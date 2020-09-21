@@ -1,0 +1,39 @@
+<!-- 
+<div class="dashboard-container" fxLayoutAlign="space-between"fxLayout="column">
+        <div fxFlex.gt-sm="25%" fxFlex.xs="100%">
+            <mat-table  [dataSource]="dataSource">
+                <ng-container matColumnDef="name">
+                    <mat-header-cell mat-header-cell *matHeaderCellDef fxShow fxHide.lt-xs> Name </mat-header-cell>
+                    <mat-cell mat-cell *matCellDef="let element" fxShow fxHide.lt-xs> <mat-icon>done</mat-icon> <mat-icon>edit</mat-icon> <p>{{element.name}}</p> <input [value]="element.name" matInput type="text"> 
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="administrators">
+                    <mat-header-cell mat-header-cell *matHeaderCellDef fxShow fxHide.lt-sm> Administrators</mat-header-cell>
+                    <mat-cell mat-cell *matCellDef="let element" fxShow fxHide.lt-sm> {{element.administrators.length }} </mat-cell>
+                </ng-container>
+        
+                <ng-container matColumnDef="participants">
+                    <mat-header-cell mat-header-cell *matHeaderCellDef fxShow fxHide.lt-sm> Participants </mat-header-cell>
+                    <mat-cell mat-cell *matCellDef="let element" fxShow fxHide.lt-sm> {{element.participants.length}} </mat-cell>
+                </ng-container>
+        
+                <ng-container matColumnDef="messagesNum">
+                    <mat-header-cell mat-header-cell *matHeaderCellDef fxShow fxHide.lt-sm> Number of messages </mat-header-cell>
+                    <mat-cell mat-cell *matCellDef="let element" fxShow fxHide.lt-sm> {{element.messages.length}} </mat-cell>
+                </ng-container>
+        
+                <ng-container matColumnDef="tasksNum">
+                    <mat-header-cell mat-header-cell *matHeaderCellDef fxShow fxHide.lt-sm> Number of tasks </mat-header-cell>
+                    <mat-cell mat-cell *matCellDef="let element" fxShow fxHide.lt-sm> {{element.tasks.length}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                    <mat-header-cell mat-header-cell *matHeaderCellDef> Status</mat-header-cell>
+                    <mat-cell fxLayoutAlign="center" mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+         
+            <mat-paginator [length]="dataSource.data.length" [pageSize]="3" [pageSizeOptions]="[3,6,12]" showFirstLastButtons></mat-paginator>
+        </div>
+</div> -->

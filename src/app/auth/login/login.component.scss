@@ -1,0 +1,41 @@
+.container-fluid {
+    background: #d9d9d9;
+    color: black;
+    height:100%;
+    width:100%;
+}
+
+.login-container{
+    height:32rem;
+    width:20rem;
+    background:#d9d9d9;
+    border: 2px solid black;
+    position: absolute;
+    left: 5%;
+    top:15%
+}
+
+.img-background{
+   height:100%;
+    width:100%;
+}
+
+.remember-me{
+    margin-top:2rem;
+
+}
+
+
+a{
+    color:blue
+}
+
+
+mat-form-field{
+    width:90% !important
+}
+
+
+.btn-submit{
+   margin-top:2em;
+}

@@ -1,0 +1,85 @@
+
+
+
+   <!--  <app-calendar-scheduler-event-panel-smart [eventSelection]="selectedEvent" #eventPanel ></app-calendar-scheduler-event-panel-smart> -->
+
+    <mat-card fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutAlign.gt-xs="center" >
+        <div fxFlex='25' (click)="postEvent()" [style.height]="'35px'" [style.margin]="'20px'" fxLayoutAlign="center">
+            <button mat-raised-button>ADD NEW EVENT</button>
+        </div>
+        <div fxFlex='25' fxLayout="row" fxLayoutAlign="space-around">
+            <div fxLayout="column" *ngIf="dateFormat === 'day'">
+                <mat-form-field   appearance="fill">
+                    <mat-label>Choose a day</mat-label>
+                    <input [value]="selectedDate" #daySelection matInput [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                        <button  (click)="setDate(daySelection.value)" [disabled]="setDateBtnDisabled(daySelection.value)" mat-raised-button>SET DATE</button>
+            </div>
+            <div *ngIf="dateFormat === 'month'" fxLayoutAlign="center" fxLayout="column">
+                        <mat-form-field fxLayoutAlign="center" appearance="fill">
+                            <mat-label>Year</mat-label>
+                            <input #yearSelection [value]="selectedDate.getFullYear().toString()" matInput onkeypress="return event.charCode >= 48 && event.charCode <= 57"  placeholder="Year">
+                        </mat-form-field>
+                        <mat-form-field fxLayoutAlign="center" appearance="fill">
+                            <mat-label>Month</mat-label>
+                            <mat-select  #monthSelection [value]="selectedDate.getMonth().toString()" [disabled]="!yearSelection.value" >
+                                <mat-option value="0">
+                                    january
+                                </mat-option>
+                                <mat-option value="1">
+                                    february
+                                </mat-option>
+                                <mat-option value="2">
+                                    march
+                                </mat-option>
+                                <mat-option value="3">
+                                    april
+                                </mat-option>
+                                <mat-option value="4">
+                                    may
+                                </mat-option>
+                                <mat-option value="5">
+                                    june
+                                </mat-option>
+                                <mat-option value="6">
+                                    july
+                                </mat-option>
+                                <mat-option value="7">
+                                    agust
+                                </mat-option>
+                                <mat-option value="8">
+                                    september
+                                </mat-option>
+                                <mat-option value="9">
+                                    october
+                                </mat-option>
+                                <mat-option value="10">
+                                    november
+                                </mat-option>
+                                <mat-option value="11">
+                                    december
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                <div fxLayoutAlign="center">
+                    <button  (click)="setDate(null,yearSelection.value,monthSelection.value)" [disabled]="setDateBtnDisabled(null,yearSelection.value,monthSelection.value)"   class="set-date-btn" [disabled]="setDateBtnDisabled()" mat-raised-button>SET DATE</button>
+                </div>
+            </div>
+        </div>
+       <div  fxFlex='25'  [style.margin-top]="'15px'" fxLayout="row" fxLayoutAlign="center">
+           <button class="format-btn" [color]="dateFormat === 'month' ? 'primary': ''" (click)="formatChange('month')"   mat-raised-button>MONTH</button>
+        <button disabled class="format-btn"  [color]="dateFormat === 'week' ? 'primary': ''"  (click)="formatChange('week')"  mat-raised-button>WEEK</button>
+        <button class="format-btn"  [color]="dateFormat === 'day' ? 'primary': ''"  (click)="formatChange('day')"  mat-raised-button>DAY</button>
+       </div>
+    </mat-card>
+    <div fxLayoutAlign="center">
+        <h2 class="date-label" *ngIf="dateFormat === 'month'"> {{selectedDate | date : 'MMMM yyyy'}} </h2>
+        <h2 class="date-label" *ngIf="dateFormat === 'day'"> {{selectedDate | date : ' EEEE d MMMM yyyy'}} </h2>
+    </div>
+    
+    <app-calendar-scheduler-month-smart *ngIf="dateFormat === 'month'" [selectedDate]="selectedDate"  (putEvent)="selectedEvent = $event"></app-calendar-scheduler-month-smart>
+    
+    <app-calendar-scheduler-day-smart *ngIf="dateFormat === 'day'" [selectedDate]="selectedDate" [hoursRange]="{start:7,end:24}" ></app-calendar-scheduler-day-smart>
+

@@ -1,0 +1,38 @@
+
+
+<mat-sidenav-container>
+  <mat-sidenav #start [mode]="'side'">
+             <mat-list>
+                <mat-list-item matTooltip="navigate to home">
+                   <a  routerLinkActive="router-link-active"> <mat-icon color="primary">home</mat-icon></a>
+                </mat-list-item>
+               <mat-list-item matTooltip="navigate to calendar">
+                  <a [routerLink]="['/calendar']" routerLinkActive="router-link-active"><mat-icon  color="primary">calendar_today</mat-icon></a>
+               </mat-list-item>
+                 <mat-list-item matTooltip="navigate to data visualization">
+                    <a [routerLink]="['/projects']" routerLinkActive="router-link-active"><mat-icon color="primary"> show_chart</mat-icon></a>
+                 </mat-list-item>
+               <mat-list-item matTooltip="navigate to chat">
+                  <a [routerLink]="['/projects']" routerLinkActive="router-link-active"><mat-icon color="primary">chat</mat-icon></a>
+               </mat-list-item>
+               <mat-list-item matTooltip="navigate to task manager">
+                  <a [routerLink]="['/projects']" routerLinkActive="router-link-active"><mat-icon color="primary">assignment</mat-icon></a>
+               </mat-list-item>
+             </mat-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-header-smart (toggleSideMenu)="start.toggle()" >
+      <app-projects-smart></app-projects-smart>
+    </app-header-smart>
+      <div class="main">
+         <router-outlet ></router-outlet>
+      </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+<!-- 
+
+<p class='fixed-bottom text-center m-0 p-0' style='background:black;color:white'>APP diseñada y desarrollada por FRJMartínez Gómez. Contacta a través de frjmartinezgomez@gmail.com</p>
+ -->
+

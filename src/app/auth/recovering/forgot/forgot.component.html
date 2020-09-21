@@ -1,0 +1,23 @@
+
+ <h2 mat-dialog-title>RESET YOUR PASSWORD</h2>
+
+<mat-dialog-content>
+     <form action="" ngNativeValidate #forgotForm='ngForm' role="form" (ngSubmit)="forgotRequest()">
+                        <div class="form-group">
+                            <input #emailControl="ngModel" [(ngModel)]="email" name='email' class="form-control" placeholder="Introduce tu email" name="email" type="email" required email>
+                            <ng-container *ngIf="emailControl.invalid && emailControl.touched" >
+                                <p *ngIf="emailControl.errors.required" class="error-message">Este campo es obligatorio</p>
+                                 <p *ngIf="emailControl.errors.email && !emailControl.errors.required" class="error-message">El valor del campo debe ser un email válido</p>
+                            </ng-container>
+                        </div>
+                        <br>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+     <button class="mat-raised-button" (click)="forgotRequest()" cdkFocusInitial [disabled]="forgotForm.invalid" type='submit'> <strong>Send</strong>    </button>
+     <button class="mat-raised-button"(click)="hideModal()">Close</button>
+</mat-dialog-actions>
+
+
+          

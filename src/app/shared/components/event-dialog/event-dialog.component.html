@@ -1,0 +1,75 @@
+
+<h2 mat-dialog-title></h2>
+<mat-dialog-content *ngIf="eventSelected">
+              <div fxLayout="column" fxLayoutAlign="center" >
+                  <div fxLayoutAlign="space-between">
+                      <mat-icon *ngIf="prevDialog" (click)="back.emit()">keyboard_backspace</mat-icon>
+                       <mat-icon *ngIf="!prevDialog && !eventsService.editionBanned(eventSelected)" appIsAdm (click)="editEvent.emit(eventSelected._id)" >edit</mat-icon>
+                   </div>
+                <div fxLayout="column" >
+                    <h3 fxLayoutAlign="center">{{eventSelected.name}}</h3>
+                    <h5 fxLayoutAlign="center" [style.color]="'#3f51b5'" >created by {{eventSelected.user['name']}}</h5>
+                </div>
+                <div fxLayout.gt-xs="row" fxLayout.xs="column">
+                    <div fxLayout="column">
+                        <div class="category-div" >
+                            <h5>
+                                Description :
+                            </h5>
+                            <p>
+                                {{eventSelected.description}}
+                            </p>
+                        </div>
+                        <div class="category-div">
+                            <h5>
+                                Participants:
+                            </h5>
+                            <ul>
+                                <li *ngFor="let participant of eventSelected.participants" role="listitem">{{participant.name}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div  class="category-div" fxLayout="column"  >
+                       <div fxLayout="column" fxLayoutAlign="center">
+                           <h5>
+                               Start date:
+                           </h5>
+                           <p>
+                               {{eventSelected.startDate | date : 'dd/MM/yyyy' }} 
+                           </p>
+                       </div>
+                        <div fxLayout="column" fxLayoutAlign="center" >
+                            <h5>
+                                End Date:
+                            </h5> 
+                            <p>
+                                {{eventSelected.endDate | date : 'dd/MM/yyyy'}}
+                            </p>
+                        </div>
+                    </div>
+                    <div fxLayout="column">
+                        <div class="category-div">
+                            <h5>
+                                Recursive:
+                            </h5> 
+                            <p>
+                                {{eventSelected.recursive}}
+                            </p>
+                        </div>
+                        <div class="category-div" >
+                            <h5>
+                                Time : 
+                            </h5>
+                            <p>
+                                {{eventSelected.startTime}} - {{eventSelected.endTime}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+              </div>
+</mat-dialog-content>
+
+<mat-dialog-actions fxLayoutAlign="center">
+    <button (click)="close.emit()" mat-raised-button> Close </button>
+</mat-dialog-actions>
+

@@ -1,0 +1,25 @@
+
+<mat-toolbar >
+    <mat-toolbar-row fxShow.gt-xs fxHide.xs >
+    <span class="spacer"></span>   
+       <a ><mat-icon matTooltip="navigate to home" class="icon-pages" color="primary" >home</mat-icon></a>
+       <a><mat-icon [routerLink]="['/calendar']" routerLinkActive="router-link-active"  matTooltip="navigate to calendar" class="icon-pages" color="primary">calendar_today</mat-icon></a>
+       <a><mat-icon matTooltip="navigate to data visualization" class="icon-pages"  color="primary"> show_chart</mat-icon></a>
+       <a><mat-icon matTooltip="navigate to chat" class="icon-pages" color="primary">chat</mat-icon></a>
+       <a><mat-icon matTooltip="navigate to task manager" class="icon-pages" color="primary">assignment</mat-icon></a>
+    <span class="spacer"></span>   
+     <a><mat-icon color="warn">share</mat-icon></a>
+     <a><mat-icon color="primary">settings</mat-icon></a>
+     <a><mat-icon (click)="logout.emit()" color="accent">logout</mat-icon></a>
+  </mat-toolbar-row>
+   <mat-toolbar-row fxShow.xs fxHide.gt-xs>
+        <a><mat-icon color="primary" (click)="toggleSideMenu.emit()" >menu</mat-icon></a>
+        <span class="spacer"></span> 
+        <a><mat-icon color="warn">share</mat-icon></a>
+        <a><mat-icon color="primary">settings</mat-icon></a>
+        <a><mat-icon (click)="logout.emit()" color="accent">logout</mat-icon></a>
+  </mat-toolbar-row>
+   <mat-toolbar-row fxFlexFill fxLayout="row" fxLayoutAlign="start"[style.margin-top]="'2rem'" >
+      <app-projects-smart></app-projects-smart>
+  </mat-toolbar-row>
+</mat-toolbar>

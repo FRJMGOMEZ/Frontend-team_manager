@@ -1,0 +1,39 @@
+
+
+
+.mat-card-content{
+   height:40px !important
+}
+
+.day-unactive{
+    opacity: 0.5;
+    cursor: not-allowed !important;
+}
+
+.day{
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.event{
+    font-size: 13px;
+    color:red;
+    cursor: pointer;
+    height: 13px;
+    margin:0px;
+    padding:0px
+}
+
+.event-recursive{
+    color:blue;
+}
+
+.event-task{
+    color:green
+}
+
+.div-events{
+    overflow-y: auto;
+    height: 50px !important;
+
+}

@@ -1,0 +1,119 @@
+/* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: 'EBGaramond';
+    src: url(/src/styles/EB_Garamond/EBGaramond-ExtraBold.woff2) format('woff2'), url(/src/styles/EB_Garamond/EBGaramond-ExtraBold.woff) format('woff')
+}
+
+html, body { 
+  font-size:14px;
+  height: 100%;
+  width:100%;
+  margin:0; 
+  font-family: 'Open Sans Condensed', sans-serif;
+ background-color:#d2d2d2;  }
+
+.global-font-size-ref{
+  font-size:14px;
+}
+
+.timepicker-overlay {
+  z-index: 1100 !important;
+}
+
+.timepicker-backdrop-overlay {
+  z-index: 1100 !important;
+}
+
+mat-icon{
+  cursor: pointer;
+}
+
+
+
+
+/* @media (min-height: 694px) and(min-width: 1450px)  {
+    * {
+    font-size:calc(1.10* 14px);
+}
+  
+}
+
+@media (min-height: 781px)and(min-width: 1650px) {
+   * {
+    font-size:calc(1.25* 14px);
+}
+  
+}
+
+@media (min-height: 833px)and(min-width: 1700px) {
+  * {
+    font-size:calc(1.35* 14px);
+}
+  
+}
+
+@media (min-height: 937px)and(min-width: 2000px) {
+  * {
+    font-size:calc(1.50* 14px);
+}
+ 
+}
+
+@media (min-height:1250px)and(min-width: 2600px) {
+  * {
+    font-size:calc(2* 14px);
+}
+ 
+}
+
+@media (min-height: 1875px)and(min-width: 3900px) {
+   * {
+    font-size:calc(3* 14px);
+}
+  
+}
+
+@media (min-height: 2500px)and(min-width: 5300px) {
+  * {
+    font-size:calc(3.90* 14px);
+}
+  
+} */
+
+
+
+
+button {
+    cursor: pointer;
+}
+
+i{
+    cursor: pointer;
+}
+
+.highlight{
+  font-weight: bold;
+}
+
+.animated {
+   -webkit-animation-duration: 0.5s;
+   animation-duration: 0.5s;
+}
+
+.error-message{
+    color:#E13526;
+    text-align: center !important;
+    position: absolute;
+}
+
+
+.modal{
+  display: inline-block;
+  overflow-y: auto;
+}
+
+a{
+  cursor: pointer;
+}
+
+

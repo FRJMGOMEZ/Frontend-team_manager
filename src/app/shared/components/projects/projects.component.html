@@ -1,0 +1,71 @@
+
+<mat-expansion-panel>
+    <mat-expansion-panel-header [collapsedHeight]="'90px'" [expandedHeight]="'90px'">
+        <div fxFlex='100' fxLayoutAlign="center" >
+            <mat-form-field fxFlex.gt-xs="10" fxFlex.xs="70" (click)="$event.stopPropagation();">
+                <mat-label>Projects</mat-label>
+                <mat-select #select [(ngModel)]="projectSelectedIn" value=""
+                    (selectionChange)="projectSelectedOut.emit($event.value ||'')">
+                    <mat-option value=""> All</mat-option>
+                    <mat-option *ngFor="let project of projects" [value]="project._id">
+                        {{project.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div fxLayout="column" fxLayoutAlign="center" [style.margin-left]="'20px'">
+                <a (click)="$event.stopPropagation();postProject.emit()">
+                    <mat-icon>add</mat-icon>
+                </a>
+            </div>
+        </div>
+    </mat-expansion-panel-header>
+    <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="name">
+            <mat-header-cell mat-header-cell *matHeaderCellDef fxShow fxHide.lt-xs> Name </mat-header-cell>
+            <mat-cell mat-cell *matCellDef="let element" fxShow fxHide.lt-xs>
+                {{element.name}}
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="administrators">
+            <mat-header-cell mat-header-cell *matHeaderCellDef fxShow fxHide.lt-sm> Administrators</mat-header-cell>
+            <mat-cell mat-cell *matCellDef="let element" fxShow fxHide.lt-sm> {{element.administrators.length }}
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="participants">
+            <mat-header-cell mat-header-cell *matHeaderCellDef fxShow fxHide.lt-sm> Participants </mat-header-cell>
+            <mat-cell mat-cell *matCellDef="let element" fxShow fxHide.lt-sm> {{element.participants.length}}
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="messagesNum">
+            <mat-header-cell mat-header-cell *matHeaderCellDef fxShow fxHide.lt-sm> Number of messages
+            </mat-header-cell>
+            <mat-cell mat-cell *matCellDef="let element" fxShow fxHide.lt-sm> {{element.messages.length}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="tasksNum">
+            <mat-header-cell mat-header-cell *matHeaderCellDef fxShow fxHide.lt-sm> Number of tasks </mat-header-cell>
+            <mat-cell mat-cell *matCellDef="let element" fxShow fxHide.lt-sm> {{element.tasks.length}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="status">
+            <mat-header-cell mat-header-cell *matHeaderCellDef> Status</mat-header-cell>
+            <mat-cell mat-cell *matCellDef="let element"> {{element.status === true ? 'active':'unactive'}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+            <mat-header-cell mat-header-cell *matHeaderCellDef> </mat-header-cell>
+            <mat-cell mat-cell *matCellDef="let element">
+                <a (click)="putProject.emit(element._id)">
+                    <mat-icon class="icon_options">edit</mat-icon>
+                </a>
+                <a (click)="$event.stopPropagation();deleteProject.emit(element._id)">
+                    <mat-icon>delete</mat-icon>
+                </a>
+            </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator [length]="dataSource.data.length" [pageSize]="3" [pageSizeOptions]="[3,6,12]" showFirstLastButtons>
+    </mat-paginator>
+</mat-expansion-panel>
