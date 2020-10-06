@@ -19,6 +19,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { LibraryPipesModule } from '../library/pipes/library-pipes.module';
 import { EventsListDialogComponent } from './components/events-list-dialog/events-list-dialog.component';
 import { EventsListDialogSmartComponent } from './components/events-list-dialog/events-list-dialog-smart.component';
+import { NoProjectsComponent } from './components/no-projects/no-projects.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { EventsListDialogSmartComponent } from './components/events-list-dialog/
     EventDialogEditionAndCreationComponent,
     EventDialogEditionAndCreationSmartComponent,
     EventsListDialogSmartComponent,
-    EventsListDialogComponent
+    EventsListDialogComponent,
+    NoProjectsComponent
   ],
   imports: [
     CommonModule,
@@ -48,7 +50,8 @@ import { EventsListDialogSmartComponent } from './components/events-list-dialog/
   ],
   exports:[
     HeaderSmartComponent,
-    ProjectsSmartComponent
+    ProjectsSmartComponent,
+    NoProjectsComponent
   ]
 })
 export class SharedModule { }

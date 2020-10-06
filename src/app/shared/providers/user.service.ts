@@ -3,10 +3,11 @@ import { HttpClient} from "@angular/common/http";
 import { URL_SERVICES } from "../../config/config";
 import { map, catchError, tap } from "rxjs/operators";
 import { User } from '../../shared/models/user.model'
-import { ErrorHandlerService } from './error-handler.service';
 import { Observable,Subject } from 'rxjs';
 import { AuthService } from '../../auth/shared/providers/auth.service';
 import { LocalStorageService } from '../../library/providers/local-storage.service';
+import { PlErrorHandlerService } from '../../library/providers/pl-error-handler.service';
+import { GDService } from '../../library/components/global-dialogs/global-dialogs.service';
 
 
 @Injectable({
@@ -17,7 +18,13 @@ export class UserServices {
     count: number = 0;
     private userSrc: Subject<{ user: User, order: string }> = new Subject < {user: User, order: string}>();
    user$: Observable < {user: User, order: string}> = this.userSrc.asObservable();
-   constructor(private http: HttpClient,private authService:AuthService,private errorHandlerService: ErrorHandlerService, private localStorageService:LocalStorageService) {}
+   constructor(private http: HttpClient,
+               private authService:AuthService,
+               private errorHandlerService: PlErrorHandlerService,
+               private localStorageService:LocalStorageService,
+               private gDService:GDService
+               
+            ) {}
 
     /* ////////////////////////////////////////////// USERS CRUD ////////////////////////////////////////////////////// */
     getUsers(from: number = 0, limit: number = 5): Observable<User[]> {
@@ -25,7 +32,7 @@ export class UserServices {
         return this.http.get(url).pipe(
             tap((res: any) => { this.count = res.count }),
             map((res: any) => { return res.users }),
-            catchError(this.errorHandlerService.handleError)
+            catchError((err) => { return this.errorHandlerService.handleError(err)})
         )
     }
     searchUsers(input: string, from: number = 0, limit: number = 5): Observable<User[]> {
@@ -35,15 +42,16 @@ export class UserServices {
             map((res: any) => {
                 return res.users;
             })
-            , catchError(this.errorHandlerService.handleError))
+            , catchError((err) => { return this.errorHandlerService.handleError(err) }))
     }
 
     postUser(user: User) {
         let url = `${URL_SERVICES}user`;
         return this.http.post(url, user).pipe(
+            tap(()=>{ this.gDService.openInfoDialog('TALK TO SOME ADMINISTRATOR OF YOUR ORGANIZATION TO GET ACCESS','authorization required') }),
             map((res: any) => {
         })
-            , catchError(this.errorHandlerService.handleError)
+            , catchError((err) => { return this.errorHandlerService.handleError(err) })
         )
     }
 
@@ -58,7 +66,7 @@ export class UserServices {
                 this.userSrc.next({user:res.user,order:'put'})
             }),
             map((res:any)=>{return res.user}),
-            catchError(this.errorHandlerService.handleError)
+            catchError((err) => { return this.errorHandlerService.handleError(err) })
         )
     }
 
@@ -66,21 +74,21 @@ export class UserServices {
         let url = `${URL_SERVICES}changeUserStatus/${id}`
         return this.http.put(url, {}).pipe(
             tap((res:any)=>{ this.userSrc.next({user:res.user, order:'put'})}),
-            catchError(this.errorHandlerService.handleError))
+            catchError((err) => { return this.errorHandlerService.handleError(err) }))
     }
 
     changeRole(userId: string, role: string) {
         let url = `${URL_SERVICES}changeRole/${userId}/${role}`
         return this.http.put(url, {}).pipe(
             tap((res: any) => { this.userSrc.next({ user: res.user, order: 'put' }) }),
-            catchError(this.errorHandlerService.handleError))
+            catchError((err) => { return this.errorHandlerService.handleError(err) }))
     }
 
     deleteUser(id: string) {
         let url = `${URL_SERVICES}user/${id}`
         return this.http.delete(url).pipe(
             tap((res: any) => { this.userSrc.next({ user: res.user, order: 'delete' }) }),
-            catchError(this.errorHandlerService.handleError))
+            catchError((err) => { return this.errorHandlerService.handleError(err) }))
     }
 
   

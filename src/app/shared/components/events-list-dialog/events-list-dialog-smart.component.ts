@@ -31,9 +31,9 @@ export class EventsListDialogSmartComponent implements OnInit {
         this.getEvents(new Date(this.data.date));
     }
     getEvents(date){
-        let timeRange = [null, date.getTime()]
-        this.eventService.getEventsByTimeRange('day', timeRange, this.selectedProject || '', date.getTime()).subscribe((events:EventModel[])=>{
-            this.events = events;  console.log({events})
+        let timeRange = [date.getTime(), null]
+        this.eventService.getEventsByTimeRange('day', timeRange, this.selectedProject , date.getTime()).subscribe((events:EventModel[])=>{
+            this.events = events; 
         })
     }
     checkDetails(eventId:string){

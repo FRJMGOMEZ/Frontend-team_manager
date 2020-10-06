@@ -11,6 +11,11 @@ import { CalendarSchedulerMonthSmartComponent } from './shared/components/calend
 import { CalendarSchedulerDayComponent } from './shared/components/calendar-scheduler-day/calendar-scheduler-day.component';
 import { CalendarSchedulerDaySmartComponent } from './shared/components/calendar-scheduler-day/calendar-scheduler-day-smart.component';
 import { DirectivesModule } from '../../shared/directives/directives.module';
+import { CalendarSchedulerDateSelectionComponent } from './shared/components/calendar-scheduler-date-selection/calendar-scheduler-date-selection.component';
+import { SharedModule } from '../../shared/shared.module';
+import { CalendarSchedulerWeekComponent } from './shared/components/calendar-scheduler-week/calendar-scheduler-week.component';
+import { CalendarSchedulerWeekSmartComponent } from './shared/components/calendar-scheduler-week/calendar-scheduler-week-smart.component';
+
 
 @NgModule({
   declarations: [
@@ -18,7 +23,10 @@ import { DirectivesModule } from '../../shared/directives/directives.module';
     CalendarSchedulerMonthComponent, 
     CalendarSchedulerMonthSmartComponent, 
     CalendarSchedulerDayComponent,
-    CalendarSchedulerDaySmartComponent],
+    CalendarSchedulerDaySmartComponent,
+    CalendarSchedulerDateSelectionComponent,
+    CalendarSchedulerWeekComponent,
+    CalendarSchedulerWeekSmartComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -26,7 +34,8 @@ import { DirectivesModule } from '../../shared/directives/directives.module';
     FlexLayoutModule,
     MaterialModule,
     LibraryPipesModule,
-    DirectivesModule
+    DirectivesModule,
+    SharedModule
   ],
   exports: []
 })

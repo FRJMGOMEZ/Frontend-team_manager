@@ -1,8 +1,12 @@
 
 
 
+mat-card{
+  padding:5px!important
+}
+
 .mat-card-content{
-   height:40px !important
+   height:55px !important
 }
 
 .day-unactive{
@@ -12,12 +16,11 @@
 
 .day{
     cursor: pointer;
-    margin-bottom: 5px;
+    margin-bottom: 0px;
 }
 
 .event{
     font-size: 13px;
-    color:red;
     cursor: pointer;
     height: 13px;
     margin:0px;
@@ -34,6 +37,6 @@
 
 .div-events{
     overflow-y: auto;
-    height: 50px !important;
+    height: 35px !important;
 
 }

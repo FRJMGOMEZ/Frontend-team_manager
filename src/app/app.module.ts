@@ -8,12 +8,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { GlobalDialogsModule } from './library/components/global-dialogs/global-dialogs.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatDialogModule } from '@angular/material/dialog';
 import { MaterialModule } from './shared/material/material.module';
+import { SocketIoModule } from 'ngx-socket-io';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -24,7 +25,8 @@ import { MaterialModule } from './shared/material/material.module';
     FormsModule,
     ReactiveFormsModule,
     MatNativeDateModule,
-    MaterialModule
+    MaterialModule,
+    SocketIoModule.forRoot(environment.socketConfig)
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],
   bootstrap: [AppComponent],

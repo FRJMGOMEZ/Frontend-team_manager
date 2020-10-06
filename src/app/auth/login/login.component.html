@@ -1,10 +1,10 @@
 <div class="container-fluid">
-    <img class="img-background" [src]="'team-manager.jpg' | frontImg" alt="">
-    <div class="login-container">
-        <div fxLayout="column">
-            <h2 fxLayoutAlign="center" [style.font-weight]="'bolder'">
-                TEAM MANAGER
-            </h2>
+    <img fxHide.xs class="img-background" [src]="'team-manager.jpg' | frontImg" alt="">
+    <div [ngClass]="checkStyleByDevice()"  >
+        <div class="login-box" fxLayout="column">
+            <h1 fxLayoutAlign="center" [style.font-weight]="'bolder'">
+                BEE TEAM
+            </h1>
             <hr>
             <h3 fxLayoutAlign="center" [style.font-weight]="'bolder'">LOGIN</h3>
             <form ngNativeValidate #userForm='ngForm' role="form" (ngSubmit)='doLogin()'>

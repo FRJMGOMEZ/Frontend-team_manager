@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MaterialModule } from '../../shared/material/material.module';
 
 
 let routes:Routes = [
@@ -14,7 +15,8 @@ let routes:Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    FlexLayoutModule
+    FlexLayoutModule,
+    MaterialModule
   ]
 })
 export class DashboardModule { }

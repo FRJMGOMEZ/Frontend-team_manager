@@ -1,5 +1,33 @@
 .main {
-  height: 85vh; /* Same as the width of the sidebar */
-  padding: 0px 10px;
+  height: 74vh; /* Same as the width of the sidebar */
+  margin: 0px 35px;
   padding-top:1rem;
+}
+
+.main-mobile{
+   height: 71vh; /* Same as the width of the sidebar */
+  margin: 0px 5px;
+  padding-top:1rem;
+}
+
+mat-sidenav{
+  width:50px;
+  position:absolute;
+  z-index:99999;
+  background-color: #1b1b1b;
+}
+
+
+app-projects-smart{
+  width: 100%;
+}
+
+
+.pages-toolbar{
+  background-color: #1b1b1b;
+  height: 43px;
+     position: sticky !important;
+    position: -webkit-sticky !important; /* For macOS/iOS Safari */
+    top: 0 !important; /* Sets the sticky toolbar to be on top */
+    z-index: 1000 !important; /* Ensure that your app's content doesn't overlap the toolbar */
 }

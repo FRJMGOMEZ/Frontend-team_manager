@@ -74,9 +74,17 @@ export class OOService {
        })
     })
     console.log({ differences })
-
     return differences
+  }
 
- 
+  public static mergeObjects(initialObj,newObj){
+    Object.keys(initialObj).forEach((iKey)=>{
+        Object.keys(newObj).forEach((nKey)=>{
+              if(iKey === nKey){
+               initialObj[iKey] = newObj[nKey]
+              }
+        })
+    })
+    return  OOService.copyObject(initialObj);
   }
 }

@@ -3,6 +3,7 @@ import { ProjectService } from '../../shared/providers/project.service';
 import { Project } from '../../shared/models/project.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { NotificationService } from '../../shared/providers/notification.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,11 +16,10 @@ export class DashboardComponent implements OnInit {
     [ 'name', 'administrators', 'participants', 'messagesNum', 'tasksNum', 'status'];
   dataSource = new MatTableDataSource<Project>([]);
 
-  constructor(private projectService:ProjectService) {}
+  constructor(private notificationService:NotificationService) {}
   ngOnInit(): void {
-     this.projectService.projects$.subscribe((projects:Project[])=>{
-         this.dataSource.data = projects;
-         this.dataSource.paginator = this.paginator;
-     })
+
+    this.notificationService.getNotifications().subscribe(console.log)
+     
   }
 }

@@ -12,6 +12,7 @@ export class EventModel {
         public endDate: number,
         public recursive:boolean,
         public disabled:boolean,
+        public allDay:boolean,
         public startTime?: string,
         public endTime?: string,
         public taskEvent?:boolean,

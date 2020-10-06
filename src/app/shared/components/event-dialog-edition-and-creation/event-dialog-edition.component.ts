@@ -20,10 +20,9 @@ export class EventDialogEditionAndCreationComponent implements OnChanges {
   @Input() projectParticipants: User[] = []
   @Input() selectedProject: string
   @Output() postEvent: EventEmitter<EventModel> = new EventEmitter<EventModel>();
-  @Output() putEvent: EventEmitter<{ [key: string]: any }> = new EventEmitter<{ [key: string]: any }>()
+  @Output() putEvent: EventEmitter<{ filters: { [key: string]: any }, id: string }> = new EventEmitter<{ filters: { [key: string]: any }, id: string }>()
   @Output() close:EventEmitter<void> = new EventEmitter<void>()
   @Output() back:EventEmitter<void> = new EventEmitter<void>()
-  allDay: boolean = false;
   dateFilter = (date: Date): boolean => { return (date.getTime() > new Date(this.event.startDate).getTime()) ? this.event.recursive ? (date.getDay() === new Date(this.event.startDate).getDay()) ? true : false : true : false }
   @Input() event: EventModel
   eventPristine: EventModel
@@ -56,6 +55,7 @@ export class EventDialogEditionAndCreationComponent implements OnChanges {
        startDate:null,
        endDate:null,
        recursive:false,
+       allDay:false,
        startTime:null,
        endTime:null,
        taskEvent:false,
@@ -96,11 +96,9 @@ export class EventDialogEditionAndCreationComponent implements OnChanges {
     this.event[type] = timePipe.transform(value, '24');
   }
 
-  checkChangesToPatch(){ 
-    //TODO: 
+  checkChangesToPatch(id:string){ 
     let obj = OOService.getObjectDifferences(this.eventPristine,this.event);
-    console.log({obj})
-    return obj
+    return {eventChanges:obj,id:this.event._id}
   }
 
   startTimeMin(){

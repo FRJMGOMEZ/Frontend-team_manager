@@ -1,16 +1,16 @@
 
 
 
-<div [style.margin]="'20px'">
+<div >
     <div fxLayout="row">
-        <div fxFlex="14" *ngFor="let label of labels">
-            <p fxLayoutAlign="center"  fxHide.xs>
-                {{label.toUpperCase()}}
-            </p>
+        <mat-card fxFlex="14" *ngFor="let label of labels">
+            <span fxLayoutAlign="center"  fxHide.xs>
+                {{label}}
+            </span>
             <p fxLayoutAlign="center"  fxHide.gt-xs fxShow.xs>
                 {{label.charAt(0)}}
             </p>
-        </div>
+        </mat-card>
     </div>
     <div *ngIf="dayRows" fxLayout="column" >
         <div *ngFor="let row of dayRows" fxLayout="row">
@@ -24,7 +24,7 @@
                                     </div>
                                     <div class="div-events" fxShow.gt-xs fxHide.xs>
                                         <ng-container *ngFor="let event of day.events" >
-                                            <mat-icon [matMenuTriggerFor]="menuPc" [matTooltip]="event.name" class="event" [class.event-recursive]="event.recursive"[class.event-task]="event.task"> trip_origin</mat-icon>
+                                            <mat-icon [matMenuTriggerFor]="menuPc" [matTooltip]="event.name" color="primary" class="event" [class.event-recursive]="event.recursive"[class.event-task]="event.task"> trip_origin</mat-icon>
                                             <mat-menu #menuPc="matMenu">
                                                 <button (click)="checkEvent.emit(event._id)" mat-menu-item>View details</button>
                                                 <div  appIsAdm [matTooltip]="eventsService.editionBanned(event) ? 'The event can not be edited because already started': null">
@@ -37,7 +37,7 @@
                                         </ng-container>
                                     </div>
                                     <p fxLayoutAlign="center" fxHide.gt-xs fxShow.xs>
-                                        <mat-icon (click)="checkEvents.emit(day.date)" color="primary" >event</mat-icon>
+                                        <mat-icon color="primary" *ngIf="day.events.length > 0" (click)="checkEvents.emit(day.date)"  >pageview</mat-icon>
                                     </p>
                                 </div>
                             </ng-template>

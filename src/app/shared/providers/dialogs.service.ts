@@ -4,6 +4,8 @@ import { EventDialogSmartComponent } from '../components/event-dialog/event-dial
 import { ProjectDialogSmartComponent } from '../components/project-dialog/project-dialog-smart-component';
 import { EventDialogEditionAndCreationSmartComponent } from '../components/event-dialog-edition-and-creation/event-dialog-edition-and-creation-smart.component';
 import { EventsListDialogSmartComponent } from '../components/events-list-dialog/events-list-dialog-smart.component';
+import { Project } from '../models/project.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,7 @@ export class DialogsService {
 
   eventId:string;
   eventsDate:number;
-  project:string
+  project:Project
 
   constructor(private dialog: MatDialog) { }
 
@@ -37,6 +39,7 @@ export class DialogsService {
   }
 
   openEventsListInfoDialog(date:number, prevDialog?:string){
+    console.log({date})
     this.eventsDate = date;
     const dialog = new MatDialogConfig();
     dialog.disableClose = true;
@@ -94,7 +97,7 @@ export class DialogsService {
     }
   }
 
-  openEditProjectDialog(project: string) {
+  openEditProjectDialog(project: Project) {
     this.project = project;
     const projectDialog = new MatDialogConfig();
     projectDialog.disableClose = true;
@@ -107,7 +110,8 @@ export class DialogsService {
     const projectDialog = new MatDialogConfig();
     projectDialog.disableClose = true;
     projectDialog.autoFocus = true;
-    this.dialog.open(ProjectDialogSmartComponent, projectDialog);
+    let dialogRef = this.dialog.open(ProjectDialogSmartComponent, projectDialog);
+
   }
   
 }

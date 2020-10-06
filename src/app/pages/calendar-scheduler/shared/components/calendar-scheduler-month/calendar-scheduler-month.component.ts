@@ -1,7 +1,5 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, SimpleChanges } from '@angular/core';
 import { Day } from '../../../../../shared/models/day.model';
-import { EventModel } from '../../../../../shared/models/event.model';
-import { DateOperationsService } from '../../../../../library/providers/date-operations.service';
 import { EventsService } from '../../../../../shared/providers/events.service';
 
 
@@ -31,6 +29,12 @@ export class CalendarSchedulerMonthComponent {
   checkDayActive(date: number) {
     let today = new Date();
     return new Date(date).getTime() < new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0, 0).getTime()
+  }
+
+  ngOnChanges(changes:SimpleChanges){
+
+    console.log(changes.dayRows)
+
   }
 
 }

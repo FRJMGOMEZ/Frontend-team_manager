@@ -3,9 +3,7 @@
 import { Component, OnInit, Input, SimpleChanges, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Hour } from '../../../../../shared/models/hour.model';
 import { EventsService } from '../../../../../shared/providers/events.service';
-import { ProjectService } from '../../../../../shared/providers/project.service';
 import { Subscription } from 'rxjs';
-import { Project } from 'src/app/shared/models/project.model';
 import { LocalStorageService } from '../../../../../library/providers/local-storage.service';
 import { EventModel } from '../../../../../shared/models/event.model';
 import { DialogsService } from '../../../../../shared/providers/dialogs.service';
@@ -22,39 +20,25 @@ export class CalendarSchedulerDaySmartComponent implements OnInit, OnDestroy {
     @Input() hoursRange: { start: number, end: number }
     @Input() selectedDate: Date
     timeRange:any[]
-    selectedProject: string
+    @Input() selectedProject: string
     hours: Hour[] = []
     events: { event: EventModel, startDateTime: number, endDateTime: number }[] = []
-    selectedProjectSubs: Subscription
     eventSubscription: Subscription
-    constructor(private eventService: EventsService, private projectService: ProjectService, private localStorageService: LocalStorageService, private dialogService:DialogsService,private cdr:ChangeDetectorRef) { }
+    constructor(private eventService: EventsService,
+                 private dialogService:DialogsService,
+                 private cdr:ChangeDetectorRef) { }
     ngOnInit(): void {
-        this.selectedProject = this.localStorageService.get('state-data', 'project');
-        this.init()
-        this.selectedProjectSubs = this.projectService.selectedProject$.subscribe((project: Project) => {
-            this.selectedProject = project._id;
-            this.init();
-        })
-        this.eventSubscription = this.eventService.event$.subscribe((data: { order: string, event: EventModel }) => {
-            switch (data.order) {
-                case 'post':
-                     this.events = [...this.events, this.getEventTimes(data.event)];
-                    break;
-                case 'put': 
-                if(data.event.startDate > this.timeRange[1]){
-                    this.events = [...this.events.filter((eachEvent) => { return eachEvent.event._id != data.event._id })]    
-                }else{
-                    this.events = [...this.events.map((eachEvent) => { return eachEvent.event._id === data.event._id ? this.getEventTimes(data.event) : eachEvent })];
-                }
-                    break;
-                case 'delete': this.events = [...this.events.filter((eachEvent) => { return eachEvent.event._id != data.event._id })]
-                    break;
-            }
-            this.cdr.detectChanges();
+        this.init();
+        this.eventSubscription = this.eventService.event$.subscribe(() => {
+            // TODO: Create an inner update system ??
+            this.init()
         })
     }
     ngOnChanges(changes: SimpleChanges) {
-        if (changes.selectedDate && this.selectedDate && !changes.selectedDate.firstChange) {
+        if (changes.selectedDate && !changes.selectedDate.firstChange) {
+            this.init();
+        }
+        if (changes.selectedProject && !changes.selectedProject.firstChange){
             this.init();
         }
     }
@@ -63,11 +47,10 @@ export class CalendarSchedulerDaySmartComponent implements OnInit, OnDestroy {
         for (let i = this.hoursRange.start; i < this.hoursRange.end; i++) {
             this.hours.push(new Hour(new Date(this.selectedDate.getFullYear(), this.selectedDate.getMonth(), this.selectedDate.getDate(), i, 0, 0, 0)))
         }
-        this.timeRange = [null, this.selectedDate.getTime()]
-        this.eventService.getEventsByTimeRange('day', this.timeRange, this.selectedProject || '', this.selectedDate.getTime()).subscribe((events: EventModel[]) => {
+        this.timeRange = [this.selectedDate.getTime(),null]
+        this.eventService.getEventsByTimeRange('day', this.timeRange, this.selectedProject , this.selectedDate.getTime()).subscribe((events: EventModel[]) => {
             let formatedEvents = [];
             events.forEach((eachEvent) => { formatedEvents.push(this.getEventTimes(eachEvent)) })
-            console.log({events})
             this.events = [...formatedEvents];
             this.cdr.detectChanges()
         })
@@ -95,7 +78,6 @@ export class CalendarSchedulerDaySmartComponent implements OnInit, OnDestroy {
         this.dialogService.openEditCreateEventDialog(eventId)
     }
     ngOnDestroy() {
-        this.selectedProjectSubs.unsubscribe();
         this.eventSubscription.unsubscribe();
     }
 

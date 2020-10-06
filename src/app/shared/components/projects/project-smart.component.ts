@@ -1,45 +1,72 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges, ɵConsole } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Project } from '../../models/project.model';
 import { ProjectService } from '../../providers/project.service';
-import { LocalStorageService } from '../../../library/providers/local-storage.service';
 import { DialogsService } from '../../providers/dialogs.service';
+import { ArrayOperationsService } from '../../../library/providers/array-operations.service';
+import { LocalStorageService } from '../../../library/providers/local-storage.service';
 
 @Component({
     selector: 'app-projects-smart',
-    template:`
-       <app-projects  [projects]="projects" (projectSelectedOut)="selectProject($event)" [projectSelectedIn]="projectSelected" (deleteProject)="deleteProject($event)" (putProject)="putProject($event)" (postProject)="postProject()" ></app-projects>
+    template: `
+       <app-projects  
+
+       [projects]="projects"
+       (projectSelectedOut)="selectProject($event)"
+       [projectSelectedIn]="projectSelected"
+       (deleteProject)="deleteProject($event)"
+       (putProject)="putProject($event)"
+       (postProject)="postProject()" >
+       
+       </app-projects>
     `,
 })
 export class ProjectsSmartComponent implements OnInit {
 
-    projects: Project[] = [];
+    @Input()projects: Project[] = []
     projectSubs: Subscription
-    projectSelected:string;
-    constructor( private projectService: ProjectService, private localStorageService: LocalStorageService, private dialogsService: DialogsService) { }
+    projectSelected: string;
+
+    constructor(private projectService: ProjectService,
+                private dialogsService: DialogsService,
+                private localStorageService:LocalStorageService) { }
     ngOnInit() {
-        this.projectService.getProjects().subscribe((projects) => {
-            this.projects = projects;
-            this.projectSelected= this.localStorageService.get('state-data', 'project') ;
-        })
-        this.projectSubs = this.projectService.project$.subscribe((data: { project: Project | string, order: string }) => {
-            switch (data.order) {
-                case 'put': this.projects = this.projects.map((project: Project) => { return (data.project as Project)._id === project._id ? data.project as Project : project })
-                    break;
-                case 'post': this.projects = [...this.projects, data.project as Project];
-                    break;
-                case 'delete':
-                    this.projects = this.projects.filter((project: Project) => { return project._id != data.project as string })
-                    break;
+        /// subscription to the changes in the projects ///
+        this.projectSubs = this.projectService.project$.subscribe((data: { project: Project, action: string }) => {
+
+            //// updating the projects ///
+            this.projects = ArrayOperationsService.update(this.projects, data.project, data.action)
+            this.projectService.projects = this.projects;
+
+            /// if the deleted project is the project selected, spread the change ////
+            if(data.action === 'DELETE' && this.projectSelected === data.project._id){
+                this.projectSelected = '';
+                this.projectService.selectProject('') 
+            }
+            if(data.action === 'POST' && !this.projectSelected){
+                this.projectSelected = data.project._id;
+                this.projectService.selectProject(data.project._id)
             }
         })
     }
+
+    ngOnChanges(changes:SimpleChanges){
+        if(changes.projects && this.projects){
+            //// check if there are project in localSorage //
+            this.projectSelected = this.localStorageService.get('state-data', 'project');
+            /// If there are no project in local storage we set the last item of teh array of project ///
+            if (!this.projectSelected && this.projects.length > 0) {
+                this.projectSelected = this.projects[this.projects.length - 1]._id;
+            }
+            this.projectService.selectProject(this.projectSelected)
+        }
+
+    }
     selectProject(projectId?: string) {
-         console.log('all')
-        this.projectService.selectProject(projectId ? projectId : '')
+        this.projectService.selectProject(projectId)
     }
     putProject(project: Project) {
-        this.dialogsService.openEditProjectDialog(project._id);
+        this.dialogsService.openEditProjectDialog(project);
     }
 
     postProject() {

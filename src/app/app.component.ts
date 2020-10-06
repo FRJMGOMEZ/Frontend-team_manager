@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { WebSocketsService } from './shared/providers/web-sockets.service';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +7,8 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor( private router:Router, private ar:ActivatedRoute){}
+  constructor(private wsService:WebSocketsService){
+    this.wsService.checkStatus()
+  }
   title = 'cargomusicapp-front';
-
 }

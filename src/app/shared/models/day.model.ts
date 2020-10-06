@@ -1,7 +1,7 @@
 
 export class Day {
 
-         constructor(date:Date, timeRange:{initHour:number,endHour:number}={initHour:7,endHour:24}) {
+         constructor(date:Date) {
             this.date = date.getTime();
             
          }

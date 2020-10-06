@@ -5,14 +5,30 @@
     width:100%;
 }
 
-.login-container{
-    height:32rem;
-    width:20rem;
-    background:#d9d9d9;
-    border: 2px solid black;
+
+.login-container-desktop{
+    width:18rem;
+    background:transparent;
     position: absolute;
-    left: 5%;
-    top:15%
+    left: 3%;
+    top:10%;
+
+    h1{
+        font-family: 'Alfa Slab One', cursive;
+        color:#3c4873;
+        font-size:1.8rem
+    }
+ 
+}
+
+/* Buscar imagen de background chu */
+.login-container{
+    height: 100%;
+    width:100%;
+    background:#ffffff;
+    .login-box{
+        padding-top:10rem
+    }
 }
 
 .img-background{
@@ -21,7 +37,7 @@
 }
 
 .remember-me{
-    margin-top:2rem;
+    margin-top:0.5rem;
 
 }
 

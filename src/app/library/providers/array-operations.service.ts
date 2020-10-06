@@ -17,4 +17,26 @@ export class ArrayOperationsService {
    }
    return chunked_arr;
  }
+  public static update(oldArray,item,method:string){
+    let updated
+    switch(method){
+      case 'POST':
+        updated = [...oldArray,item];
+      break;
+      case 'PUT':
+        updated = oldArray.map((eachItem)=>{ return eachItem._id === item._id ? item : eachItem}) 
+      break;  
+      case 'DELETE':
+        updated = oldArray.filter((eachItem)=>{ return eachItem._id != item._id}) 
+        break;
+    }
+    return updated
+  }
+
+  public static hasItem(array,item):boolean{
+    if(array.map((eachItem)=>{ return eachItem._id}).includes(item._id)){
+      return true
+    }
+    return false;
+  }
 }

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { HttpClient } from '@angular/common/http';
-import { URL_SERVICES } from '../config/config';
 import { map } from 'rxjs/operators';
+import { URL_SERVICES } from '../../config/config';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +22,7 @@ export class MessagesService {
       }))
   }
 
+  
   saveMessage(messageId:string){
     let url = `${URL_SERVICES}save-message/${messageId}`;
       return this.http.put(url,{})

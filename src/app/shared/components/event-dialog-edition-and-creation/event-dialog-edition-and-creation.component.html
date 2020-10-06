@@ -47,11 +47,11 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div fxLayoutAlign="center">
-                    <mat-checkbox (change)="allDayOptChange($event.checked)" [(ngModel)]="allDay" name="allDay" #checkbox
+                <div [style.margin-bottom]="'5px'"fxLayoutAlign="center">
+                    <mat-checkbox  (change)="allDayOptChange($event.checked)" [(ngModel)]="event.allDay" name="allDay" #checkbox
                         class="example-margin">All Day/Days</mat-checkbox>
                 </div>
-                <div *ngIf="!allDay" fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center">
+                <div *ngIf="!event.allDay" fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center">
                     <div fxFlex.gt-xs="35" fxLayoutAlign="center">
                         <input #startTimepickerInput
                             [ngClass]="{'input-error': eventForm.controls.startTime && eventForm.controls.startTime.touched && eventForm.controls.startTime.errors?.required  }"
@@ -76,7 +76,7 @@
 <mat-dialog-actions [style.margin-top]="'25px'" fxLayoutAlign="center">
     <button (click)="postEvent.emit(event)" *ngIf="!event._id" [disabled]="eventForm.invalid" mat-raised-button>
         create </button>
-    <button  [disabled]="eventHasChanges()" (click)="putEvent.emit(checkChangesToPatch(event))" *ngIf="event._id" mat-raised-button>
+    <button  [disabled]="eventHasChanges() || eventForm.invalid" (click)="putEvent.emit(checkChangesToPatch(event))" *ngIf="event._id" mat-raised-button>
         save changes </button>
     <button  (click)="close.emit()" mat-raised-button> Close </button>
 </mat-dialog-actions>

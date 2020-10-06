@@ -2,6 +2,7 @@
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { areTheyEqual, checkRegExp } from '../../validations';
 import { User } from '../../shared/models/user.model';
+import { DeviceDetectorService } from 'ngx-device-detector';
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -24,7 +25,7 @@ export class RegistrationComponent {
     password2: ['', [Validators.required, checkRegExp(this.regExpValidations)]]
   }, { validators: areTheyEqual('password1', 'password2') })
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private deviceDetectorService:DeviceDetectorService) {}
   
   navigateToLogin(){
      this.toLogin.emit();
@@ -46,5 +47,13 @@ export class RegistrationComponent {
       return false
      }
    }
+
+  checkStyleByDevice() {
+    if (this.deviceDetectorService.isDesktop()) {
+      return 'registration-container-desktop'
+    } else {
+      return 'registration-container'
+    }
+  }
 }
 

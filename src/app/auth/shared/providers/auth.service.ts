@@ -3,10 +3,10 @@ import { User } from '../../../shared/models/user.model';
 import { catchError, map, tap } from 'rxjs/operators';
 import { URL_SERVICES } from '../../../config/config';
 import { HttpClient } from '@angular/common/http';
-import { ErrorHandlerService } from '../../../shared/providers/error-handler.service';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../../../library/providers/local-storage.service';
+import { PlErrorHandlerService } from '../../../library/providers/pl-error-handler.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ import { LocalStorageService } from '../../../library/providers/local-storage.se
 export class AuthService {
 
   userOnline: User;
-  constructor(private http: HttpClient, private errorHandlerService: ErrorHandlerService, private router: Router, private localStorageService: LocalStorageService) {
+  constructor(private http: HttpClient, private plErrorHandlerService:PlErrorHandlerService, private router: Router, private localStorageService: LocalStorageService) {
     this.uploadFromStorage();
   }
 
@@ -27,7 +27,7 @@ export class AuthService {
       map((res: any) => {
         return res;
       })
-      , catchError((err) => { console.log({err});return this.errorHandlerService.handleError(err) }))
+      , catchError((err) => {return this.plErrorHandlerService.handleError(err) }))
   }
 
 
@@ -52,32 +52,19 @@ export class AuthService {
     //// REVISAMOS SI HAY TOKEN EN EL STORAGE  ////
     let token = this.localStorageService.get('user', 'token') || undefined;
     if (token) {
-      let userId = this.localStorageService.get('user', '_id') || undefined;
-      if (userId) {
-        return this.http.put(`${URL_SERVICES}check-token`, { userId }).pipe(map((res: any) => {
-          ///// SI ESTAMOS EN MODO DEMO ////
-          if (res.user) {
-            this.saveInStorage(res.user, res.token);
-            return true;
-          } else {
-            /////// NO ESTAMOS EN MODO DEMO, RECIBIMOS OTRO TOKEN Y EL USUARIO Y LOS REESCRIBIMOS //////
-            if (res.token) {
-              this.saveInStorage(this.userOnline, res.token);
-              return true
-            } else {
-              this.router.navigate(['auth']).then(() => { })
-              return false
-            }
-          }
-        }))
-      } else {
-        console.log('handle no token')
-        return this.handleNoToken();
-      }
+      return this.http.get(`${URL_SERVICES}check-token`).pipe(map((res: any) => {console.log('token is valid');return true;}))
     } else {
-      console.log('handle no token 1')
       return this.handleNoToken()
     }
+  }
+
+  refreshToken():Observable<boolean>{
+    return this.http.get(`${URL_SERVICES}refresh-token`).pipe(
+      tap((res:any)=>{
+        console.log({res})
+        this.saveInStorage(res.user, res.token)
+      }),
+      map(()=>{ return true }))
   }
 
   /* MANEJA LA RESPUESTA NEGATIVA DE CHECKTOKEN */
@@ -91,7 +78,7 @@ export class AuthService {
   changePassword(password1: string, password2: string) {
     let url = `${URL_SERVICES}changePassword/${password1}/${password2}`
     return this.http.put(url, {}).pipe(
-      catchError(this.errorHandlerService.handleError)
+      catchError((err) => { return this.plErrorHandlerService.handleError})
     )
   }
 
@@ -99,31 +86,32 @@ export class AuthService {
     let url = `${URL_SERVICES}forgotPassword/${email}`
     return this.http.put(url, {}).pipe(map((res: any) => {
     })
-      , catchError(this.errorHandlerService.handleError))
+      , catchError((err) => { return this.plErrorHandlerService.handleError }))
   }
 
   checkResetCode(userMail: string, resetCode: string) {
     let url = `${URL_SERVICES}checkResetCode/${userMail}/${resetCode}`
     return this.http.put(url, {}).pipe(
-      catchError(this.errorHandlerService.handleError))
+      catchError((err) => { return this.plErrorHandlerService.handleError }))
   }
 
   setNewPassword(resetCode: string, password: string, email: string) {
     let url = `${URL_SERVICES}setNewPassword/${email}/${resetCode}/${password}`
     return this.http.put(url, {}).pipe(map((res: any) => {
-      console.log({ res })
       if (res.message) {
         return res.message
       }
     })
-      , catchError(this.errorHandlerService.handleError)
+      , catchError((err) => { return this.plErrorHandlerService.handleError })
     )
   }
 
   /* LOGOUT */
   logout() {
-    this.router.navigate(["auth"]).then(() => {
-      this.cleanStorage();
-    })
+    return of(false).pipe(tap(()=>{
+      this.router.navigate(["auth"]).then(() => {
+        this.cleanStorage();
+      })
+    }))
   }
 }

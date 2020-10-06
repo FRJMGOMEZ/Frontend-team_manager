@@ -1,5 +1,3 @@
-import { EventModel } from './event.model';
-
 
 
 export class Hour{

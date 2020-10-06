@@ -1,11 +1,12 @@
 import { Component, Input, ElementRef, Renderer2, SimpleChanges, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 import { Hour } from '../../../../../shared/models/hour.model';
 import { EventModel } from '../../../../../shared/models/event.model';
+import { EventsService } from '../../../../../shared/providers/events.service';
 
 @Component({
   selector: 'app-calendar-scheduler-day',
   templateUrl: './calendar-scheduler-day.component.html',
-  styleUrls: ['./calendar-scheduler-day.component.css'],
+  styleUrls: ['./calendar-scheduler-day.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush 
 })
 export class CalendarSchedulerDayComponent {
@@ -15,14 +16,10 @@ export class CalendarSchedulerDayComponent {
   eventsRenderized:number = 0;
   @Output() checkEvent:EventEmitter<string> = new EventEmitter<string>();
   @Output() putEvent:EventEmitter<string> = new EventEmitter<string>();
-  constructor(private renderer: Renderer2) { }
+  constructor(private renderer: Renderer2, public eventsService:EventsService) { }
   calculateCardWidth() {
-    return `${(window.innerWidth - 40) / this.hours.length}px`;
+    return `${(window.innerWidth - 20) / this.hours.length}px`;
   }
-  ngDoCheck(){
-    console.log('checked')
-  }
-
   ngOnChanges(changes:SimpleChanges){
     if(changes.events && this.events){
          this.eventsRenderized = 0;
@@ -36,11 +33,11 @@ export class CalendarSchedulerDayComponent {
            this.renderEvent(eventDiv,size,percent)
          } else {
            if (hour.date - event.startDateTime < 3600000) {
-             percent = Math.round(((hour.date + 3600000 - event.startDateTime) * 100) / 3600000);
+             percent = Math.ceil(((hour.date + 3600000 - event.startDateTime) * 100) / 3600000);
              size === "regular" ? this.renderer.setStyle(eventDiv, 'margin-left', `${100 - percent}%`) : this.renderer.setStyle(eventDiv, 'margin-top', `${100 - percent}%`)
              this.renderEvent(eventDiv, size, percent)
            } else {
-             percent = Math.round(((event.endDateTime - hour.date) * 100) / 3600000);
+             percent = Math.ceil(((event.endDateTime - hour.date) * 100) / 3600000);
              size === 'regular' ? this.renderer.setStyle(eventDiv, 'margin-right', `${100 - percent}%`) : this.renderer.setStyle(eventDiv, 'margin-bottom', `${100 - percent}%`)
              this.renderEvent(eventDiv, size, percent)
            }
@@ -49,19 +46,12 @@ export class CalendarSchedulerDayComponent {
   }
   renderEvent(eventDiv:ElementRef,size: 'small' | 'regular', percent:number){
     if (size === 'regular') {
-      this.renderer.setStyle(eventDiv, 'background-color', "#3f51b5")
+      this.renderer.setStyle(eventDiv, 'background-color', "#5464bd")
       this.renderer.setStyle(eventDiv, 'width', `${percent}%`);
     } else {
-      this.renderer.setStyle(eventDiv, 'background-color', 'blue')
+      this.renderer.setStyle(eventDiv, 'background-color', '#5464bd')
       this.renderer.setStyle(eventDiv, 'height', `${percent}%`);
     }
     this.eventsRenderized++
-  }
-
-  editionBanned(eventStartDate:number){
-     if(new Date().getTime() > eventStartDate){
-       return true
-     }
-     return false
   }
 }

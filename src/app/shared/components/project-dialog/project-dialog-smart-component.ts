@@ -7,6 +7,8 @@ import { UserServices } from '../../providers/user.service';
 import { Project } from '../../models/project.model';
 import { ProjectService } from '../../providers/project.service';
 import { AuthService } from '../../../auth/shared/providers/auth.service';
+import { OOService } from '../../../library/providers/objects-operations.service';
+import { LocalStorageService } from '../../../library/providers/local-storage.service';
 
 @Component({
     selector: 'app-project-dialog-smart',
@@ -19,26 +21,24 @@ export class ProjectDialogSmartComponent implements OnInit {
     participantsOptions: User[] = [];
     userOnline: User = this.authService.userOnline;
     project:Project
-
     constructor(private userService: UserServices,
                   private projectService: ProjectService,
                   private authService: AuthService,
+                  private localStorageService:LocalStorageService,
                   private dialogRef: MatDialogRef<ProjectDialogSmartComponent>,
                   @Inject(MAT_DIALOG_DATA) private data) { }
 
     ngOnInit() {
         if(this.data?.project){
-             this.project = this.data.project;
+             this.project = OOService.copyObject(this.data.project)
+             this.localStorageService.set('state-data',this.project._id,'project-on-screen')
         }
-        this.userService.getUsers().subscribe((users: User[]) => {
+        this.userService.getUsers(0,999999).subscribe((users: User[]) => {
             this.participantsOptions = users;
         })
     }
-
     postProject(project:Project) {
-            this.projectService.postProject(project).subscribe(() => {
-                this.hideModal();
-            })
+            this.projectService.postProject(project).subscribe()
     }
 
     putProject(project:Project){
@@ -47,9 +47,8 @@ export class ProjectDialogSmartComponent implements OnInit {
            })
     }
 
-    hideModal() {
-        this.dialogRef.close()
+    hideModal(dataBack?:any) {
+        this.dialogRef.close(dataBack)
     }
-
 
 }

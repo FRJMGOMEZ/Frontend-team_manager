@@ -1,13 +1,11 @@
-import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Day } from '../../../../../shared/models/day.model';
 import { ArrayOperationsService } from '../../../../../library/providers/array-operations.service';
 import { EventModel } from '../../../../../shared/models/event.model';
 import { EventsService } from '../../../../../shared/providers/events.service';
-import { Subscription } from 'rxjs';
+import { Subscription, timer } from 'rxjs';
 import { DialogsService } from '../../../../../shared/providers/dialogs.service';
-import { ProjectService } from '../../../../../shared/providers/project.service';
-import { Project } from 'src/app/shared/models/project.model';
-import { LocalStorageService } from '../../../../../library/providers/local-storage.service';
+
 
 @Component({
     selector: 'app-calendar-scheduler-month-smart',
@@ -23,121 +21,123 @@ import { LocalStorageService } from '../../../../../library/providers/local-stor
     </app-calendar-scheduler-month>
     
     `,
-     changeDetection: ChangeDetectionStrategy.OnPush 
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CalendarSchedulerMonthSmartComponent implements OnInit, OnDestroy, OnChanges {
 
     @Input() selectedDate: Date = new Date()
-    @Output() putEvent = new EventEmitter<string>()
-    dayRows: any;
+    dayRows: any[];
     eventsSubscription: Subscription
-    selectedProject:string 
-    projectSelectionSubs:Subscription
+    projectSelectionSubs: Subscription
+    @Input() selectedProject: string
+    timeRange: number[]
+    days: Day[]
     constructor(private arrayOperationsService: ArrayOperationsService,
         public eventsService: EventsService,
         public dialogsService: DialogsService,
-        private projectService:ProjectService,
-        private localStorageService:LocalStorageService,
-        private cdr:ChangeDetectorRef) { }
+        private cdr: ChangeDetectorRef) { }
     ngOnInit(): void {
-        this.selectedProject = this.localStorageService.get('state-data','project');
-        this.init();
-        this.projectSelectionSubs = this.projectService.selectedProject$.subscribe((project: Project) => {
-            this.selectedProject = project ? project._id : undefined;
-            this.init();
+        this.setRangeAndDays().then(() => {
+            this.getEvents();
         })
-
-        this.eventsSubscription = this.eventsService.event$.subscribe((data: { event: EventModel, order: string }) => {
-            switch (data.order) {
-                case 'post':
-                    this.dayRows.forEach((row: Day[], i) => {
-                        row.forEach((eachDay: Day, index) => {
-                            if ((eachDay.date >= data.event.startDate) && (eachDay.date <= data.event.endDate)) {
-                                if(data.event.recursive){
-                                    if(new Date(data.event.startDate).getDay() === new Date(eachDay.date).getDay()){
-                                        eachDay.events.push(data.event)
-                                        row[i][index] = eachDay;  
-                                    }
-                                }else{
-                                    eachDay.events.push(data.event)
-                                    row[i][index] = eachDay;
-                                }
-                            }
-                        })
-                    })
+        this.eventsSubscription = this.eventsService.event$.subscribe((data:{event:EventModel,action:string}) => {
+            switch (data.action) {
+                case 'POST':
+                    this.insertEvent(data.event)
                     break;
-                case 'put':
-                    this.dayRows.forEach((row: Day[], i: number) => {
-                        row.forEach((eachDay: Day, ind: number) => {
-                            let events = eachDay.events;
-                            eachDay.events = [];
-                            events.forEach((eachEvent:EventModel)=>{
-                                eachEvent._id === data.event._id ? eachEvent = data.event : null;
-                                if ((eachDay.date >= eachEvent.startDate) && (eachDay.date <= eachEvent.endDate) && (eachEvent.project === this.selectedProject || eachEvent.project === null)) {
-                                    eachDay.events.push(eachEvent)
-                                }
-                            })
-                        })
-                    })
-                break;
-                case 'delete':
-                    this.dayRows.forEach((row: Day[], i: number) => {
-                        row.forEach((day: Day, ind: number) => {
-                            day.events.forEach((eachEvent: EventModel) => {
-                                if (eachEvent._id === data.event._id) {
-                                    this.dayRows[i][ind].events = this.dayRows[i][ind].events.filter((eachEvent:EventModel)=>{ return eachEvent._id != data.event._id})
-                                }
-                            })
-                        })
-                    }) 
+                case 'PUT':
+                    console.log('to update')
+                    this.removeEvent(data.event)
+                    this.insertEvent(data.event)
+                    break;
+                case 'DELETE':
+                    console.log('to delete')
+                    this.removeEvent(data.event)
+                    break;
             }
-            this.cdr.detectChanges();
+            this.dayRows = [...this.dayRows]
+            this.cdr.markForCheck()
         })
     }
     ngOnChanges(changes: SimpleChanges) {
-        if (changes.selectedDate && this.selectedDate && !changes.selectedDate.firstChange) {
-            this.init();
+        if (changes.selectedDate && !changes.selectedDate.firstChange) {
+            this.setRangeAndDays().then(() => {
+                this.getEvents();
+            })
+        }
+        if (changes.selectedProject && !changes.selectedProject.firstChange) {
+            this.getEvents()
         }
     }
-    init() {
-        let monthDays = new Date(this.selectedDate.getFullYear(), this.selectedDate.getMonth(), 0).getDate();
-        let lastMonthDay = new Date(this.selectedDate.getFullYear(), this.selectedDate.getMonth(), monthDays, 0, 0, 0, 0);
-        let days = this.getCalendarDays(this.selectedDate, monthDays, lastMonthDay)
-        let timeRange = this.getTimeRange(this.selectedDate, monthDays, lastMonthDay);
+
+    insertEvent(event:EventModel){
+        this.dayRows.forEach((row, ind) => {
+            row.forEach((eachDay: Day, index) => {
+                let project = (event.project as any)._id ? (event.project as any)._id : event.project
+                if ((eachDay.date >= event.startDate) && (eachDay.date <= event.endDate) && (project === this.selectedProject)) {
+                    if (event.recursive) {
+                        if ((new Date(event.startDate).getDay() === new Date(eachDay.date).getDay())) {
+                            this.dayRows[ind][index].events= [...eachDay.events, event]
+                        }
+                    } else {
+                        this.dayRows[ind][index].events = [...eachDay.events, event]
+                        console.log('need to be included')
+                    }
+                }
+            })
+        })
+    }
+
+    removeEvent(event:EventModel){
+       this.dayRows =[ ...this.dayRows.map((eachRow)=>{
+            return eachRow.map((eachDay:Day)=>{ eachDay.events = eachDay.events.filter((eachEvent:EventModel)=>{  return eachEvent._id != event._id }); return eachDay })
+        })]
+    }
+    getEvents() {
         //// search for events in a date range ///
-        this.eventsService.getEventsByTimeRange('month',timeRange,this.selectedProject).subscribe((events: EventModel[]) => {
-            days.forEach((eachDay: Day, index) => {
-                events.forEach((eachEvent: EventModel) => {
-                    if ((eachDay.date >= eachEvent.startDate) && (eachDay.date <= eachEvent.endDate) && (eachEvent.project === this.selectedProject || eachEvent.project === null || !this.selectedProject)) {
-                        if(eachEvent.recursive){
-                            if ((new Date(eachEvent.startDate).getDay() === new Date(eachDay.date).getDay())){
-                                eachDay.events.push(eachEvent);
-                                days[index] = eachDay;
+        this.eventsService.getEventsByTimeRange('month', this.timeRange, this.selectedProject).subscribe((events: EventModel[]) => {
+                this.setRangeAndDays();
+                this.days.forEach((eachDay: Day, index) => {
+                    events.forEach((eachEvent: EventModel) => {
+                    if ((eachDay.date >= eachEvent.startDate) && (eachDay.date <= eachEvent.endDate) && (eachEvent.project === this.selectedProject)) {
+                        if (eachEvent.recursive) {
+                            if ((new Date(eachEvent.startDate).getDay() === new Date(eachDay.date).getDay())) {
+                                eachDay.events = [...eachDay.events,eachEvent]
+                                this.days[index] = { ...eachDay };
                             }
-                        }else{
-                            eachDay.events.push(eachEvent)
-                            days[index] = eachDay;
+                        } else {
+                            eachDay.events = [...eachDay.events, eachEvent]
+                            this.days[index] = { ...eachDay };
                         }
                     }
                 })
             })
-            this.dayRows = this.arrayOperationsService.divideArray(days, 7);
+            this.dayRows = this.arrayOperationsService.divideArray(this.days, 7);
             this.cdr.detectChanges();
         })
     }
-    getCalendarDays(date: Date, monthDays: number, lastMonthDay: Date) {
+
+    setRangeAndDays() {
+        return new Promise(async (resolve, reject) => {
+            let monthDays = new Date(this.selectedDate.getFullYear(), this.selectedDate.getMonth() + 1, 0).getDate();
+            let lastMonthDay = new Date(this.selectedDate.getFullYear(), this.selectedDate.getMonth(), monthDays, 0, 0, 0, 0);
+            let firstMonthDay = new Date(this.selectedDate.getFullYear(), this.selectedDate.getMonth(), 1, 0, 0, 0, 0);
+            this.days = await this.getCalendarDays(this.selectedDate, monthDays, lastMonthDay, firstMonthDay)
+            this.timeRange = await this.getTimeRange(this.selectedDate, monthDays, lastMonthDay, firstMonthDay);
+            resolve()
+        })
+    }
+    getCalendarDays(date: Date, monthDays: number, lastMonthDay: Date, firstMonthDay: Date) {
         let days = [];
-        let firstMonthDay = new Date(date.getFullYear(), date.getMonth(), 1, 0, 0, 0, 0);
         for (let i = 1 - firstMonthDay.getDay(); i <= monthDays + (6 - lastMonthDay.getDay()); i++) {
             days.push(new Day(new Date(date.getFullYear(), date.getMonth(), i, 0, 0, 0, 0)))
         }
         return days
     }
-    getTimeRange(date: Date, monthDays: number, lastMonthDay: Date) {
-        return [new Date(date.getFullYear(), date.getMonth(), 0 - (7 - date.getDay())).getTime(), new Date(date.getFullYear(), date.getMonth(), monthDays + (6 - lastMonthDay.getDay()), 23,59, 59, 0).getTime()]
+    getTimeRange(date: Date, monthDays: number, lastMonthDay: Date, firstMonthDay: Date) {
+        return [new Date(date.getFullYear(), date.getMonth(), 1 - firstMonthDay.getDay()).getTime(), new Date(date.getFullYear(), date.getMonth(), monthDays + (6 - lastMonthDay.getDay()), 23, 59, 59, 0).getTime()]
     }
     ngOnDestroy() {
         this.eventsSubscription.unsubscribe();
-        this.projectSelectionSubs.unsubscribe();
     }
 }

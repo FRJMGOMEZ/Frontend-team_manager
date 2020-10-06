@@ -1,11 +1,12 @@
 
 <div class="container-fluid">
+     <!-- create a parent component to show the image -->
      <img class="img-background" [src]="'team-manager.jpg' | frontImg" alt="">
-      <div class="register-container">
-          <div fxLayout="column">
-              <h2 fxLayoutAlign="center" [style.font-weight]="'bolder'">
-                TEAM MANAGER
-            </h2>
+      <div [ngClass]="checkStyleByDevice()" >
+          <div class="login-box" fxLayout="column">
+              <h1 fxLayoutAlign="center" [style.font-weight]="'bolder'">
+                BEE TEAM
+            </h1>
             <hr>
             <h3 fxLayoutAlign="center" [style.font-weight]="'bolder'">REGISTRATION</h3>
             <form ngNativeValidate  [formGroup]='userForm' id="loginform" (ngSubmit)='doRegistration()'>
@@ -20,7 +21,7 @@
                                                     El nombre necesita un mínimo de 5 caracteres
                                     </p>
                    </ng-container>
-                    <div [style.margin-top]="'1.5em'" fxLayoutAlign="center">
+                    <div [style.margin-top]="'0.5em'" fxLayoutAlign="center">
                         <mat-form-field>
                            <mat-label for="email">EMAIL</mat-label>
                            <input matInput formControlName='email' id="email" name='email' placeholder="Email" type="email" autofocus="" >
@@ -31,7 +32,7 @@
                                                         El valor introducido debe ser un email válido
                                           </p>
                     </ng-container>
-                    <div [style.margin-top]="'3em'" fxLayoutAlign ="center"> 
+                    <div [style.margin-top]="'1em'" fxLayoutAlign ="center"> 
                         <mat-form-field>
                              <input matInput formControlName='password1' id="password1" name='password1'  placeholder="Password1" type="password" >
                         </mat-form-field>
@@ -44,7 +45,7 @@
                                                     La contraseña debe de tener un mínimo de 8 caracteres
                                     </p>
                     </ng-container>
-                    <div [style.margin-top]="'1.5em'" fxLayoutAlign ="center" >
+                    <div [style.margin-top]="'0.5em'" fxLayoutAlign ="center" >
                           <mat-form-field>
                               <input matInput formControlName='password2' id="password2" name='password2' placeholder="Password2" type="password" >
                           </mat-form-field>
@@ -60,11 +61,11 @@
                     <div fxLayoutAlign="center" *ngIf="displayPasswordError(userForm)" [style.margin-top]="'3em'" >
                                 <p class='error-message'>Las contraseñas deben de ser iguales</p>
                     </div>
-                <div [style.margin-top]="'2em'" fxLayoutAlign="center">
+                <div [style.margin-top]="'1em'" fxLayoutAlign="center">
                      <button mat-raised-button [disabled]="userForm.invalid" type='submit'><strong>REGISTER</strong></button>
                 </div>
             </form>
-            <div fxLayoutAlign="center" [style.margin-top]="'1.5em'">
+            <div fxLayoutAlign="center" [style.margin-top]="'1em'">
                 <a (click)="navigateToLogin()">Login</a>
             </div>
           </div>

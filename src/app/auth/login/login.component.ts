@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {Credentials} from '../shared/models/credentials';
 import { AuthDialogService } from '../shared/providers/auth-dialog.service';
 import { LocalStorageService } from 'src/app/library/providers/local-storage.service';
-import { timer } from 'rxjs';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: "app-login",
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     { error: 'minLength', regExp:'(?=.{8,})'}
   ]
 
-  constructor( private localStorageService:LocalStorageService, private dialogService:AuthDialogService){}
+  constructor(private localStorageService: LocalStorageService, private dialogService: AuthDialogService, private deviceDetectorService: DeviceDetectorService){}
 
   ngOnInit() {
     this.checkRememberMe();
@@ -49,6 +49,14 @@ export class LoginComponent implements OnInit {
 
   togglePassVisibility(){
     this.hidePass = !this.hidePass;
+  }
+
+  checkStyleByDevice(){
+    if(this.deviceDetectorService.isDesktop()){
+      return 'login-container-desktop'
+    }else{
+      return 'login-container'
+    }
   }
 }
 
