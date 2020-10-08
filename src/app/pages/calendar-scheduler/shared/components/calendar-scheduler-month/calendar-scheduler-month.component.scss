@@ -19,7 +19,7 @@ mat-card{
     margin-bottom: 0px;
 }
 
-.event{
+.task{
     font-size: 13px;
     cursor: pointer;
     height: 13px;
@@ -27,15 +27,13 @@ mat-card{
     padding:0px
 }
 
-.event-recursive{
+.task-recursive{
     color:blue;
 }
 
-.event-task{
-    color:green
-}
 
-.div-events{
+
+.div-tasks{
     overflow-y: auto;
     height: 35px !important;
 

@@ -1,4 +1,4 @@
-import { FileModel } from './file.model';
+
 import { User } from './user.model';
 
 export class Project{

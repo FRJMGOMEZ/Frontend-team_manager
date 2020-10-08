@@ -1,6 +1,6 @@
 
 
-<div fxLayout.gt-xs="row" fxLayout.xs="column">
+<div fxLayout.gt-xs="row" fxLayout.xs="column" [style.margin-bottom]="'20px'" fxLayout="row">
     <div fxFlex='50' fxLayout="row" fxLayoutAlign="space-around">
         <div fxLayout="column" *ngIf="dateFormat === 'day' || dateFormat === 'week'">
             <mat-form-field appearance="fill">
@@ -9,8 +9,6 @@
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
-            <button (click)="setDate(daySelection.value)" [disabled]="setDateBtnDisabled(daySelection.value)"
-                mat-raised-button>SET DATE</button>
         </div>
         <div *ngIf="dateFormat === 'month'" fxLayoutAlign="center" fxLayout="column">
             <div fxLayout.gt-xs="row" fxLayout.xs="column">
@@ -62,16 +60,11 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div fxLayoutAlign="center">
-                <button (click)="setDate(null,yearSelection.value,monthSelection.value)"
-                    [disabled]="setDateBtnDisabled(null,yearSelection.value,monthSelection.value)" class="set-date-btn"
-                    [disabled]="setDateBtnDisabled()" mat-raised-button>SET DATE</button>
-            </div>
         </div>
     
     </div>
     <div fxFlex='50' [style.margin-top]="'15px'" fxLayoutAlign="center">
-        <div fxLayout="column">
+        <div fxLayout="row">
             <button class="format-btn" [color]="dateFormat === 'month' ? 'primary': ''" (click)="setFormat('month')"
                 mat-raised-button>MONTH</button>
             <button class="format-btn" [color]="dateFormat === 'week' ? 'primary': ''" (click)="setFormat('week')"

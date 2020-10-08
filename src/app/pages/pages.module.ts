@@ -6,6 +6,8 @@ import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../shared/material/material.module';
 import { ChatComponent } from './chat/chat.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 
 
 @NgModule({
@@ -18,7 +20,8 @@ import { ChatComponent } from './chat/chat.component';
     PagesRoutingModule,
     SharedModule, 
     RouterModule,
-    MaterialModule
+    MaterialModule,
+    FlexLayoutModule
   ]
 })
 export class PagesModule { }

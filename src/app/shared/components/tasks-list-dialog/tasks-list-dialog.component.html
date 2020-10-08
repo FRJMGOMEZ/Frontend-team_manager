@@ -28,8 +28,8 @@
                 <mat-icon  [matMenuTriggerFor]="menu">more_vert</mat-icon>
                 <mat-menu yPosition="below" xPosition="after" #menu="matMenu">
                     <button  (click)="checkDetails.emit(element._id)" mat-menu-item>View details</button>
-                    <button [disabled]="eventsService.editionBanned(element)" (click)="editEvent.emit(element._id)" mat-menu-item>Edit</button>
-                    <button [disabled]="!element.editable" (click)="deleteEvent.emit(element._id)" mat-menu-item>Delete</button>
+                    <button [disabled]="taskService.editionBanned(element)" (click)="editTask.emit(element._id)" mat-menu-item>Edit</button>
+                    <button [disabled]="!element.editable" (click)="deleteTask.emit(element._id)" mat-menu-item>Delete</button>
                 </mat-menu>
             </td>
         </ng-container>

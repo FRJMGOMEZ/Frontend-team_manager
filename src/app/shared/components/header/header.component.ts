@@ -1,7 +1,5 @@
-import { Component, EventEmitter, Output, Input, ViewChild, SimpleChanges, OnInit, AfterViewInit } from '@angular/core';
-import { Project } from '../../models/project.model';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, EventEmitter, Output } from '@angular/core';
+
 
 @Component({
   selector: 'app-header',

@@ -1,11 +1,11 @@
 .main {
-  height: 74vh; /* Same as the width of the sidebar */
+  height: 85vh; /* Same as the width of the sidebar */
   margin: 0px 35px;
   padding-top:1rem;
 }
 
 .main-mobile{
-   height: 71vh; /* Same as the width of the sidebar */
+   height: 85vh; /* Same as the width of the sidebar */
   margin: 0px 5px;
   padding-top:1rem;
 }
@@ -17,10 +17,6 @@ mat-sidenav{
   background-color: #1b1b1b;
 }
 
-
-app-projects-smart{
-  width: 100%;
-}
 
 
 .pages-toolbar{

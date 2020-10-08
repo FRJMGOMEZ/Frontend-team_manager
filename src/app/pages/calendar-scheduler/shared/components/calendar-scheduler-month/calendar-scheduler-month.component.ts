@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, SimpleChanges } from '@angular/core';
 import { Day } from '../../../../../shared/models/day.model';
-import { EventsService } from '../../../../../shared/providers/events.service';
+import { TaskService } from '../../../../../shared/providers/task.service';
+
 
 
 @Component({
@@ -14,11 +15,12 @@ export class CalendarSchedulerMonthComponent {
   labels: string[] = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
   @Input() selectedDate: Date
   @Input() dayRows: any;
-  @Output() checkEvent = new EventEmitter<string>()
-  @Output() putEvent = new EventEmitter<string>();
-  @Output() checkEvents = new EventEmitter<number>()
-  @Output() deleteEvent = new EventEmitter<string>();
-  constructor(public eventsService:EventsService) { }
+  @Output() checkTask = new EventEmitter<string>()
+  @Output() putTask = new EventEmitter<string>();
+  @Output() checkTasks = new EventEmitter<number>()
+  @Output() deleteTask = new EventEmitter<string>();
+  @Input() selectedProject:string
+  constructor(public taskService:TaskService) { }
   getDayOfWeek(row: Day[], weekDay: number) {
     let day = row.filter((day) => { return new Date(day.date).getDay() === weekDay })[0];
     let date = day ? new Date(day.date) : null;

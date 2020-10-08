@@ -1,25 +1,34 @@
 
 <mat-toolbar >
-    <mat-toolbar-row fxShow.gt-xs fxHide.xs >
-    <span class="spacer"></span>   
-       <a ><mat-icon [routerLink]="['/']" routerLinkActive="router-link-active"  matTooltip="navigate to home" class="icon-pages" color="primary" >home</mat-icon></a>
-       <a><mat-icon [routerLink]="['calendar']" routerLinkActive="router-link-active"  matTooltip="navigate to calendar" class="icon-pages" color="primary">calendar_today</mat-icon></a>
-       <a><mat-icon matTooltip="navigate to data visualization" class="icon-pages"  color="primary"> show_chart</mat-icon></a>
-       <a><mat-icon matTooltip="navigate to chat" class="icon-pages" color="primary">chat</mat-icon></a>
-       <a><mat-icon matTooltip="navigate to task manager" class="icon-pages" color="primary">assignment</mat-icon></a>
-    <span class="spacer"></span>   
+    <mat-toolbar-row>
+   <a>
+      <mat-icon fxShow.xs fxHide.gt-xs color="accent" (click)="toggleSideMenu.emit()">menu</mat-icon>
+   </a>
+   <a>
+      <mat-icon fxShow.gt-xs fxHide.xs [routerLink]="['/']" routerLinkActive="router-link-active"
+         matTooltip="navigate to home" class="icon-pages" color="accent">home</mat-icon>
+   </a>
+   <a>
+      <mat-icon fxShow.gt-xs fxHide.xs [routerLink]="['/pages/calendar']" routerLinkActive="router-link-active"
+         matTooltip="navigate to calendar" class="icon-pages" color="accent">calendar_today</mat-icon>
+   </a>
+   <a>
+      <mat-icon fxShow.gt-xs fxHide.xs [routerLink]="['/pages/task-manager']" routerLinkActive="router-link-active"
+         matTooltip="navigate to task manager" class="icon-pages" color="accent">assignment</mat-icon>
+   </a>
+      <span class="spacer"></span>
+      <ng-content></ng-content>  
      <a><mat-icon color="accent">share</mat-icon></a>
      <a><mat-icon color="primary">settings</mat-icon></a>
      <a><mat-icon color="warn" (click)="logout.emit()" >exit_to_app</mat-icon></a>
+
   </mat-toolbar-row>
-   <mat-toolbar-row fxShow.xs fxHide.gt-xs>
-        <a><mat-icon color="primary" (click)="toggleSideMenu.emit()" >menu</mat-icon></a>
-        <span class="spacer"></span> 
-        <a><mat-icon color="accent">share</mat-icon></a>
-        <a><mat-icon color="primary">settings</mat-icon></a>
-        <a><mat-icon color="warn" (click)="logout.emit()" >exit_to_app</mat-icon></a>
-  </mat-toolbar-row>
-   <mat-toolbar-row  fxFlexFill fxLayout="row" fxLayoutAlign="start"[style.margin-top]="'2rem'" >
-            <ng-content></ng-content>
-  </mat-toolbar-row>
+
 </mat-toolbar>
+
+<!-- <mat-tab isActive="true" disabled="true" label="Third">
+   <ng-template mat-tab-label>
+      <button (click)="postTask()" color="accent" [disabled]="!selectedProject" mat-raised-button> NEW TASK</button>
+   </ng-template>
+</mat-tab>
+ -->

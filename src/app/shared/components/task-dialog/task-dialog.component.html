@@ -1,14 +1,14 @@
 
 <h2 mat-dialog-title></h2>
-<mat-dialog-content *ngIf="eventSelected">
+<mat-dialog-content *ngIf="taskSelected">
               <div fxLayout="column" fxLayoutAlign="center" >
                   <div fxLayoutAlign="space-between">
                       <mat-icon *ngIf="prevDialog" (click)="back.emit()">keyboard_backspace</mat-icon>
-                       <mat-icon *ngIf="!prevDialog && !eventsService.editionBanned(eventSelected)" appIsAdm (click)="editEvent.emit(eventSelected._id)" >edit</mat-icon>
+                       <mat-icon *ngIf="!prevDialog && !tasksService.editionBanned(taskSelected)" appIsAdm (click)="editTask.emit(taskSelected._id)" >edit</mat-icon>
                    </div>
                 <div fxLayout="column" >
-                    <h3 fxLayoutAlign="center">{{eventSelected.name}}</h3>
-                    <h5 fxLayoutAlign="center" [style.color]="'#3f51b5'" >created by {{eventSelected.user['name']}}</h5>
+                    <h3 fxLayoutAlign="center">{{taskSelected.name}}</h3>
+                    <h5 fxLayoutAlign="center" [style.color]="'#3f51b5'" >created by {{taskSelected.user['name']}}</h5>
                 </div>
                 <div fxLayout.gt-xs="row" fxLayout.xs="column">
                     <div fxLayout="column">
@@ -17,7 +17,7 @@
                                 Description :
                             </h5>
                             <p>
-                                {{eventSelected.description}}
+                                {{taskSelected.description}}
                             </p>
                         </div>
                         <div class="category-div">
@@ -25,7 +25,7 @@
                                 Participants:
                             </h5>
                             <ul>
-                                <li *ngFor="let participant of eventSelected.participants" role="listitem">{{participant.name}}</li>
+                                <li *ngFor="let participant of taskSelected.participants" role="listitem">{{participant.name}}</li>
                             </ul>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                                Start date:
                            </h5>
                            <p>
-                               {{eventSelected.startDate | date : 'dd/MM/yyyy' }} 
+                               {{taskSelected.startDate | date : 'dd/MM/yyyy' }} 
                            </p>
                        </div>
                         <div fxLayout="column" fxLayoutAlign="center" >
@@ -43,7 +43,7 @@
                                 End Date:
                             </h5> 
                             <p>
-                                {{eventSelected.endDate | date : 'dd/MM/yyyy'}}
+                                {{taskSelected.endDate | date : 'dd/MM/yyyy'}}
                             </p>
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                                 Recursive:
                             </h5> 
                             <p>
-                                {{eventSelected.recursive}}
+                                {{taskSelected.recursive}}
                             </p>
                         </div>
                         <div class="category-div" >
@@ -61,7 +61,7 @@
                                 Time : 
                             </h5>
                             <p>
-                                {{eventSelected.startTime}} - {{eventSelected.endTime}}
+                                {{taskSelected.startTime}} - {{taskSelected.endTime}}
                             </p>
                         </div>
                     </div>

@@ -5,7 +5,7 @@ export class Day {
             this.date = date.getTime();
             
          }
-  events:any[] =[]
+  tasks:any[] =[]
   
   date:number
   

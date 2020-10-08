@@ -1,8 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ɵConsole } from '@angular/core';
+import { Component,  Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { User } from '../../models/user.model';
 import { Project } from '../../models/project.model';
 import { OOService } from '../../../library/providers/objects-operations.service';
-import { timer } from 'rxjs';
+
 
 @Component({
   selector: 'app-project-dialog',

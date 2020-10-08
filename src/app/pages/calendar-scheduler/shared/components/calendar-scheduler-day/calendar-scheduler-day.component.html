@@ -1,46 +1,72 @@
 
 
 <div>
-    <div fxShow.gt-xs fxHide.xs [style.margin]="'10px'" fxLayout="column">
-        <div fxLayout="row">
-            <mat-card fxFlex='90' [style.width]="calculateCardWidth()" class="card-hour" *ngFor="let hour of hours">
-                    {{hour.date | date : 'H'}}
-            </mat-card>
-            <div [style.margin]="'10px'" fxFlex="10"></div>
-        </div>
-        <div  fxLayout="row">
-            <mat-card fxFlex="90"  #cardHour [style.width]="calculateCardWidth()"class="card-hour" *ngFor="let hour of hours">
-                <div  [style.width.%]="'100'" fxLayout="column">
-                    <div  [style.margin-bottom]="'10px'" [style.margin-top]="'10px'" #eventDiv class="div-event" [ngClass]="{'': hasEvent(eventDiv,event,hour,'regular')}" *ngFor="let event of events"></div>
+
+    <div  fxLayout="row"  fxShow.gt-xs fxHide.xs>
+        <div   fxFlex="5"  fxLayout="column" >
+            <mat-card  [ngClass]="{'card-selected-day':isDaySelected(day)}" [style.height]="'80px'" fxLayout="column"
+                *ngFor="let day of week; let i = index">
+                <div>
+                    <a (click)="selectDate(day)">{{day | date: 'E, d'}}</a>
                 </div>
             </mat-card>
-            <div [style.background-color]="'#ffffff'" [style.margin]="'10px'" fxFlex="10">
-                <div [style.width.%]="100"  [style.margin-bottom]="'10px'" [style.height]="'20px'" *ngFor="let event of events">
-                <a  [matMenuTriggerFor]="menu" class="a-event-toggle">{{event.event.name}}</a>
-                <mat-menu #menu="matMenu">
-                     <button (click)="checkEvent.emit(event.event._id)" mat-menu-item>View details</button>
-                    <div [matTooltip]="eventsService.editionBanned(event.event) ? 'The event can not be edited because already started': null">
-                        <button #btnEdit  [disabled]="!event.event.editable" (click)="putEvent.emit(event.event._id)" mat-menu-item>Edit</button>
+        </div>
+        <div fxFlex.gt-xs="90"  [style.margin]="'10px'" fxLayout="column">
+            <div fxLayout="row">
+                <mat-card fxFlex='90' [style.width]="calculateCardWidth()" class="card-hour" *ngFor="let hour of hours">
+                        {{hour.date | date : 'H'}}
+                </mat-card>
+                <div [style.margin]="'10px'" fxFlex="10"></div>
+            </div>
+            <div  fxLayout="row">
+                <mat-card fxFlex="90"  #cardHour [style.width]="calculateCardWidth()"class="card-hour" *ngFor="let hour of hours">
+                    <div  [style.width.%]="'100'" fxLayout="column">
+                        <div  [style.margin-bottom]="'10px'" [style.margin-top]="'10px'" #taskDiv class="div-task" [ngClass]="{'': taskRender(taskDiv,task,hour,'regular')}" *ngFor="let task of tasks"></div>
                     </div>
-                </mat-menu>
+                </mat-card>
+                <div [style.background-color]="'#ffffff'" [style.margin]="'10px'" fxFlex="10">
+                    <div [style.width.%]="100"  [style.margin-bottom]="'10px'" [style.height]="'20px'" *ngFor="let task of tasks">
+                    <a  [matMenuTriggerFor]="menu" class="a-task-toggle">{{task.task.name}}</a>
+                    <mat-menu #menu="matMenu">
+                         <button (click)="checkTask.emit(task.task._id)" mat-menu-item>View details</button>
+                        <div [matTooltip]="tasksService.editionBanned(task.task) ? 'The task can not be edited because already started': null">
+                            <button #btnEdit  [disabled]="!task.task.editable" (click)="putTask.emit(task.task._id)" mat-menu-item>Edit</button>
+                        </div>
+                    </mat-menu>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div  fxHide.gt-xs fxShow.xs  fxLayout="row">
-        <div fxLayout="column">
-        <mat-card [style.height]="'30px'" class="card-hour" *ngFor="let hour of hours">
-            {{hour.date | date : 'H'}}
-        </mat-card>
+    <div fxHide.gt-xs fxShow.xs fxLayout="column">
+        <div fxFlex="10"  fxLayout="row">
+            <mat-card class="card-week-day"  [ngClass]="{'card-selected-day':isDaySelected(day)}" [style.height]="'20px'" fxLayout="column"
+                *ngFor="let day of week; let i = index">
+                <div>
+                    <a (click)="selectDate(day)">{{day | date: 'd'}}</a>
+                </div>
+            </mat-card>
         </div>
-        <div class="div-scrollable-events"  fxLayout="column">
-        <mat-card  #cardHour fxLayout="row" [style.height]="'20px'" class="card-hour"  *ngFor="let hour of hours">
-            <div  fxLayout="row">
-                <div [style.margin-left.px]="'10'" [style.width.px]="20" [matTooltip]="event.event.name" (click)="checkEvent.emit(event.event._id)" #eventDiv
-                    [ngClass]="{'': hasEvent(eventDiv,event,hour,'small')}" *ngFor="let event of events"></div>
+        <div fxLayoutGap="10px" [style.margin-left]="'15px'" [style.height]="'20px'" fxLayout="row">
+            <div [style.width]="'15px'"  *ngFor="let task of tasks">
+                <mat-icon  (click)="checkTask.emit(task.task._id)">remove_red_eye</mat-icon>
             </div>
-        </mat-card>
+        </div>
+        <div fxFlex="90"  fxHide.gt-xs fxShow.xs  fxLayout="row">
+            <div fxLayout="column">
+            <mat-card [style.height]="'25px'" class="card-hour" *ngFor="let hour of hours">
+                {{hour.date | date : 'H'}}
+            </mat-card>
+            </div>
+            <div class="div-scrollable-tasks"  fxLayout="column">
+            <mat-card  #cardHour fxLayout="row" [style.height]="'25px'" class="card-hour"  *ngFor="let hour of hours">
+                <div fxLayoutGap="10px" fxLayout="row">
+                    <div [matTooltip]="task.task.name" [style.width]="'15px'"  #taskDiv
+                        [ngClass]="{'': taskRender(taskDiv,task,hour,'small')}" *ngFor="let task of tasks"></div>
+                </div>
+            </mat-card>
+            </div>
         </div>
     </div>
 </div>

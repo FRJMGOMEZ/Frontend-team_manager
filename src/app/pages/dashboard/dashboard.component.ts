@@ -13,7 +13,7 @@ import { NotificationService } from '../../shared/providers/notification.service
 export class DashboardComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   displayedColumns =
-    [ 'name', 'administrators', 'participants', 'messagesNum', 'tasksNum', 'status'];
+    [ 'name', 'administrators', 'participants', 'messagesNum', 'eventsNum', 'status'];
   dataSource = new MatTableDataSource<Project>([]);
 
   constructor(private notificationService:NotificationService) {}

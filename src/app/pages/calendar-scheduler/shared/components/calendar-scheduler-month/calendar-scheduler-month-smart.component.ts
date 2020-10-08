@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Day } from '../../../../../shared/models/day.model';
 import { ArrayOperationsService } from '../../../../../library/providers/array-operations.service';
-import { EventModel } from '../../../../../shared/models/event.model';
-import { EventsService } from '../../../../../shared/providers/events.service';
 import { Subscription, timer } from 'rxjs';
 import { DialogsService } from '../../../../../shared/providers/dialogs.service';
+import { TaskService } from '../../../../../shared/providers/task.service';
+import { TaskModel } from '../../../../../shared/models/task.model';
 
 
 @Component({
@@ -14,10 +14,10 @@ import { DialogsService } from '../../../../../shared/providers/dialogs.service'
     <app-calendar-scheduler-month 
     [dayRows]="dayRows" 
     [selectedDate]="selectedDate" 
-    (checkEvent)="dialogsService.openEventInfoDialog($event)" 
-    (putEvent)="dialogsService.openEditCreateEventDialog($event)" 
-    (deleteEvent)="eventsService.deleteEvent($event).subscribe()" 
-    (checkEvents)="dialogsService.openEventsListInfoDialog($event)"> 
+    (checkTask)="dialogsService.openTaskInfoDialog($event)" 
+    (putTask)="dialogsService.openEditCreateTaskDialog($event)" 
+    (deleteTask)="taskService.deleteTask($event).subscribe()" 
+    (checkTasks)="dialogsService.openTasksListInfoDialog($event)"> 
     </app-calendar-scheduler-month>
     
     `,
@@ -27,32 +27,32 @@ export class CalendarSchedulerMonthSmartComponent implements OnInit, OnDestroy, 
 
     @Input() selectedDate: Date = new Date()
     dayRows: any[];
-    eventsSubscription: Subscription
+    taskSubscription: Subscription
     projectSelectionSubs: Subscription
     @Input() selectedProject: string
     timeRange: number[]
     days: Day[]
     constructor(private arrayOperationsService: ArrayOperationsService,
-        public eventsService: EventsService,
+        public taskService: TaskService,
         public dialogsService: DialogsService,
         private cdr: ChangeDetectorRef) { }
     ngOnInit(): void {
         this.setRangeAndDays().then(() => {
-            this.getEvents();
+            this.getTasks();
         })
-        this.eventsSubscription = this.eventsService.event$.subscribe((data:{event:EventModel,action:string}) => {
+        this.taskSubscription = this.taskService.task$.subscribe((data:{task:TaskModel,action:string}) => {
             switch (data.action) {
                 case 'POST':
-                    this.insertEvent(data.event)
+                    this.insertTask(data.task)
                     break;
                 case 'PUT':
                     console.log('to update')
-                    this.removeEvent(data.event)
-                    this.insertEvent(data.event)
+                    this.removeTask(data.task)
+                    this.insertTask(data.task)
                     break;
                 case 'DELETE':
                     console.log('to delete')
-                    this.removeEvent(data.event)
+                    this.removeTask(data.task)
                     break;
             }
             this.dayRows = [...this.dayRows]
@@ -62,25 +62,25 @@ export class CalendarSchedulerMonthSmartComponent implements OnInit, OnDestroy, 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.selectedDate && !changes.selectedDate.firstChange) {
             this.setRangeAndDays().then(() => {
-                this.getEvents();
+                this.getTasks();
             })
         }
         if (changes.selectedProject && !changes.selectedProject.firstChange) {
-            this.getEvents()
+            this.getTasks()
         }
     }
 
-    insertEvent(event:EventModel){
+    insertTask(task:TaskModel){
         this.dayRows.forEach((row, ind) => {
             row.forEach((eachDay: Day, index) => {
-                let project = (event.project as any)._id ? (event.project as any)._id : event.project
-                if ((eachDay.date >= event.startDate) && (eachDay.date <= event.endDate) && (project === this.selectedProject)) {
-                    if (event.recursive) {
-                        if ((new Date(event.startDate).getDay() === new Date(eachDay.date).getDay())) {
-                            this.dayRows[ind][index].events= [...eachDay.events, event]
+                let project = (task.project as any)._id ? (task.project as any)._id : task.project
+                if ((eachDay.date >= task.startDate) && (eachDay.date <= task.endDate) && (project === this.selectedProject)) {
+                    if (task.recursive) {
+                        if ((new Date(task.startDate).getDay() === new Date(eachDay.date).getDay())) {
+                            this.dayRows[ind][index].tasks= [...eachDay.tasks, task]
                         }
                     } else {
-                        this.dayRows[ind][index].events = [...eachDay.events, event]
+                        this.dayRows[ind][index].tasks = [...eachDay.tasks, task]
                         console.log('need to be included')
                     }
                 }
@@ -88,25 +88,25 @@ export class CalendarSchedulerMonthSmartComponent implements OnInit, OnDestroy, 
         })
     }
 
-    removeEvent(event:EventModel){
+    removeTask(task:TaskModel){
        this.dayRows =[ ...this.dayRows.map((eachRow)=>{
-            return eachRow.map((eachDay:Day)=>{ eachDay.events = eachDay.events.filter((eachEvent:EventModel)=>{  return eachEvent._id != event._id }); return eachDay })
+            return eachRow.map((eachDay:Day)=>{ eachDay.tasks = eachDay.tasks.filter((eachTask:TaskModel)=>{  return eachTask._id != task._id }); return eachDay })
         })]
     }
-    getEvents() {
-        //// search for events in a date range ///
-        this.eventsService.getEventsByTimeRange('month', this.timeRange, this.selectedProject).subscribe((events: EventModel[]) => {
+    getTasks() {
+        //// search for tasks in a date range ///
+        this.taskService.getTasksByTimeRange('month', this.timeRange, this.selectedProject).subscribe((tasks: TaskModel[]) => {
                 this.setRangeAndDays();
                 this.days.forEach((eachDay: Day, index) => {
-                    events.forEach((eachEvent: EventModel) => {
-                    if ((eachDay.date >= eachEvent.startDate) && (eachDay.date <= eachEvent.endDate) && (eachEvent.project === this.selectedProject)) {
-                        if (eachEvent.recursive) {
-                            if ((new Date(eachEvent.startDate).getDay() === new Date(eachDay.date).getDay())) {
-                                eachDay.events = [...eachDay.events,eachEvent]
+                    tasks.forEach((eachTask: TaskModel) => {
+                    if ((eachDay.date >= eachTask.startDate) && (eachDay.date <= eachTask.endDate) && (eachTask.project === this.selectedProject)) {
+                        if (eachTask.recursive) {
+                            if ((new Date(eachTask.startDate).getDay() === new Date(eachDay.date).getDay())) {
+                                eachDay.tasks = [...eachDay.tasks,eachTask]
                                 this.days[index] = { ...eachDay };
                             }
                         } else {
-                            eachDay.events = [...eachDay.events, eachEvent]
+                            eachDay.tasks = [...eachDay.tasks, eachTask]
                             this.days[index] = { ...eachDay };
                         }
                     }
@@ -138,6 +138,6 @@ export class CalendarSchedulerMonthSmartComponent implements OnInit, OnDestroy, 
         return [new Date(date.getFullYear(), date.getMonth(), 1 - firstMonthDay.getDay()).getTime(), new Date(date.getFullYear(), date.getMonth(), monthDays + (6 - lastMonthDay.getDay()), 23, 59, 59, 0).getTime()]
     }
     ngOnDestroy() {
-        this.eventsSubscription.unsubscribe();
+        this.taskSubscription.unsubscribe();
     }
 }

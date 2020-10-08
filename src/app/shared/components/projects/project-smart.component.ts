@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges, ɵConsole } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Project } from '../../models/project.model';
 import { ProjectService } from '../../providers/project.service';
@@ -60,7 +60,6 @@ export class ProjectsSmartComponent implements OnInit {
             }
             this.projectService.selectProject(this.projectSelected)
         }
-
     }
     selectProject(projectId?: string) {
         this.projectService.selectProject(projectId)

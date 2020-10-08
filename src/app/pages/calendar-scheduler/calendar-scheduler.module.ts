@@ -13,8 +13,6 @@ import { CalendarSchedulerDaySmartComponent } from './shared/components/calendar
 import { DirectivesModule } from '../../shared/directives/directives.module';
 import { CalendarSchedulerDateSelectionComponent } from './shared/components/calendar-scheduler-date-selection/calendar-scheduler-date-selection.component';
 import { SharedModule } from '../../shared/shared.module';
-import { CalendarSchedulerWeekComponent } from './shared/components/calendar-scheduler-week/calendar-scheduler-week.component';
-import { CalendarSchedulerWeekSmartComponent } from './shared/components/calendar-scheduler-week/calendar-scheduler-week-smart.component';
 
 
 @NgModule({
@@ -24,9 +22,7 @@ import { CalendarSchedulerWeekSmartComponent } from './shared/components/calenda
     CalendarSchedulerMonthSmartComponent, 
     CalendarSchedulerDayComponent,
     CalendarSchedulerDaySmartComponent,
-    CalendarSchedulerDateSelectionComponent,
-    CalendarSchedulerWeekComponent,
-    CalendarSchedulerWeekSmartComponent],
+    CalendarSchedulerDateSelectionComponent],
   imports: [
     CommonModule,
     FormsModule,

@@ -3,29 +3,29 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { take } from 'rxjs/operators';
 import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 import { User } from '../../models/user.model';
-import { EventModel } from '../../models/event.model';
 import { OOService } from '../../../library/providers/objects-operations.service';
 import { ParseDatePipe } from '../../../library/pipes/parse-date.pipe';
 import { ParseHourPipe } from '../../../library/pipes/parse-hour.pipe';
 import { DateOperationsService } from '../../../library/providers/date-operations.service';
+import { TaskModel } from '../../models/task.model';
 
 @Component({
-  selector: 'app-event-dialog-edition-and-creation',
-  templateUrl: './event-dialog-edition-and-creation.component.html',
-  styleUrls: ['./event-dialog-edition-and-creation.component.scss']
+  selector: 'app-task-dialog-edition-and-creation',
+  templateUrl: './task-dialog-edition-and-creation.component.html',
+  styleUrls: ['./task-dialog-edition-and-creation.component.scss']
 })
-export class EventDialogEditionAndCreationComponent implements OnChanges {
+export class TaskDialogEditionAndCreationComponent implements OnChanges {
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
   panelOpenState: boolean = false;
   @Input() projectParticipants: User[] = []
   @Input() selectedProject: string
-  @Output() postEvent: EventEmitter<EventModel> = new EventEmitter<EventModel>();
-  @Output() putEvent: EventEmitter<{ filters: { [key: string]: any }, id: string }> = new EventEmitter<{ filters: { [key: string]: any }, id: string }>()
+  @Output() postTask: EventEmitter<TaskModel> = new EventEmitter<TaskModel>();
+  @Output() putTask: EventEmitter<{ filters: { [key: string]: any }, id: string }> = new EventEmitter<{ filters: { [key: string]: any }, id: string }>()
   @Output() close:EventEmitter<void> = new EventEmitter<void>()
   @Output() back:EventEmitter<void> = new EventEmitter<void>()
-  dateFilter = (date: Date): boolean => { return (date.getTime() > new Date(this.event.startDate).getTime()) ? this.event.recursive ? (date.getDay() === new Date(this.event.startDate).getDay()) ? true : false : true : false }
-  @Input() event: EventModel
-  eventPristine: EventModel
+  dateFilter = (date: Date): boolean => { return (date.getTime() > new Date(this.task.startDate).getTime()) ? this.task.recursive ? (date.getDay() === new Date(this.task.startDate).getDay()) ? true : false : true : false }
+  @Input() task: TaskModel
+  taskPristine: TaskModel
   today = new Date()
   @Input() prevDialog: string
   customTimepickerTheme: NgxMaterialTimepickerTheme = {
@@ -46,7 +46,7 @@ export class EventDialogEditionAndCreationComponent implements OnChanges {
     }
   };
   ngOnInit(){
-     this.event ={
+     this.task ={
        name:'',
        description:'',
        user:'',
@@ -58,7 +58,6 @@ export class EventDialogEditionAndCreationComponent implements OnChanges {
        allDay:false,
        startTime:null,
        endTime:null,
-       taskEvent:false,
        disabled:false
      }
   }
@@ -66,18 +65,18 @@ export class EventDialogEditionAndCreationComponent implements OnChanges {
   constructor(private _ngZone: NgZone) { }
 
   ngOnChanges(changes:SimpleChanges){
-    if(changes.event && this.event){
-       this.eventPristine = OOService.copyObject(this.event)
+    if(changes.task && this.task){
+       this.taskPristine = OOService.copyObject(this.task)
     }
   }
-  eventHasChanges(): boolean {
-    return OOService.areEquals(this.event, this.eventPristine)
+  taskHasChanges(): boolean {
+    return OOService.areEquals(this.task, this.taskPristine)
   }
   onRecursiveOptChange(recursive: boolean) {
-    recursive ? this.event.endDate = null : null;
+    recursive ? this.task.endDate = null : null;
   }
   allDayOptChange(allDay: boolean) {
-    if (allDay) { this.event.startTime = null; this.event.endTime = null }
+    if (allDay) { this.task.startTime = null; this.task.endTime = null }
   }
   triggerResize() {
     // Wait for changes to be applied, then trigger textarea resize.
@@ -86,24 +85,24 @@ export class EventDialogEditionAndCreationComponent implements OnChanges {
   }
 
   setDate(type: string, value: Date) {
-    type === 'startDate' ? this.event.endDate = null : null;
+    type === 'startDate' ? this.task.endDate = null : null;
     const datePipe = new ParseDatePipe();
-    this.event[type] = datePipe.transform(value, 'miliseconds');
+    this.task[type] = datePipe.transform(value, 'miliseconds');
   }
 
   setTime(type: string, value: string) {
     const timePipe = new ParseHourPipe();
-    this.event[type] = timePipe.transform(value, '24');
+    this.task[type] = timePipe.transform(value, '24');
   }
 
-  checkChangesToPatch(id:string){ 
-    let obj = OOService.getObjectDifferences(this.eventPristine,this.event);
-    return {eventChanges:obj,id:this.event._id}
+  checkChangesToPatch(){ 
+    let obj = OOService.getObjectDifferences(this.taskPristine,this.task);
+    return {taskChanges:obj,id:this.task._id}
   }
 
   startTimeMin(){
     let today = new Date();
-    if( DateOperationsService.dateComparison(new Date(this.today.getFullYear(),this.today.getMonth(),this.today.getDate(),0,0,0,0),new Date(this.event.startDate))){
+    if( DateOperationsService.dateComparison(new Date(this.today.getFullYear(),this.today.getMonth(),this.today.getDate(),0,0,0,0),new Date(this.task.startDate))){
      const  parseHourPipe = new ParseHourPipe();
      let hour = `${today.getHours()}:${today.getMinutes()}`
      let transformed:string = parseHourPipe.transform(hour, 'AM/PM').split(' ').map((val,index)=>{ return index === 1 ? val.toLocaleLowerCase():val }).join(' ')

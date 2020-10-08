@@ -13,13 +13,15 @@ export class CalendarSchedulerDateSelectionComponent implements OnInit {
   @ViewChild('daySelection') daySelection: MatInput
   @ViewChild('yearSelection') yearSelection: MatInput
   @ViewChild('monthSelection') monthSelection: MatSelect
-  @Output() dateSelection:EventEmitter<Date> = new EventEmitter<Date>()
-  @Output() formatSelection: EventEmitter<string> = new EventEmitter<string>()
+  @Output() dateSelection = new EventEmitter<Date>()
+  @Output() formatSelection= new EventEmitter<string>()
   dateFormat: string = 'month'
   @Input()selectedDate: Date
   constructor(private localStorageService: LocalStorageService ) { }
 
   ngOnInit(): void {
+
+    console.log('date initiALIZATION')
     /// set the calendar date //
     this.selectedDate = this.localStorageService.get('state-data', 'date-selected');
     if (!this.selectedDate) {

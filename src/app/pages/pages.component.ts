@@ -2,9 +2,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { WebSocketsService } from '../shared/providers/web-sockets.service';
 import { AuthService } from '../auth/shared/providers/auth.service';
 import { ProjectService } from '../shared/providers/project.service';
-import { EventsService } from '../shared/providers/events.service';
+
 import { Project } from '../shared/models/project.model';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { TaskService } from '../shared/providers/task.service';
 
 @Component({
   selector: 'app-pages',
@@ -16,11 +17,11 @@ export class PagesComponent implements OnInit, OnDestroy {
   projects:Project[]=[]
   constructor(private wSService:WebSocketsService,
                 
-                private projectService:ProjectService,
+                public projectService:ProjectService,
 
                 private authService:AuthService,
                 
-                private eventService:EventsService,
+                private taskService:TaskService,
                 private deviceDetectorService: DeviceDetectorService){ }
   ngOnInit() {
 
@@ -33,7 +34,7 @@ export class PagesComponent implements OnInit, OnDestroy {
       })
 
       this.projectService.listenningProjectSockets()
-      this.eventService.listenningEventSockets();
+      this.taskService.listenningTaskSockets();
     })
   }
   ngOnDestroy(){

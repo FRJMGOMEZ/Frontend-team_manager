@@ -19,13 +19,13 @@ export class ProjectService {
 
   /*  To spread the projects changes  */
   private projectSrc: Subject<{ project: Project, action: string }> = new Subject<{ project: Project, action: string }>();
-
   public project$: Observable<{ project: Project, action: string }> = this.projectSrc.asObservable();
 
   /* To spread projects selected */
   private selectedProjectSrc: Subject<string> = new Subject<string>();
   public selectedProject$: Observable<string> = this.selectedProjectSrc.asObservable();
 
+  public selectedProject:Project
   public projects:Project[]=[]
 
   constructor(private http: HttpClient,
@@ -41,8 +41,7 @@ export class ProjectService {
 
     private dialogRef:MatDialog
     ) {}
-
-
+   
   getProjects() {
     let url = `${URL_SERVICES}projects`
     return this.http.get(url).pipe(
@@ -70,6 +69,7 @@ export class ProjectService {
     )
   }
   selectProject(projectId?: string) {
+      this.selectedProject = this.projects.filter((eachProject:Project)=>{ return eachProject._id === projectId})[0]
       this.localStorageService.set('state-data', projectId, 'project');
       this.selectedProjectSrc.next(projectId);
   }

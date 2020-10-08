@@ -1,13 +1,39 @@
 
 
-mat-expansion-panel{
-  width:100% !important;
+.expansion-panel-pc{
+  z-index: 99999;
+  position: absolute;
+  top:1%;
+  left:30%;
+  right:30%
+}
 
-  mat-form-field{
+.expansion-panel-mobile{
+   z-index: 99999;
+  position: absolute;
+  top:1%;
+  left:15%;
+  right:30%
+}
+
+::ng-deep.mat-expansion-panel-body{
+  padding:0px 0px 0px!important
+}
+
+.mat-expansion-panel-body {
+    padding: 0;
+}
+
+.icon-plus {
+    font-size: 30px;
+}
+
+.mat-form-project{
+  width:200px !important
+}
+
+mat-expansion-panel-header{
+  div{
     width:100% !important
   }
 }
-
-
-
-

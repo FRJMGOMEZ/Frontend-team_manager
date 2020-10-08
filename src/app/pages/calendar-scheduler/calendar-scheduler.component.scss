@@ -33,3 +33,16 @@ mat-card{
     color: #3f51b5;
 }
 
+mat-tab{
+    background-color: black !important;
+    :disabled{
+       button{
+           color:blue
+       }
+    }
+}
+
+::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-disabled {
+  opacity: 1;
+}
+

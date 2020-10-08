@@ -1,23 +1,36 @@
 
 .card-hour{
     padding:0%!important;
+    width:15px
 }
 
-.div-event{
+.div-task{
     height: 10px;
 }
 
-.a-event-toggle{
+.a-task-toggle{
     margin:5px;
     color:#5464bd;
     word-break: break-all;
     max-width: 100%;
 }
 
-.div-scrollable-events {
+.div-scrollable-tasks {
   
     overflow-x:scroll;
-        width:350px;
+        width:300px;
         overflow-y:hidden;
-        margin: auto;
+        margin: 5px;
+
 }
+
+.card-selected-day{
+
+    background-color:#d1870c !important
+}
+
+.card-week-day{
+width: 50px;
+}
+
+

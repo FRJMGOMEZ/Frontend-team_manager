@@ -14,6 +14,9 @@ let pagesRoutes:Routes = [
       },
       {
         path: 'calendar', loadChildren: () => import('./calendar-scheduler/calendar-scheduler.module').then(m => m.CalendarSchedulerModule), canActivate: [CheckTokenGuard]
+      },
+      {
+        path: 'task-manager', loadChildren: () => import('./task-manager/task-manager.module').then(m => m.TaskManagerModule), canActivate: [CheckTokenGuard]
       }
     ]
   }

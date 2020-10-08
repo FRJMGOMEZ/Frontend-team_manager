@@ -9,17 +9,17 @@ import { HeaderSmartComponent } from './components/header/header-smart.component
 import { HeaderComponent } from './components/header/header.component';
 import { ProjectDialogComponent } from './components/project-dialog/project-dialog.component';
 import { ProjectDialogSmartComponent } from './components/project-dialog/project-dialog-smart-component';
-import { EventDialogComponent } from './components/event-dialog/event-dialog.component';
-import { EventDialogSmartComponent } from './components/event-dialog/event-dialog-smart.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { ProjectsSmartComponent } from './components/projects/project-smart.component';
-import { EventDialogEditionAndCreationComponent } from './components/event-dialog-edition-and-creation/event-dialog-edition.component';
-import { EventDialogEditionAndCreationSmartComponent } from './components/event-dialog-edition-and-creation/event-dialog-edition-and-creation-smart.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { LibraryPipesModule } from '../library/pipes/library-pipes.module';
-import { EventsListDialogComponent } from './components/events-list-dialog/events-list-dialog.component';
-import { EventsListDialogSmartComponent } from './components/events-list-dialog/events-list-dialog-smart.component';
 import { NoProjectsComponent } from './components/no-projects/no-projects.component';
+import { TaskDialogComponent } from './components/task-dialog/task-dialog.component';
+import { TaskDialogSmartComponent } from './components/task-dialog/task-dialog-smart.component';
+import { TasksListDialogSmartComponent } from './components/tasks-list-dialog/tasks-list-dialog-smart.component';
+import { TasksListDialogComponent } from './components/tasks-list-dialog/tasks-list-dialog.component';
+import { TaskDialogEditionAndCreationSmartComponent } from './components/task-dialog-edition-and-creation/task-dialog-edition-and-creation-smart.component';
+import { TaskDialogEditionAndCreationComponent } from './components/task-dialog-edition-and-creation/task-dialog-edition-and-creation.component';
 
 @NgModule({
   declarations: [
@@ -27,14 +27,14 @@ import { NoProjectsComponent } from './components/no-projects/no-projects.compon
     HeaderComponent,
     ProjectDialogComponent,
     ProjectDialogSmartComponent,
-    EventDialogComponent,
-    EventDialogSmartComponent,
+    TaskDialogComponent,
+    TaskDialogSmartComponent,
     ProjectsComponent,
     ProjectsSmartComponent,
-    EventDialogEditionAndCreationComponent,
-    EventDialogEditionAndCreationSmartComponent,
-    EventsListDialogSmartComponent,
-    EventsListDialogComponent,
+    TaskDialogEditionAndCreationComponent,
+    TaskDialogEditionAndCreationSmartComponent,
+    TasksListDialogSmartComponent,
+    TasksListDialogComponent,
     NoProjectsComponent
   ],
   imports: [

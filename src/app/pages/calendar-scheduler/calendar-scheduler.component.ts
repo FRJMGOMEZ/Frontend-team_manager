@@ -1,8 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, ViewChild } from '@angular/core';
 import { DialogsService } from '../../shared/providers/dialogs.service';
 import { Subscription } from 'rxjs';
 import { ProjectService } from '../../shared/providers/project.service';
-import { LocalStorageService } from '../../library/providers/local-storage.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
+import { MatTabGroup } from '@angular/material/tabs';
 
 
 @Component({
@@ -13,17 +14,20 @@ import { LocalStorageService } from '../../library/providers/local-storage.servi
 })
 
 export class CalendarSchedulerComponent implements  OnInit, OnDestroy {
+
+  @ViewChild('tabGroup') tabGroup :MatTabGroup
   selectedProject: string | undefined
   dateFormat:string = 'month'
   selectedDate:Date
   selectedProjectSubs:Subscription
- 
   constructor(
-              private dialogsService:DialogsService, 
               private cdr:ChangeDetectorRef, 
               private projectService:ProjectService,
-              private localStorageService:LocalStorageService){}
+              private deviceDetectorService:DeviceDetectorService
+              
+              ){}
   ngOnInit(){
+    this.selectedProject = this.projectService.selectedProject._id;
     this.selectedProjectSubs = this.projectService.selectedProject$.subscribe((project:string) => {
         /// project assignation //
         this.selectedProject = project ;
@@ -31,20 +35,19 @@ export class CalendarSchedulerComponent implements  OnInit, OnDestroy {
         /// trigger change detector //
         this.cdr.detectChanges()
     })
-    if(!this.selectedProject){
-        this.projectService.selectProject(this.localStorageService.get('state-data','project'))
-    }
   }
-  postEvent(){
-    this.dialogsService.openEditCreateEventDialog();
+  isDesktop(){
+    return this.deviceDetectorService.isDesktop();
   }
-
-
   ngOnDestroy(){
     this.selectedProjectSubs.unsubscribe();
   }
   dateSelection(date:Date){
     this.selectedDate = date;
-    this.cdr.detectChanges()
+    this.tabGroup  ? (this.tabGroup.selectedIndex = 1):null;
+  }
+
+  formatSelection(format:string){
+    this.dateFormat = format;
   }
 }

@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, ViewChild, SimpleChanges } from
 import { Project } from '../../models/project.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-projects',
@@ -21,11 +22,15 @@ export class ProjectsComponent  {
   displayedColumns = ['name', 'administrators', 'participants', 'status', 'actions'];
   dataSource = new MatTableDataSource<Project>([])
   @Output() deleteProject: EventEmitter<string> = new EventEmitter<string>();
-  constructor() { }
+  constructor(private deviceDetectorService:DeviceDetectorService) { }
   ngOnChanges(changes: SimpleChanges) {
     if (changes.projects) {
       this.dataSource.data = this.projects;
       this.dataSource.paginator = this.paginator;
     }
   }
+  isDesktop(){
+  return this.deviceDetectorService.isDesktop()
+  }
+
 }

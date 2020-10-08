@@ -1,7 +1,9 @@
-import { Component, Input, ElementRef, Renderer2, SimpleChanges, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { Component, Input, ElementRef, Renderer2, SimpleChanges, ChangeDetectionStrategy, Output, EventEmitter} from '@angular/core';
 import { Hour } from '../../../../../shared/models/hour.model';
-import { EventModel } from '../../../../../shared/models/event.model';
-import { EventsService } from '../../../../../shared/providers/events.service';
+
+import { LocalStorageService } from '../../../../../library/providers/local-storage.service';
+import { TaskModel } from '../../../../../shared/models/task.model';
+import { TaskService } from '../../../../../shared/providers/task.service';
 
 @Component({
   selector: 'app-calendar-scheduler-day',
@@ -11,47 +13,78 @@ import { EventsService } from '../../../../../shared/providers/events.service';
 })
 export class CalendarSchedulerDayComponent {
   @Input() hours: Hour[]
-  @Input() events: { event: EventModel, startDateTime: number, endDateTime: number}[] = [];
+  @Input() tasks: { task: TaskModel, startDateTime: number, endDateTime: number}[] = [];
   @Input() selectedDate: Date
-  eventsRenderized:number = 0;
-  @Output() checkEvent:EventEmitter<string> = new EventEmitter<string>();
-  @Output() putEvent:EventEmitter<string> = new EventEmitter<string>();
-  constructor(private renderer: Renderer2, public eventsService:EventsService) { }
+  tasksRenderized:number = 0;
+  @Output() checkTask = new EventEmitter<string>();
+  @Output() putTask = new EventEmitter<string>();
+  @Output() dateSelection = new EventEmitter<Date>()
+  week:any
+  constructor(private renderer: Renderer2, public tasksService:TaskService,private localStorageService:LocalStorageService) { }
   calculateCardWidth() {
     return `${(window.innerWidth - 20) / this.hours.length}px`;
   }
   ngOnChanges(changes:SimpleChanges){
-    if(changes.events && this.events){
-         this.eventsRenderized = 0;
+    if(changes.tasks && this.tasks){
+         this.tasksRenderized = 0;
+    }
+    if(changes.selectedDate && this.selectedDate){
+      this.week = this.getWeek(this.selectedDate) 
     }
   }
-  hasEvent(eventDiv: ElementRef, event: { event: EventModel, startDateTime: number, endDateTime: number }, hour: Hour, size: 'small' | 'regular') {
-    if ((hour.date + 3600000 > event.startDateTime) && (hour.date < event.endDateTime)  && (this.eventsRenderized<=(this.events.length * this.hours.length)*2) ) {
+  taskRender(taskDiv: ElementRef, task: { task: TaskModel, startDateTime: number, endDateTime: number }, hour: Hour, size: 'small' | 'regular') {
+    if ( this.hasTask(task,hour)  && (this.tasksRenderized<=(this.tasks.length * this.hours.length)*2) ) {
          let percent = 0;
-         if ((((hour.date + 3600000) - event.startDateTime) > 3600000) && ((event.endDateTime - hour.date) > 3600000)) {
+         if ((((hour.date + 3600000) - task.startDateTime) > 3600000) && ((task.endDateTime - hour.date) > 3600000)) {
            percent = 100;
-           this.renderEvent(eventDiv,size,percent)
+           this.renderTask(taskDiv,size,percent)
          } else {
-           if (hour.date - event.startDateTime < 3600000) {
-             percent = Math.ceil(((hour.date + 3600000 - event.startDateTime) * 100) / 3600000);
-             size === "regular" ? this.renderer.setStyle(eventDiv, 'margin-left', `${100 - percent}%`) : this.renderer.setStyle(eventDiv, 'margin-top', `${100 - percent}%`)
-             this.renderEvent(eventDiv, size, percent)
+           if (hour.date - task.startDateTime < 3600000) {
+             percent = Math.ceil(((hour.date + 3600000 - task.startDateTime) * 100) / 3600000);
+             size === "regular" ? this.renderer.setStyle(taskDiv, 'margin-left', `${100 - percent}%`) : this.renderer.setStyle(taskDiv, 'margin-top', `${100 - percent}%`)
+             this.renderTask(taskDiv, size, percent)
            } else {
-             percent = Math.ceil(((event.endDateTime - hour.date) * 100) / 3600000);
-             size === 'regular' ? this.renderer.setStyle(eventDiv, 'margin-right', `${100 - percent}%`) : this.renderer.setStyle(eventDiv, 'margin-bottom', `${100 - percent}%`)
-             this.renderEvent(eventDiv, size, percent)
+             percent = Math.ceil(((task.endDateTime - hour.date) * 100) / 3600000);
+             size === 'regular' ? this.renderer.setStyle(taskDiv, 'margin-right', `${100 - percent}%`) : this.renderer.setStyle(taskDiv, 'margin-bottom', `${100 - percent}%`)
+             this.renderTask(taskDiv, size, percent)
            }
          }
        }
   }
-  renderEvent(eventDiv:ElementRef,size: 'small' | 'regular', percent:number){
-    if (size === 'regular') {
-      this.renderer.setStyle(eventDiv, 'background-color', "#5464bd")
-      this.renderer.setStyle(eventDiv, 'width', `${percent}%`);
-    } else {
-      this.renderer.setStyle(eventDiv, 'background-color', '#5464bd')
-      this.renderer.setStyle(eventDiv, 'height', `${percent}%`);
+
+  hasTask(task: { task: TaskModel, startDateTime: number, endDateTime: number }, hour: Hour){
+    if ((hour.date + 3600000 > task.startDateTime) && (hour.date < task.endDateTime) ){
+      return true
+    }else{
+      return false
     }
-    this.eventsRenderized++
+  }
+
+  renderTask(taskDiv:ElementRef,size: 'small' | 'regular', percent:number){
+    if (size === 'regular') {
+      this.renderer.setStyle(taskDiv, 'background-color', "#5464bd")
+      this.renderer.setStyle(taskDiv, 'width', `${percent}%`);
+    } else {
+      this.renderer.setStyle(taskDiv, 'background-color', '#5464bd')
+      this.renderer.setStyle(taskDiv, 'height', `${percent}%`);
+    }
+    this.tasksRenderized++
+  }
+  getWeek(date: Date) {
+    let week = [];
+    for (let i = -date.getDay(); i < 7 - date.getDay(); i++) {
+      week.push(new Date(date.getFullYear(), date.getMonth(), date.getDate() + i))
+    }
+    return week;
+  }
+
+  isDaySelected(day: Date) {
+    return day.getTime() === this.selectedDate.getTime()
+  }
+
+  selectDate(day) {
+    this.selectedDate = day;
+    this.localStorageService.set('state-data', this.selectedDate, 'date-selected')
+    this.dateSelection.next(this.selectedDate)
   }
 }
