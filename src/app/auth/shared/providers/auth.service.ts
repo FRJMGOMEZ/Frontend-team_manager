@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../../../library/providers/local-storage.service';
-import { PlErrorHandlerService } from '../../../library/providers/pl-error-handler.service';
+import { LpErrorHandlerService } from '../../../library/providers/lp-error-handler.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ import { PlErrorHandlerService } from '../../../library/providers/pl-error-handl
 export class AuthService {
 
   userOnline: User;
-  constructor(private http: HttpClient, private plErrorHandlerService:PlErrorHandlerService, private router: Router, private localStorageService: LocalStorageService) {
+  constructor(private http: HttpClient, private plErrorHandlerService:LpErrorHandlerService, private router: Router, private localStorageService: LocalStorageService) {
     this.uploadFromStorage();
   }
 

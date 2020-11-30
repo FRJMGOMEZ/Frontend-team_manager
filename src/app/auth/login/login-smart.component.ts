@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../shared/providers/auth.service';
 import { Credentials } from '../shared/models/credentials';
-
-
 @Component({
   selector: "app-login-smart",
   template:`

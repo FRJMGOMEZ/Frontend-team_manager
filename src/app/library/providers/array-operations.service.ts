@@ -39,4 +39,66 @@ export class ArrayOperationsService {
     }
     return false;
   }
+
+
+  public static monthValue(month:string | number){
+    let value;
+    if(typeof month === 'string')
+    {
+      switch (month) {
+        case 'january': value = 0;
+          break;
+        case 'february': value = 1;
+          break;
+        case 'march': value = 2;
+          break;
+        case 'april': value = 3;
+          break;
+        case 'may': value = 4;
+          break;
+        case 'june': value = 5;
+          break;
+        case 'july': value = 6;
+          break;
+        case 'august': value = 7;
+          break;
+        case 'september': value = 8;
+          break;
+        case 'october': value = 9;
+          break;
+        case 'november': value = 10;
+          break;
+        case 'december': value = 11;
+          break;
+      }
+    }else{
+      switch (month) {
+        case 0 : value = 'january';
+          break;
+        case 1: value = 'february';
+          break;
+        case 2: value = 'march';
+          break;
+        case 3: value = 'april';
+          break;
+        case 4: value = 'may';
+          break;
+        case 5: value = 'june';
+          break;
+        case 6: value = 'july';
+          break;
+        case 7: value = 'august';
+          break;
+        case 8: value = 'september';
+          break;
+        case 9: value = 'october';
+          break;
+        case 10: value = 'october';
+          break;
+        case 11: value = 'december';
+          break;
+      }
+    }
+    return value.toString();
+  }
 }

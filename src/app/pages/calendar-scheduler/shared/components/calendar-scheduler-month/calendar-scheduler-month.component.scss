@@ -6,7 +6,7 @@ mat-card{
 }
 
 .mat-card-content{
-   height:55px !important
+   height:70px !important
 }
 
 .day-unactive{
@@ -27,14 +27,27 @@ mat-card{
     padding:0px
 }
 
-.task-recursive{
-    color:blue;
-}
-
-
 
 .div-tasks{
     overflow-y: auto;
     height: 35px !important;
 
+}
+
+
+.priority-high{
+    font-size: 25px;
+}
+
+.priority-medium{
+    font-size:20px;
+}
+
+.priority-low{
+    font-size:15px;
+}
+
+
+::ng-deep .mat-tooltip {
+    white-space: pre-line;
 }

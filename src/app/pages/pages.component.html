@@ -3,27 +3,43 @@
 <mat-sidenav-container>
   <mat-sidenav #start [mode]="'side'">
              <mat-list>
-                <mat-list-item matTooltip="navigate to home">
-                   <a  [routerLink]="['/']" routerLinkActive="router-link-active"  routerLinkActive="router-link-active"> <mat-icon color="primary">home</mat-icon></a>
-                </mat-list-item>
                <mat-list-item matTooltip="navigate to calendar">
-                  <a [routerLink]="['calendar']" routerLinkActive="router-link-active"><mat-icon  color="primary">calendar_today</mat-icon></a>
+                  <a [routerLink]="['calendar']" routerLinkActive="router-link-active"><mat-icon  color="accent">calendar_today</mat-icon></a>
                </mat-list-item>
                <mat-list-item matTooltip="navigate to task manager">
                   <a [routerLink]="['task-manager']" routerLinkActive="router-link-active">
-                     <mat-icon color="primary">assignment</mat-icon>
+                     <mat-icon color="accent">assignment</mat-icon>
+                  </a>
+               </mat-list-item>
+               <mat-list-item matTooltip="navigate to charts">
+                  <a [routerLink]="['task-manager']">
+                     <mat-icon  class="icon-pages" color="accent">assessment</mat-icon>
+                  </a>
+               </mat-list-item>
+               <mat-list-item>
+                  <a >
+                     <mat-icon color="accent">share</mat-icon>
+                  </a>
+               </mat-list-item>
+               <mat-list-item>
+                   <a >
+                     <mat-icon color="accent">settings</mat-icon>
+                  </a>
+               </mat-list-item>
+               <mat-list-item>
+                  <a (click)="logout()" >
+                     <mat-icon color="warn" (click)="logout()">exit_to_app</mat-icon>
                   </a>
                </mat-list-item>
              </mat-list>
   </mat-sidenav>
   <mat-sidenav-content>
-
     <app-header-smart (toggleSideMenu)="start.toggle()" >
           <app-projects-smart [projects]="projects" > </app-projects-smart>
     </app-header-smart >
       <div  [ngClass]="{'main-mobile': checkIfIsMobile()}" class="main">
        <div fxLayoutAlign="center" [style.width.%]="'100'" [style.margin-bottom]="'5px'">
-          <button color="accent" [disabled]="!projectService.selectedProject" mat-raised-button> NEW TASK</button>
+          <button (click)="postTask()" color="accent" [disabled]="!projectService.selectedProject" mat-raised-button> NEW TASK</button>
        </div>
          <router-outlet *ngIf="projectService.selectedProject" ></router-outlet>
          <app-no-projects *ngIf="!projectService.selectedProject"></app-no-projects>
@@ -32,15 +48,7 @@
 </mat-sidenav-container>
 
 
-   <mat-toolbar class="pages-toolbar">
+<!--    <mat-toolbar class="pages-toolbar">
       <span>My Application</span>
-   </mat-toolbar>
-
-
-
-
-<!-- 
-
-<p class='fixed-bottom text-center m-0 p-0' style='background:black;color:white'>APP diseñada y desarrollada por FRJMartínez Gómez. Contacta a través de frjmartinezgomez@gmail.com</p>
- -->
+   </mat-toolbar> -->
 

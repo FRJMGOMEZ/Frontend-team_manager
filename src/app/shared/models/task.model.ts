@@ -8,14 +8,13 @@ export class TaskModel {
         public user: string | User,
         public participants: string[] | User[],
         public project: string | Project,
+        public priority:number,
+        public status:boolean,
         public startDate: number,
         public endDate: number,
-        public recursive:boolean,
         public disabled:boolean,
-        public allDay:boolean,
-        public startTime?: string,
-        public endTime?: string,
         public editable?:boolean,
+        public prevStates?: { [key: string]: any }[],
         public _id?: string,
     ) { }
 }

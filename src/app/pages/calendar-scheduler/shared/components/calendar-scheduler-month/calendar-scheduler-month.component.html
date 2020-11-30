@@ -1,7 +1,6 @@
 
 
 
-<div >
     <div fxLayout="row">
         <mat-card fxFlex="14" *ngFor="let label of labels">
             <span fxLayoutAlign="center"  fxHide.xs>
@@ -24,7 +23,7 @@
                                     </div>
                                     <div class="div-tasks" fxShow.gt-xs fxHide.xs>
                                         <ng-container *ngFor="let task of day.tasks" >
-                                            <mat-icon [matMenuTriggerFor]="menuPc" [matTooltip]="task.name" color="primary" class="task" [class.task-recursive]="task.recursive"> trip_origin</mat-icon>
+                                            <mat-icon [matMenuTriggerFor]="menuPc" [matTooltip]="eventTooltip(task)" [matTooltipClass]="'event-tooltip'" [color]="iconColor(task)" [class]="task.priority === 1 ? 'priority-high' : task.priority === 2 ? 'priority-medium': 'priority-low'  " > trip_origin</mat-icon>
                                             <mat-menu #menuPc="matMenu">
                                                 <button (click)="checkTask.emit(task._id)" mat-menu-item>View details</button>
                                                 <div  appIsAdm  [matTooltip]="taskService.editionBanned(task) ? 'The task can not be edited because already started': null">

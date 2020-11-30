@@ -20,6 +20,11 @@ import { TasksListDialogSmartComponent } from './components/tasks-list-dialog/ta
 import { TasksListDialogComponent } from './components/tasks-list-dialog/tasks-list-dialog.component';
 import { TaskDialogEditionAndCreationSmartComponent } from './components/task-dialog-edition-and-creation/task-dialog-edition-and-creation-smart.component';
 import { TaskDialogEditionAndCreationComponent } from './components/task-dialog-edition-and-creation/task-dialog-edition-and-creation.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
+import { PlDirectivesModule } from '../library/directives/pl-directives.module';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { LpDateSelectorModule } from '../library/components/lp-date-selector/lp-date-selector.module';
+
 
 @NgModule({
   declarations: [
@@ -35,7 +40,8 @@ import { TaskDialogEditionAndCreationComponent } from './components/task-dialog-
     TaskDialogEditionAndCreationSmartComponent,
     TasksListDialogSmartComponent,
     TasksListDialogComponent,
-    NoProjectsComponent
+    NoProjectsComponent,
+    NotificationsComponent
   ],
   imports: [
     CommonModule,
@@ -46,8 +52,9 @@ import { TaskDialogEditionAndCreationComponent } from './components/task-dialog-
     ReactiveFormsModule,
     NgxMaterialTimepickerModule,
     LibraryPipesModule,
-    FlexLayoutModule
-  ],
+    FlexLayoutModule,
+    PlDirectivesModule,
+    LpDateSelectorModule],
   exports:[
     HeaderSmartComponent,
     ProjectsSmartComponent,

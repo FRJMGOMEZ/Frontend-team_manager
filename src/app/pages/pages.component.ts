@@ -6,6 +6,7 @@ import { ProjectService } from '../shared/providers/project.service';
 import { Project } from '../shared/models/project.model';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { TaskService } from '../shared/providers/task.service';
+import { DialogsService } from '../shared/providers/dialogs.service';
 
 @Component({
   selector: 'app-pages',
@@ -14,12 +15,16 @@ import { TaskService } from '../shared/providers/task.service';
 })
 export class PagesComponent implements OnInit, OnDestroy {
 
+  
+
   projects:Project[]=[]
   constructor(private wSService:WebSocketsService,
                 
                 public projectService:ProjectService,
 
                 private authService:AuthService,
+
+                private dialogService:DialogsService,
                 
                 private taskService:TaskService,
                 private deviceDetectorService: DeviceDetectorService){ }
@@ -28,20 +33,28 @@ export class PagesComponent implements OnInit, OnDestroy {
     this.wSService.emit('user-in-app', { userId: this.authService.userOnline._id })
     this.projectService.getProjects().subscribe((projects)=>{
       this.projects = projects;
-      
       this.projects.forEach((eachProject:Project)=>{
          this.wSService.emit('user-in-project',{projectId:eachProject._id})
       })
-
       this.projectService.listenningProjectSockets()
       this.taskService.listenningTaskSockets();
     })
   }
-  ngOnDestroy(){
-    this.wSService.emit('user-out-app')
-  }
 
   checkIfIsMobile(){
     return this.deviceDetectorService.isMobile()
+  }
+
+  postTask(){
+    this.dialogService.openEditCreateTaskDialog()
+  }
+
+   logout(){
+     let subs = this.authService.logout().subscribe(() => {
+       subs.unsubscribe()
+     })
+   }
+  ngOnDestroy() {
+    this.wSService.emit('user-out-app')
   }
 }

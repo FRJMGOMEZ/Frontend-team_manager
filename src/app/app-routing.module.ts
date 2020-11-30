@@ -11,7 +11,7 @@ const appRoutes: Routes = [
 
   { path: 'not-page-found', loadChildren: () => import('./not-page-found/not-page-found.module').then(m => m.NotPageFoundModule) },
 
-  { path: '', redirectTo: '/pages/dashboard', pathMatch: 'full' }, 
+  { path: '', redirectTo: '/pages/calendar', pathMatch: 'full' }, 
 
   { path: "**", redirectTo: '/not-page-found', pathMatch: 'full' }
 ];

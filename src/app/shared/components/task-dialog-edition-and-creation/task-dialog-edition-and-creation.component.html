@@ -1,15 +1,15 @@
 
 <mat-dialog-content >
-    <form fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutAlign="space-around" fxLayoutGap.xs="30px" #taskForm="ngForm">
-          <div fxFlex="30" fxLayout="column">
+    <form fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutAlign="space-around" fxLayoutGap="50px" #taskForm="ngForm">
+          <div fxFlex="50" fxLayoutGap="25px" fxLayout="column">
             <div>
                 <mat-icon *ngIf="prevDialog" (click)="back.emit()">keyboard_backspace</mat-icon>
             </div>
-              <mat-form-field fxFlex="50">
+                <mat-form-field>
                         <mat-label>Task name</mat-label>
                         <input [(ngModel)]="task.name" name="name" required matInput>
                 </mat-form-field>
-                <mat-form-field fxFlex="50">
+                <mat-form-field >
                         <mat-label>Description</mat-label>
                         <textarea [(ngModel)]="task.description" name="description" required matInput cdkTextareaAutosize
                             #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
@@ -21,55 +21,45 @@
                             {{participant.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
+                <mat-form-field>
+                    <mat-label fxLayoutAlign="space-between">
+                    <div *ngIf="!priority.errors">
+                        Priority
+                    </div>
+                    <ng-container *ngIf=" priority && priority.touched && priority.errors">
+                      <mat-error *ngIf="priority.errors.isDecimal">The value can not be decimal</mat-error>
+                      <mat-error *ngIf="priority.errors.isNegative">The value can not be negative</mat-error>
+                      <mat-error *ngIf="priority.errors.maxVal">The max value is 3</mat-error>
+                      <mat-error *ngIf="priority.errors.minVal">The min value is 1</mat-error>
+                     </ng-container>
+                    </mat-label>
+                    <input inputNumberValidator #priority="ngModel" [minVal]="1" [maxVal]="3" [allowDecimals]="false" [allowNegativeValues]="false" [(ngModel)]="task.priority" name="priority" type="number" min="1" max="3" required matInput>
+                </mat-form-field>
           </div>
-          <div fxLayout="column" fxFlex.gt-xs="60" fxLayoutGap="25px">
-                <div fxLayoutAlign="center" >
-                    <mat-checkbox (change)="onRecursiveOptChange($event.checked)" [(ngModel)]="task.recursive"
-                        name="recursive" #checkbox class="example-margin">Recursive</mat-checkbox>
-                </div>
-                <div fxLayout="column" fxLayoutAlign="space-around">
-                    <div>
-                        <mat-form-field fxFlex="50" appearance="fill">
-                            <mat-label>Start date</mat-label>
-                            <input [min]="today" required [ngModel]="task.startDate | parseDate : 'date'" name="startDate"
-                                (ngModelChange)="setDate('startDate',$event)" matInput readonly
-                                [matDatepicker]="startDatepicker">
-                            <mat-datepicker-toggle matSuffix [for]="startDatepicker"></mat-datepicker-toggle>
-                            <mat-datepicker #startDatepicker></mat-datepicker>
-                        </mat-form-field>
-                        <mat-form-field fxFlex="50" appearance="fill">
-                            <mat-label>End date</mat-label>
-                            <input required [ngModel]="task.endDate | parseDate : 'date'"
-                                (ngModelChange)="setDate('endDate',$event)" [matDatepickerFilter]="dateFilter"
-                                [disabled]="!task.startDate" name="endDate" matInput [matDatepicker]="endDatepicker">
-                            <mat-datepicker-toggle matSuffix [for]="endDatepicker"></mat-datepicker-toggle>
-                            <mat-datepicker #endDatepicker></mat-datepicker>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div [style.margin-bottom]="'5px'"fxLayoutAlign="center">
-                    <mat-checkbox  (change)="allDayOptChange($event.checked)" [(ngModel)]="task.allDay" name="allDay" #checkbox
-                        class="example-margin">All Day/Days</mat-checkbox>
-                </div>
-                <div *ngIf="!task.allDay" fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center">
-                    <div fxFlex.gt-xs="35" fxLayoutAlign="center">
-                        <input #startTimepickerInput
-                            [ngClass]="{'input-error': taskForm.controls.startTime && taskForm.controls.startTime.touched && taskForm.controls.startTime.errors?.required  }"
-                            required [ngModel]="task.startTime | parseHour : 'AM/PM' " (ngModelChange)="setTime('startTime',$event)"
-                            name="startTime" readonly placeholder="Start time" [min]="startTimeMin()" [ngxTimepicker]="startTimePicker">
-                        <ngx-material-timepicker [theme]="customTimepickerTheme" #startTimePicker>
-                        </ngx-material-timepicker>
-                    </div>
-                    <div fxFlex.gt-xs="35" fxLayoutAlign="center">
-                        <input [ngxTimepicker]="endTimepicker"
-                            [ngClass]="{'input-error': taskForm.controls.endTime && taskForm.controls.endTime.touched && taskForm.controls.endTime.errors?.required  }"
-                            required [disabled]="!task.startTime" [ngModel]="task.endTime | parseHour : 'AM/PM'"
-                            (ngModelChange)="setTime('endTime',$event)" name="endTime" readonly placeholder="End time"
-                            [min]="startTimepickerInput.value ? startTimepickerInput.value : null">
-                        <ngx-material-timepicker [theme]="customTimepickerTheme" #endTimepicker>
-                        </ngx-material-timepicker>
-                    </div>
-                </div>
+          <div fxLayout="column" fxLayoutAlign="space-around" fxFlex.gt-xs="50" fxLayoutGap="25px">
+                            <lp-date-selector
+                             dateFormat="time"
+                             placeholder="Start date" 
+                             (ngModelChange)="setDate('startDate',$event)"
+                             [minDate]="today" 
+                             required 
+                             [ngModel]="task.startDate | parseDate : 'date'" 
+                             name="startDate">
+                            </lp-date-selector>
+                            <lp-date-selector 
+                            dateFormat="time"
+                            [disabled]="!task.startDate"
+                            placeholder="End date"
+                            [ngModel]="task.endDate | parseDate : 'date'"
+                            (ngModelChange)="setDate('endDate',$event)"
+                            [minDate]="task.startDate | parseDate : 'date'"
+                            required
+                            name="endDate" 
+                            id="endDate" >
+                            </lp-date-selector>
+                            <div fxLayout="column">
+                                <div *ngFor="let string of timeString">{{string}}</div>
+                            </div>
             </div>
     </form>
 </mat-dialog-content>

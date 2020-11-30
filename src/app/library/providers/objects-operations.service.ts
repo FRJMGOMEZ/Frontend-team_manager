@@ -3,8 +3,6 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-
-/* Object-operations-service */
 export class OOService {
 
   public static copyObject(object: any) {
@@ -73,11 +71,11 @@ export class OOService {
           }
        })
     })
-    console.log({ differences })
     return differences
   }
 
   public static mergeObjects(initialObj,newObj){
+    initialObj =  this.copyObject(initialObj);
     Object.keys(initialObj).forEach((iKey)=>{
         Object.keys(newObj).forEach((nKey)=>{
               if(iKey === nKey){
@@ -85,6 +83,27 @@ export class OOService {
               }
         })
     })
-    return  OOService.copyObject(initialObj);
+    return  initialObj;
+  }
+
+  public static toQueryString(filters: any): string {
+    let queryString = ''
+    Object.keys(filters).forEach((key) => {
+      if (typeof filters[key] === 'object' && filters[key] !== null && !filters[key].length) {
+        Object.keys(filters[key]).forEach((subKey) => {
+          queryString += filters[key][subKey] && filters[key][subKey] != null ? `${queryString ? '&' : '?'}${subKey}=${filters[key][subKey]}` : ''
+        })
+      } else if (filters[key] != null && Array.isArray(filters[key]) ) {
+        queryString += `${queryString ? '&' : '?'}${key}[]=`
+        let arrayParams = '';
+        filters[key].forEach((filter,i)=>{
+          arrayParams += arrayParams ? `,${filter.toString()}`: `${filter.toString()}`
+        })
+        queryString+= `${arrayParams}` 
+      }else{
+        queryString += filters[key] && filters[key] != null ? `${queryString ? '&' : '?'}${key}=${filters[key]}` : ''
+      }
+    })
+    return queryString
   }
 }

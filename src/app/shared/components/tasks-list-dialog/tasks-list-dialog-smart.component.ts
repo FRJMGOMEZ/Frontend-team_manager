@@ -3,6 +3,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LocalStorageService } from '../../../library/providers/local-storage.service';
 import { TaskModel } from '../../models/task.model';
 import { TaskService } from '../../providers/task.service';
+import { ArrayOperationsService } from '../../../library/providers/array-operations.service';
+import { OOService } from '../../../library/providers/objects-operations.service';
 
 
 @Component({
@@ -33,7 +35,7 @@ export class TasksListDialogSmartComponent implements OnInit {
     }
     getTasks(date){
         let timeRange = [date.getTime(), null]
-        this.taskService.getTasksByTimeRange('day', timeRange, this.selectedProject , date.getTime()).subscribe((tasks:TaskModel[])=>{
+        this.taskService.getTasks('day', OOService.toQueryString({ project: this.selectedProject, from: timeRange[0], to: timeRange[1] }) ).subscribe((tasks:TaskModel[])=>{
             this.tasks = tasks; 
         })
     }

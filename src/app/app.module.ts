@@ -11,10 +11,10 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MaterialModule } from './shared/material/material.module';
 import { SocketIoModule } from 'ngx-socket-io';
 import { environment } from '../environments/environment';
-
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     AppRoutingModule,
@@ -26,7 +26,9 @@ import { environment } from '../environments/environment';
     ReactiveFormsModule,
     MatNativeDateModule,
     MaterialModule,
-    SocketIoModule.forRoot(environment.socketConfig)
+    SocketIoModule.forRoot(environment.socketConfig),
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],
   bootstrap: [AppComponent],

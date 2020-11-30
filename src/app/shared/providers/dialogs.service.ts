@@ -62,6 +62,7 @@ export class DialogsService {
     const projectDialog = new MatDialogConfig();
     projectDialog.disableClose = true;
     projectDialog.autoFocus = true;
+    projectDialog.panelClass = 'custom-dialog-container';
     projectDialog.data = taskId ? prevDialog ? {taskId,prevDialog}: {taskId} : null;
     let dialogRef = this.dialog.open(TaskDialogEditionAndCreationSmartComponent, projectDialog);
     let subs = dialogRef.afterClosed().subscribe((data) => {

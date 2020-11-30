@@ -49,6 +49,7 @@ export class FilesUploaderComponent implements OnInit, ControlValueAccessor, Aft
 
   ngAfterViewInit(){
     this.fileInputController.valueChanges.pipe(skip(1)).subscribe(() => {
+      console.log(this.fileInput)
        let errors = this.fileInputController.control.errors;
         if(errors){
           this.fileUploader.control.setErrors(errors)

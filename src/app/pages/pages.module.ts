@@ -8,8 +8,6 @@ import { MaterialModule } from '../shared/material/material.module';
 import { ChatComponent } from './chat/chat.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-
-
 @NgModule({
   declarations: [
     PagesComponent,

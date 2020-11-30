@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
-import { PlSnackbarNotificationsService } from './pl-snackbar-notifications.service';
+import { LpSnackbarNotificationsService } from './lp-snackbar-notifications.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PlErrorHandlerService {
+export class LpErrorHandlerService {
 
-  constructor(private plSnackbarNotificationsService:PlSnackbarNotificationsService) { }
+  constructor(private plSnackbarNotificationsService:LpSnackbarNotificationsService) { }
   handleError(error: HttpErrorResponse, message?: string) {
 
      let errorMessage = message ? message : error.error.message ? error.error.message : error.message;

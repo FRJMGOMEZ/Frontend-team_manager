@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Injectable({
   providedIn: 'root'
 })
-export class PlSnackbarNotificationsService {
+export class LpSnackbarNotificationsService {
 
   constructor(private _snackBar: MatSnackBar) { }
   showSocketNotification(action: string, item: string, itemType: string, user: string, project?: string,) {

@@ -1,0 +1,15 @@
+
+
+<div fxLayout="column">
+
+    <div [style.height.px]="'350'">
+    messages
+    </div>
+    <ng-content select="selector"></ng-content>
+    <div [style.height.px]="'50'">
+     <mat-form-field class="mat-form-full-width">
+        <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+       </mat-form-field>
+    </div>
+
+</div>

@@ -8,9 +8,10 @@ import { GDService } from '../../library/components/global-dialogs/global-dialog
 import { LocalStorageService } from '../../library/providers/local-storage.service';
 import { WebSocketsService } from './web-sockets.service';
 import { AuthService } from '../../auth/shared/providers/auth.service';
-import { PlSnackbarNotificationsService } from '../../library/providers/pl-snackbar-notifications.service';
 import { MatDialog } from '@angular/material/dialog';
-import { PlErrorHandlerService } from '../../library/providers/pl-error-handler.service';
+import { LpErrorHandlerService } from '../../library/providers/lp-error-handler.service';
+import { LpSnackbarNotificationsService } from '../../library/providers/lp-snackbar-notifications.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -24,12 +25,12 @@ export class ProjectService {
   /* To spread projects selected */
   private selectedProjectSrc: Subject<string> = new Subject<string>();
   public selectedProject$: Observable<string> = this.selectedProjectSrc.asObservable();
-
+  
   public selectedProject:Project
   public projects:Project[]=[]
 
   constructor(private http: HttpClient,
-    private errorHandlerService: PlErrorHandlerService,
+    private errorHandlerService: LpErrorHandlerService,
     private gdService: GDService,
     private localStorageService: LocalStorageService,
 
@@ -37,7 +38,7 @@ export class ProjectService {
 
     private authService: AuthService,
 
-    private plSnackbarNotificationsService:PlSnackbarNotificationsService,
+    private plSnackbarNotificationsService:LpSnackbarNotificationsService,
 
     private dialogRef:MatDialog
     ) {}
@@ -163,5 +164,12 @@ export class ProjectService {
         this.dialogRef.closeAll()
       }
     })
+  }
+  isUserAdm(userId:string,projectId:string){
+     let project = this.projects.find((eachP)=>{ return eachP._id === projectId});
+     if(project){
+        return (project.participants as string[]).includes(userId) ? true : false;
+     }
+     return false
   }
 }

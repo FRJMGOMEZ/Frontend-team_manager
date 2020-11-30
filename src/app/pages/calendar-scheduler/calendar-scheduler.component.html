@@ -1,19 +1,37 @@
 <div fxLayout="column" [style.width.%]="'100'">
-                <div fxLayout.gt-xs="row" fxLayout.xs="column">
-                    <app-calendar-scheduler-date-selection [selectedDate]="selectedDate" fxFlex='66' (dateSelection)="dateSelection($event)"
-                        (formatSelection)="formatSelection($event)"></app-calendar-scheduler-date-selection>
-                        <div fxFlex="33" fxLayoutAlign="center">
-                            <h2 class="date-label" *ngIf="dateFormat === 'month'"> {{selectedDate | date : 'MMMM yyyy'}} </h2>
-                            <h2 class="date-label" *ngIf=" dateFormat === 'week' "> {{selectedDate | date : ' EEEE d MMMM yyyy'}} </h2>
-                        </div>
-                </div>
-                <div>
-                    <app-calendar-scheduler-month-smart *ngIf="dateFormat === 'month'" [selectedDate]="selectedDate"
-                        [selectedProject]="selectedProject"></app-calendar-scheduler-month-smart>
+  <div fxLayout.gt-xs="row" fxLayout.xs="column">
+      <div fxLayoutAlign="center" fxFlex='66'>
+        <lp-date-selector [label]=" dateFormat === 'day' ? 'selected a date' : ''" [dateFormat]="dateFormat" [ngModel]="selectionDate" (ngModelChange)="dateSelection($event)"
+          (formatSelection)="formatSelection($event)"></lp-date-selector>
+        <div fxLayoutAlign="center">
+          <button [disabled]="setSearchBtnDisabled()" (click)="searchByDate()" class="btn-search" mat-mini-fab color="accent" aria-label="Example icon button with a bookmark icon">
+                  <mat-icon>search</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div fxFlex='50' [style.margin-top]="'15px'" fxLayoutAlign="center">
+            <div fxLayout="row">
+                <button class="format-btn" [color]="dateFormat === 'month' ? 'primary': ''" (click)="setFormat('month')"
+                    mat-raised-button>MONTH</button>
+                <button class="format-btn" [color]="dateFormat === 'day' ? 'primary': ''" (click)="setFormat('day')"
+                    mat-raised-button>DAY / WEEK</button>
+              </div>
+      </div>
+      <div fxFlex="33" fxLayoutAlign="center">
+              <h2 class="date-label" *ngIf="dateFormat === 'month'"> {{selectedDate | date : 'MMMM yyyy'}} </h2>
+              <h2 class="date-label" *ngIf=" dateFormat === 'day' "> {{selectedDate | date : ' EEEE d MMMM yyyy'}} </h2>
+      </div>
+  </div>
+  <div fxHide.xs  fxLayoutAlign="flex-end">
+    <mat-icon color="accent" (click)="openInfo()">info</mat-icon>
+  </div>
+  <div>
+      <app-calendar-scheduler-month-smart *ngIf="dateFormat === 'month'" [selectedDate]="selectedDate"
+          [selectedProject]="selectedProject"></app-calendar-scheduler-month-smart>
                     
-                     <app-calendar-scheduler-day-smart *ngIf=" dateFormat === 'week' "  [selectedDate]="selectedDate"
-                            [hoursRange]="{start:7,end:24}" [selectedProject]="selectedProject" (dateSelection)="dateSelection($event)"></app-calendar-scheduler-day-smart>
-                </div>
+        <app-calendar-scheduler-day-smart *ngIf=" dateFormat === 'day' "  [selectedDate]="selectedDate"
+              [hoursRange]="{start:7,end:24}" [selectedProject]="selectedProject" (dateSelection)="dateSelection($event)"></app-calendar-scheduler-day-smart>
+  </div>
 </div>
 
 

@@ -10,9 +10,6 @@ let pagesRoutes:Routes = [
     path:'',component:PagesComponent,
     children:[
       {
-        path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),canActivate:[CheckTokenGuard]
-      },
-      {
         path: 'calendar', loadChildren: () => import('./calendar-scheduler/calendar-scheduler.module').then(m => m.CalendarSchedulerModule), canActivate: [CheckTokenGuard]
       },
       {

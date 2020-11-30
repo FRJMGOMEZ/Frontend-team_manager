@@ -11,8 +11,10 @@ import { CalendarSchedulerMonthSmartComponent } from './shared/components/calend
 import { CalendarSchedulerDayComponent } from './shared/components/calendar-scheduler-day/calendar-scheduler-day.component';
 import { CalendarSchedulerDaySmartComponent } from './shared/components/calendar-scheduler-day/calendar-scheduler-day-smart.component';
 import { DirectivesModule } from '../../shared/directives/directives.module';
-import { CalendarSchedulerDateSelectionComponent } from './shared/components/calendar-scheduler-date-selection/calendar-scheduler-date-selection.component';
 import { SharedModule } from '../../shared/shared.module';
+import { CalendarSchedulerDayInfoComponent } from './shared/components/calendar-scheduler-day-info/calendar-scheduler-day-info.component';
+import { CalendarSchedulerMonthInfoComponent } from './shared/components/calendar-scheduler-month-info/calendar-scheduler-month-info.component';
+import { LpDateSelectorModule } from '../../library/components/lp-date-selector/lp-date-selector.module';
 
 
 @NgModule({
@@ -22,7 +24,8 @@ import { SharedModule } from '../../shared/shared.module';
     CalendarSchedulerMonthSmartComponent, 
     CalendarSchedulerDayComponent,
     CalendarSchedulerDaySmartComponent,
-    CalendarSchedulerDateSelectionComponent],
+    CalendarSchedulerDayInfoComponent,
+    CalendarSchedulerMonthInfoComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -31,7 +34,8 @@ import { SharedModule } from '../../shared/shared.module';
     MaterialModule,
     LibraryPipesModule,
     DirectivesModule,
-    SharedModule
+    SharedModule,
+    LpDateSelectorModule
   ],
   exports: []
 })

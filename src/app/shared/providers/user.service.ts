@@ -6,8 +6,8 @@ import { User } from '../../shared/models/user.model'
 import { Observable,Subject } from 'rxjs';
 import { AuthService } from '../../auth/shared/providers/auth.service';
 import { LocalStorageService } from '../../library/providers/local-storage.service';
-import { PlErrorHandlerService } from '../../library/providers/pl-error-handler.service';
 import { GDService } from '../../library/components/global-dialogs/global-dialogs.service';
+import { LpErrorHandlerService } from '../../library/providers/lp-error-handler.service';
 
 
 @Injectable({
@@ -20,7 +20,7 @@ export class UserServices {
    user$: Observable < {user: User, order: string}> = this.userSrc.asObservable();
    constructor(private http: HttpClient,
                private authService:AuthService,
-               private errorHandlerService: PlErrorHandlerService,
+               private errorHandlerService: LpErrorHandlerService,
                private localStorageService:LocalStorageService,
                private gDService:GDService
                

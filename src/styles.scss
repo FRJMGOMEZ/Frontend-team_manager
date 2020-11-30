@@ -2,6 +2,7 @@
 * Generated theme by Material Theme Generator
 * https://materialtheme.arcsine.dev
 */
+@import "~ng-pick-datetime/assets/style/picker.min.css";
 
 @import '~@angular/material/theming';
 // Include the common styles for Angular Material. We include this here so that you only
@@ -255,7 +256,7 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
 }
 
 html, body { 
-  font-size:14px;
+  font-size:12px;
   height: 100%;
   width:100%;
   margin:0; 
@@ -277,61 +278,6 @@ html, body {
 mat-icon{
   cursor: pointer;
 }
-
-
-
-
-/* @media (min-height: 694px) and(min-width: 1450px)  {
-    * {
-    font-size:calc(1.10* 14px);
-}
-  
-}
-
-@media (min-height: 781px)and(min-width: 1650px) {
-   * {
-    font-size:calc(1.25* 14px);
-}
-  
-}
-
-@media (min-height: 833px)and(min-width: 1700px) {
-  * {
-    font-size:calc(1.35* 14px);
-}
-  
-}
-
-@media (min-height: 937px)and(min-width: 2000px) {
-  * {
-    font-size:calc(1.50* 14px);
-}
- 
-}
-
-@media (min-height:1250px)and(min-width: 2600px) {
-  * {
-    font-size:calc(2* 14px);
-}
- 
-}
-
-@media (min-height: 1875px)and(min-width: 3900px) {
-   * {
-    font-size:calc(3* 14px);
-}
-  
-}
-
-@media (min-height: 2500px)and(min-width: 5300px) {
-  * {
-    font-size:calc(3.90* 14px);
-}
-  
-} */
-
-
-
 
 button {
     cursor: pointer;
@@ -364,6 +310,11 @@ i{
 
 a{
   cursor: pointer;
+}
+
+
+.mat-form-full-width{
+  width: 100%;
 }
 
 

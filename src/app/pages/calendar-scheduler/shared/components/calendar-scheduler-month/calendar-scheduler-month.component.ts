@@ -1,9 +1,9 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { Day } from '../../../../../shared/models/day.model';
 import { TaskService } from '../../../../../shared/providers/task.service';
-
-
-
+import { TaskModel } from '../../../../../shared/models/task.model';
+import { formatDate } from '@angular/common';
+import { LOCALE_ID } from '@angular/core';
 @Component({
   selector: 'app-calendar-scheduler-month',
   templateUrl: './calendar-scheduler-month.component.html',
@@ -20,7 +20,7 @@ export class CalendarSchedulerMonthComponent {
   @Output() checkTasks = new EventEmitter<number>()
   @Output() deleteTask = new EventEmitter<string>();
   @Input() selectedProject:string
-  constructor(public taskService:TaskService) { }
+  constructor(public taskService: TaskService, @Inject(LOCALE_ID) private locale: string) { }
   getDayOfWeek(row: Day[], weekDay: number) {
     let day = row.filter((day) => { return new Date(day.date).getDay() === weekDay })[0];
     let date = day ? new Date(day.date) : null;
@@ -32,11 +32,29 @@ export class CalendarSchedulerMonthComponent {
     let today = new Date();
     return new Date(date).getTime() < new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0, 0).getTime()
   }
+  iconColor(task:TaskModel){
+     let today = new Date();
 
-  ngOnChanges(changes:SimpleChanges){
+     /// one day lapso ///
+    let lapso = 86400000;
 
-    console.log(changes.dayRows)
+    if(task.status){
+      return 'green'
+    }
 
+    if (task.endDate>today.getTime()){
+      if (task.endDate > today.getTime() + lapso) {
+          return 'primary'
+      } else {
+        return 'accent'
+      }
+    }else{
+      return 'warn'
+    }
+  }
+
+  eventTooltip(task:TaskModel){
+    return `${task.name} \n START:${formatDate(new Date(task.startDate), 'M/d/yy, h:mm a', this.locale)} \n END:${formatDate(new Date(task.endDate), 'M/d/yy, h:mm a', this.locale)} `
   }
 
 }
