@@ -3,7 +3,6 @@ import { URL_SERVICES } from '../../config/config';
 import { Subject } from 'rxjs';
 import { HttpClient} from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { FileOrder, FileModel } from '../models/file.model';
 
 
 @Injectable({
@@ -11,8 +10,8 @@ import { FileOrder, FileModel } from '../models/file.model';
 })
 export class FilesService {
 
-  public fileSource = new Subject<FileOrder>();
-  public files$ = this.fileSource.asObservable();
+/*   public fileSource = new Subject<FileOrder>(); */
+/*   public files$ = this.fileSource.asObservable(); */
 
   textFormats: string[] = ['pdf'];
 
@@ -20,7 +19,7 @@ export class FilesService {
   constructor(private zone:NgZone,
               private http:HttpClient) {}
 
-  uploadFile(file: File, download:boolean=false) {
+  /* uploadFile(file: File, download:boolean=false) {
      this.zone.run( ()=>{
        let formData = new FormData();
        let xhr = new XMLHttpRequest();
@@ -44,24 +43,22 @@ export class FilesService {
        xhr.open('PUT', url, true);
        xhr.send(formData)
      })
-  }
+  } */
 
   downloadFile(url:string){
     return this.http.get(url, { observe: 'response', responseType: 'blob' })
   }
 
-  getAwsImg(file:FileModel){
-    let url = `${URL_SERVICES}get-aws-img/${file.name}`;
-    return this.http.get(url).pipe(map((res:any)=>{
-      return res.data
-    }))
+  getAwsImg(fileName:string){
+    let url = `${URL_SERVICES}file/${fileName}`;
+    return this.http.get(url, { responseType: 'blob' })
   }
 
   deleteFile(fileId:string,projectId:string){
     let url = `${URL_SERVICES}deleteFile/${fileId}`;
     return this.http.delete(url).pipe(map((res:any)=>{
-        let fileOrder = new FileOrder(res.file,'delete');
-        this.fileSource.next(fileOrder);
+        /* let fileOrder = new FileOrder(res.file,'delete');
+        this.fileSource.next(fileOrder); */
     }))
   }
 

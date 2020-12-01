@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
-import { URL_SERVICES } from '../config/config';
 import { HttpClient} from '@angular/common/http';
 import {  Message } from '../models/message.model';
 import { map, tap} from 'rxjs/operators';
+import { URL_SERVICES } from '../../config/config';
 
 @Injectable({
     providedIn: 'root'
@@ -15,20 +15,25 @@ export class ChatService {
 
     constructor(private http:HttpClient) {}
 
-    getMessages(projectId: string, from: number, limit: number = 15) {
-        let url = `${URL_SERVICES}messages?projectId=${projectId}&from=${from}&limit=${limit}`;
+    getMessages(taskId: string, from: number, limit: number = 15) {
+        let url = `${URL_SERVICES}messages/${taskId}?from=${from}&limit=${limit}`;
         return this.http.get(url).pipe(map((res: any) => {
+            console.log({res})
             return {
-                count: res.count,
-                messages: res.messages
+                count: res.data.count,
+                messages: res.data.messages
             }
         }))
     }
-    postMessage(message: Message) {
-        let url = `${URL_SERVICES}message`
-        return this.http.post(url, message).pipe(tap((res: any) => {
-            this.messagesSource.next({message:res.message,order:'post'})
-        }))
+    postMessage(message: Message,taskId:string) {
+        message.date = new Date().getTime();
+        let formData: FormData = new FormData();
+        message.files.forEach((f,i)=>{
+            formData.append(i, f, f.name);
+        })
+         Object.keys(message).forEach((k:string)=>{ k != 'files' ? formData.append(k,message[k]) : null})
+        let url = `${URL_SERVICES}message/${taskId}`
+        return this.http.post(url, formData).pipe(map((res:any)=>res.message))
     }
 
     deleteMessage(messageId: string):Observable<any> {

@@ -43,16 +43,16 @@
                              (ngModelChange)="setDate('startDate',$event)"
                              [minDate]="today" 
                              required 
-                             [ngModel]="task.startDate | parseDate : 'date'" 
+                             [ngModel]="task.startDate | lpParseDate : 'date'" 
                              name="startDate">
                             </lp-date-selector>
                             <lp-date-selector 
                             dateFormat="time"
                             [disabled]="!task.startDate"
                             placeholder="End date"
-                            [ngModel]="task.endDate | parseDate : 'date'"
+                            [ngModel]="task.endDate | lpParseDate : 'date'"
                             (ngModelChange)="setDate('endDate',$event)"
-                            [minDate]="task.startDate | parseDate : 'date'"
+                            [minDate]="task.startDate | lpParseDate : 'date'"
                             required
                             name="endDate" 
                             id="endDate" >

@@ -12,7 +12,7 @@ import { ProjectDialogSmartComponent } from './components/project-dialog/project
 import { ProjectsComponent } from './components/projects/projects.component';
 import { ProjectsSmartComponent } from './components/projects/project-smart.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-import { LibraryPipesModule } from '../library/pipes/library-pipes.module';
+
 import { NoProjectsComponent } from './components/no-projects/no-projects.component';
 import { TaskDialogComponent } from './components/task-dialog/task-dialog.component';
 import { TaskDialogSmartComponent } from './components/task-dialog/task-dialog-smart.component';
@@ -24,6 +24,7 @@ import { NotificationsComponent } from './components/notifications/notifications
 import { PlDirectivesModule } from '../library/directives/pl-directives.module';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { LpDateSelectorModule } from '../library/components/lp-date-selector/lp-date-selector.module';
+import { LpPipesModule } from '../library/lp-pipes/lp-pipes.module';
 
 
 @NgModule({
@@ -51,7 +52,7 @@ import { LpDateSelectorModule } from '../library/components/lp-date-selector/lp-
     MaterialModule,
     ReactiveFormsModule,
     NgxMaterialTimepickerModule,
-    LibraryPipesModule,
+    LpPipesModule,
     FlexLayoutModule,
     PlDirectivesModule,
     LpDateSelectorModule],

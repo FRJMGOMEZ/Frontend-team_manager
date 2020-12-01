@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./task-manager-list.component.scss']
 })
 export class TaskManagerListComponent implements OnInit {
-  displayedColumns: string[] = ['name','end date','status','options'];
+  displayedColumns: string[] = ['name','end date','status','priority','options'];
   @Input() dataSource = [];
   @Output() selectTask = new EventEmitter<string>()
   constructor() { }

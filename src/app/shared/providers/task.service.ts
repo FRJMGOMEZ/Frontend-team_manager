@@ -67,7 +67,7 @@ export class TaskService {
     let url = `${URL_SERVICES}tasks/${selector}${querysString}`
     return this.http.get(url).pipe(
       map((res: any) => { return res.tasks }),
-      catchError((err) => { this.gdService.openInfoDialog(err.error.err.message, 'ERROR'); return this.errorHandlerService.handleError(err) }))
+      catchError((err) => { return this.errorHandlerService.handleError(err) }))
   }
 
   deleteTask(taskId: string) {

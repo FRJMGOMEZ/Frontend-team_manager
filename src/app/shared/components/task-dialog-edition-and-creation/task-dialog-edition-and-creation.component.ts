@@ -3,11 +3,12 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { take } from 'rxjs/operators';
 import { User } from '../../models/user.model';
 import { OOService } from '../../../library/providers/objects-operations.service';
-import { ParseDatePipe } from '../../../library/pipes/parse-date.pipe';
-import { ParseHourPipe } from '../../../library/pipes/parse-hour.pipe';
+
 import { DateOperationsService } from '../../../library/providers/date-operations.service';
 import { TaskModel } from '../../models/task.model';
 import { AuthService } from '../../../auth/shared/providers/auth.service';
+import { LpParseDatePipe } from '../../../library/lp-pipes/lp-parse-date.pipe';
+import { LpParseHourPipe } from 'src/app/library/lp-pipes/lp-parse-hour.pipe';
 
 @Component({
   selector: 'app-task-dialog-edition-and-creation',
@@ -66,7 +67,7 @@ export class TaskDialogEditionAndCreationComponent implements OnChanges {
     if(type === 'startDate'){
       this.task.endDate = null;
     }
-    const datePipe = new ParseDatePipe();
+    const datePipe = new LpParseDatePipe();
     this.task[type] = datePipe.transform(value, 'miliseconds');
  }
 
@@ -80,7 +81,7 @@ export class TaskDialogEditionAndCreationComponent implements OnChanges {
   startTimeMin(){
     let now = new Date();
     if( DateOperationsService.dateComparison(new Date(this.today.getFullYear(),this.today.getMonth(),this.today.getDate(),0,0,0,0),new Date(this.task.startDate))){
-     const  parseHourPipe = new ParseHourPipe();
+     const  parseHourPipe = new LpParseHourPipe();
      let hour = `${now.getHours()}:${now.getMinutes()}`
      let transformed:string = parseHourPipe.transform(hour, 'AM/PM').split(' ').map((val,index)=>{ return index === 1 ? val.toLocaleLowerCase():val }).join(' ')
       return hour

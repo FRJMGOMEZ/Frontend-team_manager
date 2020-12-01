@@ -9,6 +9,10 @@ import { LpChatToolsComponent } from './lp-chat-shared/lp-chat-components/lp-cha
 import { LpChatUserParserPipe } from './lp-chat-shared/lp-chat-pipes/lp-chat-user-parser.pipe';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { LpFilesUploaderModule } from '../lp-files-uploader/lp-files-uploader.module';
+import { LpPipesModule } from '../../lp-pipes/lp-pipes.module';
+
 
 @NgModule({
   declarations: [LpChatComponent, LpChatMessagesComponent, LpChatUsersComponent, LpChatToolsComponent,LpChatUserParserPipe, LpChatUserParserPipe],
@@ -17,7 +21,10 @@ import { MatInputModule } from '@angular/material/input';
     MatCardModule,
     FlexLayoutModule,
     MatIconModule,
-    MatInputModule
+    MatInputModule,
+    FormsModule,
+    LpFilesUploaderModule,
+    LpPipesModule
   ],
   exports:[LpChatComponent, LpChatUserParserPipe]
 })

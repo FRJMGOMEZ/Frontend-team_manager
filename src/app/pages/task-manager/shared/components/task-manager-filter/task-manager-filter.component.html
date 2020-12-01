@@ -1,49 +1,58 @@
-<div fxLayout="column">
-   <div fxLayout="row" fxLayoutGap="15px">
-     <mat-form-field fxFlex="33" class="example-full-width">
+
+
+ <div fxLayoutAlign="center">
+   <button  mat-button #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="filtersMenu" mat-mini-fab color="accent"><mat-icon>search</mat-icon></button>
+ </div>
+  <mat-menu #filtersMenu="matMenu">
+  <div (click) = "$event.stopPropagation()" fxLayout="column">
+   <div fxLayout="row" fxLayoutAlign="space-around" fxLayoutGap="15px">
+     <mat-form-field fxFlex="40" class="example-full-width">
       <mat-label>ID</mat-label>
        <input [(ngModel)]="filters._id" matInput placeholder="Task ID">
     </mat-form-field> 
-    <mat-form-field fxFlex="33" class="example-full-width">
+    <mat-form-field fxFlex="40" class="example-full-width">
       <mat-label>Name</mat-label>
        <input [(ngModel)]="filters.name" matInput placeholder="Task name">
-    </mat-form-field> 
-    <div class="dates-container" fxLayout="column" fxLayoutAlign="center" fxFlex="33" >
-      <lp-date-selector (ngModelChange)="setDate($event,'from')" [ngModel]="filters.from | parseDate : 'date'" dateFormat="time" placeholder="Start date"></lp-date-selector>
-      <lp-date-selector (ngModelChange)="setDate($event,'to')" [ngModel]="filters.to | parseDate : 'date'" dateFormat="time" placeholder="End date"></lp-date-selector>
-    </div>
+    </mat-form-field>
    </div>
-   <div fxLayout="row" fxLayoutGap="15px">
-        <mat-form-field fxFlex="33"  appearance="fill">
+   <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="space-around">
+          <mat-form-field fxFlex="40"  appearance="fill">
     <mat-label>Status</mat-label>
-    <mat-select [(ngModel)]="filters.status" matNativeControl required>
+    <mat-select [(ngModel)]="filters.status" matNativeControl >
       <mat-option *ngFor="let status of options.status" [value]="status.value">{{status.label}}</mat-option>
     </mat-select>
   </mat-form-field> 
-   <mat-form-field fxFlex="33" appearance="fill">
-    <mat-label>Select the user creator/editor</mat-label>
-    <mat-select [(ngModel)]="filters.user"  matNativeControl required>
-      <mat-option *ngFor="let user of options.user" [value]="user._id">{{user.name}}</mat-option>
-    </mat-select>
-  </mat-form-field>  
-   </div>
-  <div fxLayout="row" fxLayoutGap="15px">
-   <mat-form-field fxFlex="33" appearance="fill">
-    <mat-label>Select the participants</mat-label>
-    <mat-select [(ngModel)]="filters.participants" multiple matNativeControl required>
-      <mat-option *ngFor="let participant of options.participants" [value]="participant._id">{{participant.name}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field fxFlex="33" appearance="fill">
+   <mat-form-field fxFlex="40" appearance="fill">
     <mat-label>Priority</mat-label>
-    <mat-select [(ngModel)]="filters.priority" matNativeControl required>
+    <mat-select [(ngModel)]="filters.priority" matNativeControl >
       <mat-option *ngFor="let priority of options.priority" [value]="priority.value">{{priority.label}}</mat-option>
     </mat-select>
   </mat-form-field> 
-   <div fxFlex="33" fxLayoutAlign="space-around">
-      <button (click)="searchItems()" class="btn-search"  color="accent" aria-label="Example icon button with a bookmark icon" mat-mini-fab color="accent">
+   </div>
+   <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="space-around">
+   <mat-form-field fxFlex="40" appearance="fill">
+    <mat-label>Creator/editor</mat-label>
+    <mat-select [(ngModel)]="filters.user"  matNativeControl>
+      <mat-option *ngFor="let user of options.user" [value]="user._id">{{user.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>  
+   <mat-form-field fxFlex="40" appearance="fill">
+    <mat-label>Participants</mat-label>
+    <mat-select [(ngModel)]="filters.participants" multiple matNativeControl >
+      <mat-option *ngFor="let participant of options.participants" [value]="participant._id">{{participant.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+   </div>
+  <div fxLayout="row" fxLayoutAlign="space-around" fxLayoutGap="15px">
+    <div class="dates-container" fxLayout="column" fxLayoutAlign="center" fxFlex="40" >
+      <lp-date-selector (ngModelChange)="setDate($event,'from')" [ngModel]="filters.from | lpParseDate : 'date'" dateFormat="time" placeholder="Start date"></lp-date-selector>
+      <lp-date-selector (ngModelChange)="setDate($event,'to')" [ngModel]="filters.to | lpParseDate : 'date'" dateFormat="time" placeholder="End date"></lp-date-selector>
+    </div>
+   <div fxFlex="40" fxLayoutAlign="space-around">
+      <button (click)="searchItems();menuTrigger.closeMenu()" class="btn-search"  color="accent" aria-label="Example icon button with a bookmark icon" mat-mini-fab color="accent">
                   <mat-icon>search</mat-icon>
         </button>
    </div>
   </div>
 </div>
+   </mat-menu>

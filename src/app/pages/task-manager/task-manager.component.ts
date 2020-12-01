@@ -6,7 +6,6 @@ import { TaskService } from '../../shared/providers/task.service';
 import { TaskModel } from '../../shared/models/task.model';
 import { AuthService } from '../../auth/shared/providers/auth.service';
 import { LocalStorageService } from '../../library/providers/local-storage.service';
-
 @Component({
   selector: 'app-task-manager',
   templateUrl: './task-manager.component.html',
@@ -19,7 +18,10 @@ export class TaskManagerComponent implements OnInit {
   userOnline:User
   tasksList:TaskModel[] = [];
   taskSelected:TaskModel
-  constructor(private projectService: ProjectService, private taskService: TaskService, private authService:AuthService, private localStorageService:LocalStorageService) { }
+  constructor(private projectService: ProjectService,
+                private taskService: TaskService,
+                private authService:AuthService,
+                private localStorageService:LocalStorageService) { }
 
   ngOnInit(): void {
     this.userOnline = this.authService.userOnline;
@@ -36,6 +38,7 @@ export class TaskManagerComponent implements OnInit {
     }
     this.getTasks('')
   }
+
   getTasks(queryString:string){
      this.taskService.getTasks('month',queryString).subscribe((tasks:TaskModel[])=>{
         this.tasksList = tasks;

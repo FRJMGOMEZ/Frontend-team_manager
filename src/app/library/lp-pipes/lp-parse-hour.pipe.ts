@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'parseHour'
+  name: 'lpParseHour'
 })
-export class ParseHourPipe implements PipeTransform {
+export class LpParseHourPipe implements PipeTransform {
 
   transform(hour:string, format:string): string {
 

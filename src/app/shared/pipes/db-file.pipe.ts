@@ -16,7 +16,7 @@ export class DbFilePipe implements PipeTransform {
     if (!file) {
       return url = '../../assets/no-image.png'
     } else {
-      if(this.iconsFormats.includes(file.format)){
+      if(this.iconsFormats.includes(file.mimeType)){
         return `${URL_SERVICES}/file/icons/${file.name}`
       }else{
         return `${URL_SERVICES}get-aws-file/${file.name}`

@@ -1,0 +1,21 @@
+
+
+<form #form="ngForm">
+    <input 
+    hidden
+    style="display:none" 
+    #fileInput  
+    #fileInputCtrl="ngModel"
+    ngModel
+    name="files-input"
+    type="file"
+    [multiple]="config.multiple"
+    appFilesUploader
+    [allowedMimeTypes]="config.allowedMimeTypes "
+    [notAllowedMimeTypes]="config.notAllowedMimeTypes"
+    [maxSizeKb]="config.maxSizeKb" 
+    [maxNameLength]="config.maxNameLength"
+    >
+</form>
+
+

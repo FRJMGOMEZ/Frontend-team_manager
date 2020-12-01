@@ -11,9 +11,10 @@ import { TaskManagerFilterComponent } from './shared/components/task-manager-fil
 import { TaskManagerListComponent } from './shared/components/task-manager-list/task-manager-list.component'
 import { LpDateSelectorModule } from '../../library/components/lp-date-selector/lp-date-selector.module';
 import { FormsModule } from '@angular/forms';
-import { LibraryPipesModule } from '../../library/pipes/library-pipes.module';
+
 import { LpChatModule } from '../../library/components/lp-chat/lp-chat.module';
 import { TaskManagerPanelComponent } from './shared/components/task-manager-panel/task-manager-panel.component';
+import { LpPipesModule } from '../../library/lp-pipes/lp-pipes.module';
 
 
 let routes:Routes = [
@@ -37,7 +38,7 @@ let routes:Routes = [
     SharedModule,
     LpDateSelectorModule,
     FormsModule,
-    LibraryPipesModule,
+    LpPipesModule,
     LpChatModule
   ]
 })

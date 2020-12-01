@@ -1,8 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'parseDate'})
-export class ParseDatePipe implements PipeTransform {
+  name: 'lpParseDate'})
+export class LpParseDatePipe implements PipeTransform {
   transform(time: Date | number, to: string): unknown {
     let converted;
     if (time === null) {

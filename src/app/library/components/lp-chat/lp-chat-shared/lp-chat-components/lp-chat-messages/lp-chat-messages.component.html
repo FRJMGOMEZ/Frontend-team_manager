@@ -1,15 +1,16 @@
 
 
 <div fxLayout="column">
-
-    <div [style.height.px]="'350'">
-    messages
+    <div class="div-messages">
+       <mat-card *ngFor="let message of messages">
+           {{message.text}}
+           <img class="file-icon" *ngFor="let file of message.files" [src]=" file | lpFileIcon | async" alt="">
+        </mat-card>
     </div>
-    <ng-content select="selector"></ng-content>
-    <div [style.height.px]="'50'">
+    <lp-chat-tools (files)="setFiles($event)" ></lp-chat-tools>
+    <div>
      <mat-form-field class="mat-form-full-width">
-        <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+        <textarea [(ngModel)]="message.text" matInput (keypress)="sendMessage($event)" ></textarea>
        </mat-form-field>
     </div>
-
 </div>

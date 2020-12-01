@@ -1,6 +1,6 @@
 
 <div *ngIf="taskSelected">
-    <lp-chat [users]="taskSelected.participants | lpChatUserParser" ></lp-chat>
+    <lp-chat (sendMsg)="sendMessage($event)" [messages]="messages" [users]="taskSelected.participants | lpChatUserParser" ></lp-chat>
 </div>
 
 
