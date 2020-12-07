@@ -33,7 +33,6 @@ export class DateOperationsService {
   let end = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), monthDays + (6 - lastMonthDay.getDay()), 23, 59, 59, 0)
   range.start = start;
   range.end = end;
-  console.log({range})
   return range;
 }
 
@@ -59,7 +58,6 @@ export class DateOperationsService {
         }
       }
     }
-   /*  durationString = durationString.reverse().reduce((acum,extract)=>{ acum+=` ${extract}`; return acum },'') */
     return durationString.reverse();
    }
 }

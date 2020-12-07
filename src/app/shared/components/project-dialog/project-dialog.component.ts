@@ -2,8 +2,6 @@ import { Component,  Input, Output, EventEmitter, OnChanges, SimpleChanges } fro
 import { User } from '../../models/user.model';
 import { Project } from '../../models/project.model';
 import { OOService } from '../../../library/providers/objects-operations.service';
-
-
 @Component({
   selector: 'app-project-dialog',
   templateUrl: './project-dialog.component.html',

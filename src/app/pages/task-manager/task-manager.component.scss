@@ -1,5 +1,19 @@
 
 
 .page-container{
-   height: 90%;  
+   height: 90%; 
+   width:100%;
+
+   .div-task-name{
+      background-color:#7b87cc;
+      color:whitesmoke;
+      height: 25px;
+      font-weight: bolder;
+   }
+
+   .div-progress{
+      margin-left:25px;
+     margin-right:25px;
+   margin-bottom: 10px;
+margin-top: 10px;   }
 }

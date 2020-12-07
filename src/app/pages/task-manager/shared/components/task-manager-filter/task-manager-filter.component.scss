@@ -1,8 +1,18 @@
 .dates-container{
     margin:20px
 }
-.btn-search{
-    margin-top:10px
+.btn-search-desktop{
+    margin-bottom: 10px;
+}
+
+.btn-search-mobile{
+    position: absolute;
+    right:80%;
+    top:12%;
+}
+
+.btn-search-dialog{
+      margin-top:25px;
 }
 
  ::ng-deep .mat-menu-panel{

@@ -1,7 +1,14 @@
 
 
  <div fxLayoutAlign="center">
-   <button  mat-button #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="filtersMenu" mat-mini-fab color="accent"><mat-icon>search</mat-icon></button>
+   <button  mat-button 
+            #menuTrigger="matMenuTrigger"
+            [matMenuTriggerFor]="filtersMenu"
+            mat-mini-fab color="accent"
+            ngClass.gt-xs="btn-search-desktop"  
+            ngClass.xs="btn-search-mobile">
+            <mat-icon>search</mat-icon>
+    </button>
  </div>
   <mat-menu #filtersMenu="matMenu">
   <div (click) = "$event.stopPropagation()" fxLayout="column">
@@ -49,7 +56,8 @@
       <lp-date-selector (ngModelChange)="setDate($event,'to')" [ngModel]="filters.to | lpParseDate : 'date'" dateFormat="time" placeholder="End date"></lp-date-selector>
     </div>
    <div fxFlex="40" fxLayoutAlign="space-around">
-      <button (click)="searchItems();menuTrigger.closeMenu()" class="btn-search"  color="accent" aria-label="Example icon button with a bookmark icon" mat-mini-fab color="accent">
+      <button class="btn-search-dialog" (click)="searchItems();menuTrigger.closeMenu()" 
+                mat-mini-fab color="accent">
                   <mat-icon>search</mat-icon>
         </button>
    </div>

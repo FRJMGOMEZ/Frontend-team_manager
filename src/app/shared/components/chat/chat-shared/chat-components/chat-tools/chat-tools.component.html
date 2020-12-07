@@ -1,0 +1,15 @@
+
+
+<mat-card class="card-tools">
+<mat-icon [matTooltip]="filesInfo" color="accent">info</mat-icon>
+<mat-icon color="primary" #filesUploaderTrigger > attach_file</mat-icon>
+ <form action="">
+     <lp-files-uploader
+     #fileUploader="ngModel"
+     ngModel
+     (ngModelChange)="setFiles($event)"
+     name="files" 
+     [trigger]="filesUploaderTrigger._elementRef"
+     [config] ="imgValidationConfig" ></lp-files-uploader>
+ </form>
+</mat-card>

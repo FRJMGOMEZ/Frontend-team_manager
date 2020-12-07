@@ -64,7 +64,7 @@ export class TaskService {
   }
 
   getTasks(selector: string, querysString?:string) {
-    let url = `${URL_SERVICES}tasks/${selector}${querysString}`
+    let url = `${URL_SERVICES}tasks/${selector}${querysString}&`
     return this.http.get(url).pipe(
       map((res: any) => { return res.tasks }),
       catchError((err) => { return this.errorHandlerService.handleError(err) }))
@@ -92,7 +92,18 @@ export class TaskService {
     )
   }
   userInTask(taskId:string){
-   this.wsService.emit('user-in-task',{taskId:taskId})
+    return new Promise((resolve,reject)=>{
+      this.wsService.emit('user-in-task', { taskId: taskId }, (usersOnline: string[]) => {
+        resolve(usersOnline);
+      })
+    })
+  }
+  userOutTask(){
+      this.wsService.emit('user-out-task')
+  }
+
+  usersConnected(){
+    return this.wsService.listen('users-in-task')
   }
   editionBanned(task: TaskModel) {
     let today = new Date();
@@ -110,7 +121,6 @@ export class TaskService {
           const task= notification.item;
           const taskOld = notification.oldItem;
           const user = userFrom as User;
-          console.log({taskOld})
           switch (method) {
             case 'POST':
               if ((task.participants as string[]).includes(this.authService.userOnline._id) || this.projectService.isUserAdm(this.authService.userOnline._id, task.project as string)) {

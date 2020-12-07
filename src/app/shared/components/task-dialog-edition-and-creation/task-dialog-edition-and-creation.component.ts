@@ -74,7 +74,6 @@ export class TaskDialogEditionAndCreationComponent implements OnChanges {
   checkChangesToPatch(){ 
     let obj = OOService.getObjectDifferences(this.taskPristine,this.task);
     obj.user = this.authService.userOnline._id;
-    console.log({obj})
     return {taskChanges:obj,id:this.task._id}
   }
 

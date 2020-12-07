@@ -1,6 +1,7 @@
 import { Component, forwardRef, ElementRef,ViewChild, Input,  AfterViewInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, NgModel, NG_VALIDATORS, Validator } from '@angular/forms';
 import { skip } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 
 @Component({
@@ -40,14 +41,12 @@ export class LpFilesUploaderComponent implements  ControlValueAccessor, AfterVie
    throw new Error('Component needs a trigger')
  }
     this.fileInputController.valueChanges.pipe(skip(1)).subscribe(() => {
-      console.log('eeeeeee')
        let errors = this.fileInputController.control.errors;
-       console.log({errors})
         if(errors){
           this.errors = errors;
+          this.propagateChange(null);
         }else{
           this.errors = null;
-          console.log('out')
           this.propagateChange(this.fileInput.nativeElement.files);
         }
         this.fileInput.nativeElement.files = null;

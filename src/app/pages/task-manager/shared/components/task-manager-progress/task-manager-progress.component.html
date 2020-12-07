@@ -1,0 +1,6 @@
+
+<div fxLayoutGap="10px" fxLayout="row">
+    <div fxLayoutAlign="center" fxFlex="10"> {{taskSelected.startDate | date : 'M/d/yy, h:mm a'}} </div>
+    <mat-progress-bar fxFlex="80" color="accent" mode="determinate" [value]="timelineProgress"></mat-progress-bar>
+    <div fxLayoutAlign="center" fxFlex="10">  {{taskSelected.endDate | date : 'M/d/yy, h:mm a'}} </div>
+</div>

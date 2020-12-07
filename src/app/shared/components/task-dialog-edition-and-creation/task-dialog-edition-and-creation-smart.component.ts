@@ -62,7 +62,6 @@ export class TaskDialogEditionAndCreationSmartComponent {
         }
     }
     postTask(task: TaskModel) {
-        console.log(new Date(task.startDate), new Date(task.endDate))
         this.taskService.postTask(task).subscribe((task: TaskModel) => {
             this.taskSelected = OOService.copyObject(task);
         })

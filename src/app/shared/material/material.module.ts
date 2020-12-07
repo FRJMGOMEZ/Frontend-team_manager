@@ -20,6 +20,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [],
@@ -44,7 +46,9 @@ import { MatRadioModule } from '@angular/material/radio';
     MatSnackBarModule,
     MatTabsModule,
     MatBottomSheetModule,
-    MatRadioModule
+    MatRadioModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule
   ],
   exports:[
     MatInputModule,
@@ -66,7 +70,9 @@ import { MatRadioModule } from '@angular/material/radio';
     MatSnackBarModule,
     MatTabsModule,
     MatBottomSheetModule,
-    MatRadioModule
+    MatRadioModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule
   ]
 })
 export class MaterialModule { }

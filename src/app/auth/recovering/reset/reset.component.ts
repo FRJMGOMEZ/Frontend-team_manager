@@ -29,8 +29,6 @@ export class ResetComponent implements OnInit  {
 
   ngOnInit(){
     this.resetForm.controls.resetCode.valueChanges.subscribe((value)=>{
-      
-      console.log(this.resetForm)
       if(this.resetForm.controls.resetCode.errors){
           this.resetForm.controls.password1.disable();
         this.resetForm.controls.password2.disable();
@@ -63,7 +61,4 @@ export class ResetComponent implements OnInit  {
      this.reset.emit({password:this.resetForm.value.password2,resetCode:this.resetForm.value.resetCode});
   }
 
-  changesInCode(form){
-    console.log({form})
-  }
 }

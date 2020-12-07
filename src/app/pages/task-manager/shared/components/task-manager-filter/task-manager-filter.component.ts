@@ -38,7 +38,7 @@ export class TaskManagerFilterComponent implements OnChanges {
   ngOnChanges(changes:SimpleChanges){
        if(changes.participants && this.participants){
          this.options.participants = OOService.copyObject(this.participants);
-         this.options.user = this.participants.filter((p)=>{console.log({p}); return p.role === 'ADMIN_ROLE'})
+         this.options.user = this.participants.filter((p)=>{ return p.role === 'ADMIN_ROLE'})
        }
   }
 

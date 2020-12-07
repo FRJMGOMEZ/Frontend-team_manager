@@ -15,7 +15,7 @@ mat-sidenav-container{
 }
 
 mat-sidenav{
-  width:50px;
+  width:30px;
   position:absolute;
   z-index:99999;
   background-color: #1b1b1b;

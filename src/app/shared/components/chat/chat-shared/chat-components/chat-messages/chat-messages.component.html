@@ -1,0 +1,40 @@
+
+
+<div fxLayout="column">
+    <div #divMessages class="div-messages">
+        <div fxLayoutAlign="center">
+            <mat-spinner *ngIf="showSpinner" [diameter]="50"></mat-spinner>
+        </div>
+       <mat-card  *ngFor="let message of messages">
+           <div [ngStyle]="{'color': message.user._id === userOnline._id  ? '#7b87cc' : '#d1870c'}" [fxLayoutAlign]="message.user._id === userOnline._id  ? 'flex-start' : 'flex-end'">
+            <small>  {{message.date | date}} {{message.user.name}}</small>
+           </div>
+           <div fxLayout="row">
+               <div class="div-file-icon" fxLayout="column" *ngFor="let file of message.files" >
+                   <img #fileImg (click)="downloadFile(fileImg.src,file)" class="file-icon" [src]=" file | fileIcon | async" alt="">
+                   <div class="div-file-title">
+                       {{file.title}}
+                   </div>
+               </div>
+           </div>
+            {{message.text}}
+        </mat-card>
+    </div>
+    <chat-tools (files)="setFiles($event)" ></chat-tools>
+    <div>
+     <mat-form-field class="mat-form-full-width">
+        <div fxLayout="row">
+            <div class="div-file-icon" fxLayout="column" *ngFor="let file of message.files" >
+                <div fxLayoutAlign="flex-end" >
+                    <mat-icon class="icon-remove-file" >remove</mat-icon>
+                </div>
+               <img class="file-icon-temp" [src]="file | fileIcon | async" alt="">
+                <div class="div-file-title">
+                   {{file.name}}
+               </div>
+            </div>
+        </div>
+        <textarea [style.margin-top]="'10px'" [(ngModel)]="message.text" matInput (keypress)="sendMessage($event)" ></textarea>
+       </mat-form-field>
+    </div>
+</div>

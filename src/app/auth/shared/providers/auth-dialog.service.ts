@@ -21,7 +21,6 @@ export class AuthDialogService {
     })
   }  
   openResetPassDialog(email:string){
-    console.log('openReset')
     const dialogRecover = new MatDialogConfig();
     dialogRecover.disableClose = true;
     dialogRecover.autoFocus = true;

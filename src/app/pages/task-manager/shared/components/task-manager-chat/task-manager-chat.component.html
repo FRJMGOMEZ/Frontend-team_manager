@@ -1,0 +1,6 @@
+
+
+<div *ngIf="taskSelected">
+    <app-chat (sendMsg)="sendMessage($event)" [messages]="messages" [messagesCount]="messagesCount" [users]="users | chatUserParser" [userOnline]="authService.userOnline" (getMessages)="getMessages($event.from)" ></app-chat>
+</div>
+

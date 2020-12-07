@@ -125,8 +125,6 @@ export class ProjectService {
       let { method, project, user, projectOld } = payload;
       let newParticipants = project.participants as string[]
 
-      console.log('comes')
-
       switch (method) {
         case 'POST':
           if (newParticipants.includes(this.authService.userOnline._id)) {

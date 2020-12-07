@@ -61,7 +61,6 @@ export class AuthService {
   refreshToken():Observable<boolean>{
     return this.http.get(`${URL_SERVICES}refresh-token`).pipe(
       tap((res:any)=>{
-        console.log({res})
         this.saveInStorage(res.user, res.token)
       }),
       map(()=>{ return true }))

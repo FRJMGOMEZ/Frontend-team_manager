@@ -1,13 +1,25 @@
-<div class="page-container" [style.margin.px]="'25'">
-    <div fxFlex="30" fxLayout="column" >
-        <div fxFlex="10" fxLayoutAlign="center">
+<div fxLayoutAlign="space-around" fxLayout.xs="column" fxLayout.gt-xs="row" class="page-container" [ngStyle.gt-xs]="{'margin': '25px'}" >
+    <div [style.margin-bottom]="'50px'" fxFlex.gt-xs="30" fxLayout="column" >
+        <div fxLayoutAlign="center">
             <app-task-manager-filter fxFlex="100" [participants]="participants" [projectId]="selectedProject" (getItems)="getTasks($event)"></app-task-manager-filter>
         </div>
-        <div fxFlex="90" fxLayoutAlign="center">
-            <app-task-manager-list (selectTask)="getTaskById($event)" [dataSource]="tasksList" fxFlex="100" ></app-task-manager-list>
+        <div  fxLayoutAlign="center">
+            <app-task-manager-list fxFlex="100" (selectTask)="getTaskById($event)" [dataSource]="tasksList" [taskSelected]="taskSelected ? taskSelected._id : null" ></app-task-manager-list>
         </div>
     </div>
-    <div fxFlex="100">
-        <app-task-manager-panel [taskSelected]="taskSelected"></app-task-manager-panel>
+    <div [ngStyle.gt-xs]="{'margin-left': '40px'}" *ngIf="taskSelected" fxFlex.gt-xs="70" >
+        <div>
+            <div fxFlex="30" fxLayoutAlign="center">PRIORITY: {{taskSelected.priority === 1 ? 'HIGH' : taskSelected.priority === 2 ? 'MEDIUM' : 'LOW'}}</div>
+            <div fxFlex="40" class="div-task-name" fxLayoutAlign="center">
+                <h3>
+                    {{taskSelected.name}}
+                </h3>
+            </div>
+            <div fxFlex="30" fxLayoutAlign="center">STATUS: {{taskSelected.status === true ? 'done' : 'pending'}}</div>
+        </div>
+        <div class="div-progress">
+            <app-task-manager-progress  [taskSelected]="taskSelected"></app-task-manager-progress>
+        </div>
+        <app-task-manager-chat  [taskSelected]="taskSelected"></app-task-manager-chat>
     </div>
 </div>

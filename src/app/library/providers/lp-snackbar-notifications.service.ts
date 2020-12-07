@@ -33,8 +33,15 @@ export class LpSnackbarNotificationsService {
     });
   }
 
+  /* TODO: Añadir template de snackbar */
   httpError(message:string,action:string){
     this._snackBar.open(message, action, {
+      duration: 4000,
+    });
+  }
+
+  validationError(message:string){
+    this._snackBar.open(message,null, {
       duration: 4000,
     });
   }

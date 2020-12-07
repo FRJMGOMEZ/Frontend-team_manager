@@ -45,11 +45,7 @@ export class FilesService {
      })
   } */
 
-  downloadFile(url:string){
-    return this.http.get(url, { observe: 'response', responseType: 'blob' })
-  }
-
-  getAwsImg(fileName:string){
+  getDbFile(fileName:string){
     let url = `${URL_SERVICES}file/${fileName}`;
     return this.http.get(url, { responseType: 'blob' })
   }
@@ -67,5 +63,12 @@ export class FilesService {
     return this.http.get(url).pipe(map((res:any)=>{
       return res.file
     }))
+  }
+  downloadFile(href:string,name:string){
+    const a = document.createElement("a");
+    a.href = href;
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();   
   }
 }

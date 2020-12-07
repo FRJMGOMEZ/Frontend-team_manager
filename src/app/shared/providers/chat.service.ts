@@ -4,6 +4,7 @@ import { HttpClient} from '@angular/common/http';
 import {  Message } from '../models/message.model';
 import { map, tap} from 'rxjs/operators';
 import { URL_SERVICES } from '../../config/config';
+import { WebSocketsService } from './web-sockets.service';
 
 @Injectable({
     providedIn: 'root'
@@ -13,12 +14,11 @@ export class ChatService {
     messagesSource = new Subject<{message:Message,order:string}>();
     messages$:Observable<{message:Message,order:string}> = this.messagesSource.asObservable();
 
-    constructor(private http:HttpClient) {}
+    constructor(private http:HttpClient, private wsService:WebSocketsService) {}
 
-    getMessages(taskId: string, from: number, limit: number = 15) {
-        let url = `${URL_SERVICES}messages/${taskId}?from=${from}&limit=${limit}`;
+    getMessages(taskId: string, skip: number, limit: number = 10) {
+        let url = `${URL_SERVICES}messages/${taskId}?skip=${skip}&limit=${limit}`;
         return this.http.get(url).pipe(map((res: any) => {
-            console.log({res})
             return {
                 count: res.data.count,
                 messages: res.data.messages
@@ -42,6 +42,11 @@ export class ChatService {
             this.messagesSource.next({message:res.message,order:'delete'})
         }))
     } 
+
+    listenningMessages(){
+        return this.wsService.listen('message-in')
+    }
+
 
    /*  
 

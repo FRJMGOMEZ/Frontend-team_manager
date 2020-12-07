@@ -21,7 +21,6 @@ export class LpFilesUploaderDirective implements  Validator  {
   constructor(private el:ElementRef) { }
 
   public validate() {
-     
     let files:FileList = this.el.nativeElement.files; 
      let error = this.validateTypes(files) ? this.validateTypes(files):this.validateSize(files) ? this.validateSize(files) : this.validateNameLength(files) ? this.validateNameLength(files) : null;
      return error

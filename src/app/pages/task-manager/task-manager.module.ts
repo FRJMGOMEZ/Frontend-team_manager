@@ -11,11 +11,10 @@ import { TaskManagerFilterComponent } from './shared/components/task-manager-fil
 import { TaskManagerListComponent } from './shared/components/task-manager-list/task-manager-list.component'
 import { LpDateSelectorModule } from '../../library/components/lp-date-selector/lp-date-selector.module';
 import { FormsModule } from '@angular/forms';
-
-import { LpChatModule } from '../../library/components/lp-chat/lp-chat.module';
-import { TaskManagerPanelComponent } from './shared/components/task-manager-panel/task-manager-panel.component';
 import { LpPipesModule } from '../../library/lp-pipes/lp-pipes.module';
-
+import { ChatModule } from '../../shared/components/chat/chat.module';
+import { TaskManagerChatComponent } from './shared/components/task-manager-chat/task-manager-chat.component';
+import { TaskManagerProgressComponent } from './shared/components/task-manager-progress/task-manager-progress.component';
 
 let routes:Routes = [
 
@@ -28,7 +27,8 @@ let routes:Routes = [
     TaskManagerPostEditComponent,
     TaskManagerFilterComponent,
     TaskManagerListComponent,
-    TaskManagerPanelComponent
+    TaskManagerChatComponent,
+    TaskManagerProgressComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +39,7 @@ let routes:Routes = [
     LpDateSelectorModule,
     FormsModule,
     LpPipesModule,
-    LpChatModule
+    ChatModule
   ]
 })
 export class TaskManagerModule { }
