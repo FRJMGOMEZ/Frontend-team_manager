@@ -9,13 +9,16 @@ export class TaskModel {
         public participants: string[] | User[],
         public project: string | Project,
         public priority:number,
-        public status:boolean,
+        public status:string,
         public startDate: number,
         public endDate: number,
         public disabled:boolean,
         public editable?:boolean,
         public prevStates?: { [key: string]: any }[],
         public _id?: string,
+        public deliverDate?: number,
+        public validationTime?: number,
+        public extraTime?: number,
     ) { }
 }
 

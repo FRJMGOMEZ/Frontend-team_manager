@@ -8,7 +8,8 @@ import { DateOperationsService } from '../../../library/providers/date-operation
 import { TaskModel } from '../../models/task.model';
 import { AuthService } from '../../../auth/shared/providers/auth.service';
 import { LpParseDatePipe } from '../../../library/lp-pipes/lp-parse-date.pipe';
-import { LpParseHourPipe } from 'src/app/library/lp-pipes/lp-parse-hour.pipe';
+import { LpParseHourPipe } from '../../../library/lp-pipes/lp-parse-hour.pipe';
+
 
 @Component({
   selector: 'app-task-dialog-edition-and-creation',
@@ -37,7 +38,7 @@ export class TaskDialogEditionAndCreationComponent implements OnChanges {
        participants:[],
        project:this.selectedProject,
        priority:1,
-       status:false,
+       status:'',
        startDate:null,
        endDate:null,
        disabled:false

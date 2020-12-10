@@ -20,7 +20,6 @@ export class ChatMessagesComponent implements OnInit, AfterViewInit {
   message:Message = new Message('',[],null)
   @Output() sendMsg= new EventEmitter<Message>();
   @Output() getMessages = new EventEmitter<{from:number}>();
-  temporaryFiles:File[]=[]
   showSpinner = false;
   constructor(private filesService: FilesService, private gDService: GDService, private renderer: Renderer2) { }
 
@@ -58,9 +57,11 @@ export class ChatMessagesComponent implements OnInit, AfterViewInit {
 
   setFiles(files:File[]){
     this.message.files.push(...(files as any[]))
-    this.temporaryFiles.push(...files)
   }
 
+  removeFile(index:number){
+   this.message.files = (this.message.files as File[]).filter((f,i)=>{ return i != index})
+  }
 
   downloadFile(fileSrc:any,file:FileModel){
    this.dialogSubs = this.gDService.openConfirmDialog('DOWNLOAD FILE?',file.title).subscribe((res:boolean)=>{
@@ -75,6 +76,8 @@ export class ChatMessagesComponent implements OnInit, AfterViewInit {
      }
     })
 }
+
+
 
 scrollToBottom(){
   this.divMessages.nativeElement.scrollTop = this.divMessages.nativeElement.scrollHeight; 

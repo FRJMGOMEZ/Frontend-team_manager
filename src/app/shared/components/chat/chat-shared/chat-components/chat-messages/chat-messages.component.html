@@ -7,7 +7,7 @@
         </div>
        <mat-card  *ngFor="let message of messages">
            <div [ngStyle]="{'color': message.user._id === userOnline._id  ? '#7b87cc' : '#d1870c'}" [fxLayoutAlign]="message.user._id === userOnline._id  ? 'flex-start' : 'flex-end'">
-            <small>  {{message.date | date}} {{message.user.name}}</small>
+            <small>  {{message.date | date : 'M/d/yy, h:mm a'}} {{message.user.name}}</small>
            </div>
            <div fxLayout="row">
                <div class="div-file-icon" fxLayout="column" *ngFor="let file of message.files" >
@@ -24,9 +24,9 @@
     <div>
      <mat-form-field class="mat-form-full-width">
         <div fxLayout="row">
-            <div class="div-file-icon" fxLayout="column" *ngFor="let file of message.files" >
+            <div class="div-file-icon" fxLayout="column" *ngFor="let file of message.files; let i = index" >
                 <div fxLayoutAlign="flex-end" >
-                    <mat-icon class="icon-remove-file" >remove</mat-icon>
+                    <mat-icon class="icon-remove-file" (click)="removeFile(i)" >delete</mat-icon>
                 </div>
                <img class="file-icon-temp" [src]="file | fileIcon | async" alt="">
                 <div class="div-file-title">

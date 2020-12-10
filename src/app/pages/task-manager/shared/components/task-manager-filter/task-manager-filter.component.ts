@@ -18,14 +18,14 @@ export class TaskManagerFilterComponent implements OnChanges {
     name:'',
     user:'',
     participants:[],
-    status:null,
+    status:'',
     from:null,
     to:null,
     priority:'',
     project:''
   }
   options = {
-     status:[{label:'done',value:true},{label:'pending',value:false}],
+     status:['done','pending','overdue'],
      user:[],
      participants:[],
      priority:[{label:'low',value:3},{label:'medium',value:2},{label:'high',value:1}]

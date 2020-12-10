@@ -60,4 +60,8 @@ export class DateOperationsService {
     }
     return durationString.reverse();
    }
+
+   public static milisecsToString(milisecs){
+       return  this.milisecondsToPeriod(0,milisecs).join()
+   }
 }

@@ -1,4 +1,4 @@
-<div fxLayoutAlign="space-around" fxLayout.xs="column" fxLayout.gt-xs="row" class="page-container" [ngStyle.gt-xs]="{'margin': '25px'}" >
+<div fxLayoutAlign.gt-xs="space-around" fxLayout.xs="column" fxLayout.gt-xs="row" class="page-container" [ngStyle.gt-xs]="{'margin': '25px'}" >
     <div [style.margin-bottom]="'50px'" fxFlex.gt-xs="30" fxLayout="column" >
         <div fxLayoutAlign="center">
             <app-task-manager-filter fxFlex="100" [participants]="participants" [projectId]="selectedProject" (getItems)="getTasks($event)"></app-task-manager-filter>
@@ -7,19 +7,46 @@
             <app-task-manager-list fxFlex="100" (selectTask)="getTaskById($event)" [dataSource]="tasksList" [taskSelected]="taskSelected ? taskSelected._id : null" ></app-task-manager-list>
         </div>
     </div>
-    <div [ngStyle.gt-xs]="{'margin-left': '40px'}" *ngIf="taskSelected" fxFlex.gt-xs="70" >
-        <div>
-            <div fxFlex="30" fxLayoutAlign="center">PRIORITY: {{taskSelected.priority === 1 ? 'HIGH' : taskSelected.priority === 2 ? 'MEDIUM' : 'LOW'}}</div>
-            <div fxFlex="40" class="div-task-name" fxLayoutAlign="center">
-                <h3>
-                    {{taskSelected.name}}
-                </h3>
+    <div [ngStyle.gt-xs]="{'margin-left': '40px'}"  fxFlex.gt-xs="70" >
+        <div fxLayout.xs="column" *ngIf="taskSelected">
+            <div class="div-options" fxLayout="row" fxLayoutAlign.gt-xs="space-around" fxLayoutAlign.xs="center" fxFlex.gt-xs="10" fxFlex.xs="100" [ngStyle.xs]="{'margin-bottom': '30px'}" fxLayoutGap.xs="25px">
+                <div fxLayout="column">
+                    <mat-icon [ngClass]="{'icon-disabled': taskService.taskTimeStarted(taskSelected)}" (click)="taskSelected.editable ? editTask():null" color="primary">edit</mat-icon>
+                </div>
+                <div fxLayout="column">
+                     <mat-icon 
+                     (click)="taskSelected.status === 'pending' ? toggleStatus():null"
+                     color="primary"
+                     [matTooltip]="taskSelected.status === 'on review' ? 'Task on review by the manager' :'' "
+                     [ngClass]="{'icon-disabled': !taskService.taskTimeStarted(taskSelected)}" >
+                     {{ taskSelected.status === 'pending' ? 'move_to_inbox' : taskSelected.status === 'on review' ? 'hourglass_full' : 'assignment_turned_in'  }}
+                    </mat-icon>
+                 </div>
             </div>
-            <div fxFlex="30" fxLayoutAlign="center">STATUS: {{taskSelected.status === true ? 'done' : 'pending'}}</div>
+            <div fxFlex.gt-xs="90" fxFlex.xs="100">
+                <div  class="div-feature"  fxFlex="23" fxLayoutAlign="space-around">
+                    <p>
+                        STATUS: {{taskSelected.status.toUpperCase()}}
+                    </p>
+                </div>
+                <div fxFlex="44" class="div-task-name" fxLayoutAlign="center">
+                    <h3>
+                        {{taskSelected.name}}
+                    </h3>
+                </div>
+                 <div class="div-feature"  fxFlex="23" fxLayoutAlign="space-around">
+                    <p>
+                        PRIORITY: {{taskSelected.priority === 1 ? 'HIGH' : taskSelected.priority === 2 ? 'MEDIUM' : 'LOW'}}
+                    </p>
+                </div>
+                <div fxFlex="5">
+                    <mat-icon [ngClass]="{'icon-disabled': taskService.taskTimeStarted(taskSelected)}" color="warn" (click)="deleteTask()">delete</mat-icon>
+                </div>
+            </div>
         </div>
-        <div class="div-progress">
-            <app-task-manager-progress  [taskSelected]="taskSelected"></app-task-manager-progress>
+        <div *ngIf="taskSelected" class="div-progress">
+            <app-task-manager-progress  [taskSelected]="taskSelected "></app-task-manager-progress>
         </div>
-        <app-task-manager-chat  [taskSelected]="taskSelected"></app-task-manager-chat>
+        <app-task-manager-chat  *ngIf="taskSelected" [taskSelected]="taskSelected "></app-task-manager-chat>
     </div>
 </div>

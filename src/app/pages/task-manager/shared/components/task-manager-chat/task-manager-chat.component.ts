@@ -26,6 +26,7 @@ export class TaskManagerChatComponent implements  OnDestroy{
   ngOnChanges(changes: SimpleChanges) {
     if (changes.taskSelected && this.taskSelected) {
       /// getting the messages ///
+      this.messages = [];
       this.getMessages(0);
       /// getting the users connected ///
       this.taskService.userOutTask();

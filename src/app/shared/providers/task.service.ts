@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {  TaskModel } from '../models/task.model';
+import { TaskModel } from '../models/task.model';
 import { HttpClient } from '@angular/common/http';
 import { URL_SERVICES } from '../../config/config';
 import { Subject, Observable, empty } from 'rxjs';
@@ -16,8 +16,6 @@ import { User } from '../models/user.model';
 import { NotificationService } from './notification.service';
 import { LpErrorHandlerService } from '../../library/providers/lp-error-handler.service';
 import { LpSnackbarNotificationsService } from '../../library/providers/lp-snackbar-notifications.service';
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -59,8 +57,21 @@ export class TaskService {
           this.dialogRef.closeAll();
         }
       }),
-      catchError((err) => { this.gdService.openInfoDialog(err.error.err.message, 'ERROR'); return this.errorHandlerService.handleError(err) })
+      catchError((err) => { this.gdService.openInfoDialog(err.error.err.message, 'ERROR'); return this.errorHandlerService.handleError(err)})
     )
+  }
+
+  toggleStatus(newStatus:string,taskId:string){
+    let request = this.http.put(`${URL_SERVICES}task-status`, { newStatus, taskId })
+    .pipe(
+     map((res: any) => { return res.task }),
+     tap((task:TaskModel) => {
+      this.taskSrc.next({ task, action: 'PUT' })
+      this.gdService.openInfoDialog('SUCESFULLY UPDATED', 'EDITION', task.name);}))
+
+    return this.gdService.openConfirmDialog('ARE YOU SURE?', `The task status will switch to "${newStatus}" status`).pipe(
+      switchMap((res: boolean) => { return res ? request : empty()}),
+      catchError((err) => { this.gdService.openInfoDialog(err.error.err.message, 'ERROR'); return this.errorHandlerService.handleError(err)}))
   }
 
   getTasks(selector: string, querysString?:string) {
@@ -105,9 +116,9 @@ export class TaskService {
   usersConnected(){
     return this.wsService.listen('users-in-task')
   }
-  editionBanned(task: TaskModel) {
-    let today = new Date();
-    if (task.startDate < new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0, 0).getTime()) {
+  
+  taskTimeStarted(task: TaskModel) {
+    if (task.startDate < new Date().getTime()) {
       task.editable = false;
       return true
     }
@@ -132,24 +143,30 @@ export class TaskService {
               if ((task.participants as string[]).includes(this.authService.userOnline._id) || this.projectService.isUserAdm(this.authService.userOnline._id, task.project as string)) {
                 if (!(taskOld.participants as string[]).includes(this.authService.userOnline._id) && !this.projectService.isUserAdm(this.authService.userOnline._id, task.project as string)) {
                   this.taskSrc.next({ task, action: 'POST' })
-                  this.plSnackbarNotificationsService.showSocketNotification(method, task.name, 'project', user.name, (task.project as Project).name)
+                  this.plSnackbarNotificationsService.showSocketNotification(method, task.name, 'task', user.name, (task.project as Project).name)
                 } else {
                   this.taskSrc.next({ task, action: 'PUT' })
-                  this.plSnackbarNotificationsService.showSocketNotification(method, task.name, 'project', user.name, (task.project as Project).name)
+                  this.plSnackbarNotificationsService.showSocketNotification(method, task.name, 'task', user.name, (task.project as Project).name)
                 }
               } else {
                 if ((taskOld.participants as string[]).includes(this.authService.userOnline._id)) {
                   this.taskSrc.next({ task, action: 'DELETE' })
-                  this.plSnackbarNotificationsService.showSocketNotification('REMOVAL', task.name, 'project', user.name, (task.project as Project).name)
+                  this.plSnackbarNotificationsService.showSocketNotification('REMOVAL', task.name, 'task', user.name, (task.project as Project).name)
                 }
               }
               break;
             case 'DELETE':
               if ((task.participants as string[]).includes(this.authService.userOnline._id) || this.projectService.isUserAdm(this.authService.userOnline._id, task.project as string)) {
                 this.taskSrc.next({ task, action: 'DELETE' })
-                this.plSnackbarNotificationsService.showSocketNotification('DELETE', task.name, 'project', user.name, (task.project as Project).name)
+                this.plSnackbarNotificationsService.showSocketNotification('DELETE', task.name, 'task', user.name, (task.project as Project).name)
               }
               break;
+            case 'STATUS CHANGE':
+              if ((task.participants as string[]).includes(this.authService.userOnline._id) || this.projectService.isUserAdm(this.authService.userOnline._id, task.project as string)) {
+                this.taskSrc.next({ task, action: 'PUT' })
+                this.plSnackbarNotificationsService.showSocketNotification(method, task.name, 'task', user.name, (task.project as Project).name,task.status)
+              }
+            break;  
           }
           let taskOnScreen = this.localStorageService.get('state-data', 'task-on-screen');
           if ((method === 'PUT' || method === 'DELETE') && taskOnScreen === task._id) {

@@ -4,9 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { MaterialModule } from '../../shared/material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { SharedModule } from '../../shared/shared.module';
 import {TaskManagerComponent} from './task-manager.component'
-import {TaskManagerPostEditComponent} from './shared/components/task-manager-post-edit/task-manager-post-edit.component';
 import { TaskManagerFilterComponent } from './shared/components/task-manager-filter/task-manager-filter.component';
 import { TaskManagerListComponent } from './shared/components/task-manager-list/task-manager-list.component'
 import { LpDateSelectorModule } from '../../library/components/lp-date-selector/lp-date-selector.module';
@@ -15,6 +13,8 @@ import { LpPipesModule } from '../../library/lp-pipes/lp-pipes.module';
 import { ChatModule } from '../../shared/components/chat/chat.module';
 import { TaskManagerChatComponent } from './shared/components/task-manager-chat/task-manager-chat.component';
 import { TaskManagerProgressComponent } from './shared/components/task-manager-progress/task-manager-progress.component';
+import { TaskDialogEditionAndCreationModule } from '../../shared/components/task-dialog-edition-and-creation/task-dialog-edition-and-creation.module';
+import { GlobalDialogsModule } from '../../library/components/global-dialogs/global-dialogs.module';
 
 let routes:Routes = [
 
@@ -24,7 +24,6 @@ let routes:Routes = [
 @NgModule({
   declarations: [
     TaskManagerComponent,
-    TaskManagerPostEditComponent,
     TaskManagerFilterComponent,
     TaskManagerListComponent,
     TaskManagerChatComponent,
@@ -35,11 +34,12 @@ let routes:Routes = [
     RouterModule.forChild(routes),
     MaterialModule,
     FlexLayoutModule,
-    SharedModule,
     LpDateSelectorModule,
     FormsModule,
     LpPipesModule,
-    ChatModule
+    ChatModule,
+    TaskDialogEditionAndCreationModule,
+    GlobalDialogsModule
   ]
 })
 export class TaskManagerModule { }

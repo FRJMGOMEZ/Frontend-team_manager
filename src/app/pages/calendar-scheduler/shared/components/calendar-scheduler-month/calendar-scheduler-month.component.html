@@ -26,7 +26,7 @@
                                             <mat-icon [matMenuTriggerFor]="menuPc" [matTooltip]="eventTooltip(task)" [matTooltipClass]="'event-tooltip'" [color]="iconColor(task)" [class]="task.priority === 1 ? 'priority-high' : task.priority === 2 ? 'priority-medium': 'priority-low'  " > trip_origin</mat-icon>
                                             <mat-menu #menuPc="matMenu">
                                                 <button (click)="checkTask.emit(task._id)" mat-menu-item>View details</button>
-                                                <div  appIsAdm  [matTooltip]="taskService.editionBanned(task) ? 'The task can not be edited because already started': null">
+                                                <div  appIsAdm  [matTooltip]="taskService.taskTimeStarted(task) ? 'The task can not be edited because already started': null">
                                                     <button [disabled]="!task.editable" (click)="putTask.emit(task._id)" mat-menu-item>Edit</button>
                                                 </div>
                                                 <div  appIsAdm  [matTooltip]="!task.editable ? 'The task can not be deleted because already started': null">

@@ -11,7 +11,7 @@
               <div *ngIf="taskVersions[taskV]" fxLayout="column" fxLayoutAlign="center" >
                   <div [style.margin-left.px]="'20'" fxLayoutAlign="space-between">
                       <mat-icon *ngIf="prevDialog" (click)="back.emit()">keyboard_backspace</mat-icon>
-                      <mat-icon *ngIf="!prevDialog && !tasksService.editionBanned(taskVersions[taskV]) && isLastVersion()" appIsAdm (click)="editTask.emit(taskVersions[taskV]._id)" >edit</mat-icon>
+                      <mat-icon *ngIf="!prevDialog && !tasksService.taskTimeStarted(taskVersions[taskV]) && isLastVersion()" appIsAdm (click)="editTask.emit(taskVersions[taskV]._id)" >edit</mat-icon>
                       <mat-icon *ngIf="!isLastVersion(taskVersions[taskV]) && versionIsDifferent()" (click)="restore()" appIsAdm >settings_backup_restore</mat-icon>
                       <mat-label *ngIf="!isLastVersion(taskVersions[taskV]) && !versionIsDifferent()">*Version is equal to the current one*</mat-label>
                 </div>

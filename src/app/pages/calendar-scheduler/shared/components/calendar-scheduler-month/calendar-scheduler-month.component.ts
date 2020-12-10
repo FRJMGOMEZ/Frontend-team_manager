@@ -38,10 +38,6 @@ export class CalendarSchedulerMonthComponent {
      /// one day lapso ///
     let lapso = 86400000;
 
-    if(task.status){
-      return 'green'
-    }
-
     if (task.endDate>today.getTime()){
       if (task.endDate > today.getTime() + lapso) {
           return 'primary'

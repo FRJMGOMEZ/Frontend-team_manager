@@ -28,7 +28,7 @@
                     <a  [matMenuTriggerFor]="menu" class="a-task-toggle">{{task.name}}</a>
                     <mat-menu #menu="matMenu">
                          <button (click)="checkTask.emit(task._id)" mat-menu-item>View details</button>
-                        <div [matTooltip]="tasksService.editionBanned(task) ? 'The task can not be edited because already started': null">
+                        <div [matTooltip]="tasksService.taskTimeStarted(task) ? 'The task can not be edited because already started': null">
                             <button #btnEdit  [disabled]="!task.editable" (click)="putTask.emit(task._id)" mat-menu-item>Edit</button>
                         </div>
                     </mat-menu>

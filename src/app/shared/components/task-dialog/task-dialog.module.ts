@@ -1,19 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../material/material.module';
+import { TaskDialogComponent } from './task-dialog.component';
+import { TaskDialogSmartComponent } from './task-dialog-smart.component';
 import { FormsModule } from '@angular/forms';
-import { ProjectDialogComponent } from './project-dialog.component';
-import { ProjectDialogSmartComponent } from './project-dialog-smart-component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
+
+
 @NgModule({
-  declarations: [ProjectDialogComponent,ProjectDialogSmartComponent],
+  declarations: [TaskDialogSmartComponent,TaskDialogComponent],
   imports: [
     CommonModule,
     MaterialModule,
     FormsModule,
     FlexLayoutModule
   ],
-  exports:[ProjectDialogSmartComponent]
+  exports:[TaskDialogSmartComponent]
 })
-export class ProjectDialogModule { }
+export class TaskDialogModule { }

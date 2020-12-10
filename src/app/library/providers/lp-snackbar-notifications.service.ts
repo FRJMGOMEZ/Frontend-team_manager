@@ -7,27 +7,29 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class LpSnackbarNotificationsService {
 
   constructor(private _snackBar: MatSnackBar) { }
-  showSocketNotification(action: string, item: string, itemType: string, user: string, project?: string,) {
+  showSocketNotification(action: string, item: string, itemType: string, user: string, project?: string,status?:string) {
      let message = ''
-     message += `${user}`
      switch(action){
        case 'POST':
-          message+=`created ${itemType} ${item} ${project ? `in project ${project}`: ''} and includes you`
+         message += `${item}(${itemType}) created ${project ? `in project ${project}`: ''} and includes you`
           break;
        case 'PUT':
-         message += `edited ${itemType} ${item} ${project ? `in project ${project}` : ''}`
+         message += `${item}(${itemType}) edited ${project ? `in project ${project}` : ''}`
          break;
        case 'ADHESION':
-         message += `edited ${itemType} ${item} ${project ? `in project ${project}` : ''} and includes you`
+         message += `${item}(${itemType}) created ${project ? `in project ${project}` : ''} and includes you`
        break;
        case 'REMOVAL':
-         message += `edited ${itemType} ${item} ${project ? `in project ${project}` : ''} and removes you`
+         message += `${item}(${itemType}) created ${project ? `in project ${project}` : ''} and removes you`
        break;
         case 'DELETE':
-         message += `deleted ${itemType} ${item} ${project ? `in project ${project}` : ''} and includes you`
+         message += `${item}(${itemType}) deleted ${project ? `in project ${project}` : ''} and includes you`
+         break;  
+       case 'STATUS CHANGE':
+         message += `${item}(${itemType}) changed status to "${status}"`
          break;     
      }
-     message+= ` by user ${user}`;
+     message+= ` by ${user}`;
     this._snackBar.open(message, action, {
       duration: 4000,
     });

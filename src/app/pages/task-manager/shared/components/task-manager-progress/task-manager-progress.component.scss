@@ -1,8 +1,13 @@
 
 
-::ng-deep mat-progress{
-    height: 50px !important
+ .mat-progress-bar{
+    height: 15px 
 }
 :host{
     font-size: 13px;
+}
+
+.h5-extra-time{
+  margin:0px;
+  font-weight: bolder;
 }
