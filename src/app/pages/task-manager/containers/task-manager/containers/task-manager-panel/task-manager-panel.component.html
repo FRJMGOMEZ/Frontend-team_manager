@@ -1,0 +1,36 @@
+
+   <mat-card> 
+              <mat-tab-group mat-stretch-tabs  fxFlex="100" mat-align-tabs="center">
+               <mat-tab > 
+                  <ng-template mat-tab-label>
+                   Task info
+                   <mat-icon color="primary">poll</mat-icon>
+                </ng-template>   
+                  <app-task-manager-info  (deleteTask)="deleteTask()" (toggleStatus)="toggleStatus()" (editTask)="editTask()" [taskSelected]="taskSelected"></app-task-manager-info>
+               </mat-tab>
+                <mat-tab> 
+                 <ng-template mat-tab-label>
+                   Chat
+                   <mat-icon color="primary"> chat</mat-icon>
+                </ng-template>
+                 <app-chat 
+                 
+                           *ngIf="taskSelected"
+                           [messages]="messages"
+                           [messagesCount]="messagesCount"
+                           [userOnline]="authService.userOnline"
+                           [users]="users"
+                           (sendMsg)="sendMessage($event)"
+                           (getMessages)="getMessages($event.from)"
+                           (downloadFile)="downloadFile($event)">
+                  </app-chat>      
+              </mat-tab>
+                <mat-tab> 
+               <ng-template mat-tab-label>
+                   Files
+                   <mat-icon color="primary">folder</mat-icon>
+                </ng-template>
+                <app-task-manager-files [taskSelected]="taskSelected" [files]="files" (getFiles)="getFiles($event)" (deleteFile)="deleteFile($event)" (downloadFile)="downloadFile($event)" ></app-task-manager-files>
+                </mat-tab>
+              </mat-tab-group>            
+    </mat-card>

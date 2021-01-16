@@ -1,0 +1,54 @@
+
+
+.expansion-panel-pc{
+  z-index: 99999;
+  position: absolute;
+  top:1%;
+  left:35%;
+  right:30%
+}
+
+.expansion-panel-mobile{
+   z-index: 99999;
+  position: absolute;
+  top:1%;
+  left:20%;
+  right:25%;
+
+  mat-expansion-panel-header{
+  padding:0 15px !important
+  }
+}
+::ng-deep.mat-expansion-panel-body{
+  padding:0px 0px 0px!important
+}
+
+.mat-expansion-panel-body {
+    padding: 0;
+}
+
+.icon-plus {
+    font-size: 30px;
+}
+
+.mat-form-project{
+  width:200px !important
+}
+
+mat-expansion-panel-header{
+  div{
+    width:100% !important
+  }
+}
+ ::ng-deep .mat-select-value{
+text-align: center;
+} 
+
+.mat-cell-selector{
+  cursor: pointer;
+}
+
+.mat-cell-selector:hover{
+   color: #d1870c
+}
+  

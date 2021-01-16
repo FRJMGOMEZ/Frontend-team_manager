@@ -1,0 +1,32 @@
+
+
+
+
+
+mat-card{
+    height: 100%;
+    margin:0px;
+    padding: 10px;
+}
+.mat-tab-group{
+   height: 100%;
+
+   .mat-tab-header{
+      height: 15%;
+   }  
+}
+   .div-task-name{
+      background-color:#7b87cc;
+      color:whitesmoke;
+      height: 25px;
+      font-weight: bolder;
+   }
+    ::ng-deep .mat-tab-body-wrapper{
+        height: 100% !important;
+        margin:0px !important
+}
+
+
+
+  
+

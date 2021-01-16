@@ -4,7 +4,7 @@
   <mat-sidenav #start [mode]="'side'">
              <mat-list>
                <mat-list-item fxLayoutAlign="center" matTooltip="navigate to calendar">
-                  <a [routerLink]="['calendar']" routerLinkActive="router-link-active"><mat-icon  color="accent">calendar_today</mat-icon></a>
+                  <a  [routerLink]="['calendar']" routerLinkActive="router-link-active"><mat-icon  color="accent">calendar_today</mat-icon></a>
                </mat-list-item>
                <mat-list-item fxLayoutAlign="center" matTooltip="navigate to task manager">
                   <a [routerLink]="['task-manager']" routerLinkActive="router-link-active">
@@ -34,21 +34,18 @@
              </mat-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <app-header-smart (toggleSideMenu)="start.toggle()" >
-          <app-projects-smart [projects]="projects" > </app-projects-smart>
-    </app-header-smart >
-      <div  [ngClass]="{'main-mobile': checkIfIsMobile()}" class="main">
-       <div fxLayoutAlign="center" [style.width.%]="'100'" [style.margin-bottom]="'5px'">
-          <button (click)="postTask()" color="accent" [disabled]="!projectService.selectedProject" mat-raised-button> NEW TASK</button>
-       </div>
-         <router-outlet *ngIf="projectService.selectedProject" ></router-outlet>
-         <app-no-projects *ngIf="!projectService.selectedProject"></app-no-projects>
+    <app-header (toggleSideMenu)="start.toggle()" (logout)="logout()" >
+          <app-projects-smart id="project-selector" [projects]="projects" > </app-projects-smart>
+         <button fxLayout="center" ngClass.gt-xs="new-task-btn-desktop" ngClass.xs="new-task-btn-mobile" id="new-task" (click)="postTask()" color="accent" [disabled]="!projectService.selectedProject" mat-raised-button> <small>NEW TASK</small></button>
+    </app-header >
+      <div [class]="deviceDetectorService.isMobile() ? 'main-mobile' : 'main'">
+        <div *ngIf="projectService.selectedProject" [@routeAnimations]="routesAnimation" >
+         <router-outlet #outlet="outlet"></router-outlet>
+        </div>
+            <app-no-projects *ngIf="!projectService.selectedProject"></app-no-projects>
       </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
 
 
-<!--    <mat-toolbar class="pages-toolbar">
-      <span>My Application</span>
-   </mat-toolbar> -->
 

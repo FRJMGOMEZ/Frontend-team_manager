@@ -15,7 +15,6 @@ export class DateOperationsService {
     }
   }
 
-
   public static isRangeInRange(event:{start:Date,end:Date},dayRange:{start:Date,end:Date}){
    /// check if range2 is  in range1 ///
    if(event.start <= dayRange.start && event.end >= dayRange.end){
@@ -62,6 +61,6 @@ export class DateOperationsService {
    }
 
    public static milisecsToString(milisecs){
-       return  this.milisecondsToPeriod(0,milisecs).join()
+       return  this.milisecondsToPeriod(0,milisecs)
    }
 }

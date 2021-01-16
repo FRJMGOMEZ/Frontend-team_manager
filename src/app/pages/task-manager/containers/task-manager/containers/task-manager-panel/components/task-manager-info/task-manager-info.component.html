@@ -1,0 +1,82 @@
+
+
+
+              
+<div class="div-info-container" fxLayout="column" *ngIf="taskSelected" >
+       <mat-card fxLayout="row" fxFlex="10">
+           <h4 fxFlex.gt-xs="15" fxFlex.xs="50">
+               NAME:
+           </h4>
+           <p fxFlex="90">
+           {{taskSelected.name}}
+           </p>
+        </mat-card>
+         <mat-card fxLayout="column" fxFlex="40"> 
+        <h4>
+               PROGRESS
+           </h4>   
+        <app-task-manager-progress   [taskSelected]="taskSelected"></app-task-manager-progress>
+        </mat-card>
+       <mat-card  fxFlex="10">
+           <h4 fxFlex.gt-xs="15" fxFlex.xs="50">
+               DESCRIPTION:
+           </h4>
+          <p>
+              {{taskSelected.description}}
+          </p>
+       </mat-card>
+       <mat-card  fxFlex="10">
+            <h4 fxFlex.gt-xs="15" fxFlex.xs="50">
+               PRIORITY:
+           </h4>
+           <p>
+            {{taskSelected.priority === 1 ? 'HIGH' : taskSelected.priority === 2 ? 'MEDIUM' : 'LOW'}}
+          </p>
+        </mat-card>
+       <mat-card  fxFlex="10">
+           <h4 fxFlex.gt-xs="15" fxFlex.xs="50">
+               STATUS:
+           </h4>
+            <p>
+             {{taskSelected.status.toUpperCase()}}
+            </p>
+       </mat-card>
+       <mat-card  fxFlex="20">
+           <h4 fxFlex.gt-xs="15" fxFlex.xs="50">
+               ACTIONS
+           </h4> 
+           <div fxFlex="80" fxLayout="row">
+                <div fxFlex.gt-xs="15" fxFlex.xs="33" fxLayout="column">
+                  <div fxLayoutAlign="center">
+                      <mat-icon 
+                      color="primary"
+                      [matTooltip]="taskSelected.status === 'on review' ? 'Task on review by the manager' :'' "
+                      [ngClass]="{'icon-disabled': !taskService.taskTimeStarted(taskSelected)}"
+                      (click)="taskSelected.status === 'pending' && taskService.taskTimeStarted(taskSelected) ? toggleStatus.emit():null">
+                      {{ taskSelected.status === 'pending' ? 'move_to_inbox' : taskSelected.status === 'on review' ? 'hourglass_full' : 'assignment_turned_in'  }}
+                      </mat-icon>
+                  </div>
+                   <mat-label class="label-action">
+                    TOGGLE STATUS
+                </mat-label>
+                </div>
+               <div fxFlex.gt-xs="15" fxFlex.xs="33" fxLayout="column">
+                <div fxLayoutAlign="center">
+                    <mat-icon [ngClass]="{'icon-disabled': taskService.taskTimeStarted(taskSelected)}" (click)="taskSelected.editable ? editTask.emit():null" color="primary">edit</mat-icon>
+                </div>
+                <mat-label class="label-action">
+                    EDIT
+                </mat-label>
+                 </div>
+                 <div fxFlex.gt-xs="15" fxFlex.xs="33" fxLayout="column">
+                <div fxLayoutAlign="center">
+                    <mat-icon [ngClass]="{'icon-disabled': taskService.taskTimeStarted(taskSelected)}" color="warn" (click)="!taskService.taskTimeStarted(taskSelected) ?  deleteTask.emit() : null">delete</mat-icon>
+                </div>
+                <mat-label class="label-action">
+                    DELETE TASK
+                </mat-label>
+                 </div>
+           </div>
+       </mat-card>
+</div>
+

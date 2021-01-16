@@ -256,16 +256,12 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
 }
 
 html, body { 
-  font-size:12px;
   height: 100%;
   width:100%;
   margin:0; 
   font-family: 'Open Sans Condensed', sans-serif;
- background-color:#d2d2d2;  }
-
-.global-font-size-ref{
-  font-size:14px;
-}
+ background-color:#d2d2d2;
+font-size: 12px; }
 
 .timepicker-overlay {
   z-index: 1100 !important;
@@ -296,13 +292,6 @@ i{
    animation-duration: 0.5s;
 }
 
-.error-message{
-    color:#E13526;
-    text-align: center !important;
-    position: absolute;
-}
-
-
 .modal{
   display: inline-block;
   overflow-y: auto;
@@ -316,5 +305,6 @@ a{
 .mat-form-full-width{
   width: 100%;
 }
+
 
 

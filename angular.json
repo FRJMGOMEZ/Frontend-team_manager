@@ -121,6 +121,46 @@
           }
         }
       }
+    },
+    "lp-dialogs": {
+      "projectType": "library",
+      "root": "projects/lp-dialogs",
+      "sourceRoot": "projects/lp-dialogs/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/lp-dialogs/tsconfig.lib.json",
+            "project": "projects/lp-dialogs/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/lp-dialogs/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/lp-dialogs/src/test.ts",
+            "tsConfig": "projects/lp-dialogs/tsconfig.spec.json",
+            "karmaConfig": "projects/lp-dialogs/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/lp-dialogs/tsconfig.lib.json",
+              "projects/lp-dialogs/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "team-manager-frontend",

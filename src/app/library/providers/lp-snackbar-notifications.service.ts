@@ -7,7 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class LpSnackbarNotificationsService {
 
   constructor(private _snackBar: MatSnackBar) { }
-  showSocketNotification(action: string, item: string, itemType: string, user: string, project?: string,status?:string) {
+  showNotification(action: string, item: string, itemType: string, user: string, project?: string,status?:string) {
      let message = ''
      switch(action){
        case 'POST':

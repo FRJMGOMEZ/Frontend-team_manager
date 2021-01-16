@@ -27,9 +27,7 @@ export class LpDateSelectorComponent implements  ControlValueAccessor {
   constructor() { }
   private propagateChange = (_: any) => { };
   public writeValue(date: Date) {
-    if (date) {
-      this.selectedDate = date;
-    }
+    this.selectedDate = date;
   }
   public registerOnChange(fn: any) { this.propagateChange = fn; }
   public registerOnTouched() { }

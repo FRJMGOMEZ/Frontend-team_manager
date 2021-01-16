@@ -1,0 +1,75 @@
+
+<mat-dialog-content >
+    <form fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutAlign="space-around" fxLayoutGap="50px" #taskForm="ngForm">
+          <div fxFlex="50" fxLayoutGap="25px" fxLayout="column">
+            <div>
+                <mat-icon *ngIf="prevDialog" (click)="dialogBack.emit()">keyboard_backspace</mat-icon>
+            </div>
+                <mat-form-field>
+                        <mat-label>Task name</mat-label>
+                        <input [(ngModel)]="task.name" name="name" required matInput>
+                </mat-form-field>
+                <mat-form-field >
+                        <mat-label>Description</mat-label>
+                        <textarea [(ngModel)]="task.description" name="description" required matInput cdkTextareaAutosize
+                            #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Participants</mat-label>
+                    <mat-select [(ngModel)]="task.participants" name="participants" required multiple>
+                        <mat-option [value]="participant._id" *ngFor="let participant of projectParticipants">
+                            {{participant.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label fxLayoutAlign="space-between">
+                    <div *ngIf="!priority.errors">
+                        Priority
+                    </div>
+                    <ng-container *ngIf=" priority && priority.touched && priority.errors">
+                      <mat-error *ngIf="priority.errors.isDecimal">The value can not be decimal</mat-error>
+                      <mat-error *ngIf="priority.errors.isNegative">The value can not be negative</mat-error>
+                      <mat-error *ngIf="priority.errors.maxVal">The max value is 3</mat-error>
+                      <mat-error *ngIf="priority.errors.minVal">The min value is 1</mat-error>
+                     </ng-container>
+                    </mat-label>
+                    <input inputNumberValidator #priority="ngModel" [minVal]="1" [maxVal]="3" [allowDecimals]="false" [allowNegativeValues]="false" [(ngModel)]="task.priority" name="priority" type="number" min="1" max="3" required matInput>
+                </mat-form-field>
+          </div>
+          <div fxLayout="column" fxLayoutAlign="space-around" fxFlex.gt-xs="50" fxLayoutGap="25px">
+                            <lp-date-selector
+                             dateFormat="time"
+                             placeholder="Start date" 
+                             (ngModelChange)="setDate('startDate',$event)"
+                             [minDate]="today" 
+                             required 
+                             [ngModel]="task.startDate | lpParseDate : 'date'" 
+                             name="startDate">
+                            </lp-date-selector>
+                            <lp-date-selector 
+                            dateFormat="time"
+                            [disabled]="!task.startDate"
+                            placeholder="End date"
+                            [ngModel]="task.endDate | lpParseDate : 'date'"
+                            (ngModelChange)="setDate('endDate',$event)"
+                            [minDate]="task.startDate | lpParseDate : 'date'"
+                            required
+                            name="endDate" 
+                            id="endDate" >
+                            </lp-date-selector>
+                            <div fxLayout="column">
+                                <div *ngFor="let string of timeString">{{string}}</div>
+                            </div>
+            </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions [style.margin-top]="'25px'" fxLayoutAlign="center">
+    <button (click)="postTask.emit(task)" *ngIf="!task._id" [disabled]="taskForm.invalid" mat-raised-button>
+        create </button>
+    <button  [disabled]="taskHasChanges() || taskForm.invalid" (click)="putTask.emit(checkChangesToPatch())" *ngIf="task._id" mat-raised-button>
+        save changes </button>
+    <button  (click)="close.emit()" mat-raised-button> Close </button>
+</mat-dialog-actions>
+ 
+
+

@@ -12,6 +12,12 @@
     },
     {
       "path": "./tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/lp-dialogs/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/lp-dialogs/tsconfig.spec.json"
     }
 ]
 

@@ -1,0 +1,16 @@
+.dates-container{
+    margin:20px
+}
+.btn-search-desktop{
+    margin-top:20px;
+    margin-bottom: 10px;
+}
+.btn-search-mobile{
+    margin:15px;
+}
+.btn-search-dialog{
+      margin-top:25px;
+}
+ ::ng-deep .mat-menu-panel{
+      max-width: none !important;
+}

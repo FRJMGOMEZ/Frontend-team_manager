@@ -1,0 +1,47 @@
+
+.mat-card-day{
+    cursor: pointer;
+    height: 10vh;
+   padding:5px !important
+}
+
+.mat-card-day-selected{
+    background-color:#d1870c !important
+}
+
+.mat-card-hour{
+    padding:0%!important;
+    width:22px;
+    height:22px
+}
+
+.div-task-low-p{
+    height: 10px;
+}
+.div-task-medium-p{
+    height: 15px;
+}
+.div-task-high-p{
+     height: 20px;
+}
+
+.a-task-toggle{
+    margin:5px;
+    color:#5464bd;
+    word-break: break-all;
+    max-width: 100%;
+}
+
+.div-scrollable-tasks {
+    overflow-x:scroll;
+        width:300px;
+        overflow-y:hidden;
+        margin:0px;
+}
+
+.card-week-day{
+width: 11vh;
+height: 25px !important
+}
+
+

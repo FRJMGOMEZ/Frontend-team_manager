@@ -1,0 +1,29 @@
+
+<div [ngStyle.xs]="{'font-size': '10px'}" fxLayout="column" class="div-progress-container" fxLayout="column" >
+    <div [fxFlex]=" taskSelected.deliverDate ? '40' : '100'"  class="div-progress" fxLayoutGap="5px" fxLayout="row">
+        <div  class="div-date" fxLayout="row" fxLayoutAlign="center" fxFlex="10"> {{taskSelected.startDate | date : 'M/d/yy, H:mm '}} </div>
+        <div fxFlex="80" fxLayoutAlign="center">
+            <div fxFlex="90" fxLayout="column" class="progress-bar-container" >
+                <div [style.width.%]="timelineProgress" class="progress-bar" ></div>
+            </div>
+        </div>
+        <div class="div-date" fxLayout="column" fxLayoutAlign="center" fxFlex="10">  {{taskSelected.endDate | date : 'M/d/yy, H:mm '}} </div>
+    </div>
+    <div fxFlex="40" *ngIf="taskSelected.deliverDate"  class="div-progress" fxLayout="column">
+        <div fxLayoutAlign="center" [style.width.%]="'100'">
+            <div fxFlex="60" fxLayout="column" class="progress-bar-container" >
+                    <div [style.width.%]="extraTimeProgress" class="progress-bar"></div>
+            </div>
+        </div>
+        <div class="div-extratime-info" fxFlex="10" fxLayout="column" fxLayoutAlign="center" >
+                 <div fxLayoutAlign="center">
+                     EXTRA TIME
+                    <mat-icon matTooltip="Increased while the task is on review" color="accent">info</mat-icon>
+                </div>  
+                <div fxLayoutAlign="center">
+                    (<p *ngFor="let time of extraTimeStringArray; let i = index">{{time}}{{extraTimeStringArray[i+1]? ', ' : ''}} </p>)
+                </div>
+        </div>
+    </div>
+</div>
+

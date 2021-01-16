@@ -1,22 +1,27 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { WebSocketsService } from '../shared/providers/web-sockets.service';
-import { AuthService } from '../auth/shared/providers/auth.service';
-import { ProjectService } from '../shared/providers/project.service';
+import { Component, OnInit, OnDestroy,  ViewChild, AfterViewInit } from '@angular/core';
+import { WebSocketsService } from '../core/shared/providers/web-sockets.service';
+import { AuthService } from '../core/shared/auth/shared/providers/auth.service';
+import { ProjectService } from '../core/shared/providers/project.service';
 
-import { Project } from '../shared/models/project.model';
+import { Project } from '../core/models/project.model';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { TaskService } from '../shared/providers/task.service';
-import { DialogsService } from '../shared/providers/dialogs.service';
+import { TaskService } from '../core/shared/providers/task.service';
+import { DialogsService } from '../core/shared/providers/dialogs.service';
+import { RouterOutlet } from '@angular/router';
+import { slideInAnimation } from '../core/shared/animations/animations';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-pages',
   templateUrl: './pages.component.html',
-  styleUrls: ['./pages.component.css']
+  styleUrls: ['./pages.component.css'],
+  animations: [
+    slideInAnimation
+  ]
 })
-export class PagesComponent implements OnInit, OnDestroy {
-
-  
-
+export class PagesComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('outlet') routerOutlet: RouterOutlet;
+  routesAnimation:string = '';
   projects:Project[]=[]
   constructor(private wSService:WebSocketsService,
                 
@@ -27,9 +32,8 @@ export class PagesComponent implements OnInit, OnDestroy {
                 private dialogService:DialogsService,
                 
                 private taskService:TaskService,
-                private deviceDetectorService: DeviceDetectorService){ }
+                public deviceDetectorService: DeviceDetectorService){ }
   ngOnInit() {
-
     this.wSService.emit('user-in-app', { userId: this.authService.userOnline._id })
     this.projectService.getProjects().subscribe((projects)=>{
       this.projects = projects;
@@ -37,14 +41,16 @@ export class PagesComponent implements OnInit, OnDestroy {
          this.wSService.emit('user-in-project',{projectId:eachProject._id})
       })
       this.projectService.listenningProjectSockets()
-      this.taskService.listenningTaskSockets();
+      this.taskService.listenningTasksEvents();
     })
   }
-
-  checkIfIsMobile(){
-    return this.deviceDetectorService.isMobile()
+  ngAfterViewInit(){
+     this.projectService.selectedProject$.subscribe(()=>{
+       timer().subscribe(()=>{
+         this.routesAnimation = this.routerOutlet.activatedRouteData.animation;
+       })
+     })
   }
-
   postTask(){
     this.dialogService.openEditCreateTaskDialog()
   }

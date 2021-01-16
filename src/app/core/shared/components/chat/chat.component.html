@@ -1,0 +1,14 @@
+<div class="div-chat-container" fxLayout.gt-xs="row" fxLayout.xs="column">
+    <div [fxFlex.xs]="showUsers ? 25 : 8" [fxFlex.gt-xs]="showUsers ? 15 : 8">
+        <div fxLayoutAlign="center">
+            <mat-icon class="icon-users" [color]="showUsers ? 'accent' : 'primary'" (click)="showUsers = !showUsers">supervised_user_circle</mat-icon>
+        </div>
+        <chat-users *ngIf="showUsers" [users]="users" ></chat-users>
+    </div>
+    <div [fxFlex.xs]="showUsers ? 75 : 92" [fxFlex.gt-xs]="showUsers ? 85 : 92" fxLayout="column">
+        <chat-messages fxFlex="75" [userOnline]="userOnline" [messages]="messages" [messagesCount]="messagesCount" (getMessages)="getMessages.emit($event)" (downloadFile)="downloadFile.emit($event)"></chat-messages>
+        <chat-input fxFlex="25" (sendMsg)="sendMessage($event)" ></chat-input>
+    </div>
+</div>
+
+

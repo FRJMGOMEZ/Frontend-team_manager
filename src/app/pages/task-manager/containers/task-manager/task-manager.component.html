@@ -1,0 +1,41 @@
+<div  *ngIf="deviceDetectorService.isDesktop() && taskSelected"  fxLayoutAlign.gt-xs="space-around" fxLayout.xs="column" fxLayout.gt-xs="row" fxLayoutGap="15px"  [class]="deviceDetectorService.isMobile() ? 'task-manager-container-mobile' : 'task-manager-container'" >
+     <div [ngStyle.gt-xs]="{'margin-top': '70px'}"  fxFlex.gt-xs="25" fxFlex.xs="30"  fxLayout="column" >
+        <div fxLayoutAlign="center">
+            <app-task-manager-filter fxFlex="100" [participants]="participants" [projectId]="selectedProject" (getItems)="getTasks($event,0)"></app-task-manager-filter>
+        </div>
+        <div  fxLayoutAlign="center">
+            <app-task-manager-list fxFlex="100" (selectTask)="selectTask($event)" [tasksList]="tasksList" [taskSelected]="taskSelected ? taskSelected : null" (getItems)="getTasks(taskQueryString,$event)" [taskTotal]="taskTotal" ></app-task-manager-list>
+        </div>
+    </div>
+    <div fxFlex.gt-xs="75" fxFlex.xs="70">
+        <router-outlet ></router-outlet>
+    </div>
+     <!-- <app-task-manager-panel   [taskSelected]="taskSelected" (deleteTask)="deleteTask()" (toggleStatus)="toggleStatus()" (editTask)="editTask()" ></app-task-manager-panel> -->
+    </div>
+<div *ngIf="!deviceDetectorService.isDesktop() && taskSelected" class="task-manager-container-mobile" >
+    <mat-tab-group mat-stretch-tabs  mat-align-tabs="center">
+      <mat-tab label="Taks List">
+            <div fxLayout="column">
+                <div fxLayoutAlign="center">
+                    <app-task-manager-filter fxFlex="10" [participants]="participants" [projectId]="selectedProject" (getItems)="getTasks($event,0)"></app-task-manager-filter>
+                </div>
+                <div  fxLayoutAlign="center">
+                    <app-task-manager-list fxFlex="90" (selectTask)="selectTask($event)" [tasksList]="tasksList" [taskSelected]="taskSelected ? taskSelected._id : null" (getItems)="getTasks(taskQueryString,$event)" [taskTotal]="taskTotal" ></app-task-manager-list>
+                </div> 
+            </div>
+      </mat-tab>
+      <mat-tab [label]="taskSelected ? taskSelected.name : ''"> 
+          <div fxFlex.gt-xs="75" fxFlex.xs="70">
+              <router-outlet fxFlex.gt-xs="75" fxFlex.xs="70"></router-outlet>
+          </div>
+     <!--   <app-task-manager-panel   [taskSelected]="taskSelected" (deleteTask)="deleteTask()" (toggleStatus)="toggleStatus()" (editTask)="editTask()" ></app-task-manager-panel> -->
+      </mat-tab>
+    </mat-tab-group>
+</div>
+
+<div fxLayoutAlign="center" class="div-no-tasks" *ngIf="!taskSelected">
+          <h4>THERE ARE NO TASKS IN THE CURRENT PROJECT</h4>
+</div>
+
+
+

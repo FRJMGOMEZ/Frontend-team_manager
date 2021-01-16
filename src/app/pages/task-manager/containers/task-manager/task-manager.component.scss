@@ -1,0 +1,25 @@
+
+
+.task-manager-container{
+   height: 85vh; 
+   width:100%
+}
+
+.task-manager-container-mobile{
+   height: 85vh!important;
+   width: 100% !important;
+   .mat-tab-group{
+   height: 100%;
+   }
+}
+
+::ng-deep .mat-tab-body-wrapper{
+   height: 100% !important;
+   margin:0px !important
+}
+
+.div-no-tasks{
+   margin:50px;
+}
+
+

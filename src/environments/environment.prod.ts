@@ -1,6 +1,6 @@
 import { SocketIoConfig } from 'ngx-socket-io';
 export const environment = {
   production: true,
-  baseUrl:'/',
+  apiUrl:'/',
   socketConfig: <SocketIoConfig>{ url: '', options: {} }
 };

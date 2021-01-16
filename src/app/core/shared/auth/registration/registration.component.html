@@ -1,0 +1,73 @@
+
+<div class="container-fluid">
+     <!-- create a parent component to show the image -->
+     <img fxHide.xs fxShow.gt-xs class="img-background" [src]="imgBackground" alt="">
+      <div [ngClass]="checkStyleByDevice()" >
+          <div class="registration-box" fxLayout="column">
+              <h1 fxLayoutAlign="center" [style.font-weight]="'bolder'">
+                BEE TEAM
+            </h1>
+            <hr>
+            <h3 fxLayoutAlign="center" [style.font-weight]="'bolder'">REGISTRATION</h3>
+            <form ngNativeValidate  [formGroup]='userForm' id="registerForm" (ngSubmit)='doRegistration()'>
+                  <div fxLayoutAlign="center">
+                    <mat-form-field>
+                      <mat-label for="name">NAME</mat-label>
+                     <input matInput formControlName='name' id="name" name='name' placeholder="NAME" type="text" autofocus="" >
+                      </mat-form-field>
+                  </div>
+                  <ng-container *ngIf="userForm.controls.name.invalid && userForm.controls.name.touched" >
+                                     <p *ngIf="userForm.controls.name.errors.minlength && !userForm.controls.name.errors.required" class="error-message">
+                                                    El nombre necesita un mínimo de 5 caracteres
+                                    </p>
+                   </ng-container>
+                    <div [style.margin-top]="'0.5em'" fxLayoutAlign="center">
+                        <mat-form-field>
+                           <mat-label for="email">EMAIL</mat-label>
+                           <input matInput formControlName='email' id="email" name='email' placeholder="Email" type="email" autofocus="" >
+                        </mat-form-field>
+                    </div>
+                 <ng-container *ngIf="userForm.controls.email.invalid && userForm.controls.email.touched" >
+                                          <p *ngIf="userForm.controls.email.errors.email" class="error-message">
+                                                        El valor introducido debe ser un email válido
+                                          </p>
+                    </ng-container>
+                    <div [style.margin-top]="'1em'" fxLayoutAlign ="center"> 
+                        <mat-form-field>
+                             <input matInput formControlName='password1' id="password1" name='password1'  placeholder="Password1" type="password" >
+                        </mat-form-field>
+                    </div>
+                    <ng-container *ngIf="userForm.controls.password1.invalid && userForm.controls.password1.touched" >
+                                    <p *ngIf="userForm.controls.password1.errors.hasNumeric && !userForm.controls.password1.errors.required" class="error-message">
+                                                    La contraseña debe contener al menos un caracter numérico
+                                    </p>
+                                    <p *ngIf="userForm.controls.password1.errors.minLength && !userForm.controls.password1.errors.required && !userForm.controls.password1.errors.hasNumeric" class="error-message">
+                                                    La contraseña debe de tener un mínimo de 8 caracteres
+                                    </p>
+                    </ng-container>
+                    <div [style.margin-top]="'0.5em'" fxLayoutAlign ="center" >
+                          <mat-form-field>
+                              <input matInput formControlName='password2' id="password2" name='password2' placeholder="Password2" type="password" >
+                          </mat-form-field>
+                    </div>
+                     <ng-container *ngIf="userForm.controls.password2.invalid && userForm.controls.password2.touched" >
+                                     <p *ngIf="userForm.controls.password2.errors.hasNumeric && !userForm.controls.password2.errors.required"class="error-message">
+                                                    La contraseña debe contener al menos un caracter numérico
+                                    </p>
+                                    <p *ngIf="userForm.controls.password2.errors.minLength && !userForm.controls.password2.errors.required && !userForm.controls.password2.errors.hasNumeric" class="error-message">
+                                                    La contraseña debe de tener un mínimo de 8 caracteres
+                                    </p>
+                    </ng-container>
+                    <div fxLayoutAlign="center" *ngIf="displayPasswordError(userForm)" [style.margin-top]="'3em'" >
+                                <p class='error-message'>Las contraseñas deben de ser iguales</p>
+                    </div>
+                <div [style.margin-top]="'1em'" fxLayoutAlign="center">
+                     <button mat-raised-button [disabled]="userForm.invalid" type='submit'><strong>REGISTER</strong></button>
+                </div>
+            </form>
+            <div fxLayoutAlign="center" [style.margin-top]="'1em'">
+                <a (click)="navigateToLogin()">Login</a>
+            </div>
+          </div>
+      </div>
+</div>

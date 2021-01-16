@@ -1,0 +1,47 @@
+
+
+
+<!-- 
+   FIXME: Cambiar display según formato 
+ -->
+
+<mat-toolbar >
+    <mat-toolbar-row>
+   <a fxShow.xs fxShow.md fxHide.gt-md>
+      <mat-icon  color="accent" (click)="toggleSideMenu.emit()">menu</mat-icon>
+   </a>
+   <a fxHide.xs fxHide.md fxShow.gt-md   >
+      <mat-icon [routerLink]="['/pages/home']" routerLinkActive="router-link-active" appNotifications 
+      class="icon-pages"  color="accent"  matTooltip="navigate to home">home</mat-icon>
+   </a>
+   <a fxShow.lg fxHide.xs fxHide.md >
+      <mat-icon [routerLink]="['/pages/calendar']" routerLinkActive="router-link-active"
+         matTooltip="navigate to calendar" class="icon-pages" color="accent">calendar_today</mat-icon>
+   </a>
+   <a fxShow.lg fxHide.xs fxHide.md  >
+      <mat-icon [routerLink]="['/pages/task-manager']" routerLinkActive="router-link-active"
+         matTooltip="navigate to task manager" class="icon-pages" color="accent">assignment</mat-icon>
+   </a>
+   <a fxShow.lg fxHide.xs fxHide.md  >
+      <mat-icon  class="icon-pages"  color="accent">assessment</mat-icon>
+   </a>
+   <span class="spacer"></span>
+   <ng-content select="[id='project-selector']" ></ng-content>  
+   <div ngClass.gt-xs="div-task-btn-desktop" ngClass.xs="'div-task-btn-mobile">
+      <ng-content  select="[id='new-task']"></ng-content>
+   </div>
+   <a fxShow.gt-xs fxHide.xs>
+      <mat-icon color="accent">share</mat-icon>
+   </a>
+   <a fxShow.gt-xs fxHide.xs>
+      <mat-icon color="primary">settings</mat-icon>
+   </a>
+   <a fxShow.gt-xs fxHide.xs>
+      <mat-icon color="warn" (click)="logout.emit()" >exit_to_app</mat-icon>
+   </a>
+  </mat-toolbar-row>
+
+</mat-toolbar>
+
+<!-- 
+ -->

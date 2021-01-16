@@ -1,0 +1,20 @@
+ <div *ngIf="files"   fxLayout="column">
+       <div fxLayout="row" class="div-files">
+           <div  fxLayout="column" *ngFor="let file of files; let i = index" >
+            <img class="file-icon-temp" [src]="file | fileIcon | async" alt="">
+            <div class="div-file-title">
+                    {{file.name}}
+            </div>
+        </div>
+       </div>
+        <div>
+            <mat-form-field class="mat-form-full-width">
+                <mat-label>You can write a message</mat-label>
+                    <textarea  cdkTextareaAutosize cdkAutosizeMaxRows="3" rows="3" cols="40"  class="textarea" [style.margin-top]="'10px'" [(ngModel)]="text" matInput  ></textarea>
+            </mat-form-field>
+        </div>
+        <div >
+            <button fxFlex="50" mat-raised-button (click)="accept()">OK</button>
+            <button fxFlex="50" mat-raised-button (click)="cancel()" >cancel</button>
+        </div>
+</div>

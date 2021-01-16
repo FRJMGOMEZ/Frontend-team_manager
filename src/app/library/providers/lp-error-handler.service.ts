@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { LpSnackbarNotificationsService } from './lp-snackbar-notifications.service';
-import { GDService } from '../components/global-dialogs/global-dialogs.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LpErrorHandlerService {
 
-  constructor(private plSnackbarNotificationsService:LpSnackbarNotificationsService, private gDService:GDService) { }
+  constructor(private plSnackbarNotificationsService: LpSnackbarNotificationsService) { }
   handleError(error: HttpErrorResponse) {
 
      let errorMessage = error.error.message

@@ -25,6 +25,7 @@
     "@angular/router": "~10.0.4",
     "chart.js": "^2.9.3",
     "jwt-decode": "^3.0.0",
+    "lp-dialogs": "11.0.1",
     "ng-pick-datetime": "^7.0.0",
     "ng2-charts": "^2.4.2",
     "ngx-device-detector": "^2.0.0",
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1000.3",
+    "@angular-devkit/build-ng-packagr": "~0.1000.3",
     "@angular/cli": "~10.0.3",
     "@angular/compiler-cli": "~10.0.4",
     "@types/node": "^12.11.1",
@@ -49,6 +51,7 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~3.3.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "ng-packagr": "^10.0.0",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",

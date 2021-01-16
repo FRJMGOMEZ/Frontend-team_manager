@@ -1,0 +1,10 @@
+ <h2 mat-dialog-title> {{title}} </h2>
+<mat-dialog-content>
+    <p>
+        {{message}}
+    </p>
+</mat-dialog-content>
+<mat-dialog-actions>
+<button class="mat-raised-button" (click)="hideModal(true)">Accept</button>
+<button class="mat-raised-button" (click)="hideModal(false)">Cancel</button>
+</mat-dialog-actions>
