@@ -1,0 +1,21 @@
+<lp-bottom-sheet-info [componentToShow]="infoComponent" ></lp-bottom-sheet-info>
+<ng-template #template>
+  <router-outlet>
+  </router-outlet>
+</ng-template>
+<div class="div-home-container" fxLayout="row">
+    <app-notifications-filter fxFlex="20" ></app-notifications-filter>
+     <mat-tab-group (selectedTabChange)="navigate($event.index);" [fxFlex]="notificationSelected ? '45' : '75'" mat-stretch-tabs  mat-align-tabs="center">
+          <mat-tab label="NOTIFICATIONS TO CHECK">
+                  <div *ngIf="childPath && childPath === 'new'">
+                      <ng-container  *ngTemplateOutlet="template"></ng-container>
+                  </div>
+          </mat-tab>
+          <mat-tab label="NOTIFICATIONS RECORD"> 
+                   <div *ngIf="childPath && childPath === 'record'" >
+                       <ng-container *ngTemplateOutlet="template"></ng-container>
+                   </div>
+          </mat-tab>
+    </mat-tab-group>
+    <app-notification-change-detail [fxFlex]="notificationSelected ? '30' : '0'" [notification]="notificationSelected" (unselectNotification)="unselectNotification()"></app-notification-change-detail>
+</div>

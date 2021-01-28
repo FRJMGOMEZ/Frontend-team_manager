@@ -1,0 +1,14 @@
+
+
+ <div>
+    <span fxFlex="14">Project</span>
+    <span fxFlex="14">Type</span>
+    <span fxFlex="14">User</span>
+    <span fxFlex="14">Method</span>
+    <span fxFlex="14">Date</span>
+  </div>
+<div #divNotifications [style.height.px]="viewportHeight" class="div-notifications">
+  <div *ngFor="let notification of notifications">
+     <app-notification-card [color]="notificationSelected && (notificationSelected._id=== notification._id) ? '#7b87cc' : 'white' " [height]="notificationHeight" (selectNotification)="selectNotification($event)" [notification]="notification" [userOnline]="userOnline" (toggleNotification)="toggleNotification($event)" ></app-notification-card>
+  </div>
+</div>

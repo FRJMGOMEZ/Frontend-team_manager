@@ -1,7 +1,7 @@
 import { User } from './user.model';
 import { Project } from './project.model';
 
-export class TaskModel {
+export class Task {
     constructor(
         public name: string,
         public description: string,

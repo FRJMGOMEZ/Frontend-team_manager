@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, SimpleChanges } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { TaskModel } from '../../../../core/models/task.model';
+import { Task } from '../../../../core/models/task.model';
 
 @Component({
   selector: 'app-task-manager-list',
@@ -14,13 +14,14 @@ export class TaskManagerListComponent implements OnInit {
   @Input() taskTotal:number = 0
   @Input() taskFrom:number = 0;
   @Input() taskSelected:string;
-  @Input() tasksList:TaskModel[] = [];
+  @Input() tasksList:Task[] = [];
   @Output() selectTask = new EventEmitter<string>();
   @Output() getItems = new EventEmitter<number>();
   displayedColumns: string[] = ['name', 'end date', 'status', 'priority', 'options'];
   constructor() { }
   ngOnInit(): void {}
   paginatorChange(event){
+    console.log({event})
     this.getItems.emit(this.pageSize * event.pageIndex  )
   }
   ngOnChanges(changes:SimpleChanges){

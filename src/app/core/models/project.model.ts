@@ -9,7 +9,10 @@ export class Project{
                 public messages?:string[],
                 public tasks?:string[],
                 public status?:boolean,
-                public _id?: string, ){
+                public _id?: string,
+                public prevStates?: { [key: string]: any }[],
+                
+                ){
     }
 }
 

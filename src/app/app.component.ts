@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { WebSocketsService } from './core/shared/providers/web-sockets.service';
+import { WebSocketsService } from './core/providers/web-sockets.service';
 
 
 @Component({

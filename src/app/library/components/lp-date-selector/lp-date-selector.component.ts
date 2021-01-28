@@ -32,8 +32,13 @@ export class LpDateSelectorComponent implements  ControlValueAccessor {
   public registerOnChange(fn: any) { this.propagateChange = fn; }
   public registerOnTouched() { }
   setDate(date?: Date, year?: string, month?: string) {
-    this.selectedDate = date ? date : (year && month) ? new Date(Number(year), Number(month), 1, 0, 0, 0, 0) : null;
-    this.propagateChange(this.selectedDate)
+    if(date){
+      this.selectedDate = date;
+      this.propagateChange(this.selectedDate)
+    }else if(year.length === 4){
+      this.selectedDate = new Date(Number(year), Number(month), 1, 0, 0, 0, 0);
+      this.propagateChange(this.selectedDate)
+    }
   }
   monthValue(month: string) {
     return ArrayOperationsService.monthValue(month)

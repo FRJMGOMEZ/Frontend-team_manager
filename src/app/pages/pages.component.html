@@ -3,18 +3,19 @@
 <mat-sidenav-container>
   <mat-sidenav #start [mode]="'side'">
              <mat-list>
+               <mat-list-item fxLayoutAlign="center" matTooltip="navigate to notifications">
+                  <mat-icon #homeIcon [color]="path === 'home' ? 'primary' : 'accent'" (click)="navigate('home')" routerLinkActive="router-link-active"
+                     color="accent"  matTooltip="navigate to home">home</mat-icon>
+               </mat-list-item>
                <mat-list-item fxLayoutAlign="center" matTooltip="navigate to calendar">
-                  <a  [routerLink]="['calendar']" routerLinkActive="router-link-active"><mat-icon  color="accent">calendar_today</mat-icon></a>
+                  <mat-icon [color]="path === 'calendar' ? 'primary' : 'accent'" (click)="navigate('calendar')" routerLinkActive="router-link-active">
+                     calendar_today
+                  </mat-icon>
                </mat-list-item>
                <mat-list-item fxLayoutAlign="center" matTooltip="navigate to task manager">
-                  <a [routerLink]="['task-manager']" routerLinkActive="router-link-active">
-                     <mat-icon color="accent">assignment</mat-icon>
-                  </a>
-               </mat-list-item>
-               <mat-list-item fxLayoutAlign="center" matTooltip="navigate to charts">
-                  <a [routerLink]="['task-manager']">
-                     <mat-icon  class="icon-pages" color="accent">assessment</mat-icon>
-                  </a>
+                  <mat-icon [color]="path === 'task-manager' ? 'primary' : 'accent'" (click)="navigate('task-manager')" routerLinkActive="router-link-active">
+                     assignment
+                  </mat-icon>
                </mat-list-item>
                <mat-list-item fxLayoutAlign="center">
                   <a >
@@ -27,25 +28,59 @@
                   </a>
                </mat-list-item>
                <mat-list-item fxLayoutAlign="center">
-                  <a (click)="logout()" >
+                  <a >
                      <mat-icon color="warn" (click)="logout()">exit_to_app</mat-icon>
                   </a>
                </mat-list-item>
              </mat-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <app-header (toggleSideMenu)="start.toggle()" (logout)="logout()" >
-          <app-projects-smart id="project-selector" [projects]="projects" > </app-projects-smart>
-         <button fxLayout="center" ngClass.gt-xs="new-task-btn-desktop" ngClass.xs="new-task-btn-mobile" id="new-task" (click)="postTask()" color="accent" [disabled]="!projectService.selectedProject" mat-raised-button> <small>NEW TASK</small></button>
-    </app-header >
-      <div [class]="deviceDetectorService.isMobile() ? 'main-mobile' : 'main'">
-        <div *ngIf="projectService.selectedProject" [@routeAnimations]="routesAnimation" >
-         <router-outlet #outlet="outlet"></router-outlet>
-        </div>
+     <mat-toolbar >
+    <mat-toolbar-row>
+   <a fxShow.xs fxShow.md fxHide.gt-md>
+      <mat-icon  color="accent" (click)="start.toggle()" matBadge matBadgeOverlap="false" appNotifications >menu</mat-icon>
+   </a>
+   <a fxHide.xs fxHide.md fxShow.gt-md   >
+      <mat-icon #homeIcon [color]="path === 'home' ? 'primary' : 'accent'" (click)="navigate('home')" routerLinkActive="router-link-active" matBadge matBadgeOverlap="false" appNotifications 
+      class="icon-pages"  color="accent"  matTooltip="navigate to home">home</mat-icon>
+   </a>
+   <a fxShow.lg fxHide.xs fxHide.md >
+      <mat-icon [color]="path === 'calendar' ? 'primary' : 'accent'" (click)="navigate('calendar')" routerLinkActive="router-link-active"
+         matTooltip="navigate to calendar" class="icon-pages" color="accent">calendar_today</mat-icon>
+   </a>
+   <a fxShow.lg fxHide.xs fxHide.md  >
+      <mat-icon [color]="path === 'task-manager' ? 'primary' : 'accent'" (click)="navigate('task-manager')" routerLinkActive="router-link-active"
+         matTooltip="navigate to task manager" class="icon-pages" color="accent">assignment</mat-icon>
+   </a>
+   <a fxShow.lg fxHide.xs fxHide.md  >
+      <mat-icon lpPreventNavigation  class="icon-pages"  color="accent">assessment</mat-icon>
+   </a>
+   <span class="spacer"></span>
+     <app-projects-smart id="project-selector"> </app-projects-smart>
+   <div ngClass.gt-xs="div-task-btn-desktop" ngClass.xs="'div-task-btn-mobile">
+       <button fxLayout="center" ngClass.gt-xs="new-task-btn-desktop" ngClass.xs="new-task-btn-mobile" id="new-task" (click)="postTask()" color="accent" [disabled]="!projectService.selectedProject" mat-raised-button> <small>NEW TASK</small></button>
+   </div>
+   <a fxShow.gt-xs fxHide.xs>
+      <mat-icon color="accent">share</mat-icon>
+   </a>
+   <a fxShow.gt-xs fxHide.xs>
+      <mat-icon color="primary">settings</mat-icon>
+   </a>
+   <a fxShow.gt-xs fxHide.xs>
+      <mat-icon color="warn" (click)="logout()" >exit_to_app</mat-icon>
+   </a>
+  </mat-toolbar-row>
+</mat-toolbar>
+    <div id="main-content" [class]="deviceDetectorService.isMobile() ? 'main-mobile' : 'main'">
+           <div *ngIf="projectService.selectedProject" [@routeAnimations]="routesAnimation" >
+           <router-outlet id="main-content" #outlet="outlet"></router-outlet>
+          </div>
             <app-no-projects *ngIf="!projectService.selectedProject"></app-no-projects>
-      </div>
+   </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+  
 
 
 

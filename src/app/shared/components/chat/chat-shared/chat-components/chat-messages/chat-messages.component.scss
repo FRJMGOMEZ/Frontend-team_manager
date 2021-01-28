@@ -1,0 +1,37 @@
+
+
+
+
+.div-messages{
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.div-messages::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+.file-icon{
+   height: 70px;
+  width: 70px;
+  cursor: pointer;
+}
+
+.div-file-icon{
+  height: 125px;
+width: 100px;
+
+.div-file-title{
+  max-height: 20px;
+  font-size: 10px;
+  word-break: break-all; 
+}
+}
+
+
+
+
+
+
+
+
+
