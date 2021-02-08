@@ -1,10 +1,8 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, SimpleChanges, OnChanges } from '@angular/core';
 import { LpDialogsService } from 'lp-dialogs';
 import { Task } from '../../../core/models/task.model';
 import { TaskService } from '../../../core/providers/task.service';
-import { OOService } from '../../../library/providers/objects-operations.service';
-
-
+import { LpObject } from 'lp-operations';
 
 @Component({
   selector: 'app-task-detail',
@@ -12,40 +10,24 @@ import { OOService } from '../../../library/providers/objects-operations.service
   styleUrls: ['./task-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush 
 })
-export class TaskDetailComponent implements  OnChanges  {
-
-  @Input() isDialog:boolean = true;
-  @Input() taskSelected: Task
-  taskV:number
-  taskVersions:Task[]=[]
-  @Output() close = new EventEmitter<any>();
+export class TaskDetailComponent implements OnChanges  {
+  @Input() taskSelected: Task;
+  taskPristine:Task;
+  @Input() date: number;
+  @Input() prevDialog: string
+  prevTask:Task;
   @Output() back = new EventEmitter<any>()
   @Output() editTask:EventEmitter<string> = new EventEmitter<string>()
   @Output() restoreVersion: EventEmitter<{ taskChanges: { [key: string]: any }, id: string }> = new EventEmitter<{ taskChanges: { [key: string]: any }, id: string }>()
-  @Input() prevDialog:string
-
+  isLastVersion: boolean;
+  currentVersion:number
   constructor(public tasksService: TaskService, private lpDialogsService:LpDialogsService){}
-  ngOnChanges(changes:SimpleChanges){
-     if(changes.taskSelected && this.taskSelected){
-      this.generateVersions()
-      this.taskV = this.taskSelected.prevStates.length ;
-     }
-  }
-  isLastVersion(){
-   return this.taskV > (this.taskSelected.prevStates.length-1)
-  }
-  /////TODO: fix when come back to last version ///
-  getVersion(taskBase,taskToMerge){
-      return  OOService.mergeObjects(taskBase,taskToMerge);
-  }
-  generateVersions(){
-      this.taskVersions = [];
-      this.taskVersions.push(this.taskSelected)
-      for (let i = this.taskSelected.prevStates.length; i >= 1; i--) {
-        this.taskVersions.unshift(this.getVersion(this.taskVersions[0], this.taskSelected.prevStates[i - 1]))
-      }
-  }
 
+  ngOnChanges(changes:SimpleChanges){
+    if (changes.taskSelected && this.taskSelected) {
+      this.taskPristine = LpObject.copyObject(this.taskSelected);
+    }
+  }
 
   restore(){
     this.lpDialogsService.openConfirmDialog('THIS VERSION WILL REPLACE THE CURRENT ONE', 'Are you sure?').subscribe((res) => {
@@ -55,14 +37,19 @@ export class TaskDetailComponent implements  OnChanges  {
     })
   }
   checkChangesToPatch() {
-      let obj = OOService.getObjectDifferences(this.taskSelected, this.taskVersions[this.taskV]);
+      let obj = LpObject.getObjectDifferences(this.taskSelected, this.prevTask);
       return { taskChanges: obj, id: this.taskSelected._id }
   }
   versionIsDifferent(){
-    return !OOService.areEquals(this.taskVersions[this.taskV], this.taskSelected)
+    return !LpObject.areEquals(this.prevTask, this.taskSelected)
   }
   propertyHasChanged(key:string){
-    return this.taskVersions[this.taskV - 1] ? JSON.stringify(this.taskVersions[this.taskV - 1][key]) != JSON.stringify(this.taskVersions[this.taskV][key]) :false
+    return this.currentVersion != 0 ?this.prevTask ? JSON.stringify(this.prevTask[key]) != JSON.stringify(this.taskSelected[key]) : false : false;
+  }
+
+  setVersion(task:Task){
+  this.taskSelected = task;
+  this.isLastVersion = LpObject.areEquals(this.taskSelected, this.taskPristine);
   }
 
 }

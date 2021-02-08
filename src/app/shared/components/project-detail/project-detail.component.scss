@@ -1,0 +1,26 @@
+.category-div{
+    margin-top:20px;
+    width:100%;
+    h5{
+        font-weight:bolder;
+        margin-bottom:5px;
+        text-align: center;
+    }
+
+    p{
+        text-align: center;
+    }
+}
+
+.property-changed{
+    color:#d1870c
+}
+
+.ul-users{
+    max-height: 100px;
+    overflow-y: scroll;
+}
+
+.ul-users::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}

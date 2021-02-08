@@ -1,5 +1,6 @@
 import { User } from './user.model';
 import { Project } from './project.model';
+import { PrevState } from './prev-state.model';
 
 export class Task {
     constructor(
@@ -14,7 +15,7 @@ export class Task {
         public endDate: number,
         public disabled:boolean,
         public editable?:boolean,
-        public prevStates?: { [key: string]: any }[],
+        public prevStates?: PrevState[],
         public _id?: string,
         public deliverDate?: number,
         public validationDate?: number,

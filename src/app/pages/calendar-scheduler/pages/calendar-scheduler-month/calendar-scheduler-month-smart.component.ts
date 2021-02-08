@@ -3,13 +3,12 @@ import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Day } from 'src/app/core/models/day.model';
 import { Task } from 'src/app/core/models/task.model';
-import { ArrayOperationsService } from '../../../../library/providers/array-operations.service';
-import { OOService } from '../../../../library/providers/objects-operations.service';
+
 import { ActivatedRoute } from '@angular/router';
 import { TaskService } from '../../../../core/providers/task.service';
 import { DialogsService } from '../../../../core/providers/dialogs.service';
-
-
+import { LpArray } from '../../../../../../projects/lp-operations/src/lp-array';
+import { LpObject } from 'lp-operations';
 
 @Component({
     selector: 'app-calendar-scheduler-month-smart',
@@ -36,7 +35,7 @@ export class CalendarSchedulerMonthSmartComponent implements OnInit, OnDestroy {
     projectSelectionSubs: Subscription;
     timeRange: number[];
     days: Day[];
-    constructor(private arrayOperationsService: ArrayOperationsService,
+    constructor(
         public taskService: TaskService,
         public dialogsService: DialogsService,
         private cdr: ChangeDetectorRef,
@@ -86,7 +85,7 @@ export class CalendarSchedulerMonthSmartComponent implements OnInit, OnDestroy {
         })]
     }
     getTasks() {
-        this.taskService.getTasks('month', OOService.toQueryString({ project: this.selectedProject, from: this.timeRange[0], to: this.timeRange[1] })).pipe(map((res: any) => { return res.tasks })).subscribe((tasks: Task[]) => {
+        this.taskService.getTasks('month', LpObject.toQueryString({ project: this.selectedProject, from: this.timeRange[0], to: this.timeRange[1] })).pipe(map((res: any) => { return res.tasks })).subscribe((tasks: Task[]) => {
             tasks.forEach((eachTask:Task)=>{
                 this.insertTask(eachTask)
             })
@@ -100,7 +99,7 @@ export class CalendarSchedulerMonthSmartComponent implements OnInit, OnDestroy {
             let lastMonthDay = new Date(this.selectedDate.getFullYear(), this.selectedDate.getMonth(), monthDays, 0, 0, 0, 0);
             let firstMonthDay = new Date(this.selectedDate.getFullYear(), this.selectedDate.getMonth(), 1, 0, 0, 0, 0);
             this.days = await this.getCalendarDays(this.selectedDate, monthDays, lastMonthDay, firstMonthDay)
-            this.dayRows = this.arrayOperationsService.divideArray(this.days, 7);
+            this.dayRows = LpArray.divideArray(this.days, 7);
             this.timeRange = await this.getTimeRange(this.selectedDate, monthDays, lastMonthDay, firstMonthDay);
             resolve('')
         })

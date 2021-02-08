@@ -14,7 +14,7 @@ export class NotificationsFilterComponent implements OnInit {
   ngOnInit(): void {
   }
   getNotifications(queryString: string) {
-    this.notificationService.getNotifications(this.homeComponent.childQuery ? this.homeComponent.childQuery += '&' + queryString.split('?')[1] : queryString, 0).subscribe()
+    /* this.notificationService.getNotifications(this.homeComponent.childQuery ? this.homeComponent.childQuery += '&' + queryString.split('?')[1] : queryString, 0).subscribe() */
   }
 
 }

@@ -1,14 +1,18 @@
 
 
+
+
 .category-div{
     margin-top:20px;
-    margin-right: 25px;
-    margin-left:25px;
-    width:150px;
-
+    width:100%;
     h5{
         font-weight:bolder;
         margin-bottom:5px;
+        text-align: center;
+    }
+
+    p{
+        text-align: center;
     }
 }
 
@@ -17,6 +21,7 @@
 }
 
 
-mat-radio-group{
+
+/* mat-radio-group{
     max-width: 600px;
-}
+} */

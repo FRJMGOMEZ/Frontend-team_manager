@@ -12,13 +12,15 @@ import { ChatModule } from '../../../../shared/components/chat/chat.module';
 import { MaterialModule } from '../../../../shared/material/material.module';
 import { PipesModule } from '../../../../shared/pipes/pipes.module';
 import { TaskEditionAndCreationModule } from '../../../../shared/components/task-edition-and-creation/task-edition-and-creation.module';
+import { TaskManagerChatComponent } from './components/task-manager-chat/task-manager-chat.component';
 
 @NgModule({
   declarations: [
     TaskManagerPanelComponent,
     TaskManagerProgressComponent,
     TaskManagerInfoComponent,
-    TaskManagerFilesComponent
+    TaskManagerFilesComponent,
+    TaskManagerChatComponent
   ],
   imports: [
     CommonModule,

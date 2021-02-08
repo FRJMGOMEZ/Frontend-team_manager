@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from 'src/app/core/models/user.model';
-import { LpErrorHandlerService } from '../../../library/providers/lp-error-handler.service';
+import { ErrorHandlerService } from '../../../core/providers/error-handler.service';
 import { LocalStorageService } from '../../../library/providers/local-storage.service';
 import { API_URL } from '../../../config/api-url';
 import { environment } from '../../../../environments/environment.prod';
@@ -15,13 +15,17 @@ import { environment } from '../../../../environments/environment.prod';
 export class AuthService {
 
   userOnline: User;
-  constructor(private http: HttpClient, private plErrorHandlerService:LpErrorHandlerService, private router: Router, private localStorageService: LocalStorageService) {
+  constructor(
+    private http: HttpClient,
+    private plErrorHandlerService:ErrorHandlerService,
+    private router: Router,
+    private localStorageService: LocalStorageService) {
+      
     this.uploadFromStorage();
   }
 
   /////// LOGIN //////
   login(credentials: any, rememberMe: boolean = false) {
-    console.log(API_URL,environment.apiUrl)
     rememberMe ? this.localStorageService.set('rememberMe', credentials.email) : this.localStorageService.remove('rememberMe')
     let url = `${API_URL}login`;
     return this.http.post(url, credentials).pipe(
@@ -54,7 +58,7 @@ export class AuthService {
     //// REVISAMOS SI HAY TOKEN EN EL STORAGE  ////
     let token = this.localStorageService.get('user', 'token') || undefined;
     if (token) {
-      return this.http.get(`${API_URL}check-token`).pipe(map((res: any) => {console.log('token is valid');return true;}))
+      return this.http.get(`${API_URL}check-token`).pipe(map((res: any) => {return true;}))
     } else {
       return this.handleNoToken()
     }
@@ -111,9 +115,8 @@ export class AuthService {
   logout() {
     return of(false).pipe(tap(()=>{
       this.router.navigate(["auth"]).then(() => {
-        console.log('logout')
         this.cleanStorage();
-      })
-    }))
+      });
+    }));
   }
 }

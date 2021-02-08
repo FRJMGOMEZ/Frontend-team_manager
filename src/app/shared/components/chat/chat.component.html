@@ -6,7 +6,7 @@
         <chat-users *ngIf="showUsers" [users]="users" ></chat-users>
     </div>
     <div [fxFlex.xs]="showUsers ? 75 : 92" [fxFlex.gt-xs]="showUsers ? 85 : 92" fxLayout="column">
-        <chat-messages *ngIf="messages" fxFlex="75" [userOnline]="userOnline" [messages]="messages" [messagesCount]="messagesCount" (getMessages)="getMessages.emit($event)" (downloadFile)="downloadFile.emit($event)"></chat-messages>
+        <chat-messages *ngIf="messages" fxFlex="75" [userOnline]="userOnline" [messages]="messages" [newMessage]="newMessage" [msg]="msg" [messagesCount]="messagesCount" (getMessages)="getMessages.emit($event)" (downloadFile)="downloadFile.emit($event)"></chat-messages>
         <chat-input fxFlex="25" (sendMsg)="sendMessage($event)" ></chat-input>
     </div>
 </div>

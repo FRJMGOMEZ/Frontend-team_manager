@@ -1,7 +1,6 @@
 
 
 
-              
 <div class="div-info-container" fxLayout="column" *ngIf="taskSelected" >
        <mat-card fxLayout="row" fxFlex="10">
            <h4 fxFlex.gt-xs="15" fxFlex.xs="50">
@@ -38,7 +37,7 @@
                 </div>
                <div fxFlex.gt-xs="15" fxFlex.xs="33" fxLayout="column">
                 <div fxLayoutAlign="center">
-                    <mat-icon [ngClass]="{'icon-disabled': taskService.taskTimeStarted(taskSelected)}" (click)="taskSelected.editable ? editTask.emit():null" color="primary">edit</mat-icon>
+                    <mat-icon [ngClass]="{'icon-disabled': taskService.taskTimeStarted(taskSelected)}" (click)="editTask.emit()" color="primary">edit</mat-icon>
                 </div>
                 <mat-label class="label-action">
                     EDIT

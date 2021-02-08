@@ -2,8 +2,7 @@ import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/cor
 import { NgModel } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { FILE_FORMATS } from '../../../../../../core/data/file-formats';
-import { LpSnackbarNotificationsService } from '../../../../../../library/providers/lp-snackbar-notifications.service';
-
+import { SnackbarNotificationsService } from '../../../../../../core/providers/snackbar-notifications.service';
 
 @Component({
   selector: 'chat-tools',
@@ -21,7 +20,7 @@ export class ChatToolsComponent implements OnInit {
     maxNameLength: 150,
     multiple: true
   };
-  constructor(private lpSnackbarNotificationsService:LpSnackbarNotificationsService) { }
+  constructor(private lpSnackbarNotificationsService:SnackbarNotificationsService) { }
   ngOnInit(): void {
     this.filesInfo = `Allowed formats: ${FILE_FORMATS.reduce((acum,ff)=>{ this.imgValidationConfig.allowedMimeTypes.indexOf(ff.mimeType) >=0 ? acum+= `${ acum ? `, ${ff.format}`: ff.format}` :''; return acum},'')}\nmax size kb: ${this.imgValidationConfig.maxSizeKb}\nmax name length: ${this.imgValidationConfig.maxNameLength}`
   }

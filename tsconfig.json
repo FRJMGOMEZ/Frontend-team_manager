@@ -18,6 +18,30 @@
     },
     {
       "path": "./projects/lp-dialogs/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/lp-date-selector/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/lp-date-selector/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/lp-operations/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/lp-operations/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/lp-routes-breadcrumbs/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/lp-routes-breadcrumbs/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/lp-local-storage/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/lp-local-storage/tsconfig.spec.json"
     }
 ]
 

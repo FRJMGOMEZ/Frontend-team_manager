@@ -1,6 +1,9 @@
-import { Component, Output, EventEmitter, Input, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { FileModel } from '../../../../../../core/models/file.model';
 import { Task } from '../../../../../../core/models/task.model';
+import { FilesService } from '../../../../../../core/providers/files.service';
+import { TaskService } from '../../../../../../core/providers/task.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-task-manager-files',
@@ -10,16 +13,42 @@ import { Task } from '../../../../../../core/models/task.model';
 export class TaskManagerFilesComponent implements OnChanges {
   from: number = 0;
   total: number = 0;
-  @Input() files: FileModel[];
-  @Input() filesCount: number;
-  @Input() taskSelected:Task
-  @Output() getFiles = new EventEmitter<{ from: number, title: string }>()
-  @Output() deleteFile = new EventEmitter<FileModel>();
-  @Output() downloadFile = new EventEmitter<{src:string,file:FileModel}>();
-  constructor() { }
+  files: FileModel[];
+  filesCount: number;
+  @Input() taskSelected:Task;
+  fileSubscription:Subscription
+  constructor(
+    public filesService: FilesService,
+    private taskService:TaskService
+  ) { }
+
+  ngOnInit(){
+    this.fileSubscription = this.filesService.file$.subscribe((data:{order:string,file:FileModel})=>{
+        switch(data.order){
+          case 'POST': this.files.push(data.file);
+          break;
+          case 'DELETE': this.files = this.files.filter((f)=>{ return f._id != data.file._id })
+          break;
+        }
+    })
+  }
   ngOnChanges(changes:SimpleChanges){
     if(changes.taskSelected && this.taskSelected){
-      this.getFiles.emit({ from: this.from, title: '' })
+      /// FIXME: hacer todo lo del scroll 
+      this.taskService.getTaskFiles(this.taskSelected._id, 0, 100).subscribe((files: FileModel[]) => {
+        this.files = files;
+      })
     }
+  }
+  deleteFile(file: FileModel) {
+    this.filesService.deleteFile(file).subscribe((fileDeleted: FileModel) => {
+      if (fileDeleted) {
+        this.files = this.files.filter((f) => { return f._id != fileDeleted._id });
+        this.filesService.spreadFile(fileDeleted,'DELETE')
+      }
+    });
+  }
+  ngOnDestroy(){
+  this.fileSubscription.unsubscribe();
   }
 }

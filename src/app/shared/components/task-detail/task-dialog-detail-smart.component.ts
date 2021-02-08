@@ -1,21 +1,27 @@
 import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
 import { Task } from '../../../core/models/task.model';
 import { TaskService } from '../../../core/providers/task.service';
 import { LocalStorageService } from '../../../library/providers/local-storage.service';
 import { AuthService } from '../../../auth/shared/providers/auth.service';
-import { OOService } from '../../../library/providers/objects-operations.service';
+import { LpObject } from 'lp-operations';
+
 
 @Component({
     selector: 'app-task-dialog-smart',
-    template: `<app-task-detail [taskSelected]="taskSelected" (close)="closeDialog($event)" (back)="back()" [prevDialog]="prevDialog" (editTask)="editTask($event)" (restoreVersion)="restoreVersion($event)" > </app-task-detail>`
+    template: `
+    <mat-dialog-content>
+     <app-task-detail [taskSelected]="taskSelected"  (back)="back()" [prevDialog]="prevDialog" (editTask)="editTask($event)" (restoreVersion)="restoreVersion($event)" [date]="date" > </app-task-detail>
+    </mat-dialog-content>
+    <mat-dialog-actions fxLayoutAlign="center">
+    <button (click)="closeDialog()" mat-raised-button> Close </button>
+    </mat-dialog-actions>
+    `
 })
 export class TaskDialogSmartComponent implements OnInit {
 
-    tasksSubscription: Subscription;
     taskSelected: Task
-    date: number
+    date: number = new Date().getTime();
     prevDialog: string
     constructor(
         private dialogRef: MatDialogRef<TaskDialogSmartComponent>,
@@ -26,12 +32,10 @@ export class TaskDialogSmartComponent implements OnInit {
         private authService: AuthService) { }
 
     ngOnInit(): void {
-
         this.taskService.getTaskById(this.data.taskId).subscribe((task: Task) => {
             this.localStorageService.set('state-data', this.data.taskId, 'task-on-screen')
             this.taskSelected = task;
         })
-        this.date = this.data.date ? this.data.date : null;
         this.prevDialog = this.data.prevDialog;
     }
 
@@ -40,11 +44,11 @@ export class TaskDialogSmartComponent implements OnInit {
     }
 
     restoreVersion(data: { taskChanges: { [key: string]: any }, id: string }) {
-        let taskChanges = OOService.copyObject(data.taskChanges);
+        let taskChanges = LpObject.copyObject(data.taskChanges);
         data.taskChanges.user = this.authService.userOnline._id;
         data.taskChanges.participants ? data.taskChanges.participants = data.taskChanges.participants.map((p: any) => { return p._id }) : null;
         this.taskService.putTask(data.taskChanges, data.id).subscribe((taskUpdated: Task) => {
-            this.taskSelected = OOService.mergeObjects(taskUpdated, taskChanges);
+            this.taskSelected = LpObject.mergeObjects(taskUpdated, taskChanges);
             this.cdr.detectChanges();
         })
     }

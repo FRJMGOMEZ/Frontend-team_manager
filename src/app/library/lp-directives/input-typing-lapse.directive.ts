@@ -1,6 +1,6 @@
 import { Directive, Output, EventEmitter, ElementRef } from '@angular/core';
 import { fromEvent } from 'rxjs';
-import { debounceTime, pluck, distinctUntilChanged, tap } from 'rxjs/operators';
+import { debounceTime, pluck, distinctUntilChanged} from 'rxjs/operators';
 
 @Directive({
   selector: '[appInputTypingLapse]'

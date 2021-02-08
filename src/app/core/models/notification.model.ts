@@ -1,7 +1,7 @@
 import { User } from './user.model';
 import { Project } from './project.model';
 
-export class Notification {
+export class NotificationModel {
 
     constructor(
         public project: string | Project,

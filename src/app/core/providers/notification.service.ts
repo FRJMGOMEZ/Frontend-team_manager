@@ -2,64 +2,67 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, of, Observable, Subject } from 'rxjs';
 import { ProjectService } from './project.service';
-import { tap, map, filter } from 'rxjs/operators';
-import { Notification } from '../models/notification.model';
+import { tap, map} from 'rxjs/operators';
+import { NotificationModel } from '../models/notification.model';
 import { AuthService } from '../../auth/shared/providers/auth.service';
-import { LpSnackbarNotificationsService } from '../../library/providers/lp-snackbar-notifications.service';
+import { SnackbarNotificationsService } from './snackbar-notifications.service';
 import { API_URL } from '../../config/api-url';
 import { User } from '../models/user.model';
 import { Project } from '../models/project.model';
 import { LocalStorageService } from '../../library/providers/local-storage.service';
 import { WebSocketsService } from './web-sockets.service';
+import { query } from '@angular/animations';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
-  private notificationSelectedSrc = new Subject<Notification>();
+  private notificationSelectedSrc = new Subject<NotificationModel>();
   public notificationSelected$ = this.notificationSelectedSrc.asObservable();
-  private notificationsUncheckedSrc = new BehaviorSubject<Notification[]>([]);
+  private notificationsUncheckedSrc = new BehaviorSubject<NotificationModel[]>([]);
   public notificationsUnchecked$ = this.notificationsUncheckedSrc.asObservable();
-  private notificationSrc = new Subject<Notification>();
+  private notificationSrc = new Subject<NotificationModel>();
   public notification$  = this.notificationSrc.asObservable()
   constructor(
     private http: HttpClient,
     private authService: AuthService,
-    private lpSnackbarNotificationService: LpSnackbarNotificationsService,
+    private lpSnackbarNotificationService: SnackbarNotificationsService,
     private projectService:ProjectService,
     private localStorageService:LocalStorageService,
     private wsService:WebSocketsService) { }
 
   toggleNotification(notificationId:string,itemId?:string){
     return this.http.patch(`${API_URL}toggle-notification`, { notificationId, itemId }).pipe(
-      tap((res: any) => { this.notificationsUncheckedSrc.next([...this.notificationsUncheckedSrc.getValue().filter((n)=>{ return n._id != res.notification._id})]) }));
-  }
+      tap((res: any) => { this.notificationsUncheckedSrc.next([...this.notificationsUncheckedSrc.getValue().filter((n)=>{ return n._id != res.notification._id})]) })
+      ,map((res:any)=>{ return res.notification}));
+  
+    }
   getNotifications(queryString:string,skip:number,limit?:number){
-    const headers = new HttpHeaders({ skip: skip.toString(), limit: limit ? limit.toString(): '9999999' })
-    return this.http.get(`${API_URL}notifications/${this.authService.userOnline._id}${queryString}`,{headers}).pipe(tap(console.log))
+    
+    const headers = new HttpHeaders({ skip: skip.toString(), limit: limit ? limit.toString(): '9999999' });
+    return this.http.get(`${API_URL}notifications${queryString}`,{headers});
   }
   getNotificationsUnchecked(queryString:string,skip:number,limit:number):Observable<any>{
     if (this.notificationsUncheckedSrc.getValue().length > 0){
-      console.log(this.notificationsUncheckedSrc.getValue())
-      return of(this.notificationsUncheckedSrc.getValue()).pipe(tap((res:any) => { this.notificationsUncheckedSrc.next(res.notifications) }))
+      return of({notifications:this.notificationsUncheckedSrc.getValue()});
       }else{
-        let query='?checked=false';
-        query+=queryString
-        return this.getNotifications(query, skip, limit).pipe(tap((res:any) => { this.notificationsUncheckedSrc.next(res.notifications)}))
+        let query = `?checked=false&user=${this.authService.userOnline._id}`
+        query+=queryString;
+        return this.getNotifications(query, skip, limit).pipe(tap((res:any) => {this.notificationsUncheckedSrc.next(res.notifications)}));
       }
   }
   getNotificationById(id:string){
     return this.http.get(`${ API_URL }notification/${id}`).pipe(map((res:any)=>{ return res.notification }))
   }
-  selectNotification(notification?:Notification){
+  selectNotification(notification?:NotificationModel){
     notification ? this.localStorageService.set('state-data', notification._id, 'notification-selected') : this.localStorageService.remove('state-data','notification-selected')
     this.notificationSelectedSrc.next(notification ? notification : undefined);
   }
-  addSnackNotification(notification: Notification){
+  addSnackNotification(notification: NotificationModel){
     this.showSnackNot(notification);
   }
 
-  showSnackNot(notification: Notification) {
+  showSnackNot(notification: NotificationModel) {
     const { method, item, oldItem } = notification;
     const user = notification.userFrom as User;
     const project =  notification.type === 'Project' ? {name:''} : this.projectService.projects.find((p)=>{ return p._id === (notification.project as Project)._id})
@@ -83,7 +86,8 @@ export class NotificationService {
     }
   }
   listenningNotificationsEvents(){
-    this.wsService.listen('notification').subscribe((notification:Notification)=>{
+    this.wsService.listen('notification').subscribe((notification:NotificationModel)=>{
+      console.log({notification})
       this.addSnackNotification(notification);
       const notifications = this.notificationsUncheckedSrc.getValue();
       notifications.push(notification)

@@ -1,59 +1,54 @@
-import { Component, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
-import { OOService } from '../../../library/providers/objects-operations.service';
+import { Component, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
 import { Project } from '../../../core/models/project.model';
 import { ProjectService } from '../../../core/providers/project.service';
 import { LpDialogsService } from 'lp-dialogs';
-
+import { LpObject } from 'lp-operations';
 @Component({
   selector: 'app-project-detail',
   templateUrl: './project-detail.component.html',
-  styleUrls: ['./project-detail.component.css']
+  styleUrls: ['./project-detail.component.scss']
 })
-export class ProjectDetailComponent {
-  @Input() projectSelected: Project
-  projectV: number
-  projectVersions: Project[] = []
+export class ProjectDetailComponent implements OnChanges{
+
+  @Input() isDialog:boolean = false;
+  @Input() date:number;
+  @Input() projectSelected: Project;
+  projectPristine:Project;
+  prevProject:Project;
   @Output() close = new EventEmitter<any>();
-  @Output() back = new EventEmitter<any>()
-  @Output() editProject: EventEmitter<string> = new EventEmitter<string>()
-  @Output() restoreVersion: EventEmitter<{ taskChanges: { [key: string]: any }, id: string }> = new EventEmitter<{ taskChanges: { [key: string]: any }, id: string }>()
+  @Output() back = new EventEmitter<any>();
+  isLastVersion:boolean = false;
+  isFirstVersion:boolean;
+  @Output() editProject: EventEmitter<void> = new EventEmitter<void>();
+  @Output() restoreVersion: EventEmitter<{ projectChanges: { [key: string]: any }, id: string }> = new EventEmitter<{ projectChanges: { [key: string]: any }, id: string }>();
+  currentVersion:number
   constructor(public projectService: ProjectService, private lpDialogsService: LpDialogsService) { }
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.projectSelected && this.projectSelected) {
-      this.generateVersions()
-      this.projectV = this.projectSelected.prevStates.length;
-    }
-  }
-  isLastVersion() {
-    return this.projectV > (this.projectSelected.prevStates.length - 1)
-  }
-  /////TODO: fix when come back to last version ///
-  getVersion(taskBase, taskToMerge) {
-    return OOService.mergeObjects(taskBase, taskToMerge);
-  }
-  generateVersions() {
-    this.projectVersions = [];
-    this.projectVersions.push(this.projectSelected)
-    for (let i = this.projectSelected.prevStates.length; i >= 1; i--) {
-      this.projectVersions.unshift(this.getVersion(this.projectVersions[0], this.projectSelected.prevStates[i - 1]))
-    }
+  ngOnChanges(changes:SimpleChanges){
+   if(changes.projectSelected && this.projectSelected){
+    this.projectPristine = LpObject.copyObject(this.projectSelected);
+   }
   }
   restore() {
     this.lpDialogsService.openConfirmDialog('THIS VERSION WILL REPLACE THE CURRENT ONE', 'Are you sure?').subscribe((res) => {
       if (res) {
-        this.restoreVersion.emit(this.checkChangesToPatch())
+        this.restoreVersion.emit(this.checkChangesToEdit());
       }
     })
   }
-  checkChangesToPatch() {
-    let obj = OOService.getObjectDifferences(this.projectSelected, this.projectVersions[this.projectV]);
-    return { taskChanges: obj, id: this.projectSelected._id }
+  checkChangesToEdit() {
+    let obj = LpObject.getObjectDifferences(this.projectSelected, this.prevProject);
+    return { projectChanges: obj, id: this.projectSelected._id };
   }
   versionIsDifferent() {
-    return !OOService.areEquals(this.projectVersions[this.projectV], this.projectSelected)
+    return  !LpObject.areEquals(this.prevProject, this.projectSelected) 
   }
   propertyHasChanged(key: string) {
-    return this.projectVersions[this.projectV - 1] ? JSON.stringify(this.projectVersions[this.projectV - 1][key]) != JSON.stringify(this.projectVersions[this.projectV][key]) : false
+    return this.currentVersion !== 0 ? this.prevProject ? JSON.stringify(this.prevProject[key]) != JSON.stringify(this.projectSelected[key]) : false : false;
+  }
+
+  setVersion(project:Project){
+   this.projectSelected = project;
+   this.isLastVersion = LpObject.areEquals(this.projectSelected,this.projectPristine);
   }
 
 }

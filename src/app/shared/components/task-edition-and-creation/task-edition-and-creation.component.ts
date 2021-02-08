@@ -4,10 +4,9 @@ import { take } from 'rxjs/operators';
 import { User } from '../../../core/models/user.model';
 import { Task } from '../../../core/models/task.model';
 import { AuthService } from '../../../auth/shared/providers/auth.service';
-import { OOService } from '../../../library/providers/objects-operations.service';
 import { LpParseDatePipe } from '../../../library/lp-pipes/lp-parse-date.pipe';
-import { DateOperationsService } from '../../../library/providers/date-operations.service';
 import { LpParseHourPipe } from '../../../library/lp-pipes/lp-parse-hour.pipe';
+import { LpDate, LpObject } from 'lp-operations';
 
 @Component({
   selector: 'app-task-edition-and-creation',
@@ -49,11 +48,11 @@ export class TaskEditionAndCreationComponent implements OnChanges {
 
   ngOnChanges(changes:SimpleChanges){
     if(changes.task && this.task){
-       this.taskPristine = OOService.copyObject(this.task)
+       this.taskPristine = LpObject.copyObject(this.task)
     }
   }
   taskHasChanges(): boolean {
-    return OOService.areEquals(this.task, this.taskPristine)
+    return LpObject.areEquals(this.task, this.taskPristine)
   }
   onRecursiveOptChange(recursive: boolean) {
     recursive ? this.task.endDate = null : null;
@@ -66,7 +65,6 @@ export class TaskEditionAndCreationComponent implements OnChanges {
 
   setDate(type: string, value: Date) {
     if(type === 'startDate'){
-      console.log({ value })
       this.task.endDate = null;
     }
     const datePipe = new LpParseDatePipe();
@@ -74,14 +72,14 @@ export class TaskEditionAndCreationComponent implements OnChanges {
  }
 
   checkChangesToPatch(){ 
-    let obj = OOService.getObjectDifferences(this.taskPristine,this.task);
+    let obj = LpObject.getObjectDifferences(this.taskPristine,this.task);
     obj.user = this.authService.userOnline._id;
     return {taskChanges:obj,id:this.task._id}
   }
 
   startTimeMin(){
     let now = new Date();
-    if( DateOperationsService.dateComparison(new Date(this.today.getFullYear(),this.today.getMonth(),this.today.getDate(),0,0,0,0),new Date(this.task.startDate))){
+    if( LpDate.dateComparison(new Date(this.today.getFullYear(),this.today.getMonth(),this.today.getDate(),0,0,0,0),new Date(this.task.startDate))){
      const  parseHourPipe = new LpParseHourPipe();
      let hour = `${now.getHours()}:${now.getMinutes()}`
       return hour
@@ -89,6 +87,6 @@ export class TaskEditionAndCreationComponent implements OnChanges {
     return '07:00 am'
   }
   get timeString(){
-    return this.task.startDate && this.task.endDate ?  DateOperationsService.milisecondsToPeriod(this.task.startDate,this.task.endDate):null;
+    return this.task.startDate && this.task.endDate ?  LpDate.milisecondsToPeriod(this.task.startDate,this.task.endDate):null;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ChatFilesDialogComponent } from '../chat-files-dialog/chat-files-dialog.component';
 import { Message } from '../../../../../../core/models/message.model';
@@ -9,7 +9,8 @@ import { Message } from '../../../../../../core/models/message.model';
   styleUrls: ['./chat-input.component.scss']
 })
 export class ChatInputComponent implements OnInit {
-
+  
+  @ViewChild('textArea') textArea : ElementRef
   message: Message = new Message('', [], null)
   @Output() sendMsg = new EventEmitter<Message>();
   constructor(public dialog: MatDialog) { }
@@ -19,6 +20,7 @@ export class ChatInputComponent implements OnInit {
   sendMessage() {
       this.sendMsg.emit(this.message)
       this.message = new Message('', [], null);
+      this.textArea.nativeElement.focus();
   }
 
   setFiles(files: File[]) {

@@ -21,7 +21,6 @@ export class TaskManagerListComponent implements OnInit {
   constructor() { }
   ngOnInit(): void {}
   paginatorChange(event){
-    console.log({event})
     this.getItems.emit(this.pageSize * event.pageIndex  )
   }
   ngOnChanges(changes:SimpleChanges){

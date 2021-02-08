@@ -4,7 +4,7 @@
                     <chat-tools fxFlex="90" (files)="setFiles($event)" ></chat-tools>
                 </div>
                 <mat-form-field class="mat-form-full-width">
-                    <textarea  cdkTextareaAutosize cdkAutosizeMaxRows="4" rows="4" cols="40"  class="textarea" [style.margin-top]="'10px'" [(ngModel)]="message.text" matInput placeholder="write something" ></textarea>
+                    <textarea #textArea  cdkTextareaAutosize cdkAutosizeMaxRows="4" rows="4" cols="40"  class="textarea" [style.margin-top]="'10px'" [(ngModel)]="message.text" matInput placeholder="write something" ></textarea>
                 </mat-form-field>
          </div>
 

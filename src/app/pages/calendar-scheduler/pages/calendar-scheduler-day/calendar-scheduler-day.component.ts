@@ -1,7 +1,7 @@
 import { Component, Input, ElementRef, Renderer2, SimpleChanges, ChangeDetectionStrategy, Output, EventEmitter} from '@angular/core';
 import { Hour } from '../../../../core/models/hour.model';
 import { Task } from '../../../../core/models/task.model';
-import { ENDING_TASK_TIME_LAPSO } from '../../data/time-values';
+import { ENDING_TASK_TIME_LAPSO } from '../../shared/data/time-values';
 import { LocalStorageService } from '../../../../library/providers/local-storage.service';
 import { TaskService } from '../../../../core/providers/task.service';
 

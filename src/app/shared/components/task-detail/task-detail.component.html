@@ -1,89 +1,83 @@
 
-<h2 mat-dialog-title></h2>
 
-<mat-dialog-content *ngIf="taskV || taskV === 0">
-               <div fxLayoutAlign="center">
-                <mat-radio-group  [(ngModel)]="taskV" aria-label="Select an option">
-                  <mat-radio-button  [value]="i" [style.margin.px]="'10'"  *ngFor="let taskV of taskSelected.prevStates; let i = index"  >v{{ i + 1}}</mat-radio-button>
-                  <mat-radio-button  [value]="taskSelected.prevStates.length" [style.margin.px]="'10'">v{{ taskSelected.prevStates.length + 1}}</mat-radio-button>
-                </mat-radio-group>
-               </div>
-              <div *ngIf="taskVersions[taskV]" fxLayout="column" fxLayoutAlign="center" >
-                  <div [style.margin-left.px]="'20'" fxLayoutAlign="space-between">
+<div fxLayoutAlign="center" fxLayout="column" *ngIf="taskSelected">
+               <form fxLayoutAlign="center">
+                <app-item-versions name="taskSelected" [ngModel]="taskSelected" (ngModelChange)="setVersion($event)" [date]="date" (prevVersion)="prevTask=$event" (currentVersion)="currentVersion = $event" ></app-item-versions>
+              </form>
+                <div fxLayoutAlign="flex-start">
+                   <small class="property-changed">*Property edited*</small>
+                </div>
+              <div *ngIf="taskSelected && prevTask" fxLayout="column" fxLayoutAlign="center" >
+                  <div [style.margin-left.px]="'20'" fxLayoutAlign="flex-end">
                       <mat-icon *ngIf="prevDialog" (click)="back.emit()">keyboard_backspace</mat-icon>
-                      <mat-icon *ngIf="!prevDialog && !tasksService.taskTimeStarted(taskVersions[taskV]) && isLastVersion() && isDialog" appIsAdm (click)="editTask.emit(taskVersions[taskV]._id)" >edit</mat-icon>
-                      <mat-icon *ngIf="!isLastVersion(taskVersions[taskV]) && versionIsDifferent()" (click)="restore()" appIsAdm >settings_backup_restore</mat-icon>
-                      <mat-label *ngIf="!isLastVersion(taskVersions[taskV]) && !versionIsDifferent()">*Version is equal to the current one*</mat-label>
+                      <mat-icon *ngIf="!prevDialog && !tasksService.taskTimeStarted(taskSelected) && isLastVersion " (click)="editTask.emit(taskSelected._id)" >edit</mat-icon>
+                      <mat-icon *ngIf="!isLastVersion" (click)="restore()" appIsAdm >settings_backup_restore</mat-icon>
+                      <mat-label *ngIf="!isLastVersion">*Version is equal to the current one*</mat-label>
                 </div>
-                <div *ngIf="taskVersions[taskV]" fxLayout="column" >
-                    <h3 [class]="propertyHasChanged('name') ? 'property-changed':''" fxLayoutAlign="center">{{taskVersions[taskV].name}}</h3>
-                    <h5 fxLayoutAlign="center" [style.color]="'#3f51b5'" >{{ taskV === 0 ? 'created by' : 'edited by'  }} {{taskVersions[taskV].user['name']}}</h5>
+                <div  fxLayout="column" >
+                    <h3 [class]="propertyHasChanged('name') ? 'property-changed':''" fxLayoutAlign="center">{{taskSelected.name}}</h3>
+                   <!--  <h5 fxLayoutAlign="center" [style.color]="'#3f51b5'" >{{ taskV === 0 ? 'created by' : 'edited by'  }} {{taskSelected.user['name']}}</h5> -->
                 </div>
-                <div *ngIf="taskVersions[taskV]" fxLayout.gt-xs="row" fxLayout.xs="column">
-                    <div fxLayout="column">
-                        <div class="category-div" >
-                            <h5>
-                                Description :
-                            </h5>
-                            <p [class]="propertyHasChanged('description') ? 'property-changed':''">
-                                {{taskVersions[taskV].description}}
-                            </p>
-                        </div>
+                <div  fxLayout.gt-xs="row" fxLayout.xs="column">
+                    <div fxLayoutAlign="center" fxFlex="33" fxLayout="column">
                         <div class="category-div">
                             <h5>
                                 Participants:
                             </h5>
                             <ul>
-                                <li [class]="propertyHasChanged('participants') ? 'property-changed':''" *ngFor="let participant of taskVersions[taskV].participants" role="listitem">{{participant.name}}</li>
+                                <li [class]="propertyHasChanged('participants') ? 'property-changed':''" *ngFor="let participant of taskSelected.participants" role="listitem">{{participant.name}}</li>
                             </ul>
                         </div>
+                        <div class="category-div" >
+                            <h5>
+                                Description :
+                            </h5>
+                            <p [class]="propertyHasChanged('description') ? 'property-changed':''">
+                                {{taskSelected.description}}
+                            </p>
+                        </div>
                     </div>
-                    <div  class="category-div" fxLayout="column"  >
-                       <div fxLayout="column" fxLayoutAlign="center">
+                    <div fxFlex="33" fxLayout="column"  >
+                       <div class="category-div" fxLayout="column" >
                            <h5>
                                Start date:
                            </h5>
                            <p [class]="propertyHasChanged('startDate') ? 'property-changed':''">
-                               {{taskVersions[taskV].startDate | date : 'M/d/yy, h:mm a' }} 
+                               {{taskSelected.startDate | date : 'M/d/yy, h:mm a' }} 
                            </p>
                        </div>
-                        <div fxLayout="column" fxLayoutAlign="center" >
+                        <div class="category-div" fxLayout="column"  >
                             <h5>
                                 End Date:
                             </h5> 
                             <p [class]="propertyHasChanged('endDate') ? 'property-changed':''">
-                                {{taskVersions[taskV].endDate | date : 'M/d/yy, h:mm a'}}
+                                {{taskSelected.endDate | date : 'M/d/yy, h:mm a'}}
                             </p>
                         </div>
                     </div>
-                    <div fxLayout="column">
-                        <div class="category-div">
-                            <h5>
-                               Priority:
-                            </h5> 
-                            <p [class]="propertyHasChanged('priority') ? 'property-changed':''" >
-                                {{taskVersions[taskV].priority === 1 ? 'HIGH' : taskVersions[taskV].priority === 2 ? 'MEDIUM' : 'LOW'}}
-                            </p>
-                        </div>
+                    <div fxFlex="33" fxLayout="column">
                         <div class="category-div" >
                             <h5>
-                                Status: 
+                            Priority:
+                            </h5> 
+                            <p [class]="propertyHasChanged('priority') ? 'property-changed':''" >
+                                    {{taskSelected.priority === 1 ? 'HIGH' : taskSelected.priority === 2 ? 'MEDIUM' : 'LOW'}}
+                            </p>
+                        </div>
+                        <div class="category-div"  >
+                            <h5>
+                             Status: 
                             </h5>
                             <p>
-                                {{ taskVersions[taskV].status ? 'done' : 'pending'}}
+                            {{ taskSelected.status ? 'done' : 'pending'}}
                             </p>
                         </div>
                     </div>
                 </div>
-                <div fxLayoutAlign="flex-end">
-                   <small class="property-changed">*Property edited*</small>
-                </div>
               </div>
-</mat-dialog-content>
+</div>
 
-<mat-dialog-actions *ngIf="isDialog" fxLayoutAlign="center">
-    <button (click)="close.emit()" mat-raised-button> Close </button>
-</mat-dialog-actions>
+
 
 
 

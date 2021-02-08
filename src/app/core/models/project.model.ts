@@ -1,5 +1,6 @@
 
 import { User } from './user.model';
+import { PrevState } from './prev-state.model';
 
 export class Project{
 
@@ -10,7 +11,7 @@ export class Project{
                 public tasks?:string[],
                 public status?:boolean,
                 public _id?: string,
-                public prevStates?: { [key: string]: any }[],
+                public prevStates?: PrevState[],
                 
                 ){
     }

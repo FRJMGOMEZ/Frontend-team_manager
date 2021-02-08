@@ -5,9 +5,9 @@ export const areTheyEqual = (field1: string, field2: string)=> {
         let pass1 = group.controls[field1].value;
         let pass2 = group.controls[field2].value;
         if (pass1 === pass2) {
-            return null
+            return null;
         }
-        return { areTheyEqual: true }
+        return { areTheyEqual: true };
     }
 }
 
@@ -18,7 +18,7 @@ export const checkRegExp = ( regExps:{error:string,regExp:string}[])=>{
         regExps.forEach(({ error, regExp }) => {
             let regularExpression = new RegExp(regExp);
             if (!regularExpression.test(passwordValue)) {
-                passError = { [error]: true }
+                passError = { [error]: true };
             }
         })
         return passError;

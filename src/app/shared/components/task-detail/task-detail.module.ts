@@ -7,6 +7,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../../material/material.module';
 import { TaskDetailComponent } from './task-detail.component';
 import { TaskDetailSmartComponent } from './task-detail-smart.component';
+import { ItemVersionsModule } from '../item-versions/item-versions.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { TaskDetailSmartComponent } from './task-detail-smart.component';
     CommonModule,
     MaterialModule,
     FormsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    ItemVersionsModule
   ],
   exports: [TaskDialogSmartComponent, TaskDetailSmartComponent]
 })

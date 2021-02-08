@@ -52,9 +52,6 @@
       <mat-icon [color]="path === 'task-manager' ? 'primary' : 'accent'" (click)="navigate('task-manager')" routerLinkActive="router-link-active"
          matTooltip="navigate to task manager" class="icon-pages" color="accent">assignment</mat-icon>
    </a>
-   <a fxShow.lg fxHide.xs fxHide.md  >
-      <mat-icon lpPreventNavigation  class="icon-pages"  color="accent">assessment</mat-icon>
-   </a>
    <span class="spacer"></span>
      <app-projects-smart id="project-selector"> </app-projects-smart>
    <div ngClass.gt-xs="div-task-btn-desktop" ngClass.xs="'div-task-btn-mobile">

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, ElementRef } from '@angular/core';
-import { Notification } from '../../../../core/models/notification.model';
+import { NotificationModel } from '../../../../core/models/notification.model';
 import { NotificationService } from '../../../../core/providers/notification.service';
 import { Subscription, Observable, fromEvent } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,14 +17,14 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
   @ViewChild('divNotifications') divNotifications:ElementRef;
   path:'new' | 'record';
-  notifications:Notification[] = [];
-  notificationSelected:Notification;
+  notifications:NotificationModel[] = [];
+  notificationSelected:NotificationModel;
   notificationSubs:Subscription;
   notificationSelectedSubs: Subscription;
   userOnline:User;
-  notificationHeight: number = 70;
+  notificationHeight: number = 60;
   notificationsFrom:number = 0;
-  notificationsLimit:number = 6;
+  notificationsLimit:number = 11;
   notificationsCount: number = 0;
 
   viewportHeight:number
@@ -45,18 +45,18 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     this.cdr.detectChanges();
     this.userOnline = this.authService.userOnline;
 
-    this.notificationSelectedSubs = this.notificationService.notificationSelected$.subscribe((notification: Notification) => {
+    this.notificationSelectedSubs = this.notificationService.notificationSelected$.subscribe((notification: NotificationModel) => {
       this.notificationSelected = notification;
     })
 
-    this.notificationSubs = this.notificationService.notification$.subscribe((notification:Notification)=>{
-      this.notifications = [notification,...this.notifications]
+    this.notificationSubs = this.notificationService.notification$.subscribe((notification:NotificationModel)=>{
+      this.notifications = [...this.notifications, notification]
     })
 
     this.getNotifications().subscribe((res:any) => {
+      console.log({notifications:res})
       this.notificationsCount = res.count;
-      this.notifications = [...this.notifications, ...res.notifications].sort((a, b) => { return b.date - a.date })
-      this.notificationsFrom+=this.notificationsLimit;
+      this.notifications = [...res.notifications].sort((a, b) => { return b.date - a.date })
        this.setNotificationSelected();
     })
   }
@@ -91,10 +91,8 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
   getNotifications(){
       let request: Observable<any>
       if (this.path === 'new') {
-        this.homeComponent.childQuery = '?checked=false';
-        request = this.notificationService.getNotificationsUnchecked('', this.notificationsFrom, this.notificationsLimit );
+        request = this.notificationService.getNotificationsUnchecked(``, this.notificationsFrom, this.notificationsLimit );
       } else {
-        this.homeComponent.childQuery = ''
         request = this.notificationService.getNotifications('', this.notificationsFrom, this.notificationsLimit );
       }
       return request;
@@ -106,22 +104,25 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
       const target = event.target;
       if (target['scrollHeight'] - target['scrollTop'] === target['clientHeight']) {
         if (this.notifications.length < this.notificationsCount) {
+          this.notificationsFrom+=this.notificationsLimit;
           this.getNotifications().subscribe((res: any) => {
             this.notificationsCount = res.count;
-            this.notifications = [...this.notifications, ...res.notifications].sort((a, b) => { return b.date - a.date })
-            this.notificationsFrom += this.notificationsLimit;
+            res.notifications = res.notifications.sort((a, b) => { return b.date - a.date })
+            res.notifications.forEach((n)=>{
+              this.notifications.push(n)
+            })
           })
         }
       }
     })
   }
-  selectNotification(notification:Notification){
+  selectNotification(notification:NotificationModel){
      this.notificationService.selectNotification(notification);
      this.router.navigate([`${notification._id}`],{relativeTo:this.ar});
   }
 
   getNotificationById(id:string){
-    this.notificationService.getNotificationById(id).subscribe((notification: Notification) => {
+    this.notificationService.getNotificationById(id).subscribe((notification: NotificationModel) => {
       this.selectNotification(notification);
     });
   }
@@ -130,8 +131,8 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
   }
 
   toggleNotification(notificationId:string){
-    this.notificationService.toggleNotification(notificationId).subscribe(()=>{
-      this.notifications = this.notifications.map((n)=>{ if(n._id === notificationId){ n.usersTo = (n.usersTo as any[]).map((ut)=>{ if(ut.user === this.authService.userOnline._id){ ut.user.checked = !ut.user.checked}; return ut }) }; return n; })
+    this.notificationService.toggleNotification(notificationId).subscribe((notification:NotificationModel)=>{
+       (this.notifications.find((n)=>{ return n._id === notificationId}).usersTo as any[]).find((u)=>{ return u.user === this.authService.userOnline._id}).checked = true;
     })
   }
   ngOnDestroy(){

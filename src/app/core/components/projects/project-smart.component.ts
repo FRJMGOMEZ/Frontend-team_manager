@@ -1,10 +1,11 @@
-import { Component, OnInit, SimpleChanges} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ProjectService } from '../../providers/project.service';
 import { DialogsService } from '../../providers/dialogs.service';
 import { Project } from '../../models/project.model';
 import { LocalStorageService } from '../../../library/providers/local-storage.service';
-import { ArrayOperationsService } from '../../../library/providers/array-operations.service';
+import { LpArray } from 'lp-operations';
+
 
 @Component({
     selector: 'app-projects-smart',
@@ -35,16 +36,14 @@ export class ProjectsSmartComponent implements OnInit {
 
         /// subscription to the changes in the projects ///
         this.projectSubs = this.projectService.project$.subscribe((data: { project: Project, action: string }) => {
+   
             //// updating the projects ///
-            this.projects = ArrayOperationsService.update(this.projects, data.project, data.action)
+            this.projects = LpArray.update(this.projects, data.project, data.action)
             this.projectService.projects = this.projects;
 
             /// if the deleted project is the project selected, spread the change ////
             if(data.action === 'DELETE' && this.projectSelected === data.project._id){
                 this.projectService.selectProject('') 
-            }
-            if(data.action === 'POST' && !this.projectSelected){
-                this.projects.push(data.project);
             }
         })
 

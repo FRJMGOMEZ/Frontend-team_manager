@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { MatTabGroup } from '@angular/material/tabs';
@@ -33,8 +33,7 @@ export class TaskManagerComponent implements OnInit, OnDestroy {
                 private localStorageService:LocalStorageService,
                 public deviceDetectorService:DeviceDetectorService,
                 private ar:ActivatedRoute,
-                private router:Router,
-                private cdr:ChangeDetectorRef) {}
+                private router:Router) {}
 
   ngOnInit(): void {
     this.selectedProjectSubs = this.projectService.selectedProject$.subscribe((project: string) => {
@@ -48,7 +47,6 @@ export class TaskManagerComponent implements OnInit, OnDestroy {
         switch (res.action) {
           case 'POST':
             this.taskTotal++;
-            console.log(this.taskLimit,this.tasksList.length)
             this.taskLimit > this.tasksList.length  ? this.tasksList = [...this.tasksList, res.task] : null;
             if(!this.taskSelected){this.navigateToTask(res.task._id)}
             break;

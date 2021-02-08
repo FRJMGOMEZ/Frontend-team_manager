@@ -1,7 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges, ChangeDetectionStrategy, EventEmitter, Output } from '@angular/core';
 import { User } from '../../../../core/models/user.model';
-import { OOService } from '../../../../library/providers/objects-operations.service';
-
+import { LpObject } from 'lp-operations';
 @Component({
   selector: 'app-task-manager-filter',
   templateUrl: './task-manager-filter.component.html',
@@ -37,7 +36,7 @@ export class TaskManagerFilterComponent implements OnChanges {
   }
   ngOnChanges(changes:SimpleChanges){
        if(changes.participants && this.participants){
-         this.options.participants = OOService.copyObject(this.participants);
+         this.options.participants = LpObject.copyObject(this.participants);
          this.options.user = this.participants.filter((p)=>{ return p.role === 'ADMIN_ROLE'})
        }
   }
@@ -46,7 +45,7 @@ export class TaskManagerFilterComponent implements OnChanges {
      this.filters[key] = date.getTime()
   }
   searchItems(){
-    let queryString = OOService.toQueryString(this.filters);
+    let queryString = LpObject.toQueryString(this.filters);
     this.getItems.next(queryString)
   }
 

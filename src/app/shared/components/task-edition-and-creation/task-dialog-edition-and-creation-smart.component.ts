@@ -7,8 +7,8 @@ import { UserServices } from '../../../core/providers/user.service';
 import { TaskService } from '../../../core/providers/task.service';
 import { AuthService } from '../../../auth/shared/providers/auth.service';
 import { LocalStorageService } from '../../../library/providers/local-storage.service';
-import { OOService } from '../../../library/providers/objects-operations.service';
 import { Project } from '../../../core/models/project.model';
+import { LpObject } from 'lp-operations';
 
 
 @Component({
@@ -42,7 +42,7 @@ export class TaskDialogEditionAndCreationSmartComponent {
     }
     getTask(taskId:string) {
         this.taskService.getTaskById(taskId).subscribe((taskDb: Task) => {
-            let taskSelected = OOService.copyObject(taskDb);
+            let taskSelected = LpObject.copyObject(taskDb);
             taskSelected.participants = (taskSelected.participants as User[]).map((eachParticipant: User) => { return eachParticipant._id })
             taskSelected.user = (taskSelected.user as User)._id;
             taskSelected.project = taskSelected.project as Project;
@@ -64,14 +64,14 @@ export class TaskDialogEditionAndCreationSmartComponent {
     }
     postTask(task: Task) {
         this.taskService.postTask(task).subscribe((task: Task) => {
-            this.taskSelected = OOService.copyObject(task);
+            this.taskSelected = LpObject.copyObject(task);
         })
     }
 
     //TODO: EDIT PUT METHOD
     putTask(data:{taskChanges: { [key: string]: any },id:string}) {
         this.taskService.putTask(data.taskChanges, data.id).subscribe((task)=>{
-            this.taskSelected = OOService.mergeObjects(task,data.taskChanges);
+            this.taskSelected = LpObject.mergeObjects(task,data.taskChanges);
         })
     }
     dialogBack(){

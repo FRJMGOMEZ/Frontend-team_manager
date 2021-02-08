@@ -8,8 +8,9 @@ import { LpDirectivesModule } from '../library/lp-directives/lp-directives.modul
 import { NoProjectsComponent } from '../shared/components/no-projects/no-projects.component';
 import { MaterialModule } from '../shared/material/material.module';
 import { ProjectsModule } from '../core/components/projects/projects.module';
-import { ProjectDialogModule } from '../shared/components/project-dialog/project-dialog.module';
+
 import { DirectivesModule } from '../shared/directives/directives.module';
+import { ProjectEditionAndCreationModule } from '../shared/components/project-edition-and-creation/project-edition-and-creation.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { DirectivesModule } from '../shared/directives/directives.module';
     MaterialModule,
     FlexLayoutModule,
     ProjectsModule,
-    ProjectDialogModule,
+    ProjectEditionAndCreationModule,
     DirectivesModule,
     LpDirectivesModule
   ]

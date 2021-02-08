@@ -1,0 +1,12 @@
+{
+  "name": "lp-date-selector",
+  "version": "10.0.1",
+  "peerDependencies": {
+    "@angular/common": "^10.0.4",
+    "@angular/core": "^10.0.4"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0",
+    "lp-operations":"10.0.1"
+  }
+}

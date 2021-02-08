@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { Task } from '../../../core/models/task.model';
 import { LocalStorageService } from '../../../library/providers/local-storage.service';
 import { TaskService } from '../../../core/providers/task.service';
-import { OOService } from '../../../library/providers/objects-operations.service';
+import { LpObject } from 'lp-operations';
 
 @Component({
     selector: 'app-tasks-list-dialog-smart',
@@ -34,7 +34,7 @@ export class TasksListDialogSmartComponent implements OnInit {
     }
     getTasks(date){
         let timeRange = [date.getTime(), null]
-        this.taskService.getTasks('day', OOService.toQueryString({ project: this.selectedProject, from: timeRange[0], to: timeRange[1] })).pipe(map((res: any) => { return res.tasks })).subscribe((tasks:Task[])=>{
+        this.taskService.getTasks('day', LpObject.toQueryString({ project: this.selectedProject, from: timeRange[0], to: timeRange[1] })).pipe(map((res: any) => { return res.tasks })).subscribe((tasks:Task[])=>{
             this.tasks = tasks; 
         })
     }

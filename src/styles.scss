@@ -255,13 +255,16 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
     src: url(/src/styles/EB_Garamond/EBGaramond-ExtraBold.woff2) format('woff2'), url(/src/styles/EB_Garamond/EBGaramond-ExtraBold.woff) format('woff')
 }
 
+
+
 html, body { 
   height: 100%;
   width:100%;
   margin:0; 
   font-family: 'Open Sans Condensed', sans-serif;
  background-color:#d2d2d2;
-font-size: 12px; }
+font-size: 12px;
+scrollbar-width: none!important;}
 
 .timepicker-overlay {
   z-index: 1100 !important;

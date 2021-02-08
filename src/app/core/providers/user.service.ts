@@ -5,7 +5,7 @@ import { Observable,Subject } from 'rxjs';
 import { LpDialogsService } from 'lp-dialogs';
 import { User } from '../models/user.model';
 import { AuthService } from '../../auth/shared/providers/auth.service';
-import { LpErrorHandlerService } from '../../library/providers/lp-error-handler.service';
+import { ErrorHandlerService } from './error-handler.service';
 import { LocalStorageService } from '../../library/providers/local-storage.service';
 import { API_URL } from '../../config/api-url';
 
@@ -19,7 +19,7 @@ export class UserServices {
    user$: Observable < {user: User, order: string}> = this.userSrc.asObservable();
    constructor(private http: HttpClient,
                private authService:AuthService,
-               private errorHandlerService: LpErrorHandlerService,
+               private errorHandlerService: ErrorHandlerService,
                private localStorageService:LocalStorageService,
                private lpDialogsService:LpDialogsService
                

@@ -3,3 +3,14 @@
    overflow-y: scroll;
 }
 
+.div-notifications::-webkit-scrollbar { 
+      width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+
+
+.div-notifications-labels{
+   padding:20px;
+   background-color:#f1f1f1
+}
+

@@ -161,6 +161,206 @@
           }
         }
       }
+    },
+    "lp-date-selector": {
+      "projectType": "library",
+      "root": "projects/lp-date-selector",
+      "sourceRoot": "projects/lp-date-selector/src",
+      "prefix": "lp",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/lp-date-selector/tsconfig.lib.json",
+            "project": "projects/lp-date-selector/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/lp-date-selector/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/lp-date-selector/src/test.ts",
+            "tsConfig": "projects/lp-date-selector/tsconfig.spec.json",
+            "karmaConfig": "projects/lp-date-selector/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/lp-date-selector/tsconfig.lib.json",
+              "projects/lp-date-selector/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "lp-array-operations": {
+      "projectType": "library",
+      "root": "projects/lp-array-operations",
+      "sourceRoot": "projects/lp-array-operations/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/lp-array-operations/tsconfig.lib.json",
+            "project": "projects/lp-array-operations/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/lp-array-operations/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/lp-array-operations/src/test.ts",
+            "tsConfig": "projects/lp-array-operations/tsconfig.spec.json",
+            "karmaConfig": "projects/lp-array-operations/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/lp-array-operations/tsconfig.lib.json",
+              "projects/lp-array-operations/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "lp-operations": {
+      "projectType": "library",
+      "root": "projects/lp-operations",
+      "sourceRoot": "projects/lp-operations/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/lp-operations/tsconfig.lib.json",
+            "project": "projects/lp-operations/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/lp-operations/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/lp-operations/src/test.ts",
+            "tsConfig": "projects/lp-operations/tsconfig.spec.json",
+            "karmaConfig": "projects/lp-operations/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/lp-operations/tsconfig.lib.json",
+              "projects/lp-operations/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "lp-routes-breadcrumbs": {
+      "projectType": "library",
+      "root": "projects/lp-routes-breadcrumbs",
+      "sourceRoot": "projects/lp-routes-breadcrumbs/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/lp-routes-breadcrumbs/tsconfig.lib.json",
+            "project": "projects/lp-routes-breadcrumbs/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/lp-routes-breadcrumbs/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/lp-routes-breadcrumbs/src/test.ts",
+            "tsConfig": "projects/lp-routes-breadcrumbs/tsconfig.spec.json",
+            "karmaConfig": "projects/lp-routes-breadcrumbs/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/lp-routes-breadcrumbs/tsconfig.lib.json",
+              "projects/lp-routes-breadcrumbs/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "lp-local-storage": {
+      "projectType": "library",
+      "root": "projects/lp-local-storage",
+      "sourceRoot": "projects/lp-local-storage/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/lp-local-storage/tsconfig.lib.json",
+            "project": "projects/lp-local-storage/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/lp-local-storage/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/lp-local-storage/src/test.ts",
+            "tsConfig": "projects/lp-local-storage/tsconfig.spec.json",
+            "karmaConfig": "projects/lp-local-storage/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/lp-local-storage/tsconfig.lib.json",
+              "projects/lp-local-storage/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "team-manager-frontend",

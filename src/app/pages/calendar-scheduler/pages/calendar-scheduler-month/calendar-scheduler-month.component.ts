@@ -4,7 +4,7 @@ import { formatDate } from '@angular/common';
 import { LOCALE_ID } from '@angular/core';
 import { Day } from '../../../../core/models/day.model';
 import { Task } from '../../../../core/models/task.model';
-import { ENDING_TASK_TIME_LAPSO } from '../../data/time-values';
+import { ENDING_TASK_TIME_LAPSO } from '../../shared/data/time-values';
 import { TaskService } from '../../../../core/providers/task.service';
 
 @Component({

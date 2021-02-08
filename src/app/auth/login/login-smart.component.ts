@@ -17,7 +17,6 @@ export class LoginSmartComponent implements OnInit {
     private ar:ActivatedRoute,
   ) {}
    ngOnInit() {
-     console.log('ei')
      if(this.authService.userOnline){
           this.authService.cleanStorage()
     } 

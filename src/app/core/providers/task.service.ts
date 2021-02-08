@@ -6,7 +6,7 @@ import { WebSocketsService } from './web-sockets.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LpDialogsService } from 'lp-dialogs';
 import { Task } from '../models/task.model';
-import { LpErrorHandlerService } from '../../library/providers/lp-error-handler.service';
+import { ErrorHandlerService } from './error-handler.service';
 import { LocalStorageService } from '../../library/providers/local-storage.service';
 import { AuthService } from '../../auth/shared/providers/auth.service';
 import { API_URL } from '../../config/api-url';
@@ -22,7 +22,7 @@ export class TaskService {
 
   constructor(
     private http: HttpClient,
-    private errorHandlerService: LpErrorHandlerService,
+    private errorHandlerService: ErrorHandlerService,
     private lpDialogsService: LpDialogsService,
     private wsService: WebSocketsService,
     private dialogRef: MatDialog,
@@ -39,7 +39,7 @@ export class TaskService {
 
   putTask(task: { [key: string]: any }, id: string) {
     const url = `${API_URL}task/${id}`;
-    return this.http.patch(url, task).pipe(
+    return this.http.patch(url, {task}).pipe(
       map((res: any) => { return res.task }),
       tap((task: Task) => { 
         const participantsIds = (task.participants as User[]).map(u=> u._id);
@@ -110,19 +110,17 @@ export class TaskService {
     })
   }
   userOutTask(taskId:string){
-      this.wsService.emit('user-out-task',{taskId})
+      this.wsService.emit('user-out-task',{taskId});
   }
 
   usersConnected(){
-    return this.wsService.listen('users-in-task').pipe(tap(console.log))
+    return this.wsService.listen('users-in-task');
   }
   taskTimeStarted(task: Task) {
     if (task.startDate <= new Date().getTime()) {
-      task.editable = false;
-      return true
+      return true;
     }
-    task.editable = true;
-    return false
+    return false;
   }
   listenningTasksEvents() {
     this.wsService.listen('tasks-event').subscribe((res:{task:Task, method:string}) => {
@@ -137,7 +135,7 @@ export class TaskService {
               break;
             case 'PUT':
               if ((participantsIds as string[]).includes(this.authService.userOnline._id) ) {
-                if (task.prevStates[task.prevStates.length - 1].participants && !task.prevStates[task.prevStates.length - 1].participants.map((p)=>{ return p._id}).includes(this.authService.userOnline._id)) {
+                if (task.prevStates[task.prevStates.length - 1].changes['participants'] && !task.prevStates[task.prevStates.length - 1].changes['participants'].map((p)=>{ return p._id}).includes(this.authService.userOnline._id)) {
                   this.taskSrc.next({ task, action: 'POST' });
                 } else {
                   this.taskSrc.next({ task, action: 'PUT' });

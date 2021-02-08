@@ -1,8 +1,8 @@
 import { Component, Input, ChangeDetectorRef, SimpleChanges, OnChanges } from '@angular/core';
-
 import { interval, Subscription, timer } from 'rxjs';
 import { Task } from '../../../../../../core/models/task.model';
-import { DateOperationsService } from '../../../../../../library/providers/date-operations.service';
+import { LpDate } from 'lp-operations';
+
 
 @Component({
   selector: 'app-task-manager-progress',
@@ -21,7 +21,7 @@ export class TaskManagerProgressComponent implements OnChanges {
       timer().subscribe(()=>{
         this.extraTimeSubs ? this.extraTimeSubs.unsubscribe() : null;
         this.extraTimeSubs = this.extraTimeListenner()
-        this.extraTimeStringArray = DateOperationsService.milisecsToString(this.extraTimeMilisec);
+        this.extraTimeStringArray = LpDate.milisecsToString(this.extraTimeMilisec);
         this.cdr.detectChanges();
       })
     }
@@ -37,7 +37,7 @@ export class TaskManagerProgressComponent implements OnChanges {
 
   extraTimeListenner(){
     return interval(30000).subscribe(()=>{
-        this.extraTimeStringArray = DateOperationsService.milisecsToString(this.extraTimeMilisec);
+        this.extraTimeStringArray = LpDate.milisecsToString(this.extraTimeMilisec);
       })
   }
   ngOnDestroy(){

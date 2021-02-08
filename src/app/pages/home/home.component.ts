@@ -1,5 +1,5 @@
 import { Component, ViewChild, AfterViewInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { Notification } from '../../core/models/notification.model';
+import { NotificationModel } from '../../core/models/notification.model';
 import { NotificationsInfoComponent } from './components/notifications-info/notifications-info.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatTabGroup } from '@angular/material/tabs';
@@ -13,10 +13,9 @@ import { Subscription } from 'rxjs';
 })
 export class HomeComponent implements AfterViewInit, OnDestroy {
   @ViewChild(MatTabGroup) tabGroup:MatTabGroup;
-  childQuery:string;
   childPath:string;
   infoComponent = NotificationsInfoComponent;
-  notificationSelected:Notification;
+  notificationSelected:NotificationModel;
   notificationSubs: Subscription;
   constructor(private ar:ActivatedRoute,
               private router:Router,
@@ -24,7 +23,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
               private notificationService:NotificationService) { }
 
   ngOnInit(){
-     this.notificationSubs = this.notificationService.notificationSelected$.subscribe((notification:Notification)=>{
+     this.notificationSubs = this.notificationService.notificationSelected$.subscribe((notification:NotificationModel)=>{
         this.notificationSelected = notification;
         this.cdr.detectChanges();
      });

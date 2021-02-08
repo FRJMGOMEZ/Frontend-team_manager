@@ -6,7 +6,7 @@ import { WebSocketsService } from './web-sockets.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LpDialogsService } from 'lp-dialogs';
 import { Project } from '../models/project.model';
-import { LpErrorHandlerService } from '../../library/providers/lp-error-handler.service';
+import { ErrorHandlerService } from './error-handler.service';
 import { LocalStorageService } from '../../library/providers/local-storage.service';
 import { AuthService } from '../../auth/shared/providers/auth.service';
 import { API_URL } from '../../config/api-url';
@@ -29,7 +29,7 @@ export class ProjectService {
   public projects:Project[]=[]
 
   constructor(private http: HttpClient,
-    private errorHandlerService: LpErrorHandlerService,
+    private errorHandlerService: ErrorHandlerService,
     private lpDialogsService: LpDialogsService,
     private localStorageService: LocalStorageService,
     private wSService: WebSocketsService,
@@ -46,7 +46,7 @@ export class ProjectService {
       catchError((err) => { this.lpDialogsService.openInfoDialog(err.message, err.status, 'ERROR').subscribe(); return this.errorHandlerService.handleError(err) })
     )
   }
-  getprojectById(projectId: string) {
+  getProjectById(projectId: string) {
     let url = `${API_URL}project/${projectId}`;
     return this.http.get(url).pipe(
       map((res: any) => {
@@ -80,12 +80,13 @@ export class ProjectService {
     )
   }
 
-  putProject(project: Project): Observable<any> {
-    let url = `${API_URL}project`
-    return this.http.put(url, project).pipe(
+  putProject(changes:{ [key: string]: any},id:string): Observable<any> {
+    let url = `${API_URL}project/${id}`
+    return this.http.put(url, {project:changes}).pipe(
       tap((res: any) => {
-        if(!res.project.participants.includes(this.authService.userOnline._id)){
-          this.projectSrc.next({ project, action: 'DELETE' })
+        console.log({res})
+        if(!res.project.participants.map((p)=>{ return p._id }).includes(this.authService.userOnline._id)){
+          this.projectSrc.next({ project:res.project, action: 'DELETE' })
           this.lpDialogsService.openInfoDialog('IN ORDER TO GET ACCESS AGAIN TALK TO OTHER ADMNISTRATOR', 'REMOVAL', res.project.name)
           this.wSService.emit('user-out-project', { projectId: res.project._id })
         }else{
@@ -121,9 +122,9 @@ export class ProjectService {
   }
 
   listenningProjectSockets() {
-    this.wSService.listen('projects-events').subscribe((res: { project: Project,method: string, }) => {
-      let { method, project } = res;
-      let participants = project.participants as string[]
+    this.wSService.listen('projects-events').subscribe((res: { project: Project,method: string,prevProject:any }) => {
+      let { method, project, prevProject } = res;
+      let participants:string = (project.participants as any).map((p)=>{ return p._id})
       switch (method) {
         case 'POST':
           if (participants.includes(this.authService.userOnline._id)) {
@@ -132,9 +133,8 @@ export class ProjectService {
           }
           break;
         case 'PUT':
-            if((project.participants as string[]).includes(this.authService.userOnline._id)){
-                console.log('ei')
-              if (/* (prevProject.participants as string[]).includes(this.authService.userOnline._id) */ true){
+            if(participants.includes(this.authService.userOnline._id)){
+              if ((prevProject.participants as string[]).includes(this.authService.userOnline._id)){
                 this.projectSrc.next({ project, action: 'PUT' })
               }else{
                 this.projectSrc.next({ project, action: 'POST' })
@@ -146,7 +146,7 @@ export class ProjectService {
             }
           break;
         case 'DELETE':
-          if ((project.participants as string[]).includes(this.authService.userOnline._id)){
+          if (participants.includes(this.authService.userOnline._id)){
               this.projectSrc.next({ project, action: 'DELETE' })
               this.wSService.emit('user-out-project', { projectId: project._id })
           }

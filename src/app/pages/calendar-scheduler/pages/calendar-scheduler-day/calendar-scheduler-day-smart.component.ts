@@ -5,11 +5,12 @@ import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Hour } from '../../../../core/models/hour.model';
 import { Task } from '../../../../core/models/task.model';
-import { OOService } from '../../../../library/providers/objects-operations.service';
+
 import { ActivatedRoute } from '@angular/router';
 import { CalendarSchedulerComponent } from '../../calendar-scheduler.component';
 import { TaskService } from '../../../../core/providers/task.service';
 import { DialogsService } from '../../../../core/providers/dialogs.service';
+import { LpObject } from '../../../../../../projects/lp-operations/src/lp-object';
 
 @Component({
     selector: 'app-calendar-scheduler-day-smart',
@@ -55,7 +56,7 @@ export class CalendarSchedulerDaySmartComponent implements OnInit, OnDestroy {
             this.hours.push(new Hour(new Date(this.selectedDate.getFullYear(), this.selectedDate.getMonth(), this.selectedDate.getDate(), i, 0, 0, 0)))
         }
         this.timeRange = [this.selectedDate.getTime(), this.selectedDate.getTime() + 86400000]
-        this.taskService.getTasks('day',  OOService.toQueryString({project:this.selectedProject,from:this.timeRange[0],to:this.timeRange[1]})).pipe(map((res:any)=>{return res.tasks})).subscribe((tasks: Task[]) => {
+        this.taskService.getTasks('day',  LpObject.toQueryString({project:this.selectedProject,from:this.timeRange[0],to:this.timeRange[1]})).pipe(map((res:any)=>{return res.tasks})).subscribe((tasks: Task[]) => {
             this.tasks = [...tasks];
             this.cdr.detectChanges()
         })

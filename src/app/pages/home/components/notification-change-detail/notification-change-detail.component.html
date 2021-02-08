@@ -1,18 +1,18 @@
 
 
-<div class="div-notification-detail" *ngIf="notification">
-  <div fxLayoutAlign="flex-end">
-     <mat-icon color="warn" (click)="unselectNotification.emit()">highlight_off</mat-icon>
+<mat-card class="mat-card-notification-detail" *ngIf="notification">
+  <div fxFlex="93" *ngIf="itemSelected && notification.type === 'Task' && !itemSelected.deleted">
+    <app-task-detail-smart  [taskSelected]="itemSelected" [date]="notification.date" ></app-task-detail-smart>
   </div>
-  <div *ngIf="itemSelected && notification.type === 'Task' && !itemSelected.deleted">
-    <app-task-detail-smart  [taskSelected]="itemSelected" ></app-task-detail-smart>
+  <div fxFlex="93" *ngIf="itemSelected && notification.type === 'Project' && !itemSelected.deleted">
+      <app-project-detail-smart [date]="notification.date" [projectSelected]="itemSelected" ></app-project-detail-smart>
   </div>
-  <div *ngIf="itemSelected && notification.type === 'Project' && !itemSelected.deleted">
-      <app-project-detail [projectSelected]="itemSelected" ></app-project-detail>
+   <div fxFlex="7" fxLayoutAlign="flex-end">
+     <mat-icon class="mat-icon-close" color="warn" (click)="unselectNotification.emit()">highlight_off</mat-icon>
   </div>
   <div fxLayoutAlign="center" [style.margin-top]="'30px'" *ngIf="itemSelected && itemSelected.deleted ">
       <p [style.color]="'red'">
         {{notification.type}} {{notification.oldItem.name}} has been deleted by {{notification.userFrom.name}}
       </p>
   </div>
-</div>
+</mat-card>
