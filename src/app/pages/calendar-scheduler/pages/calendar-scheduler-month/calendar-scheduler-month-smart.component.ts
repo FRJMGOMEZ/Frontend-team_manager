@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Day } from 'src/app/core/models/day.model';
+import { DayModel } from 'src/app/core/models/day.model';
 import { Task } from 'src/app/core/models/task.model';
 
 import { ActivatedRoute } from '@angular/router';
@@ -34,7 +34,7 @@ export class CalendarSchedulerMonthSmartComponent implements OnInit, OnDestroy {
     taskSubscription: Subscription;
     projectSelectionSubs: Subscription;
     timeRange: number[];
-    days: Day[];
+    days: DayModel[];
     constructor(
         public taskService: TaskService,
         public dialogsService: DialogsService,
@@ -68,10 +68,10 @@ export class CalendarSchedulerMonthSmartComponent implements OnInit, OnDestroy {
 
     insertTask(task: Task) {
         this.dayRows.forEach((row, ind) => {
-            row.forEach((eachDay: Day, index) => {
+            row.forEach((eachDay: DayModel, index) => {
                 let project = task.project;
                 let start = new Date(task.startDate);
-                 start = new Date(start.getFullYear(),start.getMonth(), start.getDate(),0,0,0,0)
+                 start = new Date(start.getFullYear(),start.getMonth(), start.getDate(),0,0,0,0);
                 if ((eachDay.date >= start.getTime()) && (eachDay.date <= task.endDate) && (project === this.selectedProject)) {
                     this.dayRows[ind][index].tasks = [...eachDay.tasks, task]
                 }
@@ -81,7 +81,7 @@ export class CalendarSchedulerMonthSmartComponent implements OnInit, OnDestroy {
 
     removeTask(task: Task) {
         this.dayRows = [...this.dayRows.map((eachRow) => {
-            return eachRow.map((eachDay: Day) => { eachDay.tasks = eachDay.tasks.filter((eachTask: Task) => { return eachTask._id != task._id }); return eachDay })
+            return eachRow.map((eachDay: DayModel) => { eachDay.tasks = eachDay.tasks.filter((eachTask: Task) => { return eachTask._id != task._id }); return eachDay })
         })]
     }
     getTasks() {
@@ -107,7 +107,7 @@ export class CalendarSchedulerMonthSmartComponent implements OnInit, OnDestroy {
     getCalendarDays(date: Date, monthDays: number, lastMonthDay: Date, firstMonthDay: Date) {
         let days = [];
         for (let i = 1 - firstMonthDay.getDay(); i <= monthDays + (6 - lastMonthDay.getDay()); i++) {
-            days.push(new Day(new Date(date.getFullYear(), date.getMonth(), i, 0, 0, 0, 0)))
+            days.push(new DayModel(new Date(date.getFullYear(), date.getMonth(), i, 0, 0, 0, 0)))
         }
         return days
     }

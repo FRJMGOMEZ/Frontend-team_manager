@@ -39,6 +39,10 @@
       "lp-local-storage": [
         "dist/lp-local-storage/lp-local-storage",
         "dist/lp-local-storage"
+      ],
+      "lp-thinking-time-progress": [
+        "dist/lp-thinking-time-progress/lp-thinking-time-progress",
+        "dist/lp-thinking-time-progress"
       ]
     }
   }

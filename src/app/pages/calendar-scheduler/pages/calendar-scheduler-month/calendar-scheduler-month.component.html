@@ -1,48 +1,47 @@
-
-
-
-    <div fxLayout="row">
-        <mat-card fxFlex="14" *ngFor="let label of labels">
-            <span fxLayoutAlign="center"  fxHide.xs>
-                {{label}}
-            </span>
-            <p fxLayoutAlign="center"  fxHide.gt-xs fxShow.xs>
-                {{label.charAt(0)}}
-            </p>
-        </mat-card>
-    </div>
-    <div *ngIf="dayRows" fxLayout="column" >
-        <div *ngFor="let row of dayRows" fxLayout="row">
-             <div fxFlex="14"  *ngFor="let label of labels ; let i=index"> 
-                    <mat-card>
-                        <mat-card-content [ngStyle]="{'height': cellSize}" fxLayout="column">
-                            <ng-template let-day="aVariable" [ngTemplateOutletContext]="{ aVariable: getDayOfWeek(row,i)  }" [ngTemplateOutlet]="selfie" #selfie>
-                                <div>
-                                    <div>
-                                        <p class="day" [ngClass]="{'day-unactive': checkDayActive(day.date) }"  >{{day.date | date:'d'}}</p>
-                                    </div>
-                                    <div class="div-tasks" fxShow.gt-xs fxHide.xs>
-                                        <ng-container *ngFor="let task of day.tasks" >
-                                            <mat-icon [matMenuTriggerFor]="menuPc" [matTooltip]="eventTooltip(task)" [matTooltipClass]="'event-tooltip'" [color]="iconColor(task)" [class]="task.priority === 1 ? 'priority-high' : task.priority === 2 ? 'priority-medium': 'priority-low'  " > trip_origin</mat-icon>
-                                            <mat-menu #menuPc="matMenu">
-                                                <button (click)="checkTask.emit(task._id)" mat-menu-item>View details</button>
-                                                <div  appIsAdm  [matTooltip]="taskService.taskTimeStarted(task) ? 'The task can not be edited because already started': null">
-                                                    <button [disabled]="taskService.taskTimeStarted(task)" (click)="putTask.emit(task._id)" mat-menu-item>Edit</button>
-                                                </div>
-                                                <div  appIsAdm  [matTooltip]="!task.editable ? 'The task can not be deleted because already started': null">
-                                                    <button [disabled]="taskService.taskTimeStarted(task)" (click)="deleteTask.emit(task._id)" mat-menu-item>Delete</button>
-                                                </div>
-                                            </mat-menu>
-                                        </ng-container>
-                                    </div>
-                                    <p fxLayoutAlign="center" fxHide.gt-xs fxShow.xs>
-                                        <mat-icon color="primary" *ngIf="day.tasks.length > 0" (click)="checkTasks.emit(day.date)"  >pageview</mat-icon>
-                                    </p>
-                                </div>
-                            </ng-template>
-                        </mat-card-content>
-                    </mat-card>  
-            </div>                                      
+<div [style.margin]="'10px'">
+        <div fxLayout="row">
+            <mat-card fxFlex="14" *ngFor="let label of labels">
+                <span fxLayoutAlign="center"  fxHide.xs>
+                    {{label}}
+                </span>
+                <p fxLayoutAlign="center"  fxHide.gt-xs fxShow.xs>
+                    {{label.charAt(0)}}
+                </p>
+            </mat-card>
         </div>
-    </div>
+        <div *ngIf="dayRows" fxLayout="column" >
+            <div   *ngFor="let row of dayRows" fxLayout="row">
+                 <div fxFlex="14"  *ngFor="let label of labels ; let i=index">
+                        <mat-card>
+                            <mat-card-content [ngStyle]="{'height': cellSize}" fxLayout="column">
+                                <ng-template let-day="aVariable" [ngTemplateOutletContext]="{ aVariable: getDayOfWeek(row,i)  }" [ngTemplateOutlet]="selfie" #selfie>
+                                    <div>
+                                        <div>
+                                            <p class="day" [ngClass]="{'day-unactive': checkDayActive(day.date) }"  >{{day.date | date:'d'}}</p>
+                                        </div>
+                                        <div class="div-tasks" fxShow.gt-xs fxHide.xs>
+                                            <ng-container *ngFor="let task of day.tasks" >
+                                                <mat-icon [matMenuTriggerFor]="menuPc" [matTooltip]="eventTooltip(task)" [matTooltipClass]="'event-tooltip'" [color]="iconColor(task)" [class]="task.priority === 1 ? 'priority-high' : task.priority === 2 ? 'priority-medium': 'priority-low'  " > trip_origin</mat-icon>
+                                                <mat-menu #menuPc="matMenu">
+                                                    <button (click)="checkTask.emit(task._id)" mat-menu-item>View details</button>
+                                                    <div  appIsAdm  [matTooltip]="!taskService.taskTimeEnded(task) ? 'The task can not be edited because the time ended': null">
+                                                        <button [disabled]="taskService.taskTimeEnded(task)" (click)="putTask.emit(task._id)" mat-menu-item>Edit</button>
+                                                    </div>
+                                                    <div  appIsAdm  [matTooltip]="!task.editable ? 'The task can not be deleted because the time ended': null">
+                                                        <button [disabled]="taskService.taskTimeEnded(task)" (click)="deleteTask.emit(task._id)" mat-menu-item>Delete</button>
+                                                    </div>
+                                                </mat-menu>
+                                            </ng-container>
+                                        </div>
+                                        <p fxLayoutAlign="center" fxHide.gt-xs fxShow.xs>
+                                            <mat-icon color="primary" *ngIf="day.tasks.length > 0" (click)="checkTasks.emit(day.date)"  >pageview</mat-icon>
+                                        </p>
+                                    </div>
+                                </ng-template>
+                            </mat-card-content>
+                        </mat-card>
+                </div>
+            </div>
+        </div>
+</div>
     

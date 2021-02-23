@@ -5,6 +5,7 @@ import { Task } from '../../../core/models/task.model';
 import { LocalStorageService } from '../../../library/providers/local-storage.service';
 import { TaskService } from '../../../core/providers/task.service';
 import { LpObject } from 'lp-operations';
+import { ProjectService } from '../../../core/providers/project.service';
 
 @Component({
     selector: 'app-tasks-list-dialog-smart',
@@ -23,13 +24,14 @@ export class TasksListDialogSmartComponent implements OnInit {
         private taskService:TaskService,
         private dialogRef: MatDialogRef<TasksListDialogSmartComponent>,
         private localStorageService:LocalStorageService,
+        private projectService:ProjectService,
         @Inject(MAT_DIALOG_DATA) private data) { }
 
     ngOnInit(): void {
         this.selectedDate = this.localStorageService.get('state-data','date-selected');
         this.selectedDate = this.selectedDate ? new Date(this.selectedDate):undefined;
         this.prevDialog = this.data.prevDialog;
-        this.selectedProject = this.localStorageService.get('state-data','project') 
+        this.selectedProject = this.projectService.selectedProject._id;
         this.getTasks(new Date(this.data.date));
     }
     getTasks(date){

@@ -1,7 +1,7 @@
 import { Component,Output, EventEmitter, Input, SimpleChanges, ElementRef, ViewChild, AfterViewInit, Renderer2, AfterViewChecked, ChangeDetectionStrategy } from '@angular/core';
 import { Subscription, timer } from 'rxjs';
 import { ChatUser } from '../../chat-models/chat-user.model';
-import { Message } from '../../../../../../core/models/message.model';
+import { MessageModel } from '../../../../../../core/models/message.model';
 import { FileModel } from '../../../../../../core/models/file.model';
 
 @Component({
@@ -13,11 +13,11 @@ import { FileModel } from '../../../../../../core/models/file.model';
 export class ChatMessagesComponent implements AfterViewInit, AfterViewChecked {
   @ViewChild('divMessages') divMessages : ElementRef;
   dialogSubs:Subscription;
-  @Input() messages:Message[];
-  messagesToDisplay:Message[];
+  @Input() messages:MessageModel[];
+  messagesToDisplay:MessageModel[];
   @Input() messagesCount:number;
   @Input() userOnline:ChatUser;
-  @Input() newMessage:Message;
+  @Input() newMessage:MessageModel;
   @Output() getMessages = new EventEmitter<{from:number}>();
   @Output() downloadFile = new EventEmitter<{src:any,file:FileModel}>();
   showSpinner = false;

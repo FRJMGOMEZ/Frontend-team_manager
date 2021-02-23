@@ -1,7 +1,7 @@
 
 .mat-card-day{
     cursor: pointer;
-    height: 10vh;
+    height: 10.5vh;
    padding:5px !important
 }
 
@@ -10,19 +10,26 @@
 }
 
 .mat-card-hour{
-    padding:0%!important;
-    width:22px;
-    height:22px
+    padding:0px!important;
+    margin: 0px !important;
+    height:22px;
+    width: 2.5vw;
 }
 
 .div-task-low-p{
     height: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .div-task-medium-p{
     height: 15px;
+    margin-bottom: 7.5px;
+    margin-top: 7.5px;
 }
 .div-task-high-p{
      height: 20px;
+     margin-bottom: 5px;
+     margin-top: 5px;
 }
 
 .a-task-toggle{

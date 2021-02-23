@@ -30,8 +30,8 @@ export class ProjectsSmartComponent implements OnInit {
                 private localStorageService:LocalStorageService) { }
     ngOnInit() {
 
-        this.projectService.selectedProject$.subscribe((selectedProject: string) => {
-            this.projectSelected = selectedProject;
+        this.projectService.selectedProject$.subscribe((selectedProject: Project) => {
+            this.projectSelected = selectedProject._id;
         })
 
         /// subscription to the changes in the projects ///
@@ -39,26 +39,26 @@ export class ProjectsSmartComponent implements OnInit {
    
             //// updating the projects ///
             this.projects = LpArray.update(this.projects, data.project, data.action)
-            this.projectService.projects = this.projects;
 
             /// if the deleted project is the project selected, spread the change ////
             if(data.action === 'DELETE' && this.projectSelected === data.project._id){
-                this.projectService.selectProject('') 
+                this.projectService.selectProject(null) 
             }
         })
 
         this.projectService.getProjects().subscribe((projects) => {
             this.projects = projects;
-            const project = this.localStorageService.get('state-data', 'project');
-            if (project) {
-                this.projectService.selectProject(project)
+            const projectSId = this.localStorageService.get('state-data', 'project');
+            const projectSelected = projectSId ? this.projects.find((p)=>{ return p._id === projectSId}) : undefined;
+            if (projectSelected) {
+                this.projectService.selectProject(projectSelected)
             } else if (this.projects.length > 0) {
-                this.projectService.selectProject(this.projects[0]._id)
+                this.projectService.selectProject(this.projects[0])
             }
         })
     }
-    selectProject(projectId?: string) {
-        this.projectService.selectProject(projectId)
+    selectProject(project: Project) {
+        this.projectService.selectProject(project)
     }
     putProject(project: Project) {
         this.dialogsService.openEditProjectDialog(project);

@@ -257,6 +257,7 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
 
 
 
+
 html, body { 
   height: 100%;
   width:100%;
@@ -264,7 +265,7 @@ html, body {
   font-family: 'Open Sans Condensed', sans-serif;
  background-color:#d2d2d2;
 font-size: 12px;
-scrollbar-width: none!important;}
+;}
 
 .timepicker-overlay {
   z-index: 1100 !important;
@@ -295,11 +296,6 @@ i{
    animation-duration: 0.5s;
 }
 
-.modal{
-  display: inline-block;
-  overflow-y: auto;
-}
-
 a{
   cursor: pointer;
 }
@@ -308,6 +304,10 @@ a{
 .mat-form-full-width{
   width: 100%;
 }
+
+
+
+
 
 
 

@@ -29,7 +29,7 @@ export class AuthService {
     rememberMe ? this.localStorageService.set('rememberMe', credentials.email) : this.localStorageService.remove('rememberMe')
     let url = `${API_URL}login`;
     return this.http.post(url, credentials).pipe(
-      tap((res: any) => { this.saveInStorage(res.user, res.token) }),
+      tap((res: any) => { this.saveUser(res.user, res.token) }),
       map((res: any) => {
         return res;
       })
@@ -38,7 +38,7 @@ export class AuthService {
 
 
   /////// STORAGE ACCESS AND WRITE //////
-  saveInStorage(user: User, token?: string) {
+  saveUser(user: User, token?: string) {
     return new Promise((resolve, reject) => {
       token ? user.token = token : null
       this.localStorageService.set('user', JSON.stringify(user))
@@ -67,7 +67,7 @@ export class AuthService {
   refreshToken():Observable<boolean>{
     return this.http.get(`${API_URL}refresh-token`).pipe(
       tap((res:any)=>{
-        this.saveInStorage(res.user, res.token)
+        this.saveUser(res.user, res.token)
       }),
       map(()=>{ return true }))
   }

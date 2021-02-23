@@ -8,7 +8,6 @@ import { LpDirectivesModule } from '../library/lp-directives/lp-directives.modul
 import { NoProjectsComponent } from '../shared/components/no-projects/no-projects.component';
 import { MaterialModule } from '../shared/material/material.module';
 import { ProjectsModule } from '../core/components/projects/projects.module';
-
 import { DirectivesModule } from '../shared/directives/directives.module';
 import { ProjectEditionAndCreationModule } from '../shared/components/project-edition-and-creation/project-edition-and-creation.module';
 

@@ -16,7 +16,7 @@ export class ProjectsComponent  {
   @Input() projects: Project[] = []
   @Output() logout: EventEmitter<void> = new EventEmitter<void>();
   @Output() toggleSideMenu: EventEmitter<void> = new EventEmitter<void>();
-  @Output() projectSelectedOut: EventEmitter<string> = new EventEmitter<string>();
+  @Output() projectSelectedOut: EventEmitter<Project> = new EventEmitter<Project>();
   @Input() projectSelectedIn: string = ''
   @Output() putProject: EventEmitter<Project> = new EventEmitter<Project>();
   @Output() postProject: EventEmitter<void> = new EventEmitter<void>();
@@ -32,8 +32,8 @@ export class ProjectsComponent  {
       this.dataSource.paginator = this.paginator;
     }
   }
-  selectProject(id){   
-    this.projectSelectedOut.emit(id);
+  selectProject(project:Project){   
+    this.projectSelectedOut.emit(project);
     this.expHeader._toggle();
   }
   isDesktop(){

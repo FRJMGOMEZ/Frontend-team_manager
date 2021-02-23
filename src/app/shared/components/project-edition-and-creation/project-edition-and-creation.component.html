@@ -20,7 +20,7 @@
                     <mat-form-field>
                         <mat-label>Participants</mat-label>
                         <mat-select required multiple [disabled]="participantsOptions.length === 0" class='form-control mb-2' (selectionChange)="participantsChange($event.value)" name="participants" [ngModel]="project.participants">
-                            <mat-option *ngFor="let opt of participantsOptions" [value]="opt._id">{{opt.name}}</mat-option>
+                            <mat-option  *ngFor="let opt of participantsOptions" [value]="opt._id">{{opt.name}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-list role="list">

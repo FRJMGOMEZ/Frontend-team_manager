@@ -13,6 +13,7 @@ import { MaterialModule } from '../../../../shared/material/material.module';
 import { PipesModule } from '../../../../shared/pipes/pipes.module';
 import { TaskEditionAndCreationModule } from '../../../../shared/components/task-edition-and-creation/task-edition-and-creation.module';
 import { TaskManagerChatComponent } from './components/task-manager-chat/task-manager-chat.component';
+import { ActionsRequiredModule } from '../../../../shared/components/actions-required/actions-required.module';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { TaskManagerChatComponent } from './components/task-manager-chat/task-ma
     MaterialModule,
     FlexLayoutModule,
     PipesModule,
-    TaskManagerPanelRoutingModule
+    TaskManagerPanelRoutingModule,
+    ActionsRequiredModule
 
   ]
 })

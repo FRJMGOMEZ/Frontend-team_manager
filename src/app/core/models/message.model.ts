@@ -1,6 +1,6 @@
 import { FileModel } from './file.model';
 
-export class Message {
+export class MessageModel {
     constructor(
         public text: string,
         public files?: FileModel[] | string[] ,

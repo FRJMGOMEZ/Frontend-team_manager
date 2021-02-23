@@ -7,6 +7,11 @@ import { LocalStorageService } from '../../../../library/providers/local-storage
 import { HomeComponent } from '../../home.component';
 import { User } from '../../../../core/models/user.model';
 import { AuthService } from '../../../../auth/shared/providers/auth.service';
+import { DialogsService } from '../../../../core/providers/dialogs.service';
+import { switchMap, map } from 'rxjs/operators';
+import { ActionsRequiredService } from '../../../../core/providers/actions-required.service';
+import { LpDialogsService } from 'lp-dialogs';
+import { empty } from 'rxjs/internal/observable/empty';
 
 @Component({
   selector: 'app-notifications-list',
@@ -22,26 +27,26 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
   notificationSubs:Subscription;
   notificationSelectedSubs: Subscription;
   userOnline:User;
-  notificationHeight: number = 60;
   notificationsFrom:number = 0;
   notificationsLimit:number = 11;
   notificationsCount: number = 0;
-
   viewportHeight:number
   params: any;
-
+  queryString:string;
   constructor(private notificationService:NotificationService,
              private ar:ActivatedRoute,
              private router:Router,
              private localStorageService:LocalStorageService,
              private homeComponent:HomeComponent,
              private authService:AuthService,
-             private cdr:ChangeDetectorRef) { }
+             private cdr:ChangeDetectorRef,
+             public dialogsService:DialogsService,
+             private actionsRequiredService:ActionsRequiredService,
+             private lpDialogsService:LpDialogsService) { }
 
   ngOnInit(): void {
     this.params = this.ar.firstChild ? this.ar.firstChild.snapshot.paramMap : undefined;
     this.path = this.router.url.includes('new') ? 'new' : 'record';
-    this.viewportHeight = (this.notificationsLimit-1) * this.notificationHeight;
     this.cdr.detectChanges();
     this.userOnline = this.authService.userOnline;
 
@@ -50,13 +55,12 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     })
 
     this.notificationSubs = this.notificationService.notification$.subscribe((notification:NotificationModel)=>{
-      this.notifications = [...this.notifications, notification]
+      this.notifications = [notification,...this.notifications];
     })
-
-    this.getNotifications().subscribe((res:any) => {
-      console.log({notifications:res})
+    this.queryString = this.localStorageService.get('state-data', 'notification-filters');
+    this.getNotifications(this.queryString).subscribe((res:any) => {
       this.notificationsCount = res.count;
-      this.notifications = [...res.notifications].sort((a, b) => { return b.date - a.date })
+      this.notifications = [...res.notifications].sort((a, b) => { return b.date - a.date });
        this.setNotificationSelected();
     })
   }
@@ -88,15 +92,16 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     }
   }
 
-  getNotifications(){
+  getNotifications(queryString:string){
+      this.queryString = queryString;
+      this.localStorageService.set('state-data', this.queryString, 'notification-filters');
       let request: Observable<any>
       if (this.path === 'new') {
-        request = this.notificationService.getNotificationsUnchecked(``, this.notificationsFrom, this.notificationsLimit );
+        request = this.notificationService.getNotificationsUnchecked(this.queryString, this.notificationsFrom, this.notificationsLimit );
       } else {
-        request = this.notificationService.getNotifications('', this.notificationsFrom, this.notificationsLimit );
+        request = this.notificationService.getNotifications(this.queryString, this.notificationsFrom, this.notificationsLimit );
       }
       return request;
-    
   }
 
   listenningScroll(){
@@ -105,7 +110,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
       if (target['scrollHeight'] - target['scrollTop'] === target['clientHeight']) {
         if (this.notifications.length < this.notificationsCount) {
           this.notificationsFrom+=this.notificationsLimit;
-          this.getNotifications().subscribe((res: any) => {
+          this.getNotifications(this.queryString).subscribe((res: any) => {
             this.notificationsCount = res.count;
             res.notifications = res.notifications.sort((a, b) => { return b.date - a.date })
             res.notifications.forEach((n)=>{
@@ -131,8 +136,29 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
   }
 
   toggleNotification(notificationId:string){
-    this.notificationService.toggleNotification(notificationId).subscribe((notification:NotificationModel)=>{
-       (this.notifications.find((n)=>{ return n._id === notificationId}).usersTo as any[]).find((u)=>{ return u.user === this.authService.userOnline._id}).checked = true;
+    this.lpDialogsService.openConfirmDialog('ARE YOU SURE?', '').pipe(switchMap((res:boolean)=>{
+      return res ? this.notificationService.toggleNotification(notificationId) : empty()
+    })).subscribe((res:boolean)=>{
+      res ? (this.notifications.find((n)=>{ return n._id === notificationId}).usersTo as any[]).find((u)=>{ return u.user === this.authService.userOnline._id}).checked = true : null;
+    })
+  }
+
+  showActionsRequired(notification: NotificationModel) {
+    this.actionsRequiredService.actionProcess(notification.type,notification.item._id ? notification.item._id: notification.item)
+    .pipe(switchMap(()=>{return this.notificationService.toggleNotification(notification._id);}))
+    .subscribe((notification:NotificationModel)=>{
+        this.notifications = this.notifications.map((n)=>{ return n._id === notification._id ? notification : n})
+    });
+  }
+
+  searchNotifications(queryString:string){
+    this.getNotifications(queryString).pipe(map((res:any)=>{ return res.notifications})).subscribe((notifications:NotificationModel[])=> this.notifications = notifications)
+  }
+
+  openSearchDialog(){
+    this.dialogsService.openNotificationsFilters(this.queryString).subscribe((queryString:string)=>{
+      this.notificationsFrom = 0; 
+      this.searchNotifications(queryString);
     })
   }
   ngOnDestroy(){

@@ -1,6 +1,6 @@
 
 
-<mat-sidenav-container>
+<mat-sidenav-container *ngIf="display">
   <mat-sidenav #start [mode]="'side'">
              <mat-list>
                <mat-list-item fxLayoutAlign="center" matTooltip="navigate to notifications">
@@ -18,11 +18,6 @@
                   </mat-icon>
                </mat-list-item>
                <mat-list-item fxLayoutAlign="center">
-                  <a >
-                     <mat-icon color="accent">share</mat-icon>
-                  </a>
-               </mat-list-item>
-               <mat-list-item fxLayoutAlign="center">
                    <a >
                      <mat-icon color="accent">settings</mat-icon>
                   </a>
@@ -37,45 +32,45 @@
   <mat-sidenav-content>
      <mat-toolbar >
     <mat-toolbar-row>
-   <a fxShow.xs fxShow.md fxHide.gt-md>
-      <mat-icon  color="accent" (click)="start.toggle()" matBadge matBadgeOverlap="false" appNotifications >menu</mat-icon>
+   <a fxHide.gt-md fxShow.lt-gt>
+      <mat-icon *ngIf="!deviceDetectorService.isDesktop()"  color="accent" (click)="start.toggle()" matBadge matBadgeOverlap="false" appNotifications >menu</mat-icon>
    </a>
-   <a fxHide.xs fxHide.md fxShow.gt-md   >
-      <mat-icon #homeIcon [color]="path === 'home' ? 'primary' : 'accent'" (click)="navigate('home')" routerLinkActive="router-link-active" matBadge matBadgeOverlap="false" appNotifications 
+   <a fxShow.gt-md fxHide.lt-gt >
+      <mat-icon *ngIf="deviceDetectorService.isDesktop()"  #homeIcon [color]="path === 'home' ? 'primary' : 'accent'" (click)="navigate('home')" routerLinkActive="router-link-active" matBadge matBadgeOverlap="false" appNotifications 
       class="icon-pages"  color="accent"  matTooltip="navigate to home">home</mat-icon>
    </a>
-   <a fxShow.lg fxHide.xs fxHide.md >
+   <a fxShow.gt-md fxHide.lt-gt>
       <mat-icon [color]="path === 'calendar' ? 'primary' : 'accent'" (click)="navigate('calendar')" routerLinkActive="router-link-active"
          matTooltip="navigate to calendar" class="icon-pages" color="accent">calendar_today</mat-icon>
    </a>
-   <a fxShow.lg fxHide.xs fxHide.md  >
+   <a fxShow.gt-md fxHide.lt-gt >
       <mat-icon [color]="path === 'task-manager' ? 'primary' : 'accent'" (click)="navigate('task-manager')" routerLinkActive="router-link-active"
          matTooltip="navigate to task manager" class="icon-pages" color="accent">assignment</mat-icon>
    </a>
    <span class="spacer"></span>
      <app-projects-smart id="project-selector"> </app-projects-smart>
-   <div ngClass.gt-xs="div-task-btn-desktop" ngClass.xs="'div-task-btn-mobile">
-       <button fxLayout="center" ngClass.gt-xs="new-task-btn-desktop" ngClass.xs="new-task-btn-mobile" id="new-task" (click)="postTask()" color="accent" [disabled]="!projectService.selectedProject" mat-raised-button> <small>NEW TASK</small></button>
+   <div *ngIf="selectedProject" appIsAdm ngClass.gt-xs="div-task-btn-desktop" ngClass.xs="'div-task-btn-mobile">
+       <button fxLayout="center" ngClass.gt-md="new-task-btn-desktop" ngClass.lt-lg="new-task-btn-mobile" id="new-task" (click)="postTask()" color="accent" [disabled]="!selectedProject" mat-raised-button fxLayoutAlign="center"><span>ADD TASK</span></button>
    </div>
-   <a fxShow.gt-xs fxHide.xs>
-      <mat-icon color="accent">share</mat-icon>
-   </a>
-   <a fxShow.gt-xs fxHide.xs>
+   <a fxShow.gt-md fxHide>
       <mat-icon color="primary">settings</mat-icon>
    </a>
-   <a fxShow.gt-xs fxHide.xs>
+   <a fxShow.gt-md fxHide>
       <mat-icon color="warn" (click)="logout()" >exit_to_app</mat-icon>
    </a>
   </mat-toolbar-row>
 </mat-toolbar>
     <div id="main-content" [class]="deviceDetectorService.isMobile() ? 'main-mobile' : 'main'">
-           <div *ngIf="projectService.selectedProject" [@routeAnimations]="routesAnimation" >
+           <div *ngIf="selectedProject"  >
            <router-outlet id="main-content" #outlet="outlet"></router-outlet>
           </div>
-            <app-no-projects *ngIf="!projectService.selectedProject"></app-no-projects>
+            <app-no-projects *ngIf="!selectedProject"></app-no-projects>
    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+<div *ngIf="!display">
+   <div class="div-not-display" [style.margin]="'25px'" >SORRY THE MOBILE AND TABLE VERSIONS ARE IN PROGRESS.</div>
+</div>
 
   
 

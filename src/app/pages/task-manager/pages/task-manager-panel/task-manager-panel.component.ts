@@ -1,11 +1,13 @@
 import { Component, OnDestroy, OnInit} from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, empty } from 'rxjs';
 import { Task } from '../../../../core/models/task.model';
 import { User } from '../../../../core/models/user.model';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../../auth/shared/providers/auth.service';
 import { TaskService } from '../../../../core/providers/task.service';
 import { DialogsService } from '../../../../core/providers/dialogs.service';
+import { LpDialogsService } from 'lp-dialogs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-task-manager-panel',
@@ -20,7 +22,8 @@ export class TaskManagerPanelComponent implements  OnDestroy,OnInit{
               public authService: AuthService,
               public taskService: TaskService,
               private dialogsService: DialogsService,
-              private ar:ActivatedRoute) { }
+              private ar:ActivatedRoute,
+              private lpDialogsService:LpDialogsService) { }
 
   ngOnInit(){
      this.ar.paramMap.subscribe((params)=>{
@@ -50,8 +53,10 @@ export class TaskManagerPanelComponent implements  OnDestroy,OnInit{
       });
     });
   }
-  toggleStatus() {
-    this.taskService.toggleStatus('on review', this.taskSelected._id).subscribe();
+  toggleStatus(newStatus:string) {
+    this.lpDialogsService.openConfirmDialog('ARE YOU SURE?', `The task status will switch to "${newStatus}" status`).pipe(switchMap((res:any)=>{
+      return res ? this.taskService.putTask({status:newStatus},this.taskSelected._id) : empty()
+    })).subscribe();
   }
   editTask() {
     this.dialogsService.openEditCreateTaskDialog(this.taskSelected._id);
@@ -60,6 +65,9 @@ export class TaskManagerPanelComponent implements  OnDestroy,OnInit{
     this.taskService.deleteTask(this.taskSelected._id).subscribe();
   }
 
+  resolveAction(res:any){
+    this.taskService.putTask({ [Object.keys(res)[0]]: res[Object.keys(res)[0]]},res.itemId).subscribe();
+  }
   ngOnDestroy() {
     this.taskService.userOutTask(this.taskSelected._id);
     this.taskSubscription.unsubscribe();

@@ -19,25 +19,19 @@ mat-sidenav{
   background-color: #1b1b1b;
 }
 
-.pages-toolbar{
-  background-color: #1b1b1b;
-  height: 43px;
-     position: sticky !important;
-    position: -webkit-sticky !important; /* For macOS/iOS Safari */
-    top: 0 !important; /* Sets the sticky toolbar to be on top */
-    z-index: 1000 !important; /* Ensure that your app's content doesn't overlap the toolbar */
-}
-
 .new-task-btn-desktop{
     font-weight: bolder;
     width: 100px;
     font-size: 15px;
+    text-align: center;
 }
 
 .new-task-btn-mobile{
     font-weight: bolder;
     width: 50px;
     font-size: 11px;
+    text-align: center;
+    padding: 0px;
 }
 
 
@@ -57,7 +51,7 @@ mat-icon{
 mat-toolbar-row{
   background-color:#1b1b1b;
   padding:5px!important;
-  margin-top:0px !important
+  margin-top:0px !important;
 }
 
 .div-task-btn-desktop{
@@ -66,6 +60,11 @@ mat-toolbar-row{
 
 .div-task-btn-mobile{
     margin-right: 0vw;
+}
+
+.div-not-display{
+  color:#7b87cc ;
+  margin: 25px;
 }
 
 

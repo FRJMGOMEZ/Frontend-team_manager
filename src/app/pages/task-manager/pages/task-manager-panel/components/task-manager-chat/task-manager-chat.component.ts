@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnDestroy, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Message } from '../../../../../../core/models/message.model';
+import { MessageModel } from '../../../../../../core/models/message.model';
 import { ChatService } from '../../../../../../core/providers/chat.service';
 import { Task } from '../../../../../../core/models/task.model';
 import { User } from '../../../../../../core/models/user.model';
@@ -18,8 +18,8 @@ export class TaskManagerChatComponent implements OnInit, OnDestroy {
 
   messagesSubs: Subscription;
   dialogSubs:Subscription;
-  messages: Message[];
-  newMessage: Message;
+  messages: MessageModel[];
+  newMessage: MessageModel;
   messagesCount: number;
   usersConnectedSubs: Subscription;
   users: User[] = [];
@@ -39,17 +39,17 @@ export class TaskManagerChatComponent implements OnInit, OnDestroy {
       this.users = (this.taskSelected.participants as User[]);
     }
   }
-  sendMessage(message: Message) {
-    this.chatService.postMessage(message, this.taskSelected._id).subscribe((message: Message) => {
+  sendMessage(message: MessageModel) {
+    this.chatService.postMessage(message, this.taskSelected._id).subscribe((message: MessageModel) => {
       this.newMessage = message;
     });
   }
   getMessages(from: number) {
     this.chatService.getMessages(this.taskSelected._id, from)
-      .subscribe((res: { messages: Message[], count: number }) => {
+      .subscribe((res: { messages: MessageModel[], count: number }) => {
         let messages = this.messages ? this.messages : [];
         messages.unshift(...res.messages)
-        this.messages = [...messages.sort((a: Message, b: Message) => { return a.date - b.date; })];
+        this.messages = [...messages.sort((a: MessageModel, b: MessageModel) => { return a.date - b.date; })];
         this.messagesCount = res.count;
       });
   }
@@ -63,7 +63,7 @@ export class TaskManagerChatComponent implements OnInit, OnDestroy {
     });
   }
   listenningMessages() {
-    this.messagesSubs = this.chatService.listenningMessages().subscribe((message: Message) => {
+    this.messagesSubs = this.chatService.listenningMessages().subscribe((message: MessageModel) => {
       this.newMessage = message;
       this.spreadFiles(message.files as FileModel[])
     });

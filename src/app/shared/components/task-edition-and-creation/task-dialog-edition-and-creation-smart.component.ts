@@ -36,7 +36,7 @@ export class TaskDialogEditionAndCreationSmartComponent {
                  this.localStorageService.set('state-data',this.data.taskId,'task-on-screen')
            } 
 
-        this.selectedProject = this.localStorageService.get('state-data', 'project')
+        this.selectedProject = this.projectService.selectedProject._id;
         this.getPanelData(this.selectedProject) 
         this.prevDialog = this.data ? this.data.prevDialog : undefined  
     }
@@ -44,6 +44,7 @@ export class TaskDialogEditionAndCreationSmartComponent {
         this.taskService.getTaskById(taskId).subscribe((taskDb: Task) => {
             let taskSelected = LpObject.copyObject(taskDb);
             taskSelected.participants = (taskSelected.participants as User[]).map((eachParticipant: User) => { return eachParticipant._id })
+            taskSelected.reviewers = (taskSelected.reviewers as User[]).map((eachParticipant: User) => { return eachParticipant._id });
             taskSelected.user = (taskSelected.user as User)._id;
             taskSelected.project = taskSelected.project as Project;
             this.taskSelected = taskSelected;
@@ -64,7 +65,7 @@ export class TaskDialogEditionAndCreationSmartComponent {
     }
     postTask(task: Task) {
         this.taskService.postTask(task).subscribe((task: Task) => {
-            this.taskSelected = LpObject.copyObject(task);
+            this.closeDialog();
         })
     }
 

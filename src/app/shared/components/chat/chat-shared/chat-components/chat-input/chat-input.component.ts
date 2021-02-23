@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ChatFilesDialogComponent } from '../chat-files-dialog/chat-files-dialog.component';
-import { Message } from '../../../../../../core/models/message.model';
+import { MessageModel } from '../../../../../../core/models/message.model';
 
 @Component({
   selector: 'chat-input',
@@ -11,15 +11,15 @@ import { Message } from '../../../../../../core/models/message.model';
 export class ChatInputComponent implements OnInit {
   
   @ViewChild('textArea') textArea : ElementRef
-  message: Message = new Message('', [], null)
-  @Output() sendMsg = new EventEmitter<Message>();
+  message: MessageModel = new MessageModel('', [], null)
+  @Output() sendMsg = new EventEmitter<MessageModel>();
   constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
   sendMessage() {
       this.sendMsg.emit(this.message)
-      this.message = new Message('', [], null);
+      this.message = new MessageModel('', [], null);
       this.textArea.nativeElement.focus();
   }
 

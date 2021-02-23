@@ -361,6 +361,46 @@
           }
         }
       }
+    },
+    "lp-thinking-time-progress": {
+      "projectType": "library",
+      "root": "projects/lp-thinking-time-progress",
+      "sourceRoot": "projects/lp-thinking-time-progress/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/lp-thinking-time-progress/tsconfig.lib.json",
+            "project": "projects/lp-thinking-time-progress/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/lp-thinking-time-progress/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/lp-thinking-time-progress/src/test.ts",
+            "tsConfig": "projects/lp-thinking-time-progress/tsconfig.spec.json",
+            "karmaConfig": "projects/lp-thinking-time-progress/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/lp-thinking-time-progress/tsconfig.lib.json",
+              "projects/lp-thinking-time-progress/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "team-manager-frontend",

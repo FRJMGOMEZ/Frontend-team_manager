@@ -1,6 +1,5 @@
 
 
-:host{
 .div-progress-container{
   width: 100%;
   line-height: 10pt;
@@ -14,7 +13,7 @@
   width: 100%;
   align-items: center;
   .progress-bar-container{
-       height: 20px;
+       height: 18px;
        width: 100%;
        background-color: wheat;
        border: 1px solid black;
@@ -25,10 +24,11 @@
         }
      }
   }
-  .h5-extra-time{
-  margin-top:2px!important;
-  font-weight: bolder;
-  }
+  .div-extratime-info{
+   margin-top:10px !important
+    }
+
 }
-}
+
+
 

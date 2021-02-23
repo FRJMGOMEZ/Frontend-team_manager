@@ -21,8 +21,9 @@ export class NotificationModel {
         public date: number,
 
         public item: any,
+        public actionsRequired:number,
 
-        public oldItem?: any,
+        public prevItem?: any,
 
         public _id?:string
 

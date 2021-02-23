@@ -12,7 +12,7 @@ const appRoutes: Routes = [
 
   { path: 'not-page-found', loadChildren: () => import('./core/components/not-page-found/not-page-found.module').then(m => m.NotPageFoundModule) },
 
-  { path: '', redirectTo: '/pages/home', pathMatch: 'full' }, 
+  { path: '', redirectTo: 'pages', pathMatch: 'full' }, 
 
   { path: "**", redirectTo: '/not-page-found', pathMatch: 'full' }
 ];

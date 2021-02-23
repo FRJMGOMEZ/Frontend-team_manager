@@ -12,26 +12,26 @@
         </div>
         <div fxFlex.gt-xs="90"  [style.margin]="'10px'" fxLayout="column">
             <div fxLayout="row">
-                <mat-card fxFlex='90' [style.width]="calculateCardWidth()" class="mat-card-hour" *ngFor="let hour of hours">
-                        {{hour.date | date : 'H'}}
+                <mat-card fxFlex='90' class="mat-card-hour" *ngFor="let hour of hours">
+                        <div>{{hour.date | date : 'H'}}</div>
                 </mat-card>
-                <div [style.margin]="'10px'" fxFlex="10"></div>
+                <div fxFlex="10"></div>
             </div>
             <div  fxLayout="row">
-                <mat-card fxFlex="90"  #cardHour [style.width]="calculateCardWidth()"class="mat-card-hour" *ngFor="let hour of hours">
-                    <div  [style.width.%]="'100'" fxLayout="column">
-                        <div  [style.margin-bottom]="'10px'" [style.margin-top]="'10px'" #taskDiv [class]="task.priority === 1 ? 'div-task-high-p' : task-priority === 2 ? 'div-task-medium-p' : 'div-task-low-p' " [ngClass]="{'': taskRender(taskDiv,task,hour,'regular')}" *ngFor="let task of tasks"></div>
+                <mat-card fxFlex="90"  #cardHour [style.height]="'68vh'" class="mat-card-hour" *ngFor="let hour of hours">
+                    <div  fxLayout="column">
+                        <div #taskDiv [class]="task.priority === 1 ? 'div-task-high-p' : task-priority === 2 ? 'div-task-medium-p' : 'div-task-low-p' " [ngClass]="{'': taskRender(taskDiv,task,hour,'regular')}" *ngFor="let task of tasks"></div>
                     </div>
                 </mat-card>
-                <div [style.background-color]="'#ffffff'" [style.margin]="'10px'" fxFlex="10">
-                    <div [style.width.%]="100"  [style.margin-bottom]="'10px'" [style.height]="'20px'" *ngFor="let task of tasks">
-                    <a  [matMenuTriggerFor]="menu" class="a-task-toggle">{{task.name}}</a>
-                    <mat-menu #menu="matMenu">
+                <div [style.background-color]="'#ffffff'" fxFlex="10">
+                    <div [style.height]="'30px'" *ngFor="let task of tasks">
+                       <a  [matMenuTriggerFor]="menu" class="a-task-toggle">{{task.name}}</a>
+                       <mat-menu #menu="matMenu">
                          <button (click)="checkTask.emit(task._id)" mat-menu-item>View details</button>
                         <div [matTooltip]="tasksService.taskTimeStarted(task) ? 'The task can not be edited because already started': null">
-                            <button #btnEdit  [disabled]="tasksService.taskTimeStarted(task)" (click)="putTask.emit(task._id)" mat-menu-item>Edit</button>
+                            <button #btnEdit  [disabled]="tasksService.taskTimeEnded(task)" (click)="putTask.emit(task._id)" mat-menu-item>Edit</button>
                         </div>
-                    </mat-menu>
+                       </mat-menu>
                     </div>
                 </div>
             </div>

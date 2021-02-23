@@ -8,6 +8,7 @@ export class Task {
         public description: string,
         public user: string | User,
         public participants: string[] | User[],
+        public reviewers:string[] | User[],
         public project: string | Project,
         public priority:number,
         public status:string,
@@ -16,11 +17,14 @@ export class Task {
         public disabled:boolean,
         public editable?:boolean,
         public prevStates?: PrevState[],
-        public _id?: string,
         public deliverDate?: number,
         public validationDate?: number,
         public extraTime?: number,
+        public actionsRequired?:{[key:string]:any}[],
+        public _id?: string,
+
     ) { }
 }
+
 
 

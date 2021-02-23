@@ -1,5 +1,5 @@
 
-export class Day {
+export class DayModel {
 
          constructor(date:Date) {
             this.date = date.getTime();

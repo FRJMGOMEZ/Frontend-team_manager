@@ -1,21 +1,26 @@
-<lp-bottom-sheet-info [componentToShow]="infoComponent" ></lp-bottom-sheet-info>
-<ng-template #template>
-  <router-outlet>
-  </router-outlet>
-</ng-template>
-<div class="div-home-container" fxLayout="row">
-    <app-notifications-filter fxFlex="20" ></app-notifications-filter>
-     <mat-tab-group (selectedTabChange)="navigate($event.index);" [fxFlex]="notificationSelected ? '45' : '75'" mat-stretch-tabs  mat-align-tabs="center">
-          <mat-tab label="NOTIFICATIONS TO CHECK">
-                  <div *ngIf="childPath && childPath === 'new'">
-                      <ng-container  *ngTemplateOutlet="template"></ng-container>
-                  </div>
-          </mat-tab>
-          <mat-tab label="NOTIFICATIONS RECORD"> 
-                   <div *ngIf="childPath && childPath === 'record'" >
-                       <ng-container *ngTemplateOutlet="template"></ng-container>
-                   </div>
-          </mat-tab>
-    </mat-tab-group>
-    <app-notification-change-detail [fxFlex]="notificationSelected ? '30' : '0'" [notification]="notificationSelected" (unselectNotification)="unselectNotification()"></app-notification-change-detail>
+<lp-bottom-sheet-info [componentToShow]="infoComponent"></lp-bottom-sheet-info>
+<div class="div-home-container" fxLayout.gt-md="row" fxLayout.lt-lg="column">
+     <div [fxFlex]="notificationSelected ? '70' : '100'" >
+        <nav mat-stretch-tabs mat-tab-nav-bar>
+           <a mat-tab-link
+            routerLinkActive
+            #rla="routerLinkActive"
+             [active]="tabIndex === 0"
+             (click)="navigate(0);">
+             <mat-icon>notification_important</mat-icon>
+             NOTIFICATIONS TO CHECK
+            </a>
+            <a mat-tab-link
+            routerLinkActive
+            #rla="routerLinkActive"
+              [active]="tabIndex === 1"
+             (click)="navigate(1);">
+             <mat-icon>folder</mat-icon>
+              NOTIFICATIONS RECORD
+            </a>
+       </nav>
+     <router-outlet>
+     </router-outlet> 
+     </div>
+    <app-notification-change-detail *ngIf="notificationSelected" fxFlex="30" [notification]="notificationSelected" (unselectNotification)="unselectNotification()"></app-notification-change-detail>
 </div>

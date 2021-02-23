@@ -6,7 +6,7 @@
                    Task info
                    <mat-icon color="primary">poll</mat-icon>
                 </ng-template>   
-                  <app-task-manager-info  *ngIf="taskSelected && tabIndex === 0" (deleteTask)="deleteTask()" (toggleStatus)="toggleStatus()" (editTask)="editTask()" [taskSelected]="taskSelected"></app-task-manager-info>
+                  <app-task-manager-info  *ngIf="taskSelected && tabIndex === 0" (deleteTask)="deleteTask()" (toggleStatus)="toggleStatus($event)" (editTask)="editTask()" [taskSelected]="taskSelected" (actionResolved)="resolveAction($event)"></app-task-manager-info>
                </mat-tab>
                 <mat-tab> 
                  <ng-template mat-tab-label>

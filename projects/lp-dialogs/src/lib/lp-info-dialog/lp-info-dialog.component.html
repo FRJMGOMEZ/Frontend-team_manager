@@ -3,11 +3,10 @@
     <p >
         {{item}}
     </p>
-    <p>
-        {{message}}
-    </p>
+    <div class="div-message" >
+       <p>{{message}}</p>
+    </div>
 </mat-dialog-content>
 <mat-dialog-actions>
     <button class="mat-raised-button" (click)="hideModal()">Close</button>
-    <button class="mat-raised-button" (click)="reportError()">Report</button>
 </mat-dialog-actions>

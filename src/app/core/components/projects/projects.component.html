@@ -12,7 +12,7 @@
     <mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="name">
             <mat-header-cell mat-header-cell *matHeaderCellDef fxShow fxHide.lt-xs> Name </mat-header-cell>
-            <mat-cell class="mat-cell-selector" (click)="selectProject(element._id)"  mat-cell *matCellDef="let element" fxShow fxHide.lt-xs>
+            <mat-cell class="mat-cell-selector" (click)="selectProject(element)"  mat-cell *matCellDef="let element" fxShow fxHide.lt-xs>
                 {{element.name}}
             </mat-cell>
         </ng-container>

@@ -1,18 +1,26 @@
 
 
 
+h3{
+    margin: 0px;
+    padding: 0px;
+}
 
-.category-div{
+h5{
+    font-weight:bolder;
+    margin-bottom:5px;
+    text-align: center;
+}
+
+.div-category{
     margin-top:20px;
+    height: 15vh;
     width:100%;
-    h5{
-        font-weight:bolder;
-        margin-bottom:5px;
-        text-align: center;
-    }
-
     p{
         text-align: center;
+    }
+    mat-icon{
+        font-size: 30px;
     }
 }
 
@@ -20,8 +28,12 @@
     color:#d1870c
 }
 
-
-
-/* mat-radio-group{
-    max-width: 600px;
-} */
+.div-labels{
+    height: 20px;
+    width: 100%;
+}
+.p-description{
+    max-width: 100%!important;
+    max-height: 100% !important;
+    word-break: break-all;
+}

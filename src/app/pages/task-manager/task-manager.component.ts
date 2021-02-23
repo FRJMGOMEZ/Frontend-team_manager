@@ -9,6 +9,7 @@ import { User } from '../../core/models/user.model';
 import { LocalStorageService } from '../../library/providers/local-storage.service';
 import { ProjectService } from '../../core/providers/project.service';
 import { TaskService } from '../../core/providers/task.service';
+import { Project } from '../../core/models/project.model';
 
 @Component({
   selector: 'app-task-manager',
@@ -36,8 +37,9 @@ export class TaskManagerComponent implements OnInit, OnDestroy {
                 private router:Router) {}
 
   ngOnInit(): void {
-    this.selectedProjectSubs = this.projectService.selectedProject$.subscribe((project: string) => {
-       this.selectedProject = project;
+
+    this.selectedProjectSubs = this.projectService.selectedProject$.subscribe((project:Project) => {
+       this.selectedProject = project._id;
        this.removeTaskInStorage();
        this.redirectTo('pages/task-manager')
     })
@@ -61,13 +63,15 @@ export class TaskManagerComponent implements OnInit, OnDestroy {
       }
     });
     this.selectedProject = this.projectService.selectedProject._id;
-    this.getParticipants();
     this.taskSelected = this.localStorageService.get('state-data', 'task-selected');
-    this.getTasks(`?project=${this.selectedProject}`, 0).subscribe(()=>{
-      if (!this.taskSelected) {
-        this.tasksList[this.tasksList.length - 1] ? this.navigateToTask(this.tasksList[this.tasksList.length - 1]._id) : this.taskSelected = '';
-     }
-    })
+    if(this.selectedProject){
+      this.getTasks(`?project=${this.selectedProject}`, 0).subscribe(() => {
+        if (!this.taskSelected) {
+          this.tasksList[this.tasksList.length - 1] ? this.navigateToTask(this.tasksList[this.tasksList.length - 1]._id) : this.taskSelected = '';
+        }
+      });
+      this.getParticipants();
+    }
   }
 
   redirectTo(uri: string) {

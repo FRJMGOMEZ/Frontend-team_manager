@@ -2,32 +2,58 @@
 
 
 <div class="div-info-container" fxLayout="column" *ngIf="taskSelected" >
-       <mat-card fxLayout="row" fxFlex="10">
-           <h4 fxFlex.gt-xs="15" fxFlex.xs="50">
-               NAME:
-           </h4>
-           <p fxFlex="90">
-           {{taskSelected.name}}
-           </p>
+       <mat-card fxLayout="row" fxFlex="8">
+           <div fxFlex="50" >
+               <h4 fxLayout="column" fxLayoutAlign="center" fxFlex.gt-xs="20" fxFlex.xs="50" >
+                   Name:
+               </h4>
+               <p fxLayout="column" fxLayoutAlign="center">
+               {{taskSelected.name}}
+               </p>
+           </div>
+            <div fxFlex="50">
+                <h4 fxLayout="column" fxLayoutAlign="center" fxFlex.gt-xs="20" fxFlex.xs="50">
+                 Description:
+                </h4>
+                 <mat-icon fxLayout="column" fxLayoutAlign="center" color="primary" (click)="showDescription()">pageview</mat-icon>
+            </div>
         </mat-card>
-         <mat-card fxLayout="column" fxFlex="40"> 
+         <mat-card fxLayout="row"  fxFlex="8">
+           <div fxFlex="50" >
+               <h4 fxLayout="column" fxLayoutAlign="center" fxFlex.gt-xs="20" fxFlex.xs="50">
+                   Status:
+               </h4>
+                <p fxLayout="column" fxLayoutAlign="center">
+                 {{taskSelected.status.toUpperCase()}}
+                </p>
+           </div>
+           <div fxFlex="50">
+                <h4 fxLayout="column" fxLayoutAlign="center" fxFlex.gt-xs="20" fxFlex.xs="50">
+                 Priority:
+                </h4>
+               <p fxLayout="column" fxLayoutAlign="center">
+               {{taskSelected.priority === 1 ? 'HIGH' : taskSelected.priority === 2 ? 'MEDIUM' : 'LOW'}}
+                </p>
+           </div>
+       </mat-card>
+         <mat-card fxLayout="column" fxFlex="hasActsRequired ? 26: 36"> 
         <h4>
-               PROGRESS
+               Progress
            </h4>   
         <app-task-manager-progress   [taskSelected]="taskSelected"></app-task-manager-progress>
         </mat-card>
-        <mat-card  fxFlex="20">
+        <mat-card  [fxFlex]="hasActsRequired ? 10: 20">
            <h4 fxFlex.gt-xs="15" fxFlex.xs="50">
-               ACTIONS
+               Options
            </h4> 
            <div fxFlex="80" fxLayout="row">
-                <div fxFlex.gt-xs="15" fxFlex.xs="33" fxLayout="column">
+                <div fxFlex.gt-xs="20" fxFlex.xs="33" fxLayout="row">
                   <div fxLayoutAlign="center">
                       <mat-icon 
                       color="primary"
                       [matTooltip]="taskSelected.status === 'on review' ? 'Task on review by the manager' :'' "
                       [ngClass]="{'icon-disabled': !taskService.taskTimeStarted(taskSelected)}"
-                      (click)="taskSelected.status === 'pending' && taskService.taskTimeStarted(taskSelected) ? toggleStatus.emit():null">
+                      (click)="toggleStat()">
                       {{ taskSelected.status === 'pending' ? 'move_to_inbox' : taskSelected.status === 'on review' ? 'hourglass_full' : 'assignment_turned_in'  }}
                       </mat-icon>
                   </div>
@@ -35,15 +61,15 @@
                     TOGGLE STATUS
                 </mat-label>
                 </div>
-               <div fxFlex.gt-xs="15" fxFlex.xs="33" fxLayout="column">
+               <div fxFlex.gt-xs="20" fxFlex.xs="33" fxLayout="row">
                 <div fxLayoutAlign="center">
-                    <mat-icon [ngClass]="{'icon-disabled': taskService.taskTimeStarted(taskSelected)}" (click)="editTask.emit()" color="primary">edit</mat-icon>
+                    <mat-icon [ngClass]="{'icon-disabled': !taskService.canBeEdited(taskSelected)}" (click)="taskService.canBeEdited(taskSelected) ? editTask.emit() : null" color="primary">edit</mat-icon>
                 </div>
                 <mat-label class="label-action">
                     EDIT
                 </mat-label>
                  </div>
-                 <div fxFlex.gt-xs="15" fxFlex.xs="33" fxLayout="column">
+                 <div fxFlex.gt-xs="20" fxFlex.xs="33" fxLayout="row">
                 <div fxLayoutAlign="center">
                     <mat-icon [ngClass]="{'icon-disabled': taskService.taskTimeStarted(taskSelected)}" color="warn" (click)="!taskService.taskTimeStarted(taskSelected) ?  deleteTask.emit() : null">delete</mat-icon>
                 </div>
@@ -53,29 +79,25 @@
                  </div>
            </div>
        </mat-card>
-      <mat-card  fxFlex="10">
-           <h4 fxFlex.gt-xs="15" fxFlex.xs="50">
-               STATUS:
-           </h4>
-            <p>
-             {{taskSelected.status.toUpperCase()}}
-            </p>
+       <mat-card fxLayout="row" [fxFlex]=" hasActsRequired ? 15: 30">
+        <div fxLayout="row" fxFlex="50">
+            <h4>Participants</h4>
+             <ul>
+               <li *ngFor="let participant of taskSelected.participants" role="listitem">{{participant.name}}</li>
+            </ul>
+        </div>
+        <div fxLayout="row" fxFlex="50">
+            <h4>Reviewers</h4>
+             <ul>
+               <li *ngFor="let reviewer of taskSelected.reviewers" role="listitem">{{reviewer.name}}</li>
+            </ul>
+        </div>
        </mat-card>
-       <mat-card  fxFlex="10">
-           <h4 fxFlex.gt-xs="15" fxFlex.xs="50">
-               DESCRIPTION:
+      <mat-card *ngIf="hasActsRequired" fxLayout="column" fxFlex="35">
+            <h4 [style.color]="'red'">
+               Actions required
            </h4>
-          <p>
-              {{taskSelected.description}}
-          </p>
-       </mat-card>
-       <mat-card  fxFlex="10">
-            <h4 fxFlex.gt-xs="15" fxFlex.xs="50">
-               PRIORITY:
-           </h4>
-           <p>
-            {{taskSelected.priority === 1 ? 'HIGH' : taskSelected.priority === 2 ? 'MEDIUM' : 'LOW'}}
-          </p>
-        </mat-card>
+           <app-actions-required-smart [actionsRequired]="taskSelected.actionsRequired" (onActionResolved)="actionResolved.emit($event)" ></app-actions-required-smart>
+      </mat-card>
 </div>
 

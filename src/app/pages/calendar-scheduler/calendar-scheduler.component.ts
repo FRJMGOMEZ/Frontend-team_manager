@@ -6,6 +6,7 @@ import { CalendarSchedulerMonthInfoComponent } from './components/calendar-sched
 import { CalendarSchedulerDayInfoComponent } from './components/calendar-scheduler-day-info/calendar-scheduler-day-info.component';
 import { LocalStorageService } from '../../library/providers/local-storage.service';
 import { ProjectService } from '../../core/providers/project.service';
+import { Project } from '../../core/models/project.model';
 
 
 @Component({
@@ -33,14 +34,15 @@ export class CalendarSchedulerComponent implements  OnInit, OnDestroy {
     this.ar.queryParamMap.subscribe((querys) => {
       querys.get('selectedDate') ? this.urlHasQuerys = true : null;
     })
-    this.selectedProjectSubs = this.projectService.selectedProject$.subscribe((project: string) => {
-      this.selectedProject = project;
+    this.selectedProjectSubs = this.projectService.selectedProject$.subscribe((project: Project) => {
+      this.selectedProject = project._id;
       this.navigateToChild()
     })
     this.selectedDate = this.localStorageService.get('state-data', 'date-selected') ? new Date(this.localStorageService.get('state-data', 'date-selected')) : new Date();
     this.selectionDate = this.selectedDate;
-    this.selectedProject = this.projectService.selectedProject._id;
     this.dateFormat = this.localStorageService.get('state-data', 'date-format') || 'month';
+    /* FIXME */
+    this.selectedProject = this.projectService.selectedProject._id; ;
     this.navigateToChild();
   }
 

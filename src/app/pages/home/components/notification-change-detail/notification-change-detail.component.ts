@@ -42,7 +42,7 @@ export class NotificationChangeDetailComponent {
                  this.itemSelected = item;
                  break;
                case 'DELETE':
-                 this.itemSelected = this.notification.oldItem;
+                 this.itemSelected = this.notification.prevItem;
                  this.itemSelected.deleted = true;
                  break;
              }
@@ -56,16 +56,17 @@ export class NotificationChangeDetailComponent {
   getItems(notification:NotificationModel){
     let request:Observable<any>
     switch(notification.type){
-      case 'Task': request = notification.method != 'DELETE' ? this.taskService.getTaskById(notification.item._id ? notification.item._id : notification.item) : of(notification.oldItem).pipe(map((i)=>{ i.deleted = true;return i}))
+      case 'Task': request = notification.method != 'DELETE' ? this.taskService.getTaskById(notification.item._id ? notification.item._id : notification.item) : of(notification.prevItem).pipe(map((i)=>{ i.deleted = true;return i}))
       break;
-      case 'Project': request = notification.method != 'DELETE' ? this.projectService.getProjectById(notification.item._id ? notification.item._id : notification.item): of(notification.oldItem)
+      case 'Project': request = notification.method != 'DELETE' ? this.projectService.getProjectById(notification.item._id ? notification.item._id : notification.item): of(notification.prevItem)
       break;
     }
     request.pipe(catchError((err)=>{
-      this.itemSelected = notification.oldItem;
+      this.itemSelected = notification.prevItem;
       this.itemSelected.deleted = true;
       return empty()})) 
     .subscribe((res)=>{
+      console.log({res});
        this.itemSelected = res != null ? res : this.itemSelected;
     })
   }

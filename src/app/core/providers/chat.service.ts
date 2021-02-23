@@ -3,7 +3,7 @@ import { Subject, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, tap} from 'rxjs/operators';
 import { WebSocketsService } from './web-sockets.service';
-import { Message } from '../models/message.model';
+import { MessageModel } from '../models/message.model';
 import { API_URL } from '../../config/api-url';
 
 @Injectable({
@@ -11,8 +11,8 @@ import { API_URL } from '../../config/api-url';
 })
 export class ChatService {
 
-    messagesSource = new Subject<{message:Message,order:string}>();
-    messages$:Observable<{message:Message,order:string}> = this.messagesSource.asObservable();
+    messagesSource = new Subject<{message:MessageModel,order:string}>();
+    messages$:Observable<{message:MessageModel,order:string}> = this.messagesSource.asObservable();
 
     constructor(private http:HttpClient, private wsService:WebSocketsService) {}
 
@@ -26,7 +26,7 @@ export class ChatService {
             }
         }))
     }
-    postMessage(message: Message,taskId:string) {
+    postMessage(message: MessageModel,taskId:string) {
         message.date = new Date().getTime();
         const formData: FormData = new FormData();
         message.files.forEach((f,i)=>{

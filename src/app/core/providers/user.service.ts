@@ -59,7 +59,7 @@ export class UserServices {
         return this.http.put(url, user).pipe(
             tap((res: any) => {
                 if (res.user._id === this.authService.userOnline._id) {
-                    this.authService.saveInStorage( res.user, this.localStorageService.get('user','token'))
+                    this.authService.saveUser( res.user, this.localStorageService.get('user','token'))
                     this.authService.userOnline = res.user;
                 }
                 this.userSrc.next({user:res.user,order:'put'})

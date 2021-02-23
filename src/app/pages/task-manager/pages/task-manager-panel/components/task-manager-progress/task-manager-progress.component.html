@@ -15,13 +15,12 @@
                     <div [style.width.%]="extraTimeProgress" class="progress-bar"></div>
             </div>
         </div>
-        <div class="div-extratime-info" fxFlex="10" fxLayout="column" fxLayoutAlign="center" >
+        <div class="div-extratime-info" fxFlex="10" fxLayout="row" fxLayoutAlign="center" >
                  <div fxLayoutAlign="center">
                      EXTRA TIME
-                    <mat-icon matTooltip="Increased while the task is on review" color="accent">info</mat-icon>
                 </div>  
                 <div fxLayoutAlign="center">
-                    (<p *ngFor="let time of extraTimeStringArray; let i = index">{{time}}{{extraTimeStringArray[i+1]? ', ' : ''}} </p>)
+                    (<p *ngFor="let time of extraTimeStringArray; let i = index">{{time ? time : 0}}{{extraTimeStringArray[i+1]? ', ' : ''}} </p>)
                 </div>
         </div>
     </div>

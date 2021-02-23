@@ -3,9 +3,26 @@
     height: 85vh;
     width: 100%;
 }
-
-
 mat-tab-group{
-    margin-top:5px
+    margin-top:5px;
+    width: 100%;
+
+}
+::ng-deep .mat-ripple{
+    max-width: 50%;
+}
+::ng-deep .mat-tab-list {
+  .mat-tab-label {
+    flex-basis: 0;
+    flex-grow: 1
+  }
+}
+
+.mat-tab-link{
+  height: 5vh;
+}
+
+mat-icon{
+  margin: 5px;
 }
 

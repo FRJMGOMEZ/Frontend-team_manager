@@ -13,7 +13,7 @@ import { LpObject } from 'lp-operations';
     <mat-dialog-content>
      <app-task-detail [taskSelected]="taskSelected"  (back)="back()" [prevDialog]="prevDialog" (editTask)="editTask($event)" (restoreVersion)="restoreVersion($event)" [date]="date" > </app-task-detail>
     </mat-dialog-content>
-    <mat-dialog-actions fxLayoutAlign="center">
+    <mat-dialog-actions [style.margin-top]="'15px'" fxLayoutAlign="center">
     <button (click)="closeDialog()" mat-raised-button> Close </button>
     </mat-dialog-actions>
     `

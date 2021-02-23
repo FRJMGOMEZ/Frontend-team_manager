@@ -37,7 +37,9 @@ export class ProjectEditionAndCreationSmartComponent implements OnInit {
         })
     }
     postProject(project:Project) {
-            this.projectService.postProject(project).subscribe()
+            this.projectService.postProject(project).subscribe(()=>{
+                this.hideModal();
+            })
     }
 
     putProject(changes:{[key:string]:any}){

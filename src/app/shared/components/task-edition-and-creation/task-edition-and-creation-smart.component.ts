@@ -33,7 +33,7 @@ export class TaskEditionAndCreationSmartComponent implements OnInit {
   ngOnChanges(changes:SimpleChanges) {
     if(changes.taskSelected && this.taskSelected){
       this.localStorageService.set('state-data', this.taskSelected._id, 'task-on-screen');
-      this.selectedProject = this.localStorageService.get('state-data', 'project');
+      this.selectedProject = this.projectService.selectedProject._id;
       this.getPanelData(this.selectedProject);
     }
   }

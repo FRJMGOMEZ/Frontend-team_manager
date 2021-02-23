@@ -14,7 +14,7 @@
            <mat-card fxLayout="column" fxFlex="10" *ngIf="i + 8 < files.length"> <div fxFlex="80"><img #img fxFlex="80" [src]="files[i + 8] | fileIcon | async" alt="" (click)="filesService.downloadFile({src:img.src,file:files[i+8]}).subscribe()"> <mat-icon color="warn" (click)="deleteFile(files[i+8])" fxFlex="20">delete</mat-icon></div> <p fxFlex="20">{{files[i+8].title}}</p> </mat-card>
            <mat-card fxLayout="column" fxFlex="10" *ngIf="i + 9 < files.length"> <div fxFlex="80"><img #img fxFlex="80" [src]="files[i + 9] | fileIcon | async" alt="" (click)="filesService.downloadFile({src:img.src,file:files[i+9]}).subscribe()"> <mat-icon color="warn" (click)="deleteFile(files[i+9])" fxFlex="20">delete</mat-icon></div> <p fxFlex="20">{{files[i+9].title}}</p> </mat-card>
          </div>
-       </div>.subscribe()
+       </div>
     </div>
     <div fxHide.gt-xs fxShow.xs class="div-files">
         <div *ngFor="let file of files; let i = index">

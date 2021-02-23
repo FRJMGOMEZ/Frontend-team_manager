@@ -5,7 +5,9 @@ import { TaskDialogSmartComponent } from '../../shared/components/task-detail/ta
 import { TasksListDialogSmartComponent } from '../../shared/components/tasks-list-dialog/tasks-list-dialog-smart.component';
 import { TaskDialogEditionAndCreationSmartComponent } from '../../shared/components/task-edition-and-creation/task-dialog-edition-and-creation-smart.component';
 import { ProjectEditionAndCreationSmartComponent } from '../../shared/components/project-edition-and-creation/project-editon-and-creation-smart-component';
-
+import { ActionsRequiredSmartDialogComponent } from '../../shared/components/actions-required/actions-required-smart-dialog.component';
+import { ActionRequired } from '../models/action-required';
+import { NotificationsFilterSmartDialogComponent } from '../../pages/home/pages/notifications-list/components/notifications-filter/notifications-filter-smart-dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +23,7 @@ export class DialogsService {
     const dialog = new MatDialogConfig();
     dialog.disableClose = true;
     dialog.autoFocus = true;
-    dialog.maxHeight='500px';
+    dialog.maxHeight='560px';
     dialog.width = '500px'
     dialog.data = prevDialog ? {taskId,prevDialog} : {taskId}
     let dialogRef: MatDialogRef<any> = this.dialog.open(TaskDialogSmartComponent, dialog)
@@ -62,6 +64,7 @@ export class DialogsService {
     projectDialog.disableClose = true;
     projectDialog.autoFocus = true;
     projectDialog.panelClass = 'custom-dialog-container';
+    projectDialog.maxHeight= '600px';
     projectDialog.data = taskId ? prevDialog ? {taskId,prevDialog}: {taskId} : null;
     let dialogRef = this.dialog.open(TaskDialogEditionAndCreationSmartComponent, projectDialog);
     let subs = dialogRef.afterClosed().subscribe((data) => {
@@ -110,5 +113,27 @@ export class DialogsService {
         break;
     }
   }
-  
+
+  showActionsRequired(actionsRequired:ActionRequired[]){
+    const dialog = new MatDialogConfig();
+    dialog.disableClose = true;
+    dialog.autoFocus = true;
+    dialog.maxHeight = '300px';
+    dialog.width = '650px';
+    dialog.data = { actionsRequired};
+    let dialogRef: MatDialogRef<any> = this.dialog.open(ActionsRequiredSmartDialogComponent, dialog);
+    return dialogRef.componentInstance.onActionResolved;
+  }
+
+
+  openNotificationsFilters(queryString:string){
+    const dialog = new MatDialogConfig();
+    dialog.disableClose = true;
+    dialog.autoFocus = true;
+    dialog.maxHeight = '55vh';
+    dialog.width = '250px';
+    dialog.data = {queryString};
+    let dialogRef: MatDialogRef<any> = this.dialog.open(NotificationsFilterSmartDialogComponent, dialog);
+    return dialogRef.componentInstance.getNotifications;
+  }  
 }

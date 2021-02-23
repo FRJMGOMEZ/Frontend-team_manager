@@ -7,6 +7,7 @@ import { AuthService } from '../../../auth/shared/providers/auth.service';
 import { LpParseDatePipe } from '../../../library/lp-pipes/lp-parse-date.pipe';
 import { LpParseHourPipe } from '../../../library/lp-pipes/lp-parse-hour.pipe';
 import { LpDate, LpObject } from 'lp-operations';
+import { TaskService } from '../../../core/providers/task.service';
 
 @Component({
   selector: 'app-task-edition-and-creation',
@@ -18,23 +19,26 @@ export class TaskEditionAndCreationComponent implements OnChanges {
   @Input() isDialog: boolean = true;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
   panelOpenState: boolean = false;
-  @Input() projectParticipants: User[] = []
-  @Input() selectedProject: string
+  @Input() projectParticipants: User[] = [];
+  @Input() selectedProject: string;
   @Output() postTask: EventEmitter<Task> = new EventEmitter<Task>();
-  @Output() putTask: EventEmitter<{ filters: { [key: string]: any }, id: string }> = new EventEmitter<{ filters: { [key: string]: any }, id: string }>()
-  @Output() close:EventEmitter<void> = new EventEmitter<void>()
-  @Output() back:EventEmitter<void> = new EventEmitter<void>()
-  @Input() task: Task
-  taskPristine: Task
-  today = new Date()
-  @Input() prevDialog: string
+  @Output() putTask: EventEmitter<{ filters: { [key: string]: any }, id: string }> = new EventEmitter<{ filters: { [key: string]: any }, id: string }>();
+  @Output() close:EventEmitter<void> = new EventEmitter<void>();
+  @Output() back:EventEmitter<void> = new EventEmitter<void>();
+
+  @Output() dialogBack = new EventEmitter<void>();
+  @Input() task: Task;
+  taskPristine: Task;
+  today = new Date();
+  @Input() prevDialog: string;
 
   ngOnInit(){
      this.task ={
        name:'',
        description:'',
-       user:'',
+       user:this.authService.userOnline._id,
        participants:[],
+       reviewers:[],
        project:this.selectedProject,
        priority:1,
        status:'',
@@ -44,15 +48,15 @@ export class TaskEditionAndCreationComponent implements OnChanges {
      }
   }
 
-  constructor(private _ngZone: NgZone, private authService:AuthService) { }
+  constructor(private _ngZone: NgZone, private authService:AuthService, public taskService:TaskService) { }
 
   ngOnChanges(changes:SimpleChanges){
     if(changes.task && this.task){
-       this.taskPristine = LpObject.copyObject(this.task)
+       this.taskPristine = LpObject.copyObject(this.task);
     }
   }
   taskHasChanges(): boolean {
-    return LpObject.areEquals(this.task, this.taskPristine)
+    return LpObject.areEquals(this.task, this.taskPristine);
   }
   onRecursiveOptChange(recursive: boolean) {
     recursive ? this.task.endDate = null : null;
@@ -74,19 +78,28 @@ export class TaskEditionAndCreationComponent implements OnChanges {
   checkChangesToPatch(){ 
     let obj = LpObject.getObjectDifferences(this.taskPristine,this.task);
     obj.user = this.authService.userOnline._id;
-    return {taskChanges:obj,id:this.task._id}
+    return {taskChanges:obj,id:this.task._id};
   }
 
   startTimeMin(){
     let now = new Date();
     if( LpDate.dateComparison(new Date(this.today.getFullYear(),this.today.getMonth(),this.today.getDate(),0,0,0,0),new Date(this.task.startDate))){
      const  parseHourPipe = new LpParseHourPipe();
-     let hour = `${now.getHours()}:${now.getMinutes()}`
-      return hour
+     let hour = `${now.getHours()}:${now.getMinutes()}`;
+      return hour;
     }
-    return '07:00 am'
+    return '07:00 am';
+  }
+
+  participantsChange(change){
+    this.task.participants = change;
+    this.task.reviewers = (this.task.reviewers as string[]).filter((rw)=>{ (this.task.participants as string[]).includes(rw)})
   }
   get timeString(){
     return this.task.startDate && this.task.endDate ?  LpDate.milisecondsToPeriod(this.task.startDate,this.task.endDate):null;
+  }
+
+  get reviewersOptions(){
+    return this.projectParticipants.filter((p:User)=>{ return (this.task.participants as string[]).includes(p._id) });
   }
 }

@@ -6,7 +6,8 @@ import { CheckTokenGuard } from '../auth/shared/guards/check-token.guard';
 
 let pagesRoutes:Routes = [
   {
-    path:'',component:PagesComponent,
+    path:'',
+    component:PagesComponent,
     children:[
       {
         path:'',

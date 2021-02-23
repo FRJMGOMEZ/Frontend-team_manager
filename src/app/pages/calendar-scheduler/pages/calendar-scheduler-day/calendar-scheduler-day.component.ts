@@ -1,5 +1,5 @@
 import { Component, Input, ElementRef, Renderer2, SimpleChanges, ChangeDetectionStrategy, Output, EventEmitter} from '@angular/core';
-import { Hour } from '../../../../core/models/hour.model';
+import { HourModel } from '../../../../core/models/hour.model';
 import { Task } from '../../../../core/models/task.model';
 import { ENDING_TASK_TIME_LAPSO } from '../../shared/data/time-values';
 import { LocalStorageService } from '../../../../library/providers/local-storage.service';
@@ -12,7 +12,7 @@ import { TaskService } from '../../../../core/providers/task.service';
   changeDetection: ChangeDetectionStrategy.OnPush 
 })
 export class CalendarSchedulerDayComponent {
-  @Input() hours: Hour[]
+  @Input() hours: HourModel[]
   @Input() tasks:Task[] = [];
   @Input() selectedDate: Date
   tasksRenderized:number = 0;
@@ -32,7 +32,7 @@ export class CalendarSchedulerDayComponent {
       this.week = this.getWeek(this.selectedDate) 
     }
   }
-  taskRender(taskDiv: ElementRef, task:Task, hour: Hour, size: 'small' | 'regular') {
+  taskRender(taskDiv: ElementRef, task:Task, hour: HourModel, size: 'small' | 'regular') {
     if ( this.hasTask(task,hour)  && (this.tasksRenderized<=(this.tasks.length * this.hours.length)*2) ) {
          let percent = 0;
          if ((((hour.date + 3600000) - task.startDate) > 3600000) && ((task.endDate - hour.date) > 3600000)) {
@@ -52,7 +52,7 @@ export class CalendarSchedulerDayComponent {
        }
   }
 
-  hasTask( task: Task, hour: Hour){
+  hasTask( task: Task, hour: HourModel){
     if ((hour.date + 3600000 > task.startDate) && (hour.date < task.endDate) ){
       return true
     }else{

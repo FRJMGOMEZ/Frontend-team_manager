@@ -1,11 +1,10 @@
 
 .div-radio-group{
-height: 100% ;
-max-height: 80px;
+max-height: 12vh;
 width: 100%;
 background-color:#f1f1f1;
-overflow-x: scroll;
-overflow-y: none !important;
+overflow-x: none;
+overflow-y: scroll;
 border-radius: 8px;
 color: #7b87cc;
 font-weight: bolder;
@@ -14,4 +13,13 @@ font-weight: bolder;
 
 .div-radio-group::-webkit-scrollbar { 
     display: none !important;  /* Safari and Chrome */
+}
+
+.mat-radio-button{
+    height: 30px;
+    width: 60px;
+}
+
+.mat-radio-group{
+     overflow-x: scroll;
 }

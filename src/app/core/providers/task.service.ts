@@ -37,9 +37,9 @@ export class TaskService {
       catchError((err) => {  this.lpDialogsService.openInfoDialog(err.error.err.message, 'ERROR'); return this.errorHandlerService.handleError(err) }))
   }
 
-  putTask(task: { [key: string]: any }, id: string) {
+  putTask(changes: { [key: string]: any }, id: string) {
     const url = `${API_URL}task/${id}`;
-    return this.http.patch(url, {task}).pipe(
+    return this.http.patch(url, {changes}).pipe(
       map((res: any) => { return res.task }),
       tap((task: Task) => { 
         const participantsIds = (task.participants as User[]).map(u=> u._id);
@@ -56,18 +56,18 @@ export class TaskService {
     )
   }
 
-  toggleStatus(newStatus:string,taskId:string){
-    let request = this.http.put(`${API_URL}task-status`, { newStatus, taskId,frontTime:new Date().getTime()})
-    .pipe(
-     map((res: any) => { return res.task }),
-     tap((task:Task) => {
-      this.taskSrc.next({ task, action: 'PUT' })
-      this.lpDialogsService.openInfoDialog('SUCESFULLY UPDATED', 'EDITION', task.name);}))
-
-    return this.lpDialogsService.openConfirmDialog('ARE YOU SURE?', `The task status will switch to "${newStatus}" status`).pipe(
-      switchMap((res: boolean) => { return res ? request : empty()}),
-      catchError((err) => { this.lpDialogsService.openInfoDialog(err.error.err.message, 'ERROR'); return this.errorHandlerService.handleError(err)}))
+  toggleStatus(newStatus: string, taskId: string) {
+    return this.http.put(`${API_URL}task-status`, { newStatus, taskId, frontTime: new Date().getTime() })
+      .pipe(
+        map((res: any) => { return res.task }),
+        tap((task: Task) => {
+          this.taskSrc.next({ task, action: 'PUT' })
+          this.lpDialogsService.openInfoDialog('SUCESFULLY UPDATED', 'EDITION', task.name);
+        }),
+        catchError((err) => {this.lpDialogsService.openInfoDialog(err.error.err.message, 'ERROR'); return this.errorHandlerService.handleError(err) })
+      )
   }
+
   
   getTasks(selector: string,querysString?:string,skip:number=0,limit:number=99999999) {
     let url = `${API_URL}tasks/${selector}${querysString}`
@@ -122,6 +122,10 @@ export class TaskService {
     }
     return false;
   }
+
+  taskTimeEnded(task:Task){
+    return task.endDate < new Date().getTime();
+  }
   listenningTasksEvents() {
     this.wsService.listen('tasks-event').subscribe((res:{task:Task, method:string}) => {
           const {method } = res;
@@ -160,5 +164,9 @@ export class TaskService {
             this.dialogRef.closeAll();
           }
     })
+  }
+
+  canBeEdited(task:Task){
+    return !(task.status === 'done' || task.status === 'on review')
   }
 }
