@@ -19,6 +19,30 @@
       "lp-dialogs": [
         "dist/lp-dialogs/lp-dialogs",
         "dist/lp-dialogs"
+      ],
+      "lp-date-selector": [
+        "dist/lp-date-selector/lp-date-selector",
+        "dist/lp-date-selector"
+      ],
+      "lp-array-operations": [
+        "dist/lp-array-operations/lp-array-operations",
+        "dist/lp-array-operations"
+      ],
+      "lp-operations": [
+        "dist/lp-operations/lp-operations",
+        "dist/lp-operations"
+      ],
+      "lp-routes-breadcrumbs": [
+        "dist/lp-routes-breadcrumbs/lp-routes-breadcrumbs",
+        "dist/lp-routes-breadcrumbs"
+      ],
+      "lp-local-storage": [
+        "dist/lp-local-storage/lp-local-storage",
+        "dist/lp-local-storage"
+      ],
+      "lp-thinking-time-progress": [
+        "dist/lp-thinking-time-progress/lp-thinking-time-progress",
+        "dist/lp-thinking-time-progress"
       ]
     }
   }

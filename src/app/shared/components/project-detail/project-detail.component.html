@@ -1,0 +1,55 @@
+<div *ngIf="date && projectSelected ">
+               <div fxLayoutAlign="center">
+                <form action="">
+                    <app-item-versions name="projectSelected" [ngModel]="projectSelected" (ngModelChange)="setVersion($event)" [date]="date" (prevVersion)="prevProject=$event" (currentVersion)="currentVersion=$event" ></app-item-versions>
+                </form>
+               </div>
+                <div [style.margin]="'20px'" fxLayoutAlign="flex-start">
+                   <small class="property-changed">*Property edited*</small>
+                </div> 
+              <div *ngIf=" prevProject" fxLayout="column" fxLayoutAlign="center" >
+                  <div [style.margin-left.px]="'20'" fxLayoutAlign="flex-end">
+                      <mat-icon *ngIf="isDialog" (click)="back.emit()">keyboard_backspace</mat-icon>
+                      <mat-icon *ngIf="versionIsDifferent() && !isLastVersion" (click)="restore()"  >settings_backup_restore</mat-icon>
+                      <mat-icon *ngIf="isLastVersion" (click)="editProject.emit()" >edit</mat-icon>
+                  </div>
+                 <mat-label fxLayoutAlign="center" [style.color]="'#7b87cc'" *ngIf="isLastVersion">*CURRENT STATE*</mat-label>
+                <div  fxLayout="column" >
+                    <h3 [class]="propertyHasChanged('name') ? 'property-changed':''" fxLayoutAlign="center">{{projectSelected.name}}</h3>
+                </div>
+                <div fxLayout="column">
+                    <div fxLayout="row">
+                        <div fxFlex="50"  class="category-div"  fxLayout="column">
+                                <h5>
+                                    Participants:
+                                </h5>
+                                <ul class="ul-users" >
+                                    <li [class]="propertyHasChanged('participants') ? 'property-changed':''" *ngFor="let participant of projectSelected.participants" role="listitem">{{participant.name}}</li>
+                                </ul>
+                        </div>
+                        <div fxFlex="50" class="category-div"  fxLayout="column">
+                                <h5>
+                                    Administrators:
+                                </h5>
+                                <ul class="ul-users" >
+                                    <li [class]="propertyHasChanged('administrators') ? 'property-changed':''" *ngFor="let adm of projectSelected.administrators" role="listitem">{{adm.name}}</li>
+                                </ul>
+                        </div>
+                    </div>
+                    <div fxFlex="33" class="category-div"  fxLayout="row" fxLayoutAlign="center" fxLayoutGap="50px">
+                            <h5>
+                                Status: 
+                            </h5>
+                            <p [class]="propertyHasChanged('status') ? 'property-changed':''" [ngStyle]="{'color': !projectSelected.status ? '#ff0000' : '#6a74ad'}">
+                                {{ projectSelected.status ? 'ACTIVE' : 'UNACTIVE'}}
+                            </p>
+                    </div> 
+                </div>
+            
+              </div>
+    </div>
+
+
+
+
+

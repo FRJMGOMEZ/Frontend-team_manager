@@ -1,0 +1,40 @@
+
+<form #notificationForm="ngForm" fxLayout.gt-md="row" fxLayout.lt-lg="column" action="" (ngSubmit)="search()">
+  <mat-form-field fxFlex="14" class="mat-form-field-input">
+    <mat-label>Project</mat-label>
+    <input [(ngModel)]="queryFilters.project" name="project" matInput >
+    <button *ngIf="queryFilters.project" mat-button matSuffix mat-icon-button aria-label="Clear" (click)="queryFilters.project = ''" >x</button>
+  </mat-form-field>  
+  <mat-form-field  fxFlex="14"  class="mat-form-field-input">
+    <mat-label>User from</mat-label>
+    <input [(ngModel)]="queryFilters.userFrom" name="userFrom" matInput>
+    <button *ngIf="queryFilters.userFrom" mat-button matSuffix mat-icon-button aria-label="Clear" (click)="queryFilters.userFrom = ''" >x</button>
+  </mat-form-field>  
+  <mat-form-field fxFlex="14"appearance="fill">
+  <mat-label>Type</mat-label>
+  <mat-select [(ngModel)]="queryFilters.type" name="type">
+    <mat-option value=""></mat-option>
+    <mat-option *ngFor="let type of typesOpt" [value]="type">
+      {{type}}
+   </mat-option>
+  </mat-select>
+</mat-form-field>
+ <mat-form-field fxFlex="14" appearance="fill">
+  <mat-label>Method</mat-label>
+  <mat-select [(ngModel)]="queryFilters.method" name="method">
+    <mat-option value=""></mat-option>
+    <mat-option *ngFor="let method of methodsOpt" [value]="method.value">
+      {{method.label}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<div fxFlex="17"  fxLayoutAlign="center" >
+        <lp-date-selector #from="ngModel" [ngModel]="queryFilters.from | lpParseDate : 'date'" (ngModelChange)="setDate('from',$event)" name="from" dateFormat="time" placeholder="Start date"></lp-date-selector>
+         <button *ngIf="queryFilters.from" mat-button matSuffix mat-icon-button aria-label="Clear" (click)="queryFilters.from = null" >x</button>
+</div>
+<div fxFlex="17"  fxLayoutAlign="center" >
+        <lp-date-selector #to="ngModel" [ngModel]="queryFilters.to | lpParseDate : 'date'" (ngModelChange)="setDate('to',$event)"  name="to" dateFormat="time" placeholder="End date"></lp-date-selector>
+        <button *ngIf="queryFilters.to" mat-button matSuffix mat-icon-button aria-label="Clear" (click)="queryFilters.to = null" >x</button>
+</div>
+<button fxLayoutAlign="center" fxFlex="8" type="submit"  mat-raised-button>SEARCH</button>
+</form>

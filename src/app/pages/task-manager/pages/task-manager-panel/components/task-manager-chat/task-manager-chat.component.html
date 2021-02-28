@@ -1,0 +1,12 @@
+
+
+ <app-chat 
+  [messages]="messages"
+  [newMessage]="newMessage"
+  [messagesCount]="messagesCount"
+  [userOnline]="authService.userOnline"
+  [users]="users"
+  (sendMsg)="sendMessage($event)"
+  (getMessages)="getMessages($event.from)"
+  (downloadFile)="filesService.downloadFile($event).subscribe()">
+</app-chat>  

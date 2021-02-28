@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { WebSocketsService } from './core/shared/providers/web-sockets.service';
+import { WebSocketsService } from './core/providers/web-sockets.service';
 
 
 @Component({
@@ -9,7 +9,7 @@ import { WebSocketsService } from './core/shared/providers/web-sockets.service';
 })
 export class AppComponent {
   constructor(private wsService:WebSocketsService){
-    this.wsService.checkStatus()
+    this.wsService.checkStatus();
   }
   title = 'cargomusicapp-front';
 }

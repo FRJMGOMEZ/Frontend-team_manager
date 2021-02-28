@@ -1,0 +1,38 @@
+<lp-bottom-sheet-info [componentToShow]="infoComponent" ></lp-bottom-sheet-info>
+<div fxLayout="column" class="div-calendar-container" >
+    <div fxFlex.gt-xs="12" fxFlex.xs="27" fxLayout="row">
+       <div fxHide.xs fxShow.gt-xs fxLayout="column" fxFlex.gt-xs="25" fxLayoutAlign="center">
+          <div fxLayoutAlign="center">
+            <h2 class="date-label" *ngIf="dateFormat === 'month'"> {{selectedDate | date : 'MMMM yyyy'}} </h2>
+            <h2 class="date-label" *ngIf=" dateFormat === 'day' "> {{selectedDate | date : ' EEEE d MMMM yyyy'}} </h2>
+          </div>
+      </div>
+      <div fxFlex.gt-xs="15" fxFlex.xs="45" [style.margin-top]="'15px'" fxLayout="column" fxLayoutAlign="center">
+              <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutAlign="center">
+                  <button class="format-btn" [color]="dateFormat === 'month' ? 'primary': ''" (click)="setFormat('month')"
+                      mat-raised-button>MONTH</button>
+                  <button class="format-btn" [color]="dateFormat === 'day' ? 'primary': ''" (click)="setFormat('day')"
+                      mat-raised-button>DAY / WEEK</button>
+               </div>
+      </div>
+      <div [style.margin-top]="'20px'" fxLayoutGap="15px" fxLayoutAlign.gt-xs="center" fxLayoutAlign.xs="flex-start" fxFlex.gt-xs="45" fxFlex.xs="55">
+          <div fxLayout="column" fxLayoutAlign="center" fxFlex.xs="70" fxFlex.gt-xs="70">
+            <div fxLayoutAlign="flex-end">
+              <lp-date-selector  [label]=" dateFormat === 'day' ? 'selected a date' : ''" [dateFormat]="dateFormat" [ngModel]="selectionDate" (ngModelChange)="dateSelection($event)"></lp-date-selector>
+            </div>
+          </div>
+          <div fxFlex="30" fxLayout="column" fxLayoutAlign="center">
+            <button [disabled]="setSearchBtnDisabled()" (click)="searchByDate()" mat-mini-fab color="accent" aria-label="Example icon button with a bookmark icon">
+                    <mat-icon>forward</mat-icon>
+            </button>
+          </div>
+      </div>
+      <div fxFlex.gt-xs="15" fxFlex.xs="50" fxHide.xs  fxLayoutAlign="flex-end">
+      </div>
+  </div>
+  <div fxFlex.gt-xs="88" fxFlex.xs="73">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+

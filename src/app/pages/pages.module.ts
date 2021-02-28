@@ -3,20 +3,18 @@ import { CommonModule } from '@angular/common';
 import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
 import { RouterModule } from '@angular/router';
-import { MaterialModule } from '../core/shared/material/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { HeaderModule } from '../core/shared/components/header/header.module';
-import { ProjectsModule } from '../core/shared/components/projects/projects.module';
-import { NoProjectsComponent } from '../core/shared/components/no-projects/no-projects.component';
-import { ProjectDialogModule } from '../core/shared/components/project-dialog/project-dialog.module';
-import { HomeComponent } from './home/containers/home/home.component';
-import { DirectivesModule } from '../core/shared/directives/directives.module';
+import { LpDirectivesModule } from '../library/lp-directives/lp-directives.module';
+import { NoProjectsComponent } from '../shared/components/no-projects/no-projects.component';
+import { MaterialModule } from '../shared/material/material.module';
+import { ProjectsModule } from '../core/components/projects/projects.module';
+import { DirectivesModule } from '../shared/directives/directives.module';
+import { ProjectEditionAndCreationModule } from '../shared/components/project-edition-and-creation/project-edition-and-creation.module';
 
 @NgModule({
   declarations: [
     PagesComponent,
-    NoProjectsComponent,
-    HomeComponent
+    NoProjectsComponent
   ],
   imports: [
     CommonModule,
@@ -24,10 +22,10 @@ import { DirectivesModule } from '../core/shared/directives/directives.module';
     RouterModule,
     MaterialModule,
     FlexLayoutModule,
-    HeaderModule,
     ProjectsModule,
-    ProjectDialogModule,
-    DirectivesModule
+    ProjectEditionAndCreationModule,
+    DirectivesModule,
+    LpDirectivesModule
   ]
 })
 export class PagesModule { }

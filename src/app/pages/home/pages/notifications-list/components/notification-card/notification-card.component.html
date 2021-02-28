@@ -1,0 +1,26 @@
+
+
+<mat-card *ngIf="notification" [style.background-color]="isChecked ? '#fcebcd' : 'white' " [style.height]="'8.5vh'"  fxLayout="row">
+    <div fxFlex="14">
+        {{notification.project ? notification.project['name'] : ''}}
+    </div>
+    <div fxFlex="14">
+        {{notification.type}}
+    </div>
+    <div fxFlex="14">
+        {{notification.userFrom['name']}}
+    </div>
+    <div fxFlex="14">
+        {{method}}
+    </div>
+    <div fxFlex="20">
+        {{notification.date | date : 'M/d/yy HH:mm'}}
+    </div>
+    <div  fxFlex="10">
+        <button *ngIf="!isChecked && !hasActionsRequired" fxLayout="column" fxLayoutAlign="center" (click)="toggleNotification.emit(notification._id)" mat-raised-button><mat-icon>done</mat-icon></button>
+        <button *ngIf="hasActionsRequired" fxFlex="14" (click)="showActionsRequired.emit(notification)" matTooltip="ACTIONS REQUIRED" fxLayout="column" fxLayoutAlign="center" mat-raised-button><mat-icon color="warn">assignment_late</mat-icon></button>
+    </div>
+     <div fxFlex="10">
+        <button fxLayout="column" fxLayoutAlign="center" [style.background-color]="color != 'white' ? color : !isChecked ? 'white' : color " mat-raised-button (click)="selectNotification.emit(notification)">	<mat-icon >launch</mat-icon></button>
+    </div>
+</mat-card>

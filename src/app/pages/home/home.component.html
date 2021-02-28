@@ -1,0 +1,26 @@
+<lp-bottom-sheet-info [componentToShow]="infoComponent"></lp-bottom-sheet-info>
+<div class="div-home-container" fxLayout.gt-md="row" fxLayout.lt-lg="column">
+     <div [fxFlex]="notificationSelected ? '70' : '100'" >
+        <nav mat-stretch-tabs mat-tab-nav-bar>
+           <a mat-tab-link
+            routerLinkActive
+            #rla="routerLinkActive"
+             [active]="tabIndex === 0"
+             (click)="navigate(0);">
+             <mat-icon>notification_important</mat-icon>
+             NOTIFICATIONS TO CHECK
+            </a>
+            <a mat-tab-link
+            routerLinkActive
+            #rla="routerLinkActive"
+              [active]="tabIndex === 1"
+             (click)="navigate(1);">
+             <mat-icon>folder</mat-icon>
+              NOTIFICATIONS RECORD
+            </a>
+       </nav>
+     <router-outlet>
+     </router-outlet> 
+     </div>
+    <app-notification-change-detail *ngIf="notificationSelected" fxFlex="30" [notification]="notificationSelected" (unselectNotification)="unselectNotification()"></app-notification-change-detail>
+</div>

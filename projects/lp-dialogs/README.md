@@ -1,24 +1,61 @@
 # LpDialogs
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.4.
+LpDialogs shows an ANGULAR MATERIAL confirm and info dialogs. 
 
-## Code scaffolding
+### Tech
+* [Angular 11] 
+* [Angular Material] 
+### Peer Dependencies
+```
+"@angular/common": "^10.0.4",
+"@angular/core": "^10.0.4",
+"@angular/material": "^10.0.2",
+"@angular/cdk": "^10.0.2"
+```
+### Installation
+```
+$ npm install lp-dialog
+```
+### Use
+```typescript
+import { Component } from '@angular/core';
 
-Run `ng generate component component-name --project lp-dialogs` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project lp-dialogs`.
-> Note: Don't forget to add `--project lp-dialogs` or else it will be added to the default project in your `angular.json` file. 
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  constructor(private lpDialogsService:LpDialogsService ){
+    
+  }
+  showDialogConfirm(){
+       this.lpDialogsService.openConfirmDialog(title: string = 'CONFIRM DELETION', message: string = 'Are you sure?').subscribe((response:boolean)=>{
+        
+       })
+  }
+  
+  showInfoDialog(){
+      this.lpDialogsService.openInfoDialog(message: string, title: string, item?: string).subscribe(()=>{
+         
+      })
+  }
+  title = 'cargomusicapp-front';
+}
+```
 
-## Build
 
-Run `ng build lp-dialogs` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Publishing
 
-After building your library with `ng build lp-dialogs`, go to the dist folder `cd dist/lp-dialogs` and run `npm publish`.
 
-## Running unit tests
 
-Run `ng test lp-dialogs` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+
+
+
+
+
+
+

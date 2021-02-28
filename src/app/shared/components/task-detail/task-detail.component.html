@@ -1,0 +1,93 @@
+
+
+<div fxLayoutAlign="center" fxLayout="column" *ngIf="taskSelected">
+               <form fxLayoutAlign="center">
+                <app-item-versions name="taskSelected" [ngModel]="taskSelected" (ngModelChange)="setVersion($event)" [date]="date" (prevVersion)="prevTask=$event" (currentVersion)="currentVersion = $event" ></app-item-versions>
+              </form>
+                <div fxLayout="row" [style.margin]="'10px'" fxLayoutAlign="flex-start">
+                   <small fxFlex="70" class="property-changed">*Property edited*</small>
+                  <div *ngIf="taskSelected && prevTask"  class="div-labels" fxLayoutAlign="flex-end">
+                      <mat-icon *ngIf="prevDialog" (click)="back.emit()">keyboard_backspace</mat-icon>
+                      <mat-icon *ngIf="!prevDialog && isLastVersion && taskPristine.status !== 'done'" (click)="editTask.emit(taskSelected._id)" >edit</mat-icon>
+                      <mat-icon *ngIf="!isLastVersion && taskPristine.status !== 'done'" (click)="restore()" appIsAdm >settings_backup_restore</mat-icon>
+                  </div>
+                </div>
+              <div fxLayout="column" fxLayoutAlign="center" >
+                <div fxLayoutAlign="flex-start" [style.height]="'20px'">
+                    <mat-label fxLayoutAlign="center" [style.color]="'#7b87cc'" *ngIf="isLastVersion">*CURRENT STATE*</mat-label>
+                </div>
+                <div  fxLayout="column" >
+                    <h3 [class]="propertyHasChanged('name') ? 'property-changed':''" fxLayoutAlign="center">{{taskSelected.name}}</h3>
+                </div>
+                <div  fxLayout.gt-xs="row" fxLayout.xs="column">
+                    <div fxLayoutAlign="center" fxFlex="33" fxLayout="column">
+                        <div class="div-category">
+                            <h5>
+                                Participants:
+                            </h5>
+                            <ul>
+                                <li [class]="propertyHasChanged('participants') ? 'property-changed':''" *ngFor="let participant of taskSelected.participants" role="listitem">{{participant.name}}</li>
+                            </ul>
+                        </div>
+                        <div class="div-category">
+                            <h5>
+                                Reviewers:
+                            </h5>
+                            <ul>
+                                <li [class]="propertyHasChanged('reviewers') ? 'property-changed':''" *ngFor="let reviewer of taskSelected.reviewers" role="listitem">{{reviewer.name}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div fxFlex="33" fxLayout="column"  >
+                       <div class="div-category" fxLayout="column" >
+                           <h5>
+                               Start date:
+                           </h5>
+                           <p [class]="propertyHasChanged('startDate') ? 'property-changed':''">
+                               {{taskSelected.startDate | date : 'M/d/yy, h:mm a' }} 
+                           </p>
+                       </div>
+                        <div class="div-category" fxLayout="column"  >
+                            <h5>
+                                End Date:
+                            </h5> 
+                            <p [class]="propertyHasChanged('endDate') ? 'property-changed':''">
+                                {{taskSelected.endDate | date : 'M/d/yy, h:mm a'}}
+                            </p>
+                        </div>
+                    </div>
+                    <div fxFlex="33" fxLayout="column">
+                        <div class="div-category" >
+                            <h5>
+                            Priority:
+                            </h5> 
+                            <p [class]="propertyHasChanged('priority') ? 'property-changed':''" >
+                                    {{taskSelected.priority === 1 ? 'HIGH' : taskSelected.priority === 2 ? 'MEDIUM' : 'LOW'}}
+                            </p>
+                        </div>
+                        <div class="div-category"  >
+                            <h5>
+                             Status: 
+                            </h5>
+                            <p [class]="propertyHasChanged('status') ? 'property-changed':''">
+                            {{ taskSelected.status}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                 <div fxLayoutAlign="center" >
+                    <div fxLayout="row">
+                        <h5>
+                         Description :
+                        </h5>
+                         <mat-icon [color]="propertyHasChanged('description') ? 'accent':''" (click)="showDescription()">pageview</mat-icon>
+                    </div>
+                </div>
+              </div>
+</div>
+
+
+
+
+
+
