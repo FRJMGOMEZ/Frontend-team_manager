@@ -10,6 +10,7 @@ import { LocalStorageService } from '../../library/providers/local-storage.servi
 import { ProjectService } from '../../core/providers/project.service';
 import { TaskService } from '../../core/providers/task.service';
 import { Project } from '../../core/models/project.model';
+import { MediaService } from '../../core/providers/media.service';
 
 @Component({
   selector: 'app-task-manager',
@@ -32,9 +33,9 @@ export class TaskManagerComponent implements OnInit, OnDestroy {
   constructor(private projectService: ProjectService,
                 public taskService: TaskService,
                 private localStorageService:LocalStorageService,
-                public deviceDetectorService:DeviceDetectorService,
                 private ar:ActivatedRoute,
-                private router:Router) {}
+                private router:Router,
+                public mdService:MediaService) {}
 
   ngOnInit(): void {
 

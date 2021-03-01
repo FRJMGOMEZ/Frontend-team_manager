@@ -6,6 +6,7 @@ import { DayModel } from '../../../../core/models/day.model';
 import { Task } from '../../../../core/models/task.model';
 import { ENDING_TASK_TIME_LAPSO } from '../../shared/data/time-values';
 import { TaskService } from '../../../../core/providers/task.service';
+import { MediaService } from '../../../../core/providers/media.service';
 
 @Component({
   selector: 'app-calendar-scheduler-month',
@@ -23,7 +24,7 @@ export class CalendarSchedulerMonthComponent {
   @Output() checkTasks = new EventEmitter<number>()
   @Output() deleteTask = new EventEmitter<string>();
   @Input() selectedProject:string
-  constructor(public taskService: TaskService, @Inject(LOCALE_ID) private locale: string) { }
+  constructor(public taskService: TaskService, @Inject(LOCALE_ID) private locale: string, public mdService:MediaService) { }
   getDayOfWeek(row: DayModel[], weekDay: number) {
     let day = row.filter((day) => { return new Date(day.date).getDay() === weekDay })[0];
     let date = day ? new Date(day.date) : null;
@@ -39,7 +40,7 @@ export class CalendarSchedulerMonthComponent {
    get cellSize(){
      if(this.dayRows){
        const days = this.dayRows.flat()
-       return days.length > 35 ? '10vh': '12.5vh'
+       return this.mdService.desktop ? days.length > 35 ? '9.5vh' : '12vh' : days.length > 35 ? '8vh' : '10vh'
      }else{
        return '10vh'
      }

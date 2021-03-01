@@ -14,12 +14,9 @@
     </ng-container>
     <ng-container matColumnDef="time">
         <th mat-header-cell *matHeaderCellDef> Time </th>
-        <td fxLayout="column" mat-cell *matCellDef="let element">  
-            <p>
-                {{element.startDate | date}}
-            </p> <p>
-                {{element.endDate | date}}
-            </p>
+        <td mat-cell *matCellDef="let element">  
+        <p>{{element.startDate | date}}</p>
+        <p>{{element.endDate | date}}</p>
         </td>
     </ng-container>
         <ng-container matColumnDef="opt">

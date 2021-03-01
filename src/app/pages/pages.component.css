@@ -1,15 +1,18 @@
-.main {
+.main-desktop {
   height: 85vh; /* Same as the width of the sidebar */
-  margin: 0px 5px;
+  width: 100%;
 }
 
-.main-mobile{
-   height: 85vh; /* Same as the width of the sidebar */
-  margin: 0px;
+.main{
+   height: 89vh; /* Same as the width of the sidebar */
+  width: 100%;
 }
 
 mat-sidenav-container{
   height: 100%;
+  width: 100% !important;
+  margin:0px;
+  padding: 0px;
 }
 
 mat-sidenav{
@@ -28,15 +31,17 @@ mat-sidenav{
 
 .new-task-btn-mobile{
     font-weight: bolder;
-    width: 50px;
+    width: 100%;
     font-size: 11px;
     text-align: center;
     padding: 0px;
+    margin-left: 0vw;
 }
 
 
 .spacer {
   flex: 1 1 auto;
+  width: 50px;
 }
 
 mat-icon{

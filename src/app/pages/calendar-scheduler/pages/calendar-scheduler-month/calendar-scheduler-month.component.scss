@@ -3,17 +3,6 @@
 
 mat-card{
   padding:5px!important;
-
-  .size1{
-       height:9.5vh !important
-  }
-
-  .size2{
-        height:11vh !important
-  }
-  .mat-card-content{
-
-   }
 }
 
 .day-unactive{
@@ -34,11 +23,8 @@ mat-card{
     padding:0px
 }
 
-
 .div-tasks{
-    overflow-y: auto;
-    height: 35px !important;
-
+  overflow-y: auto;
 }
 
 

@@ -6,17 +6,25 @@ import { LocalStorageService } from '../../../library/providers/local-storage.se
 import { AuthService } from '../../../auth/shared/providers/auth.service';
 import { LpObject } from 'lp-operations';
 
-
 @Component({
     selector: 'app-task-dialog-smart',
     template: `
     <mat-dialog-content>
      <app-task-detail [taskSelected]="taskSelected"  (back)="back()" [prevDialog]="prevDialog" (editTask)="editTask($event)" (restoreVersion)="restoreVersion($event)" [date]="date" > </app-task-detail>
     </mat-dialog-content>
-    <mat-dialog-actions [style.margin-top]="'15px'" fxLayoutAlign="center">
+    <mat-dialog-actions fxLayoutAlign="center">
     <button (click)="closeDialog()" mat-raised-button> Close </button>
     </mat-dialog-actions>
-    `
+    `,
+    styles:[
+        `
+        mat-dialog-content{
+            margin-bottom:0px !important;
+            height:450px!important;
+        }
+        `
+    ]
+    
 })
 export class TaskDialogSmartComponent implements OnInit {
 

@@ -1,3 +1,7 @@
+.div-thinking-time{
+    height: 60px;
+    width: 60px;
+}
 
 .mat-icon-progress-cancel{
     position:absolute !important;

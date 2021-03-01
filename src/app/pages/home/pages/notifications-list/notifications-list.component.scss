@@ -1,15 +1,15 @@
-.div-notifications {
-   width: 100%;
-   height: 65.5vh;
+
+.div-notifications-container{
+   height:100%;
+}
+.div-notifications-list{
+   height: 100%;
    overflow-y: scroll;
 }
-
-.div-notifications::-webkit-scrollbar { 
+.div-notifications-list::-webkit-scrollbar { 
       width: 0px;  /* remove scrollbar space */
     background: transparent;  /* optional: just make scrollbar invisible */
 }
-
-
 .div-notifications-labels{
    margin-top: 0px;
    padding:1.5vh;

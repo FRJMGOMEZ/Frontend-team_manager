@@ -1,6 +1,6 @@
 
 .div-calendar-container{
-    height: 85vh;
+    height: 84vh;
     width: 100%;
 }
 
@@ -8,9 +8,13 @@
     background-color: primary;
 }
 
-.format-btn{
+.btn-format{
     max-width: 100px !important;
-    height: 50px !important;
+    height: 40px !important;
+}
+
+.btn-format-short{
+    height: 27px;
 }
 
 .set-date-btn{
@@ -48,5 +52,6 @@ mat-tab{
 ::ng-deep .mat-tab-list .mat-tab-labels .mat-tab-disabled {
   opacity: 1;
 }
+
 
 

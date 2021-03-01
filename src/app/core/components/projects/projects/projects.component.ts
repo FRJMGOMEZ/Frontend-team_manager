@@ -2,9 +2,9 @@ import { Component, Input, Output, EventEmitter, ViewChild, SimpleChanges } from
 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { DeviceDetectorService } from 'ngx-device-detector';
 import { MatExpansionPanelHeader } from '@angular/material/expansion';
-import { Project } from '../../models/project.model';
+import { Project } from '../../../models/project.model';
+import { MediaService } from '../../../providers/media.service';
 
 @Component({
   selector: 'app-projects',
@@ -23,9 +23,11 @@ export class ProjectsComponent  {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatExpansionPanelHeader) expHeader: MatExpansionPanelHeader
   displayedColumns = ['name', 'administrators', 'participants', 'status', 'actions'];
-  dataSource = new MatTableDataSource<Project>([])
+  dataSource = new MatTableDataSource<Project>([]);
   @Output() deleteProject: EventEmitter<string> = new EventEmitter<string>();
-  constructor(private deviceDetectorService:DeviceDetectorService) { }
+  constructor(public mdService:MediaService) { };
+  ngOnInit(){}
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes.projects) {
       this.dataSource.data = this.projects;
@@ -35,9 +37,6 @@ export class ProjectsComponent  {
   selectProject(project:Project){   
     this.projectSelectedOut.emit(project);
     this.expHeader._toggle();
-  }
-  isDesktop(){
-  return this.deviceDetectorService.isDesktop()
   }
 
   get projectSelected(){

@@ -12,7 +12,11 @@ import { tap } from 'rxjs/operators';
     <button (click)="closeDialog()" mat-raised-button> Close </button>
     </mat-dialog-actions>
     `,
-  styles: []
+  styles: [`
+  .mat-dialog-content{
+    max-height:75vh !important
+  }
+  `]
 })
 export class NotificationsFilterSmartDialogComponent implements OnInit {
   @Output() getNotifications = new EventEmitter<string>();

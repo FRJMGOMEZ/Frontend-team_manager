@@ -35,6 +35,7 @@ export class LpDate {
         if (Number(String(seconds).split('.')[0]) > 0) {
             seconds = Number(String(seconds).split('.')[0]);
             let minutes = seconds / 60;
+            if (Math.round((Number('0.' + String(minutes).split('.')[1]) * 60)) >= 1) { durationString.push(Math.round(Number('0.' + String(minutes).split('.')[1]) * 60) + (Math.round(Number('0.' + String(minutes).split('.')[1]) * 60) > 1 ? ' seconds' : 'seconds')) }
             if (Number(String(minutes).split('.')[0]) > 0) {
                 minutes = Number(String(minutes).split('.')[0]);
                 let hours = minutes / 60;

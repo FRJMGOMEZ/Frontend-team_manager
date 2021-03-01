@@ -28,13 +28,13 @@
     </mat-option>
   </mat-select>
 </mat-form-field>
-<div fxFlex="17"  fxLayoutAlign="center" >
+<div fxFlex="15"  fxLayoutAlign="center" >
         <lp-date-selector #from="ngModel" [ngModel]="queryFilters.from | lpParseDate : 'date'" (ngModelChange)="setDate('from',$event)" name="from" dateFormat="time" placeholder="Start date"></lp-date-selector>
          <button *ngIf="queryFilters.from" mat-button matSuffix mat-icon-button aria-label="Clear" (click)="queryFilters.from = null" >x</button>
 </div>
-<div fxFlex="17"  fxLayoutAlign="center" >
+<div fxFlex="15"  fxLayoutAlign="center" >
         <lp-date-selector #to="ngModel" [ngModel]="queryFilters.to | lpParseDate : 'date'" (ngModelChange)="setDate('to',$event)"  name="to" dateFormat="time" placeholder="End date"></lp-date-selector>
         <button *ngIf="queryFilters.to" mat-button matSuffix mat-icon-button aria-label="Clear" (click)="queryFilters.to = null" >x</button>
 </div>
-<button fxLayoutAlign="center" fxFlex="8" type="submit"  mat-raised-button>SEARCH</button>
+<button fxLayoutAlign="center" fxFlex="5" type="submit"  mat-raised-button>SEARCH</button>
 </form>

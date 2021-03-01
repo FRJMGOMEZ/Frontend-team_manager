@@ -8,6 +8,8 @@ import { ProjectEditionAndCreationSmartComponent } from '../../shared/components
 import { ActionsRequiredSmartDialogComponent } from '../../shared/components/actions-required/actions-required-smart-dialog.component';
 import { ActionRequired } from '../models/action-required';
 import { NotificationsFilterSmartDialogComponent } from '../../pages/home/pages/notifications-list/components/notifications-filter/notifications-filter-smart-dialog.component';
+import { ProjectsDialogComponent } from '../components/projects/projects-dialog/projects-dialog.component';
+import { merge } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +25,7 @@ export class DialogsService {
     const dialog = new MatDialogConfig();
     dialog.disableClose = true;
     dialog.autoFocus = true;
-    dialog.maxHeight='560px';
-    dialog.width = '500px'
+    dialog.width = '500px';
     dialog.data = prevDialog ? {taskId,prevDialog} : {taskId}
     let dialogRef: MatDialogRef<any> = this.dialog.open(TaskDialogSmartComponent, dialog)
     let subs = dialogRef.afterClosed().subscribe((data)=>{
@@ -45,7 +46,7 @@ export class DialogsService {
     dialog.disableClose = true;
     dialog.autoFocus = true;
     dialog.data = prevDialog ? { date, prevDialog }: {date};
-    dialog.width = '300px'
+    dialog.width = '500px';
     let dialogRef: MatDialogRef<any> = this.dialog.open(TasksListDialogSmartComponent, dialog)
     let subs = dialogRef.afterClosed().subscribe((data)=>{
       if(data){
@@ -60,13 +61,13 @@ export class DialogsService {
   }
 
   openEditCreateTaskDialog(taskId?: string, prevDialog?: string) {
-    const projectDialog = new MatDialogConfig();
-    projectDialog.disableClose = true;
-    projectDialog.autoFocus = true;
-    projectDialog.panelClass = 'custom-dialog-container';
-    projectDialog.maxHeight= '600px';
-    projectDialog.data = taskId ? prevDialog ? {taskId,prevDialog}: {taskId} : null;
-    let dialogRef = this.dialog.open(TaskDialogEditionAndCreationSmartComponent, projectDialog);
+    const dialog = new MatDialogConfig();
+    dialog.disableClose = true;
+    dialog.autoFocus = true;
+    dialog.maxHeight= '600px';
+    dialog.width = '500px';
+    dialog.data = taskId ? prevDialog ? {taskId,prevDialog}: {taskId} : null;
+    let dialogRef = this.dialog.open(TaskDialogEditionAndCreationSmartComponent, dialog);
     let subs = dialogRef.afterClosed().subscribe((data) => {
       if (data) {
         if (data.prevDialog) {
@@ -79,18 +80,20 @@ export class DialogsService {
     })
   }
   openEditProjectDialog(project: Project) {
-    const projectDialog = new MatDialogConfig();
-    projectDialog.disableClose = true;
-    projectDialog.autoFocus = true;
-    projectDialog.data = { project };
-    this.dialog.open(ProjectEditionAndCreationSmartComponent, projectDialog);
+    const dialog = new MatDialogConfig();
+    dialog.disableClose = true;
+    dialog.autoFocus = true;
+    dialog.data = { project };
+    dialog.width = '500px';
+    this.dialog.open(ProjectEditionAndCreationSmartComponent, dialog);
   }
 
   openPostProjectDialog() {
-    const projectDialog = new MatDialogConfig();
-    projectDialog.disableClose = true;
-    projectDialog.autoFocus = true;
-    let dialogRef = this.dialog.open(ProjectEditionAndCreationSmartComponent, projectDialog);
+    const dialog = new MatDialogConfig();
+    dialog.disableClose = true;
+    dialog.autoFocus = true;
+    dialog.width = '500px';
+    this.dialog.open(ProjectEditionAndCreationSmartComponent, dialog);
   }
 
   checkPrevDialog(prevDialog: string) {
@@ -118,7 +121,7 @@ export class DialogsService {
     const dialog = new MatDialogConfig();
     dialog.disableClose = true;
     dialog.autoFocus = true;
-    dialog.maxHeight = '300px';
+    dialog.maxHeight = '500px';
     dialog.width = '650px';
     dialog.data = { actionsRequired};
     let dialogRef: MatDialogRef<any> = this.dialog.open(ActionsRequiredSmartDialogComponent, dialog);
@@ -130,10 +133,21 @@ export class DialogsService {
     const dialog = new MatDialogConfig();
     dialog.disableClose = true;
     dialog.autoFocus = true;
-    dialog.maxHeight = '55vh';
+    dialog.maxHeight = '100vh';
     dialog.width = '250px';
     dialog.data = {queryString};
     let dialogRef: MatDialogRef<any> = this.dialog.open(NotificationsFilterSmartDialogComponent, dialog);
     return dialogRef.componentInstance.getNotifications;
   }  
+
+  openProjectList(projects?:Project[]){
+    const dialog = new MatDialogConfig();
+    dialog.disableClose = true;
+    dialog.autoFocus = true;
+    dialog.maxHeight = '100vh';
+    dialog.maxWidth = '1000px';
+    dialog.data = {projects};
+    let dialogRef: MatDialogRef<any> = this.dialog.open(ProjectsDialogComponent, dialog);
+    return merge(dialogRef.componentInstance.putProject, dialogRef.componentInstance.deleteProject)
+  }
 }

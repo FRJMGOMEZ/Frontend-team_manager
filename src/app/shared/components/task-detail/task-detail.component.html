@@ -1,10 +1,10 @@
 
 
 <div fxLayoutAlign="center" fxLayout="column" *ngIf="taskSelected">
-               <form fxLayoutAlign="center">
+               <form fxFlex="10" fxLayoutAlign="center">
                 <app-item-versions name="taskSelected" [ngModel]="taskSelected" (ngModelChange)="setVersion($event)" [date]="date" (prevVersion)="prevTask=$event" (currentVersion)="currentVersion = $event" ></app-item-versions>
               </form>
-                <div fxLayout="row" [style.margin]="'10px'" fxLayoutAlign="flex-start">
+                <div fxFlex="5" fxLayout="row" [style.margin]="'10px'" fxLayoutAlign="flex-start">
                    <small fxFlex="70" class="property-changed">*Property edited*</small>
                   <div *ngIf="taskSelected && prevTask"  class="div-labels" fxLayoutAlign="flex-end">
                       <mat-icon *ngIf="prevDialog" (click)="back.emit()">keyboard_backspace</mat-icon>
@@ -12,16 +12,16 @@
                       <mat-icon *ngIf="!isLastVersion && taskPristine.status !== 'done'" (click)="restore()" appIsAdm >settings_backup_restore</mat-icon>
                   </div>
                 </div>
-              <div fxLayout="column" fxLayoutAlign="center" >
-                <div fxLayoutAlign="flex-start" [style.height]="'20px'">
+              <div fxFlex="85" fxLayout="column" fxLayoutAlign="center" >
+                <div fxLayoutAlign="flex-start" [style.height]="'10px'">
                     <mat-label fxLayoutAlign="center" [style.color]="'#7b87cc'" *ngIf="isLastVersion">*CURRENT STATE*</mat-label>
                 </div>
                 <div  fxLayout="column" >
                     <h3 [class]="propertyHasChanged('name') ? 'property-changed':''" fxLayoutAlign="center">{{taskSelected.name}}</h3>
                 </div>
                 <div  fxLayout.gt-xs="row" fxLayout.xs="column">
-                    <div fxLayoutAlign="center" fxFlex="33" fxLayout="column">
-                        <div class="div-category">
+                    <div fxLayoutAlign="center" fxFlex="33" fxLayout.gt-md="column" fxLayout.lt-lg="row">
+                        <div fxFlex.lt-lg="50" [class]="mdService.desktop ? 'div-category-desktop' : 'div-category'">
                             <h5>
                                 Participants:
                             </h5>
@@ -29,7 +29,7 @@
                                 <li [class]="propertyHasChanged('participants') ? 'property-changed':''" *ngFor="let participant of taskSelected.participants" role="listitem">{{participant.name}}</li>
                             </ul>
                         </div>
-                        <div class="div-category">
+                        <div fxFlex.lt-lg="50" [class]="mdService.desktop ? 'div-category-desktop' : 'div-category'">
                             <h5>
                                 Reviewers:
                             </h5>
@@ -38,8 +38,8 @@
                             </ul>
                         </div>
                     </div>
-                    <div fxFlex="33" fxLayout="column"  >
-                       <div class="div-category" fxLayout="column" >
+                    <div fxFlex="33" fxLayout.gt-md="column" fxLayout.lt-lg="row"  >
+                       <div fxFlex.lt-lg="50" [class]="mdService.desktop ? 'div-category-desktop' : 'div-category'" fxLayout="column" >
                            <h5>
                                Start date:
                            </h5>
@@ -47,7 +47,7 @@
                                {{taskSelected.startDate | date : 'M/d/yy, h:mm a' }} 
                            </p>
                        </div>
-                        <div class="div-category" fxLayout="column"  >
+                        <div fxFlex.lt-lg="50" [class]="mdService.desktop ? 'div-category-desktop' : 'div-category'" fxLayout="column"  >
                             <h5>
                                 End Date:
                             </h5> 
@@ -56,8 +56,8 @@
                             </p>
                         </div>
                     </div>
-                    <div fxFlex="33" fxLayout="column">
-                        <div class="div-category" >
+                    <div fxFlex="33" fxLayout.gt-md="column" fxLayout.lt-lg="row" >
+                        <div fxFlex.lt-lg="50" [class]="mdService.desktop ? 'div-category-desktop' : 'div-category'" >
                             <h5>
                             Priority:
                             </h5> 
@@ -65,7 +65,7 @@
                                     {{taskSelected.priority === 1 ? 'HIGH' : taskSelected.priority === 2 ? 'MEDIUM' : 'LOW'}}
                             </p>
                         </div>
-                        <div class="div-category"  >
+                        <div fxFlex.lt-lg="50" [class]="mdService.desktop ? 'div-category-desktop' : 'div-category'">
                             <h5>
                              Status: 
                             </h5>
@@ -80,7 +80,7 @@
                         <h5>
                          Description :
                         </h5>
-                         <mat-icon [color]="propertyHasChanged('description') ? 'accent':''" (click)="showDescription()">pageview</mat-icon>
+                         <mat-icon [style.font-size]="'30px'" [color]="propertyHasChanged('description') ? 'accent':''" (click)="showDescription()">pageview</mat-icon>
                     </div>
                 </div>
               </div>

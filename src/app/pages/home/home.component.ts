@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '../../core/providers/notification.service';
 import { Subscription, timer } from 'rxjs';
 import { LocalStorageService } from '../../library/providers/local-storage.service';
+import { MediaService } from '../../core/providers/media.service';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
               private router:Router,
               private cdr:ChangeDetectorRef,
               private notificationService:NotificationService,
-              private localStorageService:LocalStorageService) { }
+              private localStorageService:LocalStorageService,
+              public mdService:MediaService) { }
 
   ngOnInit(){
      this.notificationSubs = this.notificationService.notificationSelected$.subscribe((notification:NotificationModel)=>{

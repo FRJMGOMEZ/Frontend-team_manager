@@ -15,8 +15,8 @@
                     <mat-checkbox #statusControl [(ngModel)]="project.status" name="status"> Status :{{project.status ? 'active' : 'unactive'}}</mat-checkbox>
                 </div>
             </div>
-            <div fxFlex="100%" fxLayout.gt-xs="row" fxLayoutAlign="space-around" fxLayout.xs="column">
-                <div fxFlex="45%">
+            <div  fxFlex="100%" fxLayout.gt-xs="row" fxLayoutAlign="space-around" fxLayout.xs="column">
+                <div [style.margin-top]="'15px'" fxFlex="45%">
                     <mat-form-field>
                         <mat-label>Participants</mat-label>
                         <mat-select required multiple [disabled]="participantsOptions.length === 0" class='form-control mb-2' (selectionChange)="participantsChange($event.value)" name="participants" [ngModel]="project.participants">
@@ -27,7 +27,7 @@
                         <mat-list-item *ngFor="let participant of participantsSelected" role="listitem">{{participant.name}}</mat-list-item>
                     </mat-list>
                 </div>
-                <div fxFlex='45%'>
+                <div [style.margin-top]="'15px'" [style.margin-bottom]="'15px'" fxFlex='45%'>
                     <mat-form-field>
                         <mat-label>Administrators</mat-label>
                         <mat-select required multiple [disabled]="admOptions.length === 0 && project.administrators.length === 0" (selectionChange)="administratorsChange($event.value)" [ngModel]="project.administrators" name="administrators">

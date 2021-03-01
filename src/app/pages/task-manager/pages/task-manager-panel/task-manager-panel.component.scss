@@ -1,19 +1,6 @@
-
-
-
-
-
-mat-card{
-    height: 100%;
-    margin:0px;
-    padding: 10px;
-}
 .mat-tab-group{
    height: 100%;
-
-   .mat-tab-header{
-      height: 15%;
-   }  
+   width: 100%;
 }
    .div-task-name{
       background-color:#7b87cc;
@@ -21,10 +8,22 @@ mat-card{
       height: 25px;
       font-weight: bolder;
    }
-    ::ng-deep .mat-tab-body-wrapper{
+::ng-deep .mat-tab-body-wrapper{
         height: 100% !important;
         margin:0px !important
 }
+
+::ng-deep   .mat-tab-header{
+      height: 6vh !important;
+   }  
+::ng-deep .mat-tab-labels {
+   height: 6vh !important;
+}
+::ng-deep .mat-tab-label{
+     height: 6vh !important;
+     padding: 0px !important;
+}
+
 
 
 

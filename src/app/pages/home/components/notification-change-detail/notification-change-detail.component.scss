@@ -1,12 +1,14 @@
-.mat-card-notification-detail{
-    height: 79vh;
+.mat-card-notification-detail-desktop{
+    height: 78vh;
     width: 100%;
-    margin:40px 0px 0px 5px;
+    margin:20px 0px 0px 0px;
+}
+.mat-card-notification-detail{
+    height: 60vh;
 }
 mat-icon{
     font-size: 30px !important
 }
-
 .mat-icon-close{
     margin-right:13px
 }

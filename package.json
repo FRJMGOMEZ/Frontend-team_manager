@@ -25,7 +25,7 @@
     "@angular/router": "~10.0.4",
     "chart.js": "^2.9.3",
     "jwt-decode": "^3.0.0",
-    "lp-date-selector": "^10.0.2",
+    "lp-date-selector": "^10.0.3",
     "lp-dialogs": "^11.0.1",
     "lp-operations": "^10.0.1",
     "lp-thinking-time-progress": "file:dist/lp-thinking-time-progress",

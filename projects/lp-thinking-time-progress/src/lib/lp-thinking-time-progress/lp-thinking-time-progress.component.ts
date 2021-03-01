@@ -23,7 +23,7 @@ export class LpThinkingTimeProgressComponent implements OnInit {
 
   ngOnChanges(changes:SimpleChanges){
     if(changes.show && this.show){
-        this.timeSubscription = interval(this.velocity * 10).subscribe(() => {
+        this.timeSubscription = interval(this.velocity * 30).subscribe(() => {
           if (this.progress <= 100) {
             this.progress++
           } else {

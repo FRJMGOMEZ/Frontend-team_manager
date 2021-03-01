@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MediaService } from '../../../../core/providers/media.service';
 
 @Component({
   selector: 'app-notifications-info',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotificationsInfoComponent implements OnInit {
 
-  constructor() { }
+  constructor(public mdService:MediaService) { }
 
   ngOnInit(): void {
   }

@@ -2,7 +2,7 @@
 <mat-dialog-content *ngIf="isDialog && task">
     <form fxLayout="column" #taskForm="ngForm">
           <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutAlign="space-around" fxLayoutGap="50px" >
-              <div fxFlex="50" fxLayoutGap="25px" fxLayout="column">
+              <div fxFlex="50" fxLayoutGap.gt-lg="25px" fxLayout="column">
                 <div>
                     <mat-icon *ngIf="prevDialog" (click)="dialogBack.emit()">keyboard_backspace</mat-icon>
                 </div>
@@ -13,7 +13,7 @@
                     <mat-form-field >
                             <mat-label>Description</mat-label>
                             <textarea [(ngModel)]="task.description" name="description" required matInput cdkTextareaAutosize
-                                #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="4"></textarea>
+                                #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="4"></textarea>
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Participants</mat-label>
@@ -64,7 +64,7 @@
                                 </div>
               </div>
           </div>
-          <div [style.margin-top]="'25px'" fxLayoutAlign="center">
+          <div [style.margin-top]="mdService.desktop ? '25px' : '0px'" fxLayoutAlign="center">
                  <button (click)="postTask.emit(task)" *ngIf="!task._id" [disabled]="taskForm.invalid" mat-raised-button>
             create </button>
              <button  [disabled]="taskHasChanges() || taskForm.invalid" (click)="putTask.emit(checkChangesToPatch())" *ngIf="task._id" mat-raised-button>

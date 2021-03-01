@@ -1,36 +1,38 @@
-<lp-bottom-sheet-info [componentToShow]="infoComponent" ></lp-bottom-sheet-info>
+<div [class]="mdService.desktop ? 'div-info-icon-desktop' : 'div-info-icon'">
+  <lp-bottom-sheet-info [componentToShow]="infoComponent" ></lp-bottom-sheet-info>
+</div>
 <div fxLayout="column" class="div-calendar-container" >
-    <div fxFlex.gt-xs="12" fxFlex.xs="27" fxLayout="row">
-       <div fxHide.xs fxShow.gt-xs fxLayout="column" fxFlex.gt-xs="25" fxLayoutAlign="center">
-          <div fxLayoutAlign="center">
+    <div fxLayout="100" fxFlex.gt-md="12" fxFlex.lt-lg="33" fxLayout.gt-md="row" fxLayout.lt-lg="column">
+       <div fxHide.lt-lg fxShow.gt-md fxLayout="column" fxFlex.gt-md="25" fxLayoutAlign="center">
+          <div  fxLayoutAlign="center">
             <h2 class="date-label" *ngIf="dateFormat === 'month'"> {{selectedDate | date : 'MMMM yyyy'}} </h2>
             <h2 class="date-label" *ngIf=" dateFormat === 'day' "> {{selectedDate | date : ' EEEE d MMMM yyyy'}} </h2>
           </div>
       </div>
-      <div fxFlex.gt-xs="15" fxFlex.xs="45" [style.margin-top]="'15px'" fxLayout="column" fxLayoutAlign="center">
-              <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutAlign="center">
-                  <button class="format-btn" [color]="dateFormat === 'month' ? 'primary': ''" (click)="setFormat('month')"
+      <div fxFlex.gt-md="15" fxFlex.lt-lg="10" [style.margin-top]="'15px'" [ngStyle]="{'margin-left': mdService.desktop ? '10px' : '0px'}" fxLayout="column" fxLayoutAlign="center">
+              <div fxLayout="row"  fxLayoutAlign.gt-md="center" fxLayouAlign.lt-lg="flex-start">
+                  <button fxLayoutAlign="center" [class]="mdService.desktop ? 'btn-format' : 'btn-format-short'"    [color]="dateFormat === 'month' ? 'primary': ''" (click)="setFormat('month')"
                       mat-raised-button>MONTH</button>
-                  <button class="format-btn" [color]="dateFormat === 'day' ? 'primary': ''" (click)="setFormat('day')"
-                      mat-raised-button>DAY / WEEK</button>
+                  <button fxLayoutAlign="center"  [class]="mdService.desktop ? 'btn-format' : 'btn-format-short'"   [color]="dateFormat === 'day' ? 'primary': ''" (click)="setFormat('day')"
+                      mat-raised-button>DAY/WEEK</button>
                </div>
       </div>
-      <div [style.margin-top]="'20px'" fxLayoutGap="15px" fxLayoutAlign.gt-xs="center" fxLayoutAlign.xs="flex-start" fxFlex.gt-xs="45" fxFlex.xs="55">
-          <div fxLayout="column" fxLayoutAlign="center" fxFlex.xs="70" fxFlex.gt-xs="70">
-            <div fxLayoutAlign="flex-end">
-              <lp-date-selector  [label]=" dateFormat === 'day' ? 'selected a date' : ''" [dateFormat]="dateFormat" [ngModel]="selectionDate" (ngModelChange)="dateSelection($event)"></lp-date-selector>
+      <div [style.margin-top]="'15px'"  fxFlex.gt-md="60" fxFlex.lt-lg="90">
+          <div fxLayout="column" fxLayoutAlign="center"fxFlex="80">
+              <div fxLayout.gt-xs="row"fxLayoutAlign="flex-end">
+                <lp-date-selector  [label]=" dateFormat === 'day' ? 'selected a date' : ''" [dateFormat]="dateFormat" [ngModel]="selectionDate" (ngModelChange)="dateSelection($event)"></lp-date-selector>
+              </div>
+          </div>
+          <div fxFlex="20"  fxLayoutAlign.gt-xs="flex-start" fxLayoutAlign.xs="flex-end">
+            <div fxLayout="column" fxLayoutAlign="center">
+              <button [ngStyle.lt-lg]="{'margin-right': '15px'}"  [disabled]="setSearchBtnDisabled()" (click)="searchByDate()" mat-mini-fab color="accent" aria-label="Example icon button with a bookmark icon">
+                      <mat-icon>forward</mat-icon>
+              </button>
             </div>
           </div>
-          <div fxFlex="30" fxLayout="column" fxLayoutAlign="center">
-            <button [disabled]="setSearchBtnDisabled()" (click)="searchByDate()" mat-mini-fab color="accent" aria-label="Example icon button with a bookmark icon">
-                    <mat-icon>forward</mat-icon>
-            </button>
-          </div>
-      </div>
-      <div fxFlex.gt-xs="15" fxFlex.xs="50" fxHide.xs  fxLayoutAlign="flex-end">
       </div>
   </div>
-  <div fxFlex.gt-xs="88" fxFlex.xs="73">
+  <div fxFlex.gt-md="88" fxFlex.lt-lg="67">
     <router-outlet></router-outlet>
   </div>
 </div>

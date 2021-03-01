@@ -3,11 +3,17 @@
     margin:5px;
     .input-date{
     cursor: pointer;
+    }
+     mat-form-field{
+     width: 200px !important;
+    }
 }
 
-mat-form-field{
-    width:170px;
+::ng-deep.mat-calendar-content{
+    padding:0 40px 8px 8px !important; 
 }
 
-}
 
+::ng-deep.cdk-overlay-pane{
+    /* left:5% !important; */
+}
