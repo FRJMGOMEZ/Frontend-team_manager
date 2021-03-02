@@ -7,6 +7,7 @@ import { CalendarSchedulerDayInfoComponent } from './components/calendar-schedul
 import { LocalStorageService } from '../../library/providers/local-storage.service';
 import { ProjectService } from '../../core/providers/project.service';
 import { Project } from '../../core/models/project.model';
+import { MediaService } from '../../core/providers/media.service';
 
 
 @Component({
@@ -29,7 +30,8 @@ export class CalendarSchedulerComponent implements  OnInit, OnDestroy {
               private deviceDetectorService:DeviceDetectorService,
               private localStorageService: LocalStorageService,
               private router:Router,
-              private ar:ActivatedRoute){}
+              private ar:ActivatedRoute,
+              public mdService:MediaService){}
   ngOnInit(){
     this.ar.queryParamMap.subscribe((querys) => {
       querys.get('selectedDate') ? this.urlHasQuerys = true : null;

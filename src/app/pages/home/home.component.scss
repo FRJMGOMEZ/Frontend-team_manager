@@ -1,28 +1,28 @@
-
-.div-home-container{
-    height: 85vh;
-    width: 100%;
+.div-home-desktop{
+  height: 87vh;
 }
-mat-tab-group{
-    margin-top:5px;
-    width: 100%;
-
-}
-::ng-deep .mat-ripple{
-    max-width: 50%;
+.div-home{
+  height: 90vh;
 }
 ::ng-deep .mat-tab-list {
   .mat-tab-label {
-    flex-basis: 0;
+    flex-basis: 1;
     flex-grow: 1
   }
 }
-
 .mat-tab-link{
   height: 5vh;
 }
-
 mat-icon{
   margin: 5px;
+}
+
+
+.div-info-icon{
+    top:19% !important;
+}
+
+.div-info-icon-desktop-without-task{
+    top:19%
 }
 

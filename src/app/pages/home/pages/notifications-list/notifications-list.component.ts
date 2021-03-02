@@ -12,6 +12,7 @@ import { switchMap, map } from 'rxjs/operators';
 import { ActionsRequiredService } from '../../../../core/providers/actions-required.service';
 import { LpDialogsService } from 'lp-dialogs';
 import { empty } from 'rxjs/internal/observable/empty';
+import { MediaService } from '../../../../core/providers/media.service';
 
 @Component({
   selector: 'app-notifications-list',
@@ -42,7 +43,8 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
              private cdr:ChangeDetectorRef,
              public dialogsService:DialogsService,
              private actionsRequiredService:ActionsRequiredService,
-             private lpDialogsService:LpDialogsService) { }
+             private lpDialogsService:LpDialogsService,
+             public mdService:MediaService) { }
 
   ngOnInit(): void {
     this.params = this.ar.firstChild ? this.ar.firstChild.snapshot.paramMap : undefined;
@@ -122,8 +124,12 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     })
   }
   selectNotification(notification:NotificationModel){
-     this.notificationService.selectNotification(notification);
-     this.router.navigate([`${notification._id}`],{relativeTo:this.ar});
+    this.notificationService.selectNotification(notification);
+    if(this.mdService.desktop){
+      this.router.navigate([`${notification._id}`], { relativeTo: this.ar });
+    }else{
+       this.dialogsService.openTaskInfoDialog(notification.item);
+    }
   }
 
   getNotificationById(id:string){

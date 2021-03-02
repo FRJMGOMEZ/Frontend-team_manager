@@ -52,11 +52,7 @@ export class FilesService {
       if (res) {
         const request: Observable<any> = !src.includes('blob') ? this.getDbFile(file.name).pipe(map((blob: Blob) => {return { src: URL.createObjectURL(blob), title: file.title } })) : of({ src, title: file.title });
         return request.pipe(tap((res: { src: any, title: string }) => {
-          const a = document.createElement("a");
-          a.href = res.src;
-          a.download = res.title;
-          document.body.appendChild(a);
-          a.click();
+          
         }))
       } else {
         return empty();

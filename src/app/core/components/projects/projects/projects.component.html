@@ -1,19 +1,10 @@
-<mat-expansion-panel [class]="isDesktop() ? 'expansion-panel-pc': 'expansion-panel-mobile'">
-    <mat-expansion-panel-header  [collapsedHeight]="'50px'" [expandedHeight]="'50px'">
-            <div  fxLayout="row" fxLayoutAlign="space-between">
-                <a  fxLayoutAlign="center" fxFlex="10"(click)="postProject.emit();$event.stopPropagation()">
-                    <mat-icon class="icon-plus" color="primary">add</mat-icon>
-                </a>
-                <div  fxFlex="90" fxLayout="row" fxLayoutAlign="center">
-                    {{projectSelected ? projectSelected.name: ''}}
-                </div>
-            </div>
-    </mat-expansion-panel-header>
+
     <mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="name">
-            <mat-header-cell mat-header-cell *matHeaderCellDef fxShow fxHide.lt-xs> Name </mat-header-cell>
-            <mat-cell class="mat-cell-selector" (click)="selectProject(element)"  mat-cell *matCellDef="let element" fxShow fxHide.lt-xs>
-                {{element.name}}
+            <mat-header-cell   mat-header-cell *matHeaderCellDef fxShow fxHide.lt-xs> Name </mat-header-cell>
+            <mat-cell  class="mat-cell-selector" (click)="selectProject(element)"   mat-cell *matCellDef="let element" fxShow fxHide.lt-xs>
+                <a [style.color]="'blue'"*ngIf="!mdService.desktop">{{element.name}}</a>
+                <span *ngIf="mdService.desktop">{{element.name}}</span>
             </mat-cell>
         </ng-container>
         <ng-container matColumnDef="administrators">
@@ -21,7 +12,6 @@
             <mat-cell mat-cell *matCellDef="let element" fxShow fxHide.lt-sm> {{element.administrators.length }}
             </mat-cell>
         </ng-container>
-
         <ng-container matColumnDef="participants">
             <mat-header-cell mat-header-cell *matHeaderCellDef fxShow fxHide.lt-sm> Participants </mat-header-cell>
             <mat-cell mat-cell *matCellDef="let element" fxShow fxHide.lt-sm> {{element.participants.length}}
@@ -33,7 +23,7 @@
         </ng-container>
         <ng-container matColumnDef="actions">
             <mat-header-cell mat-header-cell *matHeaderCellDef> </mat-header-cell>
-            <mat-cell fxLayout.xs="column" mat-cell *matCellDef="let element">
+            <mat-cell fxLayoutAlign.lt-lg="flex-end" mat-cell *matCellDef="let element">
                 <a (click)="putProject.emit(element)">
                     <mat-icon class="icon_options">edit</mat-icon>
                 </a>
@@ -47,7 +37,6 @@
     </mat-table>
     <mat-paginator [length]="dataSource.data.length" [pageSize]="3" [pageSizeOptions]="[3,6,12]" showFirstLastButtons>
     </mat-paginator>
-</mat-expansion-panel>
 
 
 

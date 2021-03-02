@@ -1,26 +1,28 @@
-<lp-bottom-sheet-info [componentToShow]="infoComponent"></lp-bottom-sheet-info>
-<div class="div-home-container" fxLayout.gt-md="row" fxLayout.lt-lg="column">
-     <div [fxFlex]="notificationSelected ? '70' : '100'" >
+<div [class]="mdService.desktop ? 'div-info-icon-desktop' : 'div-info-icon'" [ngClass]="{'div-info-icon-desktop-without-task': !notificationSelected}">
+  <lp-bottom-sheet-info [componentToShow]="infoComponent" ></lp-bottom-sheet-info>
+</div>
+<div [class]="mdService.desktop ? 'div-home-desktop' : 'div-home'" fxLayout.gt-md="row" fxLayout.lt-lg="column">
+     <div fxLayout="column" fxFlex.gt-md="notificationSelected ? '70' : '100'" fxFlex.lt-lg="100" >
         <nav mat-stretch-tabs mat-tab-nav-bar>
            <a mat-tab-link
-            routerLinkActive
-            #rla="routerLinkActive"
              [active]="tabIndex === 0"
              (click)="navigate(0);">
              <mat-icon>notification_important</mat-icon>
-             NOTIFICATIONS TO CHECK
+             <span *ngIf="mdService.desktop" >NOTIFICATIONS TO CHECK</span>
             </a>
             <a mat-tab-link
-            routerLinkActive
-            #rla="routerLinkActive"
               [active]="tabIndex === 1"
              (click)="navigate(1);">
              <mat-icon>folder</mat-icon>
-              NOTIFICATIONS RECORD
+              <span *ngIf="mdService.desktop" >NOTIFICATIONS RECORD</span>
             </a>
        </nav>
-     <router-outlet>
-     </router-outlet> 
-     </div>
-    <app-notification-change-detail *ngIf="notificationSelected" fxFlex="30" [notification]="notificationSelected" (unselectNotification)="unselectNotification()"></app-notification-change-detail>
+      <div fxFlex="90">
+        <router-outlet>
+        </router-outlet>
+      </div> 
+    </div> 
+    <div [style.margin-top]="'5vh'" fxShow.gt-md fxHide.lt-lg *ngIf="notificationSelected" fxFlex.gt-md="28" fxFlex.lt-lg="30" >
+      <app-notification-change-detail [notification]="notificationSelected" (unselectNotification)="unselectNotification()"></app-notification-change-detail>
+    </div>
 </div>

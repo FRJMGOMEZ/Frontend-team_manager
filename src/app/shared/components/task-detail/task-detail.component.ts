@@ -3,6 +3,7 @@ import { LpDialogsService } from 'lp-dialogs';
 import { Task } from '../../../core/models/task.model';
 import { TaskService } from '../../../core/providers/task.service';
 import { LpObject } from 'lp-operations';
+import { MediaService } from '../../../core/providers/media.service';
 
 @Component({
   selector: 'app-task-detail',
@@ -21,7 +22,7 @@ export class TaskDetailComponent implements OnChanges  {
   @Output() restoreVersion: EventEmitter<{ taskChanges: { [key: string]: any }, id: string }> = new EventEmitter<{ taskChanges: { [key: string]: any }, id: string }>();
   isLastVersion: boolean;
   currentVersion:number;
-  constructor(public tasksService: TaskService, private lpDialogsService:LpDialogsService){}
+  constructor(public tasksService: TaskService, private lpDialogsService:LpDialogsService, public mdService:MediaService){}
 
   ngOnChanges(changes:SimpleChanges){
     if (changes.taskSelected && this.taskSelected) {

@@ -5,6 +5,7 @@ import { empty } from 'rxjs';
 import { TaskService } from '../../../../core/providers/task.service';
 import { ProjectService } from '../../../../core/providers/project.service';
 import { NotificationModel } from '../../../../core/models/notification.model';
+import { MediaService } from '../../../../core/providers/media.service';
 
 @Component({
   selector: 'app-notification-change-detail',
@@ -13,13 +14,12 @@ import { NotificationModel } from '../../../../core/models/notification.model';
 })
 export class NotificationChangeDetailComponent {
 
-  itemSubscription:Subscription
+  itemSubscription:Subscription;
+  @Input() notification:NotificationModel;
+  itemSelected:any;
+  @Output() unselectNotification: EventEmitter<void> = new EventEmitter<void>();
 
-  @Input() notification:NotificationModel
-  itemSelected:any
-  @Output() unselectNotification: EventEmitter<void> = new EventEmitter<void>()
-
-  constructor(private taskService:TaskService, private projectService:ProjectService, private cdr:ChangeDetectorRef) { }
+  constructor(private taskService:TaskService, private projectService:ProjectService, private cdr:ChangeDetectorRef, public mdService:MediaService) { }
 
   ngOnChanges(changes:SimpleChanges){
     if(changes.notification && this.notification){
@@ -56,9 +56,9 @@ export class NotificationChangeDetailComponent {
   getItems(notification:NotificationModel){
     let request:Observable<any>
     switch(notification.type){
-      case 'Task': request = notification.method != 'DELETE' ? this.taskService.getTaskById(notification.item._id ? notification.item._id : notification.item) : of(notification.prevItem).pipe(map((i)=>{ i.deleted = true;return i}))
+      case 'Task': request = notification.method != 'DELETE' ? this.taskService.getTaskById(notification.item._id ? notification.item._id : notification.item) : of(notification.prevItem).pipe(map((i)=>{ i.deleted = true;return i}));
       break;
-      case 'Project': request = notification.method != 'DELETE' ? this.projectService.getProjectById(notification.item._id ? notification.item._id : notification.item): of(notification.prevItem)
+      case 'Project': request = notification.method != 'DELETE' ? this.projectService.getProjectById(notification.item._id ? notification.item._id : notification.item): of(notification.prevItem);
       break;
     }
     request.pipe(catchError((err)=>{
@@ -66,7 +66,6 @@ export class NotificationChangeDetailComponent {
       this.itemSelected.deleted = true;
       return empty()})) 
     .subscribe((res)=>{
-      console.log({res});
        this.itemSelected = res != null ? res : this.itemSelected;
     })
   }

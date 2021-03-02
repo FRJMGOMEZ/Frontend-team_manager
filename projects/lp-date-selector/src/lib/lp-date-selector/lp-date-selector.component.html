@@ -1,21 +1,20 @@
 
 
-<div class="div-date" fxLayout.gt-xs="row" fxLayout.xs="column" *ngIf="dateFormat === 'day'">
-    <mat-form-field appearance="fill">
+<div class="div-date" fxLayoutAlign="center" *ngIf="dateFormat === 'day'">
+    <mat-form-field fxFlex="100" appearance="fill">
         <mat-label>{{label}}</mat-label>
         <input [min]="minDate" [max]="maxDate" (ngModelChange)="setDate($event)" [disabled]="disabled"  [ngModel]="selectedDate" name="date" #daySelection matInput [matDatepicker]="picker">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 </div>
-<div  class="div-date" *ngIf="dateFormat === 'month'" fxLayoutAlign="center" fxLayout="row">
-    <div fxLayout.gt-xs="row" fxLayout.xs="column">
-        <mat-form-field fxFlex="40" fxLayoutAlign="center" appearance="fill">
+<div  class="div-date" *ngIf="dateFormat === 'month'" fxLayout.gt-xs="row" fxLayoutAlign="center" fxLayout.xs="column">
+    <mat-form-field fxFlex="40" fxLayoutAlign="center" appearance="fill">
             <mat-label>Year</mat-label>
             <input [disabled]="disabled" [min]="min ? min.getFullYear():null" [max]="max ? max.getFullYear():null" (keyup)="setDate(null,yearSelection.value, monthSelection.value)"  #yearSelection [value]="selectedDate ? selectedDate.getFullYear().toString() : null"  matInput
                 onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Year">
-        </mat-form-field>
-        <mat-form-field fxFlex="40"  fxLayoutAlign="center" appearance="fill">
+    </mat-form-field>
+    <mat-form-field fxFlex="40"  fxLayoutAlign="center" appearance="fill">
             <mat-label>Month</mat-label>
             <mat-select (selectionChange)="setDate(undefined,yearSelection.value, monthSelection.value)"  #monthSelection [value]="selectedDate ? selectedDate.getMonth().toString() : null"
                 [disabled]="!yearSelection.value || disabled">
@@ -23,8 +22,7 @@
                     {{month}}
                 </mat-option>
             </mat-select>
-        </mat-form-field>
-    </div>
+     </mat-form-field>
 </div>
 <div  class="div-date" *ngIf="dateFormat === 'time'" fxLayout="column" fxLayoutAlign="center">
         <label *ngIf="label" for="endDate">{{label}}</label>

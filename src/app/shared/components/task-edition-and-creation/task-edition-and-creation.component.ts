@@ -8,6 +8,7 @@ import { LpParseDatePipe } from '../../../library/lp-pipes/lp-parse-date.pipe';
 import { LpParseHourPipe } from '../../../library/lp-pipes/lp-parse-hour.pipe';
 import { LpDate, LpObject } from 'lp-operations';
 import { TaskService } from '../../../core/providers/task.service';
+import { MediaService } from '../../../core/providers/media.service';
 
 @Component({
   selector: 'app-task-edition-and-creation',
@@ -48,7 +49,7 @@ export class TaskEditionAndCreationComponent implements OnChanges {
      }
   }
 
-  constructor(private _ngZone: NgZone, private authService:AuthService, public taskService:TaskService) { }
+  constructor(private _ngZone: NgZone, private authService:AuthService, public taskService:TaskService, public mdService:MediaService) { }
 
   ngOnChanges(changes:SimpleChanges){
     if(changes.task && this.task){
@@ -93,7 +94,7 @@ export class TaskEditionAndCreationComponent implements OnChanges {
 
   participantsChange(change){
     this.task.participants = change;
-    this.task.reviewers = (this.task.reviewers as string[]).filter((rw)=>{ (this.task.participants as string[]).includes(rw)})
+    this.task.reviewers = (this.task.reviewers as string[]).filter((rw)=>{ return (this.task.participants as string[]).includes(rw)})
   }
   get timeString(){
     return this.task.startDate && this.task.endDate ?  LpDate.milisecondsToPeriod(this.task.startDate,this.task.endDate):null;

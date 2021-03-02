@@ -1,48 +1,48 @@
 
 
 
-<div class="div-info-container" fxLayout="column" *ngIf="taskSelected" >
-       <mat-card fxLayout="row" fxFlex="8">
-           <div fxFlex="50" >
-               <h4 fxLayout="column" fxLayoutAlign="center" fxFlex.gt-xs="20" fxFlex.xs="50" >
+<div [class]="mdService.desktop ? 'div-info-container-desktop' : 'div-info-container'" fxLayout="column" *ngIf="taskSelected" >
+       <mat-card fxLayout="row" [fxFlex]=" mdService ? 8 : 10">
+           <div fxLayout.gt-md="row" fxFlex="50" >
+               <h4 fxFlex.gt-md="50" fxLayout.gt-md="column" fxLayoutAlign="center">
                    Name:
                </h4>
-               <p fxLayout="column" fxLayoutAlign="center">
+               <p fxFlex.gt-md="50"  fxLayout.gt-md="column" fxLayoutAlign="center">
                {{taskSelected.name}}
                </p>
            </div>
-            <div fxFlex="50">
-                <h4 fxLayout="column" fxLayoutAlign="center" fxFlex.gt-xs="20" fxFlex.xs="50">
+            <div fxLayout.gt-md="row" fxFlex="50">
+                <h4 fxFlex.gt-md="50"  fxLayout.gt-md="column" fxLayoutAlign="center">
                  Description:
                 </h4>
-                 <mat-icon fxLayout="column" fxLayoutAlign="center" color="primary" (click)="showDescription()">pageview</mat-icon>
+                 <mat-icon fxFlex.gt-md="50"  fxLayout.gt-md="column" fxLayoutAlign="center" color="primary" (click)="showDescription()">pageview</mat-icon>
             </div>
         </mat-card>
-         <mat-card fxLayout="row"  fxFlex="8">
-           <div fxFlex="50" >
-               <h4 fxLayout="column" fxLayoutAlign="center" fxFlex.gt-xs="20" fxFlex.xs="50">
+         <mat-card fxLayout="row" [fxFlex]=" mdService ? 8 : 10">
+           <div fxLayout.gt-md="row" fxFlex="50" >
+               <h4 fxFlex.gt-md="50" fxLayout.gt-md="column" fxLayoutAlign="center">
                    Status:
                </h4>
-                <p fxLayout="column" fxLayoutAlign="center">
+                <p fxFlex.gt-md="50" fxLayout.gt-md="column" fxLayoutAlign="center">
                  {{taskSelected.status.toUpperCase()}}
                 </p>
            </div>
-           <div fxFlex="50">
-                <h4 fxLayout="column" fxLayoutAlign="center" fxFlex.gt-xs="20" fxFlex.xs="50">
+           <div fxLayout.gt-md="row" fxFlex="50">
+                <h4 fxFlex.gt-md="50" fxLayout.gt-md="column" fxLayoutAlign="center">
                  Priority:
                 </h4>
-               <p fxLayout="column" fxLayoutAlign="center">
+               <p fxFlex.gt-md="50" fxLayout.gt-md="column" fxLayoutAlign="center">
                {{taskSelected.priority === 1 ? 'HIGH' : taskSelected.priority === 2 ? 'MEDIUM' : 'LOW'}}
                 </p>
            </div>
        </mat-card>
-         <mat-card fxLayout="column" fxFlex="hasActsRequired ? 26: 36"> 
-        <h4>
+         <mat-card fxLayout="column" [fxFlex]="mdService.desktop ? (hasActsRequired ? 26: 36) : '42'"> 
+           <h4  fxLayout.gt-md="column" fxLayoutAlign="center">
                Progress
            </h4>   
         <app-task-manager-progress   [taskSelected]="taskSelected"></app-task-manager-progress>
         </mat-card>
-        <mat-card  [fxFlex]="hasActsRequired ? 10: 20">
+        <mat-card  [fxFlex]="mdService.desktop ? (hasActsRequired ? 10: 20) : '35'">
            <h4 fxFlex.gt-xs="15" fxFlex.xs="50">
                Options
            </h4> 
@@ -57,7 +57,7 @@
                       {{ taskSelected.status === 'pending' ? 'move_to_inbox' : taskSelected.status === 'on review' ? 'hourglass_full' : 'assignment_turned_in'  }}
                       </mat-icon>
                   </div>
-                   <mat-label class="label-action">
+                   <mat-label *ngIf="mdService.desktop" class="label-action">
                     TOGGLE STATUS
                 </mat-label>
                 </div>
@@ -65,7 +65,7 @@
                 <div fxLayoutAlign="center">
                     <mat-icon [ngClass]="{'icon-disabled': !taskService.canBeEdited(taskSelected)}" (click)="taskService.canBeEdited(taskSelected) ? editTask.emit() : null" color="primary">edit</mat-icon>
                 </div>
-                <mat-label class="label-action">
+                <mat-label *ngIf="mdService.desktop"  class="label-action">
                     EDIT
                 </mat-label>
                  </div>
@@ -73,27 +73,33 @@
                 <div fxLayoutAlign="center">
                     <mat-icon [ngClass]="{'icon-disabled': taskService.taskTimeStarted(taskSelected)}" color="warn" (click)="!taskService.taskTimeStarted(taskSelected) ?  deleteTask.emit() : null">delete</mat-icon>
                 </div>
-                <mat-label class="label-action">
+                <mat-label *ngIf="mdService.desktop"  class="label-action">
                     DELETE TASK
                 </mat-label>
                  </div>
            </div>
        </mat-card>
-       <mat-card fxLayout="row" [fxFlex]=" hasActsRequired ? 15: 30">
-        <div fxLayout="row" fxFlex="50">
-            <h4>Participants</h4>
+       <mat-card fxLayout="row" [fxFlex]="mdService.desktop ? (hasActsRequired ? 15: 30) : 30">
+        <div fxLayout.gt-md="row" fxLayout.lt-lg="column" fxFlex="50">
+            <h4  fxLayout.gt-md="column" fxLayoutAlign.lt-lg="center">Participants</h4>
              <ul>
                <li *ngFor="let participant of taskSelected.participants" role="listitem">{{participant.name}}</li>
             </ul>
         </div>
-        <div fxLayout="row" fxFlex="50">
-            <h4>Reviewers</h4>
+        <div  fxLayout.gt-md="row" fxLayout.lt-lg="column" fxFlex="50">
+            <h4  fxLayout.gt-md="column" fxLayoutAlign.lt-lg>Reviewers</h4>
              <ul>
                <li *ngFor="let reviewer of taskSelected.reviewers" role="listitem">{{reviewer.name}}</li>
             </ul>
         </div>
        </mat-card>
-      <mat-card *ngIf="hasActsRequired" fxLayout="column" fxFlex="35">
+       <mat-card fxLayoutAlign="center"*ngIf="hasActsRequired && !mdService.desktop" fxLayout="row" fxFlex="10">
+             <h4>
+               Actions required
+           </h4> 
+       <mat-icon (click)="showActionsRequired()" color="primary">assignment_late</mat-icon>
+      </mat-card> 
+      <mat-card  *ngIf="hasActsRequired && mdService.desktop" fxLayout="column" fxFlex="35">
             <h4 [style.color]="'red'">
                Actions required
            </h4>

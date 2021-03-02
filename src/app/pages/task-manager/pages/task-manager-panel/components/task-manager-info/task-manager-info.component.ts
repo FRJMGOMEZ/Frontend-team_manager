@@ -1,9 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectorRef, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Task } from '../../../../../../core/models/task.model';
 import { TaskService } from '../../../../../../core/providers/task.service';
-import { timer } from 'rxjs';
 import { AuthService } from '../../../../../../auth/shared/providers/auth.service';
 import { LpDialogsService } from 'lp-dialogs';
+import { MediaService } from '../../../../../../core/providers/media.service';
+import { DialogsService } from '../../../../../../core/providers/dialogs.service';
+import { ActionRequired } from '../../../../../../core/models/action-required';
 
 @Component({
   selector: 'app-task-manager-info',
@@ -19,7 +21,12 @@ export class TaskManagerInfoComponent implements OnInit {
   @Output() actionResolved = new EventEmitter<any>();
   hasActsRequired = false;
   display = false;
-  constructor(public taskService:TaskService, private cdr:ChangeDetectorRef, private authService:AuthService, private lpDialogsService:LpDialogsService) { }
+  constructor(
+    public taskService:TaskService,
+    private authService:AuthService,
+    private lpDialogsService:LpDialogsService,
+    public mdService:MediaService,
+    private dialogsService:DialogsService) { }
   ngOnInit(): void {}
   ngOnChanges(changes:SimpleChanges){
     if(changes.taskSelected && this.taskSelected){
@@ -41,6 +48,12 @@ export class TaskManagerInfoComponent implements OnInit {
 
   showDescription(){
     this.lpDialogsService.openInfoDialog(this.taskSelected.description,'TASK DESCRIPTION');
+  }
+
+  showActionsRequired(){
+   this.dialogsService.showActionsRequired(this.taskSelected.actionsRequired as ActionRequired[]).subscribe((res)=>{
+     this.actionResolved.emit(res);
+   })
   }
 
 }

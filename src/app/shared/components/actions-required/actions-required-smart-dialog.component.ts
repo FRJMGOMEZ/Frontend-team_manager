@@ -16,8 +16,8 @@ import { ActionRequired } from '../../../core/models/action-required';
 `,
   styles: [
   ` 
-  .div - actions - required{
-      max- height: 20vh;
+  .div-actions-required{
+      max-height: 33vh;
   overflow- y: scroll; `
   ]
 })

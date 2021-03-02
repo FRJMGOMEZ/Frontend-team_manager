@@ -1,7 +1,46 @@
 
 
+.div-info-container-desktop{
+   height: 79vh;
+     mat-icon{
+     font-size: 30px;
+     }
+    .icon-disabled{
+      cursor:auto;
+      opacity: 0.3;
+     }
+    .div-task-name{
+      background-color:#7b87cc;
+      color:whitesmoke;
+      height: 25px;
+      font-weight: bolder;
+    }
+    h4{
+       color: #7b87cc;
+       margin:0px;
+       padding: 0px;
+    }
+    .label-action{
+       font-weight: bold;
+       font-size: 12px;
+       text-align: center;
+       margin-top:5px
+    }
+    mat-card{
+       padding: 0px;
+    }
+    mat-icon{
+       margin:5px;
+    }
+    .div-description{
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-y: none;
+    cursor: pointer;
+    }
+}
+
 .div-info-container{
-   height: 100%;
      mat-icon{
      font-size: 30px;
      }

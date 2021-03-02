@@ -1,8 +1,8 @@
 
 .mat-card-day{
     cursor: pointer;
-    height: 10.5vh;
-   padding:5px !important
+    height: 9.5vh;
+ padding:5px !important
 }
 
 .mat-card-day-selected{
@@ -12,8 +12,8 @@
 .mat-card-hour{
     padding:0px!important;
     margin: 0px !important;
-    height:22px;
-    width: 2.5vw;
+    width: 5.5vw;
+    height: 3.3vh;
 }
 
 .div-task-low-p{
@@ -41,14 +41,25 @@
 
 .div-scrollable-tasks {
     overflow-x:scroll;
-        width:300px;
-        overflow-y:hidden;
-        margin:0px;
+    width:92vw;
+    overflow-y:hidden;
+    margin:0px;
+    padding: 0px;
+     height: 52vh;
 }
 
-.card-week-day{
-width: 11vh;
+.mat-card-week-day{
+width: 15%;
+padding: 0px;
 height: 25px !important
 }
+
+.div-date{
+   background-color:#5464bd;
+   color:white;
+   width: 22px;
+   text-align: center;
+}
+
 
 

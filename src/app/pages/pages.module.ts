@@ -10,11 +10,13 @@ import { MaterialModule } from '../shared/material/material.module';
 import { ProjectsModule } from '../core/components/projects/projects.module';
 import { DirectivesModule } from '../shared/directives/directives.module';
 import { ProjectEditionAndCreationModule } from '../shared/components/project-edition-and-creation/project-edition-and-creation.module';
+import { UserInfoComponent } from '../core/components/user-info/user-info.component';
 
 @NgModule({
   declarations: [
     PagesComponent,
-    NoProjectsComponent
+    NoProjectsComponent,
+    UserInfoComponent
   ],
   imports: [
     CommonModule,

@@ -255,9 +255,6 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
     src: url(/src/styles/EB_Garamond/EBGaramond-ExtraBold.woff2) format('woff2'), url(/src/styles/EB_Garamond/EBGaramond-ExtraBold.woff) format('woff')
 }
 
-
-
-
 html, body { 
   height: 100%;
   width:100%;
@@ -304,6 +301,20 @@ a{
 .mat-form-full-width{
   width: 100%;
 }
+
+.div-info-icon-desktop{
+    z-index: 999999;
+    position: absolute;
+    right:2%;
+    top:11vh
+}
+.div-info-icon{
+    position: absolute;
+     z-index: 999999;
+    right:5%;
+    top:10%;
+}
+
 
 
 

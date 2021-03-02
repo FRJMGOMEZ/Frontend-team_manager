@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NotificationModel } from '../../../../../../core/models/notification.model';
 import { User } from '../../../../../../core/models/user.model';
 import { AuthService } from '../../../../../../auth/shared/providers/auth.service';
+import { MediaService } from '../../../../../../core/providers/media.service';
 
 @Component({
   selector: 'app-notification-card',
@@ -32,9 +33,8 @@ export class NotificationCardComponent implements OnInit {
     }
     return label;
   }
-  constructor(private authService:AuthService) { }
+  constructor(private authService:AuthService, public mdService:MediaService) { }
   ngOnInit(): void {
-    this.hasActionsRequired = (this.notification.actionsRequired as any).find((ar)=>{console.log({ar}); return ar.usersTo.includes(this.authService.userOnline._id)}) ? true : false;
- 
+  this.hasActionsRequired = (this.notification.actionsRequired as any).find((ar)=>{return ar.usersTo.includes(this.authService.userOnline._id)}) ? true : false;
   }
 }

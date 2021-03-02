@@ -21,9 +21,6 @@ export class CalendarSchedulerDayComponent {
   @Output() dateSelection = new EventEmitter<Date>()
   week:any
   constructor(private renderer: Renderer2, public tasksService: TaskService, private localStorageService: LocalStorageService) { }
-  calculateCardWidth() {
-    return `${(window.innerWidth - 20) / this.hours.length}px`;
-  }
   ngOnChanges(changes:SimpleChanges){
     if(changes.tasks && this.tasks){
          this.tasksRenderized = 0;
@@ -33,11 +30,12 @@ export class CalendarSchedulerDayComponent {
     }
   }
   taskRender(taskDiv: ElementRef, task:Task, hour: HourModel, size: 'small' | 'regular') {
+   /*  task.endDate= + (task.deliverDate ? (task.extraTime ? task.extraTime + new Date().getTime() - task.deliverDate : new Date().getTime() - task.deliverDate):0); */
     if ( this.hasTask(task,hour)  && (this.tasksRenderized<=(this.tasks.length * this.hours.length)*2) ) {
          let percent = 0;
-         if ((((hour.date + 3600000) - task.startDate) > 3600000) && ((task.endDate - hour.date) > 3600000)) {
+      if ((((hour.date + 3600000) - task.startDate) > 3600000) && ((task.endDate - hour.date) > 3600000)) {
            percent = 100;
-           this.renderTask(taskDiv,size,percent,task)
+           this.renderTask(taskDiv,size,percent,task);
          } else {
            if (hour.date - task.startDate < 3600000) {
              percent = Math.ceil(((hour.date + 3600000 - task.startDate) * 100) / 3600000);
@@ -65,7 +63,7 @@ export class CalendarSchedulerDayComponent {
       this.renderer.setStyle(taskDiv, 'background-color', this.taskColor(task))
       this.renderer.setStyle(taskDiv, 'width', `${percent}%`);
     } else {
-      this.renderer.setStyle(taskDiv, 'background-color', '#5464bd')
+      this.renderer.setStyle(taskDiv, 'background-color', this.taskColor(task))
       this.renderer.setStyle(taskDiv, 'height', `${percent}%`);
     }
     this.tasksRenderized++

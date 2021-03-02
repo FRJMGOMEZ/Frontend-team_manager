@@ -1,6 +1,3 @@
-
-
-
 h3{
     margin: 0px;
     padding: 0px;
@@ -12,9 +9,9 @@ h5{
     text-align: center;
 }
 
-.div-category{
-    margin-top:20px;
-    height: 15vh;
+.div-category-desktop{
+    margin-top:10px;
+    height: 12vh;
     width:100%;
     p{
         text-align: center;
@@ -22,6 +19,9 @@ h5{
     mat-icon{
         font-size: 30px;
     }
+}
+.div-category{
+   margin-top:10px
 }
 
 .property-changed{

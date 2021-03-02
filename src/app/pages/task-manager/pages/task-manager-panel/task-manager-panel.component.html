@@ -1,7 +1,7 @@
 
-   <mat-card> 
-              <mat-tab-group (selectedIndexChange)="tabIndex = $event;" #tabGroup mat-stretch-tabs  fxFlex="100" mat-align-tabs="center">
-               <mat-tab > 
+
+<mat-tab-group (selectedIndexChange)="tabIndex = $event;" #tabGroup mat-stretch-tabs  fxFlex="100" mat-align-tabs="center">
+               <mat-tab> 
                   <ng-template mat-tab-label>
                    Task info
                    <mat-icon color="primary">poll</mat-icon>
@@ -22,5 +22,4 @@
                 </ng-template>
                 <app-task-manager-files *ngIf="taskSelected && tabIndex === 2" [taskSelected]="taskSelected" ></app-task-manager-files>
                 </mat-tab>
-              </mat-tab-group>            
-    </mat-card>
+</mat-tab-group>            

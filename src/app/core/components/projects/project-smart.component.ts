@@ -5,29 +5,27 @@ import { DialogsService } from '../../providers/dialogs.service';
 import { Project } from '../../models/project.model';
 import { LocalStorageService } from '../../../library/providers/local-storage.service';
 import { LpArray } from 'lp-operations';
+import { MediaService } from '../../providers/media.service';
 
 
 @Component({
     selector: 'app-projects-smart',
-    template: `
-       <app-projects  
-       [projects]="projects"
-       (projectSelectedOut)="selectProject($event)"
-       [projectSelectedIn]="projectSelected"
-       (deleteProject)="deleteProject($event)"
-       (putProject)="putProject($event)"
-       (postProject)="postProject()">
-       </app-projects>
-    `,
+    templateUrl: './projects-smart.component.html',
+    styleUrls:['./projects-smart.component.scss']
 })
 export class ProjectsSmartComponent implements OnInit {
 
     projects: Project[] = []
     projectSubs: Subscription;
     projectSelected: string;
+
+    get projectName(){
+   return this.projects.find((p)=>{ return p._id === this.projectSelected}).name;
+    }
     constructor(private projectService: ProjectService,
                 private dialogsService: DialogsService,
-                private localStorageService:LocalStorageService) { }
+                private localStorageService:LocalStorageService,
+                public mdService:MediaService) { }
     ngOnInit() {
 
         this.projectService.selectedProject$.subscribe((selectedProject: Project) => {
@@ -70,6 +68,19 @@ export class ProjectsSmartComponent implements OnInit {
 
     deleteProject(projectId: string) {
         this.projectService.deleteProject(projectId).subscribe();
+    }
+
+    openProjectList(){
+        this.dialogsService.openProjectList(this.projects).subscribe((res:any)=>{
+            switch(res.order){
+                case 'put': this.putProject(res.project);
+                break;
+                case 'delete':this.deleteProject(res.project);
+                break;
+                case 'select':this.selectProject(res.project);
+                break;
+        }
+        })
     }
     ngOnDestroy() {
         this.projectSubs.unsubscribe();
