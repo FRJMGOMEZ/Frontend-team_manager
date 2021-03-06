@@ -2,17 +2,17 @@
 <mat-dialog-content *ngIf="isDialog && task">
     <form fxLayout="column" #taskForm="ngForm">
           <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutAlign="space-around" fxLayoutGap="50px" >
-              <div fxFlex="50" fxLayoutGap.gt-lg="25px" fxLayout="column">
+              <div fxFlex="50" fxLayoutGap.gt-md="25px" fxLayout="column">
                 <div>
                     <mat-icon *ngIf="prevDialog" (click)="dialogBack.emit()">keyboard_backspace</mat-icon>
                 </div>
                     <mat-form-field>
                             <mat-label>Task name</mat-label>
-                            <input [(ngModel)]="task.name" name="name" required matInput>
+                            <input matInput lpInputTrimmer  [(ngModel)]="task.name" name="name" required>
                     </mat-form-field>
                     <mat-form-field >
                             <mat-label>Description</mat-label>
-                            <textarea [(ngModel)]="task.description" name="description" required matInput cdkTextareaAutosize
+                            <textarea cdkTextareaAutosize matInput lpInputTrimmer  [(ngModel)]="task.description" name="description" required  
                                 #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="4"></textarea>
                     </mat-form-field>
                     <mat-form-field>

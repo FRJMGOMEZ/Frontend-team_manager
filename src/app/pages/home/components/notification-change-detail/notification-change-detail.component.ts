@@ -5,7 +5,6 @@ import { empty } from 'rxjs';
 import { TaskService } from '../../../../core/providers/task.service';
 import { ProjectService } from '../../../../core/providers/project.service';
 import { NotificationModel } from '../../../../core/models/notification.model';
-import { MediaService } from '../../../../core/providers/media.service';
 
 @Component({
   selector: 'app-notification-change-detail',
@@ -19,7 +18,7 @@ export class NotificationChangeDetailComponent {
   itemSelected:any;
   @Output() unselectNotification: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(private taskService:TaskService, private projectService:ProjectService, private cdr:ChangeDetectorRef, public mdService:MediaService) { }
+  constructor(private taskService:TaskService, private projectService:ProjectService, private cdr:ChangeDetectorRef) { }
 
   ngOnChanges(changes:SimpleChanges){
     if(changes.notification && this.notification){

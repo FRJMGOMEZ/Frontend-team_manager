@@ -1,7 +1,5 @@
 
-
-  <mat-dialog-content>
-      
+<mat-dialog-content>
 <app-projects  
        [projects]="projects"
        (projectSelectedOut)="selectProject.emit({project:$event,order:'select'}); close()"

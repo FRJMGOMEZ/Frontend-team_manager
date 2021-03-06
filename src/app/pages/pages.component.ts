@@ -25,8 +25,8 @@ export class PagesComponent implements OnInit, OnDestroy {
   display:boolean = true;
   constructor(  private wSService:WebSocketsService,
                 public projectService:ProjectService,
-                private authService:AuthService,
-                private dialogService:DialogsService,
+                public authService:AuthService,
+                public dialogService:DialogsService,
                 private taskService:TaskService,
                 private notificationsService: NotificationService,
                 private lpDialogs:LpDialogsService,

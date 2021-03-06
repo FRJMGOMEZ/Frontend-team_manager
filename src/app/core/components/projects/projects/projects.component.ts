@@ -34,9 +34,9 @@ export class ProjectsComponent  {
       this.dataSource.paginator = this.paginator;
     }
   }
-  selectProject(project:Project){   
+  selectProject(project:Project){  
     this.projectSelectedOut.emit(project);
-    this.expHeader._toggle();
+    this.expHeader ? this.expHeader._toggle() : null;
   }
 
   get projectSelected(){

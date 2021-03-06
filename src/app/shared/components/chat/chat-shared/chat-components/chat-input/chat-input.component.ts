@@ -13,6 +13,7 @@ export class ChatInputComponent implements OnInit {
   @ViewChild('textArea') textArea : ElementRef
   message: MessageModel = new MessageModel('', [], null)
   @Output() sendMsg = new EventEmitter<MessageModel>();
+  @Output() showUsers = new EventEmitter<boolean>();
   constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {

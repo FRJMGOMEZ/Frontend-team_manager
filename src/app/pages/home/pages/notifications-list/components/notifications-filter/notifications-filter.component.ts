@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { NOTIFICATION_METHODS, NOTIFICATION_TYPES } from '../../../../shared/data/notification-filter';
 
-
 @Component({
   selector: 'app-notifications-filter',
   templateUrl: './notifications-filter.component.html',
@@ -43,5 +42,4 @@ export class NotificationsFilterComponent implements OnChanges {
     let queryString = Object.keys(this.queryFilters).reduce((acum, key) => { acum ? acum += (this.queryFilters[key] && this.queryFilters[key] != null ? `&${key}=${this.queryFilters[key]}` : '') : acum += (this.queryFilters[key] && this.queryFilters[key] != null ? `?${key}=${this.queryFilters[key]}` : '') ; return acum }, '');
     this.getNotifications.emit(queryString);
   }
-
 }

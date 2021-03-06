@@ -15,11 +15,11 @@
    <div fxLayout="row" fxLayoutAlign="space-around" fxLayoutGap="15px">
      <mat-form-field fxFlex="40" class="example-full-width">
       <mat-label>ID</mat-label>
-       <input [(ngModel)]="filters._id" matInput placeholder="Task ID">
+       <input matInput lpInputTrimmer [(ngModel)]="filters._id"  placeholder="Task ID">
     </mat-form-field> 
     <mat-form-field fxFlex="40" class="example-full-width">
       <mat-label>Name</mat-label>
-       <input [(ngModel)]="filters.name" matInput placeholder="Task name">
+       <input matInput lpInputTrimmer [(ngModel)]="filters.name" placeholder="Task name">
     </mat-form-field>
    </div>
    <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="space-around">

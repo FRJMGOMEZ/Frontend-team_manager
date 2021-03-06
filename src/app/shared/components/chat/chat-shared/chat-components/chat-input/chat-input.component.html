@@ -1,10 +1,10 @@
           <div  fxLayout="column" >
                 <div fxLayout="row" >
                     <button [disabled]="!message.text" mat-raised-button [style.width.%]="100" (click)="sendMessage()">send</button>
-                    <chat-tools fxFlex="90" (files)="setFiles($event)" ></chat-tools>
+                    <chat-tools fxFlex="90" (files)="setFiles($event)" (showUsers)="showUsers.emit($event)" ></chat-tools>
                 </div>
                 <mat-form-field class="mat-form-full-width">
-                    <textarea #textArea  cdkTextareaAutosize cdkAutosizeMaxRows="4" rows="4" cols="40"  class="textarea" [style.margin-top]="'10px'" [(ngModel)]="message.text" matInput placeholder="write something" ></textarea>
+                    <textarea #textArea matInput lpInputTrimmer cdkTextareaAutosize cdkAutosizeMaxRows="4" cdkAutosizeMinRows="4" cols="40"  class="textarea" [style.margin-top]="'10px'" [(ngModel)]="message.text" placeholder="write something" ></textarea>
                 </mat-form-field>
          </div>
 

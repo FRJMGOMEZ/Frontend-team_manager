@@ -302,18 +302,28 @@ a{
   width: 100%;
 }
 
-.div-info-icon-desktop{
+.div-info-icon{
     z-index: 999999;
     position: absolute;
     right:2%;
     top:11vh
 }
-.div-info-icon{
-    position: absolute;
-     z-index: 999999;
+
+@media (min-width: 0px) and (max-width: 1279px) {
+  .div-info-icon{
     right:5%;
     top:10%;
 }
+}
+
+/* @media (min-width: 0px) and (max-width: 599.9px){
+    .div-info-icon{
+    position: absolute;
+     z-index: 999999;
+    right:5%;
+    top:20%;
+}
+} */
 
 
 

@@ -9,7 +9,8 @@ export class dbImgPipe implements PipeTransform {
   transform(file:any) {
     let url;
     if (!file) {
-      return url = '../../assets/no-image.png'
+      url = '../../../assets/images/no-image.png';
+      return url;
     }else{
 
       if(!file.name){

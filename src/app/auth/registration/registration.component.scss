@@ -6,13 +6,15 @@
 }
 
 
-.registration-container-desktop{
+.registration-container{
     width:18rem;
     background:transparent;
     position: absolute;
     left: 3%;
     top:10%;
-
+     .registration-box{
+        padding-top:10rem
+    }
     h1{
         font-family: 'Alfa Slab One', cursive;
         color:#3c4873;
@@ -21,15 +23,16 @@
  
 }
 
-/* Buscar imagen de background chu */
-.registration-container-mobile{
+@media  (max-width: 1279px) {
+.registration-container{
+    position: inherit;
     height: 100%;
     width:100%;
     background:#ffffff;
-
     .registration-box{
-      padding-top: 10rem;
+        padding-top:7rem
     }
+}
 }
 
 .img-background{
@@ -47,11 +50,14 @@
     width: 100%;
 }
 
-
 a{
     color:blue
 }
 
 mat-form-field{
     width:90% !important
+}
+
+.mat-error{
+    margin-left: 15px;
 }

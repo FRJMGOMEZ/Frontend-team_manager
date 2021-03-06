@@ -1,13 +1,13 @@
 
-<form #notificationForm="ngForm" fxLayout.gt-md="row" fxLayout.lt-lg="column" action="" (ngSubmit)="search()">
+<form #notificationForm="ngForm" fxLayout.gt-sm="row" fxLayout.lt-md="column" action="" (ngSubmit)="search()">
   <mat-form-field fxFlex="14" class="mat-form-field-input">
     <mat-label>Project</mat-label>
-    <input [(ngModel)]="queryFilters.project" name="project" matInput >
+    <input matInput lpInputTrimmer [(ngModel)]="queryFilters.project" name="project"  >
     <button *ngIf="queryFilters.project" mat-button matSuffix mat-icon-button aria-label="Clear" (click)="queryFilters.project = ''" >x</button>
   </mat-form-field>  
   <mat-form-field  fxFlex="14"  class="mat-form-field-input">
     <mat-label>User from</mat-label>
-    <input [(ngModel)]="queryFilters.userFrom" name="userFrom" matInput>
+    <input matInput lpInputTrimmer [(ngModel)]="queryFilters.userFrom" name="userFrom" >
     <button *ngIf="queryFilters.userFrom" mat-button matSuffix mat-icon-button aria-label="Clear" (click)="queryFilters.userFrom = ''" >x</button>
   </mat-form-field>  
   <mat-form-field fxFlex="14"appearance="fill">

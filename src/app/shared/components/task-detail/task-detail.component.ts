@@ -4,6 +4,7 @@ import { Task } from '../../../core/models/task.model';
 import { TaskService } from '../../../core/providers/task.service';
 import { LpObject } from 'lp-operations';
 import { MediaService } from '../../../core/providers/media.service';
+import { LpDate } from 'lp-operations';
 
 @Component({
   selector: 'app-task-detail',
@@ -22,8 +23,12 @@ export class TaskDetailComponent implements OnChanges  {
   @Output() restoreVersion: EventEmitter<{ taskChanges: { [key: string]: any }, id: string }> = new EventEmitter<{ taskChanges: { [key: string]: any }, id: string }>();
   isLastVersion: boolean;
   currentVersion:number;
-  constructor(public tasksService: TaskService, private lpDialogsService:LpDialogsService, public mdService:MediaService){}
 
+  get extraTime(){
+    const timesArray = LpDate.milisecsToString(this.taskSelected.extraTime);
+    return timesArray.reduce((acum, time, index) => { acum += time + (timesArray[index+1] ?', ' : ''); return acum},'')
+  }
+  constructor(public tasksService: TaskService, private lpDialogsService:LpDialogsService, public mdService:MediaService){}
   ngOnChanges(changes:SimpleChanges){
     if (changes.taskSelected && this.taskSelected) {
       this.taskPristine = LpObject.copyObject(this.taskSelected);

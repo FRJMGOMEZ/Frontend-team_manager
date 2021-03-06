@@ -7,10 +7,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { LpDialogsService } from 'lp-dialogs';
 import { Project } from '../models/project.model';
 import { ErrorHandlerService } from './error-handler.service';
-import { LocalStorageService } from '../../library/providers/local-storage.service';
 import { AuthService } from '../../auth/shared/providers/auth.service';
 import { API_URL } from '../../config/api-url';
-
+import { LpLocalStorage } from 'lp-operations';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +37,6 @@ export class ProjectService {
   constructor(private http: HttpClient,
     private errorHandlerService: ErrorHandlerService,
     private lpDialogsService: LpDialogsService,
-    private localStorageService: LocalStorageService,
     private wSService: WebSocketsService,
     private authService: AuthService,
     private dialogRef:MatDialog
@@ -74,7 +72,7 @@ export class ProjectService {
   }
   selectProject(project:Project) {
       this._selectedProject =project;
-      this.localStorageService.set('state-data', project._id, 'project');
+    LpLocalStorage.set('state-data', project._id, 'project');
       this.selectedProjectSrc.next(project);
   }
 
@@ -152,7 +150,7 @@ export class ProjectService {
           }
           break;
       }
-      if(this.localStorageService.get('state-data','project-on-screen') === project._id){
+      if (LpLocalStorage.get('state-data','project-on-screen') === project._id){
         this.dialogRef.closeAll()
       }
     })

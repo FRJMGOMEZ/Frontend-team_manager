@@ -5,9 +5,8 @@ import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from 'src/app/core/models/user.model';
 import { ErrorHandlerService } from '../../../core/providers/error-handler.service';
-import { LocalStorageService } from '../../../library/providers/local-storage.service';
 import { API_URL } from '../../../config/api-url';
-import { environment } from '../../../../environments/environment.prod';
+import { LpLocalStorage } from 'lp-operations';
 
 @Injectable({
   providedIn: 'root'
@@ -18,15 +17,14 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private plErrorHandlerService:ErrorHandlerService,
-    private router: Router,
-    private localStorageService: LocalStorageService) {
+    private router: Router) {
       
     this.uploadFromStorage();
   }
 
   /////// LOGIN //////
   login(credentials: any, rememberMe: boolean = false) {
-    rememberMe ? this.localStorageService.set('rememberMe', credentials.email) : this.localStorageService.remove('rememberMe')
+    rememberMe ? LpLocalStorage.set('rememberMe', credentials.email) : LpLocalStorage.remove('rememberMe')
     let url = `${API_URL}login`;
     return this.http.post(url, credentials).pipe(
       tap((res: any) => { this.saveUser(res.user, res.token) }),
@@ -41,22 +39,22 @@ export class AuthService {
   saveUser(user: User, token?: string) {
     return new Promise((resolve, reject) => {
       token ? user.token = token : null
-      this.localStorageService.set('user', JSON.stringify(user))
+      LpLocalStorage.set('user', JSON.stringify(user))
       this.userOnline = user;
       resolve(undefined)
     })
   }
   uploadFromStorage() {
-    this.userOnline = this.localStorageService.get('user');
+    this.userOnline = LpLocalStorage.get('user');
   }
   cleanStorage() {
-    localStorage.removeItem("user");
+    LpLocalStorage.remove("user");
     this.userOnline = null;
   }
   //////// LOGIN WITH TOKEN (A TRAVÉS DE GUARD) ///////////
   checkToken(): Observable<boolean> {
     //// REVISAMOS SI HAY TOKEN EN EL STORAGE  ////
-    let token = this.localStorageService.get('user', 'token') || undefined;
+    let token = LpLocalStorage.get('user', 'token') || undefined;
     if (token) {
       return this.http.get(`${API_URL}check-token`).pipe(map((res: any) => {return true;}))
     } else {

@@ -43,6 +43,30 @@
       "lp-thinking-time-progress": [
         "dist/lp-thinking-time-progress/lp-thinking-time-progress",
         "dist/lp-thinking-time-progress"
+      ],
+      "lp-input-trimmer": [
+        "dist/lp-input-trimmer/lp-input-trimmer",
+        "dist/lp-input-trimmer"
+      ],
+      "lp-email-validator": [
+        "dist/lp-email-validator/lp-email-validator",
+        "dist/lp-email-validator"
+      ],
+      "lp-date-pipes": [
+        "dist/lp-date-pipes/lp-date-pipes",
+        "dist/lp-date-pipes"
+      ],
+      "lp-validation-directives": [
+        "dist/lp-validation-directives/lp-validation-directives",
+        "dist/lp-validation-directives"
+      ],
+      "lp-files-uploader": [
+        "dist/lp-files-uploader/lp-files-uploader",
+        "dist/lp-files-uploader"
+      ],
+      "lp-bottom-sheet-info": [
+        "dist/lp-bottom-sheet-info/lp-bottom-sheet-info",
+        "dist/lp-bottom-sheet-info"
       ]
     }
   }

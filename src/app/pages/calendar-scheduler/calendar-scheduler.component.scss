@@ -13,8 +13,10 @@
     height: 40px !important;
 }
 
-.btn-format-short{
+@media  (max-width: 1279px) {
+  .btn-format{
     height: 27px;
+}
 }
 
 .set-date-btn{

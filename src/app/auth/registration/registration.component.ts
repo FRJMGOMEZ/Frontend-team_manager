@@ -48,13 +48,5 @@ export class RegistrationComponent {
       return false
      }
    }
-
-  checkStyleByDevice() {
-    if (this.deviceDetectorService.isDesktop()) {
-      return 'registration-container-desktop'
-    } else {
-      return 'registration-container-mobile'
-    }
-  }
 }
 

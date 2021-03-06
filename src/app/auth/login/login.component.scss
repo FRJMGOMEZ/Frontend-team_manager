@@ -1,18 +1,19 @@
 .container-fluid {
-    background: #d9d9d9;
     color: black;
     height:100%;
     width:100%;
 }
 
 
-.login-container-desktop{
+.login-container{
     width:18rem;
     background:transparent;
     position: absolute;
     left: 3%;
     top:10%;
-
+    .login-box{
+        padding-top:10rem
+    }
     h1{
         font-family: 'Alfa Slab One', cursive;
         color:#3c4873;
@@ -21,37 +22,34 @@
  
 }
 
-/* Buscar imagen de background chu */
-.login-container-mobile{
+@media  (max-width: 1279px) {
+.login-container{
+    position: inherit;
     height: 100%;
     width:100%;
     background:#ffffff;
     .login-box{
-        padding-top:10rem
+        padding-top:7rem
     }
 }
-
+}
 .img-background{
    height:100%;
     width:100%;
 }
-
 .remember-me{
     margin-top:0.5rem;
 
 }
-
-
 a{
     color:blue
 }
-
-
 mat-form-field{
     width:90% !important
 }
-
-
 .btn-submit{
    margin-top:2em;
+}
+.mat-error{
+    margin-left: 15px;
 }

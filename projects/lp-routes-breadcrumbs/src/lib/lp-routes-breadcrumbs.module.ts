@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
-import { LpRoutesBreadcrumbsComponent } from './lp-routes-breadcrumbs.component';
-
-
 
 @NgModule({
-  declarations: [LpRoutesBreadcrumbsComponent],
+  declarations: [],
   imports: [
   ],
-  exports: [LpRoutesBreadcrumbsComponent]
+  exports: [],
+  providers:[LpRoutesBreadcrumbsModule]
 })
 export class LpRoutesBreadcrumbsModule { }

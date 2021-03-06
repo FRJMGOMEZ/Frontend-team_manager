@@ -3,8 +3,7 @@ import { Subscription } from 'rxjs';
 import { ProjectService } from '../../providers/project.service';
 import { DialogsService } from '../../providers/dialogs.service';
 import { Project } from '../../models/project.model';
-import { LocalStorageService } from '../../../library/providers/local-storage.service';
-import { LpArray } from 'lp-operations';
+import { LpArray, LpLocalStorage } from 'lp-operations';
 import { MediaService } from '../../providers/media.service';
 
 
@@ -24,7 +23,6 @@ export class ProjectsSmartComponent implements OnInit {
     }
     constructor(private projectService: ProjectService,
                 private dialogsService: DialogsService,
-                private localStorageService:LocalStorageService,
                 public mdService:MediaService) { }
     ngOnInit() {
 
@@ -46,7 +44,7 @@ export class ProjectsSmartComponent implements OnInit {
 
         this.projectService.getProjects().subscribe((projects) => {
             this.projects = projects;
-            const projectSId = this.localStorageService.get('state-data', 'project');
+            const projectSId = LpLocalStorage.get('state-data', 'project');
             const projectSelected = projectSId ? this.projects.find((p)=>{ return p._id === projectSId}) : undefined;
             if (projectSelected) {
                 this.projectService.selectProject(projectSelected)

@@ -6,8 +6,8 @@ import { LpDialogsService } from 'lp-dialogs';
 import { User } from '../models/user.model';
 import { AuthService } from '../../auth/shared/providers/auth.service';
 import { ErrorHandlerService } from './error-handler.service';
-import { LocalStorageService } from '../../library/providers/local-storage.service';
 import { API_URL } from '../../config/api-url';
+import { LpLocalStorage } from 'lp-operations';
 
 @Injectable({
     providedIn: 'root'
@@ -20,7 +20,6 @@ export class UserServices {
    constructor(private http: HttpClient,
                private authService:AuthService,
                private errorHandlerService: ErrorHandlerService,
-               private localStorageService:LocalStorageService,
                private lpDialogsService:LpDialogsService
                
             ) {}
@@ -59,7 +58,7 @@ export class UserServices {
         return this.http.put(url, user).pipe(
             tap((res: any) => {
                 if (res.user._id === this.authService.userOnline._id) {
-                    this.authService.saveUser( res.user, this.localStorageService.get('user','token'))
+                    this.authService.saveUser(res.user, LpLocalStorage.get('user','token'))
                     this.authService.userOnline = res.user;
                 }
                 this.userSrc.next({user:res.user,order:'put'})

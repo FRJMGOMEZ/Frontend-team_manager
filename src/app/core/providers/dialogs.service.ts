@@ -10,6 +10,8 @@ import { ActionRequired } from '../models/action-required';
 import { NotificationsFilterSmartDialogComponent } from '../../pages/home/pages/notifications-list/components/notifications-filter/notifications-filter-smart-dialog.component';
 import { ProjectsDialogComponent } from '../components/projects/projects-dialog/projects-dialog.component';
 import { merge } from 'rxjs';
+import { User } from '../models/user.model';
+import { UserInfoSmartDialogComponent } from '../../shared/components/user-info/user-info-smart-dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +28,7 @@ export class DialogsService {
     dialog.disableClose = true;
     dialog.autoFocus = true;
     dialog.width = '500px';
+    dialog.maxHeight = '900px';
     dialog.data = prevDialog ? {taskId,prevDialog} : {taskId}
     let dialogRef: MatDialogRef<any> = this.dialog.open(TaskDialogSmartComponent, dialog)
     let subs = dialogRef.afterClosed().subscribe((data)=>{
@@ -64,7 +67,7 @@ export class DialogsService {
     const dialog = new MatDialogConfig();
     dialog.disableClose = true;
     dialog.autoFocus = true;
-    dialog.maxHeight= '600px';
+    dialog.maxHeight= '900px';
     dialog.width = '500px';
     dialog.data = taskId ? prevDialog ? {taskId,prevDialog}: {taskId} : null;
     let dialogRef = this.dialog.open(TaskDialogEditionAndCreationSmartComponent, dialog);
@@ -148,6 +151,14 @@ export class DialogsService {
     dialog.maxWidth = '1000px';
     dialog.data = {projects};
     let dialogRef: MatDialogRef<any> = this.dialog.open(ProjectsDialogComponent, dialog);
-    return merge(dialogRef.componentInstance.putProject, dialogRef.componentInstance.deleteProject)
+    return merge(dialogRef.componentInstance.putProject, dialogRef.componentInstance.deleteProject, dialogRef.componentInstance.selectProject);
+  }
+
+  openUserInfo(user:User){
+    const dialog = new MatDialogConfig();
+    dialog.disableClose = true;
+    dialog.autoFocus = true;
+    dialog.data = {user};
+    let dialogRef: MatDialogRef<any> = this.dialog.open(UserInfoSmartDialogComponent, dialog);
   }
 }

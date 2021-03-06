@@ -1,43 +1,45 @@
 
 
 
-<div [class]="mdService.desktop ? 'div-info-container-desktop' : 'div-info-container'" fxLayout="column" *ngIf="taskSelected" >
+<div class="div-info-container" fxLayout="column" *ngIf="taskSelected" >
        <mat-card fxLayout="row" [fxFlex]=" mdService ? 8 : 10">
-           <div fxLayout.gt-md="row" fxFlex="50" >
-               <h4 fxFlex.gt-md="50" fxLayout.gt-md="column" fxLayoutAlign="center">
+           <div fxLayout="row" fxFlex="50" >
+               <h4 fxFlex.gt-sm="50" fxLayout.gt-sm="column" fxLayoutAlign="center">
                    Name:
                </h4>
-               <p fxFlex.gt-md="50"  fxLayout.gt-md="column" fxLayoutAlign="center">
+               <p fxFlex.gt-sm="50"  fxLayout.gt-sm="column" fxLayoutAlign="center">
                {{taskSelected.name}}
                </p>
            </div>
-            <div fxLayout.gt-md="row" fxFlex="50">
-                <h4 fxFlex.gt-md="50"  fxLayout.gt-md="column" fxLayoutAlign="center">
+            <div fxLayout="row" fxFlex="50">
+                <h4 fxFlex.gt-sm="50"  fxLayout.gt-sm="column" fxLayoutAlign="center">
                  Description:
                 </h4>
-                 <mat-icon fxFlex.gt-md="50"  fxLayout.gt-md="column" fxLayoutAlign="center" color="primary" (click)="showDescription()">pageview</mat-icon>
+                 <div fxFlex.gt-sm="50"  fxLayout.gt-sm="column" fxLayoutAlign="center">
+                     <mat-icon  color="primary" (click)="showDescription()">pageview</mat-icon>
+                 </div>
             </div>
         </mat-card>
          <mat-card fxLayout="row" [fxFlex]=" mdService ? 8 : 10">
-           <div fxLayout.gt-md="row" fxFlex="50" >
-               <h4 fxFlex.gt-md="50" fxLayout.gt-md="column" fxLayoutAlign="center">
+           <div fxLayout="row" fxFlex="50" >
+               <h4 fxFlex.gt-sm="50" fxLayout.gt-sm="column" fxLayoutAlign="center">
                    Status:
                </h4>
-                <p fxFlex.gt-md="50" fxLayout.gt-md="column" fxLayoutAlign="center">
+                <p fxFlex.gt-sm="50" fxLayout.gt-sm="column" fxLayoutAlign="center">
                  {{taskSelected.status.toUpperCase()}}
                 </p>
            </div>
-           <div fxLayout.gt-md="row" fxFlex="50">
-                <h4 fxFlex.gt-md="50" fxLayout.gt-md="column" fxLayoutAlign="center">
+           <div fxLayout="row" fxFlex="50">
+                <h4 fxFlex.gt-sm="50" fxLayout.gt-sm="column" fxLayoutAlign="center">
                  Priority:
                 </h4>
-               <p fxFlex.gt-md="50" fxLayout.gt-md="column" fxLayoutAlign="center">
+               <p fxFlex.gt-sm="50" fxLayout.gt-sm="column" fxLayoutAlign="center">
                {{taskSelected.priority === 1 ? 'HIGH' : taskSelected.priority === 2 ? 'MEDIUM' : 'LOW'}}
                 </p>
            </div>
        </mat-card>
          <mat-card fxLayout="column" [fxFlex]="mdService.desktop ? (hasActsRequired ? 26: 36) : '42'"> 
-           <h4  fxLayout.gt-md="column" fxLayoutAlign="center">
+           <h4  fxLayout.gt-sm="column" fxLayoutAlign="center">
                Progress
            </h4>   
         <app-task-manager-progress   [taskSelected]="taskSelected"></app-task-manager-progress>
@@ -80,14 +82,14 @@
            </div>
        </mat-card>
        <mat-card fxLayout="row" [fxFlex]="mdService.desktop ? (hasActsRequired ? 15: 30) : 30">
-        <div fxLayout.gt-md="row" fxLayout.lt-lg="column" fxFlex="50">
-            <h4  fxLayout.gt-md="column" fxLayoutAlign.lt-lg="center">Participants</h4>
+        <div fxLayout.gt-sm="row" fxLayout.lt-md="column" fxFlex="50">
+            <h4  fxLayout.gt-sm="column" fxLayoutAlign.lt-md="center">Participants</h4>
              <ul>
                <li *ngFor="let participant of taskSelected.participants" role="listitem">{{participant.name}}</li>
             </ul>
         </div>
-        <div  fxLayout.gt-md="row" fxLayout.lt-lg="column" fxFlex="50">
-            <h4  fxLayout.gt-md="column" fxLayoutAlign.lt-lg>Reviewers</h4>
+        <div  fxLayout.gt-sm="row" fxLayout.lt-md="column" fxFlex="50">
+            <h4  fxLayout.gt-sm="column" fxLayoutAlign.lt-md>Reviewers</h4>
              <ul>
                <li *ngFor="let reviewer of taskSelected.reviewers" role="listitem">{{reviewer.name}}</li>
             </ul>
