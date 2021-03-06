@@ -1,7 +1,7 @@
 
 
-<mat-card class="card-tools">
-<mat-icon [matTooltip]="filesInfo" color="accent">info</mat-icon>
+<mat-card fxLayoutGap="20px" class="card-tools">
+<mat-icon [color]="showU ? 'accent' : 'primary'" (click)="showU = !showU; showUsers.emit(showU)">supervised_user_circle</mat-icon>
 <mat-icon color="primary" #filesUploaderTrigger > attach_file</mat-icon>
  <form action="">
      <lp-files-uploader

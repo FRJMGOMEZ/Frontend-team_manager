@@ -1,16 +1,16 @@
 
 
 <div class="div-notifications-container" fxLayout="column">
-  <button fxLayout="column" fxLayoutAlign="center" mat-raised-button fxFlex.lt-lg="5" fxShow.lt-lg fxHide.gt-md (click)="openSearchDialog()">SEARCH</button>
-  <app-notifications-filter fxHide.lt-lg fxShow.gt-md (getNotifications)="notificationsFrom = 0;searchNotifications($event)" [queryString]="queryString"   ></app-notifications-filter>
-   <div fxFlex.lt-lg="7"  *ngIf="notifications && notifications.length > 0" class="div-notifications-labels">
-      <span fxFlex.gt-md="14" fxFlex.lt-lg="20">Project</span>
-      <span fxHide.lt-lg fxShow.gt-md fxFlex="14" >Type</span>
-      <span fxFlex.gt-md="14" fxFlex.lt-lg="20">User</span>
-      <span fxHide.lt-lg fxShow.gt-md fxFlex="14" >Method</span>
-      <span fxFlex.gt-md="20" fxFlex.lt-lg="30">Date</span>
+  <button fxLayout="column" fxLayoutAlign="center" mat-raised-button fxFlex.lt-md="5" fxShow.lt-md fxHide.gt-sm (click)="openSearchDialog()">SEARCH</button>
+  <app-notifications-filter fxHide.lt-md fxShow.gt-sm (getNotifications)="notificationsFrom = 0;searchNotifications($event)" [queryString]="queryString"   ></app-notifications-filter>
+   <div fxFlex.lt-md="7"  *ngIf="notifications && notifications.length > 0" class="div-notifications-labels">
+      <span fxFlex.gt-sm="14" fxFlex.lt-md="20">Project</span>
+      <span fxHide.lt-md fxShow.gt-sm fxFlex="14" >Type</span>
+      <span fxFlex.gt-sm="14" fxFlex.lt-md="20">User</span>
+      <span fxHide.lt-md fxShow.gt-sm fxFlex="14" >Method</span>
+      <span fxFlex.gt-sm="20" fxFlex.lt-md="30">Date</span>
     </div>
-  <div fxFlex.lt-lg="88"  #divNotifications  class="div-notifications-list" >
+  <div fxFlex.lt-md="88"  #divNotifications  class="div-notifications-list" >
     <div *ngFor="let notification of notifications" >
        <app-notification-card [color]="notificationSelected && (notificationSelected._id=== notification._id) ? '#7b87cc' : 'white' " (selectNotification)="selectNotification($event)" [notification]="notification" [userOnline]="userOnline" (toggleNotification)="toggleNotification($event)" (showActionsRequired)="showActionsRequired($event)" ></app-notification-card>
     </div>

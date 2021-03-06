@@ -40,7 +40,7 @@ export class CalendarSchedulerMonthComponent {
    get cellSize(){
      if(this.dayRows){
        const days = this.dayRows.flat()
-       return this.mdService.desktop ? days.length > 35 ? '9.5vh' : '12vh' : days.length > 35 ? '8vh' : '10vh'
+       return this.mdService.desktop ? days.length > 35 ? '9.5vh' : '12vh' : days.length > 35 ? '7.2vh' : '9vh'
      }else{
        return '10vh'
      }

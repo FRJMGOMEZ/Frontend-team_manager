@@ -15,6 +15,8 @@ import { ForgotComponent } from './recovering/forgot/forgot.component';
 import { ResetSmartComponent } from './recovering/reset/reset-smart.component';
 import { PipesModule } from '../shared/pipes/pipes.module';
 import { MaterialModule } from '../shared/material/material.module';
+import { LpInputTrimmerModule } from '../../../projects/lp-input-trimmer/src/lib/lp-input-trimmer.module';
+import { LpValidationDirectivesModule } from '../../../projects/lp-validation-directives/src/lib/lp-validation-directives.module';
 
 let authRoutes:Routes=[
   {
@@ -50,7 +52,8 @@ let authRoutes:Routes=[
     ReactiveFormsModule,
     FlexLayoutModule,
     PipesModule,
-    MaterialModule
-  ]
+    MaterialModule,
+    LpInputTrimmerModule,
+    LpValidationDirectivesModule]
 })
 export class AuthModule { }

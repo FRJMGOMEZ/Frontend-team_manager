@@ -1,5 +1,5 @@
-<div  *ngIf="mdService.desktop"  fxLayoutAlign.gt-md="space-around" fxLayout.lt-lg="column" fxLayout.gt-md="row"  [class]="mdService.desktop ?  'task-manager-container-desktop' : 'task-manager-container' " >
-     <div [ngStyle.lt-lg]="{'margin-top': '70px'}"  fxFlex.gt-md="22" fxFlex.lt-lg="30"  fxLayout="column" >
+<div  *ngIf="mdService.desktop"  fxLayoutAlign.gt-sm="space-around" fxLayout.lt-md="column" fxLayout.gt-sm="row"  class="task-manager-container" >
+     <div [ngStyle.lt-md]="{'margin-top': '70px'}"  fxFlex.gt-sm="22" fxFlex.md="35" fxFlex.lt-md="30"  fxLayout="column" >
         <div fxLayoutAlign="center">
             <app-task-manager-filter fxFlex="100" [participants]="participants" [projectId]="selectedProject" (getItems)="getTasks($event,0).subscribe()"></app-task-manager-filter>
         </div>
@@ -10,7 +10,7 @@
 <!--     <div fxLayoutAlign="center" class="div-no-tasks" *ngIf="tasksList.length === 0">
         <h4>THERE ARE NO TASKS IN THE CURRENT PROJECT</h4>
     </div> -->
-    <div fxFlex.gt-md="75" fxFlex.lt-lg="70">
+    <div fxFlex.gt-sm="75" fxFlex.lt-md="70">
         <router-outlet *ngIf="taskSelected" ></router-outlet>
          <div fxLayoutAlign="center">
                  <h4 class="div-no-tasks"  *ngIf="!taskSelected">NO TASK SELECTED</h4>

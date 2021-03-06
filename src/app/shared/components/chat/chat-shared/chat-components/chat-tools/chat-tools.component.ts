@@ -14,6 +14,8 @@ export class ChatToolsComponent implements OnInit {
   @ViewChild('fileUploader') fileUploader : NgModel
   filesUploaderChanges:Subscription
   @Output() files = new EventEmitter<File[]>();
+  @Output() showUsers = new EventEmitter<boolean>();
+  showU:boolean;
   imgValidationConfig = {
     allowedMimeTypes: FILE_FORMATS.map((ff)=>{ return ff.mimeType}),
     maxSizeKb: 3000,

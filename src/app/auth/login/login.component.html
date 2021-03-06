@@ -1,6 +1,6 @@
 <div class="container-fluid">
-    <img fxHide.xs class="img-background" [src]="imgBackground" alt="">
-    <div [ngClass]="checkStyleByDevice()"  >
+    <img fxHide.lt-lg class="img-background" [src]="imgBackground" alt="">
+    <div class="login-container"  >
         <div class="login-box" fxLayout="column">
             <h1 fxLayoutAlign="center" [style.font-weight]="'bolder'">
                 BEE TEAM
@@ -11,22 +11,22 @@
                     <div  fxLayoutAlign="center">
                          <mat-form-field  >
                               <mat-label for="email">EMAIL</mat-label>
-                             <input matInput #emailControl="ngModel" [(ngModel)]="email" id="email" name='email' type="email"  placeholder="E-mail"   autofocus="" email required>
-                         </mat-form-field>
+                             <input  #emailControl="ngModel" [(ngModel)]="email" id="email" name='email' type="email"  placeholder="E-mail" autofocus="" required lpEmailValidator matInput>
+                        </mat-form-field>
                     </div>
-                    <ng-container  *ngIf="!emailControl.valid && emailControl.touched">
-                                        <p   *ngIf="emailControl.errors.email && !emailControl.errors.required" class="error-message">El valor de este campo debe ser un email válido</p>
+                    <ng-container *ngIf="!emailControl.valid && emailControl.touched">
+                               <mat-error fxLayoutAlign="center" *ngIf="emailControl.errors.email && !emailControl.errors.required">El valor de este campo debe ser un email válido</mat-error>
                     </ng-container>
                     <div [style.margin-top]="'2.5em'" fxLayoutAlign="center"> 
                           <mat-form-field>
                             <mat-label for="password">PASSWORD</mat-label>
-                             <input [type]="hidePass ? 'password' : 'text'" appPassword  matInput [(ngModel)]="password"  #passControl="ngModel" [regExps]="regExpValidations"  id="password" name="password"   placeholder="Password" required>
+                             <input [type]="hidePass ? 'password' : 'text'"  [(ngModel)]="password" #passControl="ngModel" [regExps]="passwordRegExpValidations"  id="password" name="password"   placeholder="Password" required appPassword lpInputTrimmer matInput>
                              <mat-icon [style.cursor]="'pointer'" matSuffix (click)="togglePassVisibility()">{{hidePass ? 'visibility' : 'visibility_off'}}</mat-icon>
-                            </mat-form-field>
+                         </mat-form-field>
                     </div>
                      <ng-container *ngIf="!passControl.valid && passControl.touched">
-                                        <p *ngIf="passControl.errors.hasNumeric && !passControl.errors.required " class="error-message">La contraseña debe de tener al menos un número</p>
-                                        <p *ngIf="passControl.errors.minLength && !passControl.errors.required && !passControl.errors.hasNumeric" class="error-message">La contraseña debe ser al menos de 8 caracteres</p>
+                                <mat-error fxLayoutAlign="center" *ngIf="passControl.errors.hasNumeric && !passControl.errors.required ">La contraseña debe de tener al menos un número</mat-error>
+                                <mat-error fxLayoutAlign="center" *ngIf="passControl.errors.minLength && !passControl.errors.required && !passControl.errors.hasNumeric">La contraseña debe ser al menos de 8 caracteres</mat-error>
                     </ng-container>
                     <div [style.margin-top]="'2em'" fxLayoutAlign="center">
                               <mat-checkbox  class="remember-me" [(ngModel)]="rememberMe" value="false"  name="rememberMe" type="checkbox" >Remember me</mat-checkbox> 
@@ -35,9 +35,9 @@
                      <button mat-raised-button [disabled]="userForm.invalid" type='submit'><strong>LOGIN</strong></button>
                 </div>
             </form>
-            <div  [style.margin-top]="'1.5em'" fxLayout="row"  fxLayoutAlign="space-around">
-                <a (click)="navigateToRegistration()" >Registrarse</a>
-                <a (click)="recoverPassword()" routerLinkActive="router-link-active">¿Olvidaste tu contraseña?</a>
+            <div  [style.margin-top]="'1.5em'" fxLayout="row"  >
+                <a fxFlex="50" fxLayoutAlign="center" (click)="navigateToRegistration()" >Registrarse</a>
+                <a fxFlex="50" fxLayoutAlign="center" (click)="recoverPassword()" routerLinkActive="router-link-active">¿Olvidaste tu contraseña?</a>
             </div>
         </div>
     </div>

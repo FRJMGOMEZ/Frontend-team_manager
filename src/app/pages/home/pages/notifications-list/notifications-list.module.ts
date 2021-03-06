@@ -8,9 +8,10 @@ import { NotificationsListComponent } from './notifications-list.component';
 import { ActionsRequiredModule } from '../../../../shared/components/actions-required/actions-required.module';
 import { LpDateSelectorModule } from 'lp-date-selector';
 import { FormsModule } from '@angular/forms';
-import { LpPipesModule } from '../../../../library/lp-pipes/lp-pipes.module';
 import { NotificationsFilterComponent } from './components/notifications-filter/notifications-filter.component';
 import { NotificationsFilterSmartDialogComponent } from './components/notifications-filter/notifications-filter-smart-dialog.component';
+import { LpInputTrimmerModule } from 'lp-input-trimmer';
+import { LpDatePipesModule } from 'lp-date-pipes';
 
 @NgModule({
   declarations: [NotificationsListComponent,
@@ -25,7 +26,8 @@ import { NotificationsFilterSmartDialogComponent } from './components/notificati
     ActionsRequiredModule,
     LpDateSelectorModule,
     FormsModule,
-    LpPipesModule
+    LpDatePipesModule,
+    LpInputTrimmerModule
   ]
 })
 export class NotificationsListModule { }

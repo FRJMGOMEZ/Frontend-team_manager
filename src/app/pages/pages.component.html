@@ -18,8 +18,8 @@
                   </mat-icon>
                </mat-list-item>
                <mat-list-item fxLayoutAlign="center">
-                   <a >
-                     <mat-icon color="accent">settings</mat-icon>
+                   <a (click)="dialogService.openUserInfo(authService.userOnline)" >
+                     <mat-icon color="accent">account_circle</mat-icon>
                   </a>
                </mat-list-item>
                <mat-list-item fxLayoutAlign="center">
@@ -32,40 +32,40 @@
   <mat-sidenav-content >
      <mat-toolbar >
     <mat-toolbar-row>
-   <div fxFlex.lt-lg="20" fxHide.gt-md fxShow.lt-gt>
+   <div fxFlex.lt-md="20" fxHide.gt-sm fxShow.lt-gt>
       <a >
          <mat-icon   color="accent" (click)="start.toggle()" matBadge matBadgeOverlap="false" appNotifications >menu</mat-icon>
       </a>
    </div>
-   <a fxShow.gt-md fxHide >
+   <a fxShow.gt-sm fxHide >
       <mat-icon   #homeIcon [color]="path === 'home' ? 'primary' : 'accent'" (click)="navigate('home')" routerLinkActive="router-link-active" matBadge matBadgeOverlap="false" appNotifications 
       class="icon-pages"  color="accent"  matTooltip="navigate to home">home</mat-icon>
    </a>
-   <a fxShow.gt-md fxHide>
+   <a fxShow.gt-sm fxHide>
       <mat-icon [color]="path === 'calendar' ? 'primary' : 'accent'" (click)="navigate('calendar')" routerLinkActive="router-link-active"
          matTooltip="navigate to calendar" class="icon-pages" color="accent">calendar_today</mat-icon>
    </a>
-   <a fxShow.gt-md fxHide >
+   <a fxShow.gt-sm fxHide >
       <mat-icon [color]="path === 'task-manager' ? 'primary' : 'accent'" (click)="navigate('task-manager')" routerLinkActive="router-link-active"
          matTooltip="navigate to task manager" class="icon-pages" color="accent">assignment</mat-icon>
    </a>
    <span *ngIf="mdService.desktop" class="spacer"></span>
-   <app-projects-smart fxFlex.lt-lg="55" id="project-selector"> </app-projects-smart>
-   <div [style.margin-left]="'10px'" fxFlex.lt-lg="22" fxLayoutAlign.gt-md="center" fxFlex.gt-md="20" *ngIf="selectedProject"appIsAdm >
-       <button fxLayout="center" ngClass.gt-md="new-task-btn-desktop" ngClass.lt-lg="new-task-btn-mobile" id="new-task" (click)="postTask()" color="accent" [disabled]="!selectedProject" mat-raised-button fxLayoutAlign="center"><span>ADD TASK</span></button>
+   <app-projects-smart fxFlex.lt-md="55" id="project-selector"> </app-projects-smart>
+   <div [style.margin-left]="'10px'" fxFlex.lt-md="22" fxLayoutAlign.gt-sm="center" fxFlex.gt-sm="20" *ngIf="selectedProject"appIsAdm >
+       <button fxLayout="center" ngClass.gt-sm="new-task-btn-desktop" ngClass.lt-md="new-task-btn-mobile" id="new-task" (click)="postTask()" color="accent" [disabled]="!selectedProject" mat-raised-button fxLayoutAlign="center"><span>ADD TASK</span></button>
    </div>
-   <a fxShow.gt-md fxHide>
+   <a fxShow.gt-sm fxHide>
      <mat-icon [matMenuTriggerFor]="menu" color="primary">account_circle</mat-icon>
      <mat-menu #menu="matMenu">
-        <app-user-info></app-user-info>
+        <app-user-info [user]="authService.userOnline" ></app-user-info>
      </mat-menu>
    </a>
-   <a fxShow.gt-md fxHide>
+   <a fxShow.gt-sm fxHide>
       <mat-icon color="warn" (click)="logout()" >exit_to_app</mat-icon>
    </a>
   </mat-toolbar-row>
 </mat-toolbar>
-    <div [class]="mdService.desktop ? 'main-desktop' : 'main'">
+    <div class="main">
            <div *ngIf="selectedProject"  >
            <router-outlet id="main-content" #outlet="outlet"></router-outlet>
           </div>

@@ -7,10 +7,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { LpDialogsService } from 'lp-dialogs';
 import { Task } from '../models/task.model';
 import { ErrorHandlerService } from './error-handler.service';
-import { LocalStorageService } from '../../library/providers/local-storage.service';
 import { AuthService } from '../../auth/shared/providers/auth.service';
 import { API_URL } from '../../config/api-url';
 import { User } from '../models/user.model';
+import { LpLocalStorage } from 'lp-operations';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,6 @@ export class TaskService {
     private lpDialogsService: LpDialogsService,
     private wsService: WebSocketsService,
     private dialogRef: MatDialog,
-    private localStorageService:LocalStorageService,
     private authService:AuthService) { }
 
   postTask(task: Task) {
@@ -159,7 +158,7 @@ export class TaskService {
               }
             break;  
           }
-          let taskOnScreen = this.localStorageService.get('state-data', 'task-on-screen');
+      let taskOnScreen = LpLocalStorage.get('state-data', 'task-on-screen');
           if ((method === 'PUT' || method === 'DELETE') && taskOnScreen === task._id) {
             this.dialogRef.closeAll();
           }

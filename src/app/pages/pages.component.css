@@ -1,11 +1,13 @@
-.main-desktop {
+.main {
   height: 85vh; /* Same as the width of the sidebar */
   width: 100%;
 }
 
-.main{
-   height: 89vh; /* Same as the width of the sidebar */
-  width: 100%;
+@media (max-width: 1279px) {
+  .main{
+   height: 89vh;
+   width: 100%;
+   }
 }
 
 mat-sidenav-container{

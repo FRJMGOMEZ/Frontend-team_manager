@@ -1,16 +1,15 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { DeviceDetectorService } from 'ngx-device-detector';
 import { MatTabGroup } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { Task } from '../../core/models/task.model';
 import { User } from '../../core/models/user.model';
-import { LocalStorageService } from '../../library/providers/local-storage.service';
 import { ProjectService } from '../../core/providers/project.service';
 import { TaskService } from '../../core/providers/task.service';
 import { Project } from '../../core/models/project.model';
 import { MediaService } from '../../core/providers/media.service';
+import { LpLocalStorage } from 'lp-operations';
 
 @Component({
   selector: 'app-task-manager',
@@ -32,7 +31,6 @@ export class TaskManagerComponent implements OnInit, OnDestroy {
   @ViewChild(MatTabGroup) tabsGroup:MatTabGroup
   constructor(private projectService: ProjectService,
                 public taskService: TaskService,
-                private localStorageService:LocalStorageService,
                 private ar:ActivatedRoute,
                 private router:Router,
                 public mdService:MediaService) {}
@@ -64,7 +62,7 @@ export class TaskManagerComponent implements OnInit, OnDestroy {
       }
     });
     this.selectedProject = this.projectService.selectedProject._id;
-    this.taskSelected = this.localStorageService.get('state-data', 'task-selected');
+    this.taskSelected = LpLocalStorage.get('state-data', 'task-selected');
     if(this.selectedProject){
       this.getTasks(`?project=${this.selectedProject}`, 0).subscribe(() => {
         if (!this.taskSelected) {
@@ -103,11 +101,11 @@ export class TaskManagerComponent implements OnInit, OnDestroy {
   }
 
   setTaskInStorage(){
-    this.localStorageService.set('state-data', this.taskSelected, 'task-selected');
+    LpLocalStorage.set('state-data', this.taskSelected, 'task-selected');
   }
 
   removeTaskInStorage(){
-    this.localStorageService.remove('state-data', 'task-selected') 
+    LpLocalStorage.remove('state-data', 'task-selected') 
   }
 
   ngOnDestroy(){

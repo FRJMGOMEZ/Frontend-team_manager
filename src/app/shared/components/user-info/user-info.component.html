@@ -1,0 +1,22 @@
+<div *ngIf="user">
+ <!--  <div>
+    <img class="img-user" [src]="user.img | dbImg" alt="">
+  </div> -->
+  <div class="div-user-property" >
+    <h4>NAME</h4>
+    <p>{{user.name}}</p>
+  </div>
+   <div class="div-user-property">
+    <h4>EMAIL</h4>
+    <p>{{user.email}}</p>
+  </div>
+  <div class="div-user-property">
+    <h4>ROLE</h4>
+    <p>{{user.role}}</p>
+  </div>
+    <div class="div-user-property">
+    <h4>STATUS</h4>
+    <p>{{user.status ? 'active' : 'deactivated'}}</p>
+  </div>
+<!--   {{user|json}} -->
+</div>

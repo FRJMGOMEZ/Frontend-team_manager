@@ -9,7 +9,7 @@ h5{
     text-align: center;
 }
 
-.div-category-desktop{
+.div-category{
     margin-top:10px;
     height: 12vh;
     width:100%;
@@ -20,8 +20,10 @@ h5{
         font-size: 30px;
     }
 }
-.div-category{
+@media  (max-width: 1279px) {
+   .div-category{
    margin-top:10px
+   }
 }
 
 .property-changed{

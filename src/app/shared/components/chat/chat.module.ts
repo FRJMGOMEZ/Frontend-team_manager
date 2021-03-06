@@ -11,17 +11,26 @@ import { PipesModule } from '../../pipes/pipes.module';
 import { ChatInputComponent } from './chat-shared/chat-components/chat-input/chat-input.component';
 import { ChatFilesDialogComponent } from './chat-shared/chat-components/chat-files-dialog/chat-files-dialog.component';
 import { MaterialModule } from '../../material/material.module';
-import { LpFilesUploaderModule } from '../../../library/components/lp-files-uploader/lp-files-uploader.module';
+import { LpFilesUploaderModule } from 'lp-files-uploader';
+import { LpInputTrimmerModule } from 'lp-input-trimmer';
 
 @NgModule({
-  declarations: [ChatComponent, ChatMessagesComponent, ChatUsersComponent, ChatToolsComponent,ChatUserParserPipe, ChatInputComponent, ChatFilesDialogComponent],
+  declarations: [
+    ChatComponent,
+    ChatMessagesComponent,
+    ChatUsersComponent,
+    ChatToolsComponent,
+    ChatUserParserPipe,
+    ChatInputComponent,
+    ChatFilesDialogComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,
     FormsModule,
     LpFilesUploaderModule,
     MaterialModule,
-    PipesModule
+    PipesModule,
+    LpInputTrimmerModule
   ],
   exports: [ChatComponent, ChatUserParserPipe]
 })

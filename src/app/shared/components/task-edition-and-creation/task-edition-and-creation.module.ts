@@ -5,21 +5,21 @@ import { TaskEditionAndCreationComponent } from './task-edition-and-creation.com
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../../material/material.module';
-import { LpPipesModule } from '../../../library/lp-pipes/lp-pipes.module';
-import { LpDirectivesModule } from '../../../library/lp-directives/lp-directives.module';
 import { TaskEditionAndCreationSmartComponent } from './task-edition-and-creation-smart.component';
 import { LpDateSelectorModule } from 'lp-date-selector';
+import { LpInputTrimmerModule } from '../../../../../projects/lp-input-trimmer/src/lib/lp-input-trimmer.module';
+import { LpDatePipesModule } from 'lp-date-pipes';
 
 @NgModule({
   declarations: [TaskDialogEditionAndCreationSmartComponent, TaskEditionAndCreationComponent, TaskEditionAndCreationSmartComponent],
   imports: [
     CommonModule,
     MaterialModule,
-    LpPipesModule,
+    LpDatePipesModule,
     FormsModule,
     LpDateSelectorModule, 
-    LpDirectivesModule,
-    FlexLayoutModule],
+    FlexLayoutModule,
+    LpInputTrimmerModule],
   exports: [TaskDialogEditionAndCreationSmartComponent, TaskEditionAndCreationSmartComponent]
 })
 export class TaskEditionAndCreationModule { }

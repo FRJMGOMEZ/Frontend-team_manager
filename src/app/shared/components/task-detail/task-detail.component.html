@@ -20,8 +20,8 @@
                     <h3 [class]="propertyHasChanged('name') ? 'property-changed':''" fxLayoutAlign="center">{{taskSelected.name}}</h3>
                 </div>
                 <div  fxLayout.gt-xs="row" fxLayout.xs="column">
-                    <div fxLayoutAlign="center" fxFlex="33" fxLayout.gt-md="column" fxLayout.lt-lg="row">
-                        <div fxFlex.lt-lg="50" [class]="mdService.desktop ? 'div-category-desktop' : 'div-category'">
+                    <div fxLayoutAlign="center" fxFlex="33" fxLayout.gt-sm="column" fxLayout.lt-md="row">
+                        <div fxFlex.lt-md="50" class="div-category">
                             <h5>
                                 Participants:
                             </h5>
@@ -29,7 +29,7 @@
                                 <li [class]="propertyHasChanged('participants') ? 'property-changed':''" *ngFor="let participant of taskSelected.participants" role="listitem">{{participant.name}}</li>
                             </ul>
                         </div>
-                        <div fxFlex.lt-lg="50" [class]="mdService.desktop ? 'div-category-desktop' : 'div-category'">
+                        <div fxFlex.lt-md="50" class="div-category">
                             <h5>
                                 Reviewers:
                             </h5>
@@ -38,8 +38,8 @@
                             </ul>
                         </div>
                     </div>
-                    <div fxFlex="33" fxLayout.gt-md="column" fxLayout.lt-lg="row"  >
-                       <div fxFlex.lt-lg="50" [class]="mdService.desktop ? 'div-category-desktop' : 'div-category'" fxLayout="column" >
+                    <div fxFlex="33" fxLayout.gt-sm="column" fxLayout.lt-md="row"  >
+                       <div fxFlex.lt-md="50" class="div-category" fxLayout="column" >
                            <h5>
                                Start date:
                            </h5>
@@ -47,7 +47,7 @@
                                {{taskSelected.startDate | date : 'M/d/yy, h:mm a' }} 
                            </p>
                        </div>
-                        <div fxFlex.lt-lg="50" [class]="mdService.desktop ? 'div-category-desktop' : 'div-category'" fxLayout="column"  >
+                        <div fxFlex.lt-md="50" class="div-category" fxLayout="column"  >
                             <h5>
                                 End Date:
                             </h5> 
@@ -56,8 +56,8 @@
                             </p>
                         </div>
                     </div>
-                    <div fxFlex="33" fxLayout.gt-md="column" fxLayout.lt-lg="row" >
-                        <div fxFlex.lt-lg="50" [class]="mdService.desktop ? 'div-category-desktop' : 'div-category'" >
+                    <div fxFlex="33" fxLayout.gt-sm="column" fxLayout.lt-md="row" >
+                        <div fxFlex.lt-md="50" class="div-category" >
                             <h5>
                             Priority:
                             </h5> 
@@ -65,7 +65,7 @@
                                     {{taskSelected.priority === 1 ? 'HIGH' : taskSelected.priority === 2 ? 'MEDIUM' : 'LOW'}}
                             </p>
                         </div>
-                        <div fxFlex.lt-lg="50" [class]="mdService.desktop ? 'div-category-desktop' : 'div-category'">
+                        <div fxFlex.lt-md="50" class="div-category">
                             <h5>
                              Status: 
                             </h5>
@@ -76,11 +76,19 @@
                     </div>
                 </div>
                  <div fxLayoutAlign="center" >
-                    <div fxLayout="row">
+                    <div fxFlex="50" class="div-category" fxLayout="column">
                         <h5>
                          Description :
                         </h5>
-                         <mat-icon [style.font-size]="'30px'" [color]="propertyHasChanged('description') ? 'accent':''" (click)="showDescription()">pageview</mat-icon>
+                         <div fxLayoutAlign="center">
+                             <mat-icon  [style.font-size]="'30px'" [color]="propertyHasChanged('description') ? 'accent':''" (click)="showDescription()">pageview</mat-icon>
+                         </div>
+                    </div>
+                    <div fxFlex="50" class="div-category" *ngIf="taskSelected.extraTime" fxLayout="column">
+                        <h5>
+                          Extra time :
+                        </h5>
+                        <p>{{extraTime}}</p>
                     </div>
                 </div>
               </div>

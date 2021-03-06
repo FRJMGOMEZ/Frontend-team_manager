@@ -1,9 +1,9 @@
 
     <mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="name">
-            <mat-header-cell   mat-header-cell *matHeaderCellDef fxShow fxHide.lt-xs> Name </mat-header-cell>
-            <mat-cell  class="mat-cell-selector" (click)="selectProject(element)"   mat-cell *matCellDef="let element" fxShow fxHide.lt-xs>
-                <a [style.color]="'blue'"*ngIf="!mdService.desktop">{{element.name}}</a>
+            <mat-header-cell   mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+            <mat-cell [style.color]="'blue'" [style.cursor]="'pointer'" class="mat-cell-selector" (click)="selectProject(element)"   mat-cell *matCellDef="let element">
+                <a  *ngIf="!mdService.desktop">{{element.name}}</a>
                 <span *ngIf="mdService.desktop">{{element.name}}</span>
             </mat-cell>
         </ng-container>
@@ -23,7 +23,7 @@
         </ng-container>
         <ng-container matColumnDef="actions">
             <mat-header-cell mat-header-cell *matHeaderCellDef> </mat-header-cell>
-            <mat-cell fxLayoutAlign.lt-lg="flex-end" mat-cell *matCellDef="let element">
+            <mat-cell fxLayoutAlign.lt-md="flex-end" mat-cell *matCellDef="let element">
                 <a (click)="putProject.emit(element)">
                     <mat-icon class="icon_options">edit</mat-icon>
                 </a>

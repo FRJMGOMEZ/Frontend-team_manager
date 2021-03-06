@@ -1,8 +1,11 @@
-.div-home-desktop{
+.div-home{
   height: 87vh;
 }
-.div-home{
+
+@media  (max-width: 1279px) {
+ .div-home{
   height: 90vh;
+}
 }
 ::ng-deep .mat-tab-list {
   .mat-tab-label {
@@ -19,7 +22,7 @@ mat-icon{
 
 
 .div-info-icon{
-    top:19% !important;
+    top:8% !important;
 }
 
 .div-info-icon-desktop-without-task{

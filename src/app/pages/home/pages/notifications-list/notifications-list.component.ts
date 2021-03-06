@@ -3,7 +3,6 @@ import { NotificationModel } from '../../../../core/models/notification.model';
 import { NotificationService } from '../../../../core/providers/notification.service';
 import { Subscription, Observable, fromEvent } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LocalStorageService } from '../../../../library/providers/local-storage.service';
 import { HomeComponent } from '../../home.component';
 import { User } from '../../../../core/models/user.model';
 import { AuthService } from '../../../../auth/shared/providers/auth.service';
@@ -13,6 +12,7 @@ import { ActionsRequiredService } from '../../../../core/providers/actions-requi
 import { LpDialogsService } from 'lp-dialogs';
 import { empty } from 'rxjs/internal/observable/empty';
 import { MediaService } from '../../../../core/providers/media.service';
+import { LpLocalStorage } from 'lp-operations';
 
 @Component({
   selector: 'app-notifications-list',
@@ -31,13 +31,12 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
   notificationsFrom:number = 0;
   notificationsLimit:number = 11;
   notificationsCount: number = 0;
-  viewportHeight:number
+  viewportHeight:number;
   params: any;
   queryString:string;
   constructor(private notificationService:NotificationService,
              private ar:ActivatedRoute,
              private router:Router,
-             private localStorageService:LocalStorageService,
              private homeComponent:HomeComponent,
              private authService:AuthService,
              private cdr:ChangeDetectorRef,
@@ -59,7 +58,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     this.notificationSubs = this.notificationService.notification$.subscribe((notification:NotificationModel)=>{
       this.notifications = [notification,...this.notifications];
     })
-    this.queryString = this.localStorageService.get('state-data', 'notification-filters');
+    this.queryString = LpLocalStorage.get('state-data', 'notification-filters');
     this.getNotifications(this.queryString).subscribe((res:any) => {
       this.notificationsCount = res.count;
       this.notifications = [...res.notifications].sort((a, b) => { return b.date - a.date });
@@ -72,7 +71,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
   setNotificationSelected(){
     const urlNotification = this.params ? this.params.get('id') ? this.params.get('id') : undefined : undefined;
-    const storageNotification = this.localStorageService.get('state-data', 'notification-selected');
+    const storageNotification = LpLocalStorage.get('state-data', 'notification-selected');
     if (!this.homeComponent.notificationSelected) {
       if (urlNotification) {
         const notification = this.notifications.find((n) => { return n._id === urlNotification });
@@ -96,7 +95,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
   getNotifications(queryString:string){
       this.queryString = queryString;
-      this.localStorageService.set('state-data', this.queryString, 'notification-filters');
+    LpLocalStorage.set('state-data', this.queryString, 'notification-filters');
       let request: Observable<any>
       if (this.path === 'new') {
         request = this.notificationService.getNotificationsUnchecked(this.queryString, this.notificationsFrom, this.notificationsLimit );

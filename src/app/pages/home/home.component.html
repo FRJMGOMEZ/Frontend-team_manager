@@ -1,8 +1,8 @@
-<div [class]="mdService.desktop ? 'div-info-icon-desktop' : 'div-info-icon'" [ngClass]="{'div-info-icon-desktop-without-task': !notificationSelected}">
+<div class="div-info-icon" [ngClass]="{'div-info-icon-desktop-without-task': !notificationSelected}">
   <lp-bottom-sheet-info [componentToShow]="infoComponent" ></lp-bottom-sheet-info>
 </div>
-<div [class]="mdService.desktop ? 'div-home-desktop' : 'div-home'" fxLayout.gt-md="row" fxLayout.lt-lg="column">
-     <div fxLayout="column" fxFlex.gt-md="notificationSelected ? '70' : '100'" fxFlex.lt-lg="100" >
+<div class="div-home" fxLayout.gt-sm="row" fxLayout.lt-md="column">
+     <div fxLayout="column" [fxFlex.gt-md]="notificationSelected ? '70' : '100'" [fxFlex.md]="notificationSelected ? '60' : '100'" fxFlex.lt-md="100" >
         <nav mat-stretch-tabs mat-tab-nav-bar>
            <a mat-tab-link
              [active]="tabIndex === 0"
@@ -22,7 +22,7 @@
         </router-outlet>
       </div> 
     </div> 
-    <div [style.margin-top]="'5vh'" fxShow.gt-md fxHide.lt-lg *ngIf="notificationSelected" fxFlex.gt-md="28" fxFlex.lt-lg="30" >
+    <div [style.margin-top]="'5vh'" fxShow.gt-sm fxHide.lt-md *ngIf="notificationSelected" fxFlex.gt-md="28" fxFlex.md="40" fxFlex.lt-md="30" >
       <app-notification-change-detail [notification]="notificationSelected" (unselectNotification)="unselectNotification()"></app-notification-change-detail>
     </div>
 </div>

@@ -4,19 +4,17 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
 import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { LpDirectivesModule } from '../library/lp-directives/lp-directives.module';
 import { NoProjectsComponent } from '../shared/components/no-projects/no-projects.component';
 import { MaterialModule } from '../shared/material/material.module';
 import { ProjectsModule } from '../core/components/projects/projects.module';
 import { DirectivesModule } from '../shared/directives/directives.module';
 import { ProjectEditionAndCreationModule } from '../shared/components/project-edition-and-creation/project-edition-and-creation.module';
-import { UserInfoComponent } from '../core/components/user-info/user-info.component';
+import { UserInfoModule } from '../shared/components/user-info/user-info.module';
 
 @NgModule({
   declarations: [
     PagesComponent,
-    NoProjectsComponent,
-    UserInfoComponent
+    NoProjectsComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +25,7 @@ import { UserInfoComponent } from '../core/components/user-info/user-info.compon
     ProjectsModule,
     ProjectEditionAndCreationModule,
     DirectivesModule,
-    LpDirectivesModule
+    UserInfoModule
   ]
 })
 export class PagesModule { }

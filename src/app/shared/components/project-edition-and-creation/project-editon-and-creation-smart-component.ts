@@ -6,8 +6,8 @@ import { UserServices } from '../../../core/providers/user.service';
 import { Project } from '../../../core/models/project.model';
 import { ProjectService } from '../../../core/providers/project.service';
 import { AuthService } from '../../../auth/shared/providers/auth.service';
-import { LocalStorageService } from '../../../library/providers/local-storage.service';
 import { LpObject } from 'lp-operations';
+import { LpLocalStorage } from 'lp-operations';
 
 @Component({
     selector: 'app-project-edition-and-creation-smart',
@@ -23,14 +23,13 @@ export class ProjectEditionAndCreationSmartComponent implements OnInit {
     constructor(private userService: UserServices,
                   private projectService: ProjectService,
                   private authService: AuthService,
-                  private localStorageService:LocalStorageService,
-        private dialogRef: MatDialogRef<ProjectEditionAndCreationSmartComponent>,
+                  private dialogRef: MatDialogRef<ProjectEditionAndCreationSmartComponent>,
                   @Inject(MAT_DIALOG_DATA) private data) { }
 
     ngOnInit() {
         if(this.data?.project){
              this.project = LpObject.copyObject(this.data.project);
-             this.localStorageService.set('state-data',this.project._id,'project-on-screen');
+            LpLocalStorage.set('state-data',this.project._id,'project-on-screen');
         }
         this.userService.getUsers(0,999999).subscribe((users: User[]) => {
             this.participantsOptions = users;

@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, of, Observable, Subject } from 'rxjs';
-import { tap, map, switchMap, catchError } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { tap, map, catchError } from 'rxjs/operators';
 import { NotificationModel } from '../models/notification.model';
 import { AuthService } from '../../auth/shared/providers/auth.service';
 import { SnackbarNotificationsService } from './snackbar-notifications.service';
 import { API_URL } from '../../config/api-url';
 import { User } from '../models/user.model';
-import { LocalStorageService } from '../../library/providers/local-storage.service';
 import { WebSocketsService } from './web-sockets.service';
 import { LpDialogsService } from 'lp-dialogs';
 import { ErrorHandlerService } from './error-handler.service';
+import { LpLocalStorage } from 'lp-operations';
 
 @Injectable({
   providedIn: 'root'
@@ -21,12 +21,11 @@ export class NotificationService {
   private notificationsUncheckedSrc = new Subject<boolean>();
   public notificationsUnchecked$ = this.notificationsUncheckedSrc.asObservable();
   private notificationSrc = new Subject<NotificationModel>();
-  public notification$  = this.notificationSrc.asObservable()
+  public notification$  = this.notificationSrc.asObservable();
   constructor(
     private http: HttpClient,
     private authService: AuthService,
     private lpSnackbarNotificationService: SnackbarNotificationsService,
-    private localStorageService:LocalStorageService,
     private wsService:WebSocketsService,
     private lpDialogsService:LpDialogsService,
     private errorHandlerService:ErrorHandlerService) { }
@@ -40,8 +39,7 @@ export class NotificationService {
   getNotifications(queryString:string,skip:number,limit?:number){
     const headers = new HttpHeaders({ skip: skip.toString(), limit: limit ? limit.toString(): '9999999' });
     return this.http.get(`${API_URL}notifications${queryString}`,{headers}).pipe(
-      catchError((err) => { this.lpDialogsService.openInfoDialog(err.message, err.status, 'ERROR'); return this.errorHandlerService.handleError(err) })
-    )
+      catchError((err) => { this.lpDialogsService.openInfoDialog(err.message, err.status, 'ERROR'); return this.errorHandlerService.handleError(err) }));
   }
   getNotificationsUnchecked(queryString:string,skip:number,limit:number):Observable<any>{
     // FIXME:
@@ -51,11 +49,11 @@ export class NotificationService {
   }
   getNotificationById(id:string){
     return this.http.get(`${ API_URL }notification/${id}`).pipe(map((res:any)=>{ return res.notification }),
-    catchError((err) => { this.lpDialogsService.openInfoDialog(err.message, err.status, 'ERROR'); return this.errorHandlerService.handleError(err) }))
+    catchError((err) => { this.lpDialogsService.openInfoDialog(err.message, err.status, 'ERROR'); return this.errorHandlerService.handleError(err) }));
   }
 
   selectNotification(notification?:NotificationModel){
-    notification ? this.localStorageService.set('state-data', notification._id, 'notification-selected') : this.localStorageService.remove('state-data','notification-selected')
+    notification ? LpLocalStorage.set('state-data', notification._id, 'notification-selected') : LpLocalStorage.remove('state-data','notification-selected');
     this.notificationSelectedSrc.next(notification ? notification : undefined);
   }
   addSnackNotification(notification: NotificationModel){
@@ -87,7 +85,6 @@ export class NotificationService {
   }
   listenningNotificationsEvents(){
     this.wsService.listen('notification').subscribe((notification:NotificationModel)=>{
-       console.log({notification});
       this.addSnackNotification(notification);
       (notification.usersTo as any).map((u)=>{ return u.user}).includes(this.authService.userOnline._id) ? this.notificationsUncheckedSrc.next(true) : null;
       this.notificationSrc.next(notification);

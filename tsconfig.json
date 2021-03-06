@@ -38,16 +38,40 @@
       "path": "./projects/lp-routes-breadcrumbs/tsconfig.spec.json"
     },
     {
-      "path": "./projects/lp-local-storage/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/lp-local-storage/tsconfig.spec.json"
-    },
-    {
       "path": "./projects/lp-thinking-time-progress/tsconfig.lib.json"
     },
     {
       "path": "./projects/lp-thinking-time-progress/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/lp-input-trimmer/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/lp-input-trimmer/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/lp-date-pipes/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/lp-date-pipes/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/lp-validation-directives/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/lp-validation-directives/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/lp-files-uploader/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/lp-files-uploader/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/lp-bottom-sheet-info/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/lp-bottom-sheet-info/tsconfig.spec.json"
     }
 ]
 

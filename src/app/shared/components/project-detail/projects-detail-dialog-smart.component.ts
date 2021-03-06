@@ -2,9 +2,8 @@ import { Component, OnInit, ChangeDetectorRef, Inject } from '@angular/core';
 import { Project } from '../../../core/models/project.model';
 import { AuthService } from '../../../auth/shared/providers/auth.service';
 import { ProjectService } from '../../../core/providers/project.service';
-import { LpObject } from 'lp-operations';
+import { LpObject, LpLocalStorage } from 'lp-operations';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { LocalStorageService } from '../../../library/providers/local-storage.service';
 
 @Component({
   selector: 'app-projects-detail-dialog-smart',
@@ -25,14 +24,13 @@ export class ProjectsDetailDialogSmartComponent implements OnInit {
     private projectService: ProjectService,
     private cdr: ChangeDetectorRef,
     private dialogRef: MatDialogRef<ProjectsDetailDialogSmartComponent>,
-    @Inject(MAT_DIALOG_DATA) private data,
-    private localStorageService: LocalStorageService,
+    @Inject(MAT_DIALOG_DATA) private data
 
   ) { }
 
   ngOnInit(): void {
     this.projectService.getProjectById(this.data.projectId).subscribe((project:Project)=>{
-      this.localStorageService.set('state-data', this.data.projectId, 'project-on-screen')
+      LpLocalStorage.set('state-data', this.data.projectId, 'project-on-screen')
       this.projectSelected = project;
     })
     this.date = this.data.date ? this.data.date : null;
@@ -56,7 +54,7 @@ export class ProjectsDetailDialogSmartComponent implements OnInit {
   }
   closeDialog(date?) {
     this.dialogRef.close(date ? { date } : undefined)
-    this.localStorageService.remove('state-data', 'task-on-screen')
+    LpLocalStorage.remove('state-data', 'task-on-screen')
   }
 
 }

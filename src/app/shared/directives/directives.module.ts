@@ -6,7 +6,7 @@ import { IsAdmDirective } from './is-adm.directive';
 import { NotificationsDirective } from './notifications.directive';
 
 @NgModule({
-  declarations: [	
+  declarations: [		
     ProjectAdmRoleDirective,
     IsUserOnlineDirective,
     IsAdmDirective,

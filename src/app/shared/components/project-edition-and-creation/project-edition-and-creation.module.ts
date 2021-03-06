@@ -6,6 +6,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../../material/material.module';
 import { ProjectEditionAndCreationComponent } from './project-editon-and-creation.component';
 import { ProjectEditionAndCreationSmartComponent } from './project-editon-and-creation-smart-component';
+import { LpInputTrimmerModule } from 'lp-input-trimmer';
 
 @NgModule({
   declarations: [ProjectEditionAndCreationComponent,ProjectEditionAndCreationSmartComponent],
@@ -13,7 +14,8 @@ import { ProjectEditionAndCreationSmartComponent } from './project-editon-and-cr
     CommonModule,
     MaterialModule,
     FormsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    LpInputTrimmerModule
   ],
   exports: [ProjectEditionAndCreationSmartComponent]
 })

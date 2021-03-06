@@ -4,8 +4,8 @@ import { NotificationsInfoComponent } from './components/notifications-info/noti
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '../../core/providers/notification.service';
 import { Subscription, timer } from 'rxjs';
-import { LocalStorageService } from '../../library/providers/local-storage.service';
 import { MediaService } from '../../core/providers/media.service';
+import { LpLocalStorage } from 'lp-operations';
 
 
 @Component({
@@ -18,13 +18,11 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   infoComponent = NotificationsInfoComponent;
   notificationSelected:NotificationModel;
   notificationSubs: Subscription;
-
   tabIndex:number;
   constructor(private ar:ActivatedRoute,
               private router:Router,
               private cdr:ChangeDetectorRef,
               private notificationService:NotificationService,
-              private localStorageService:LocalStorageService,
               public mdService:MediaService) { }
 
   ngOnInit(){
@@ -35,7 +33,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   }
   ngAfterViewInit(){
     this.childPath = this.router.url.split('/')[3];
-    this.localStorageService.set('state-data',this.childPath,'home-path');
+    LpLocalStorage.set('state-data',this.childPath,'home-path');
     this.tabIndex = this.childPath === 'new' ? 0 : 1;  
     this.cdr.detectChanges();
   }
@@ -46,7 +44,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
       url += this.notificationSelected ? `/${this.notificationSelected._id}` : '';
       this.router.navigate([url], { relativeTo: this.ar }).then(() => {
         this.childPath = index === 0 ? 'new' : 'record';
-        this.localStorageService.set('state-data', this.childPath, 'home-path');
+        LpLocalStorage.set('state-data', this.childPath, 'home-path');
       });
   }
   unselectNotification(){
@@ -59,7 +57,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     this.cdr.detectChanges();
     timer().subscribe(() => {
       this.tabIndex = this.childPath === 'new' ? 0 : 1;
-    })
+    });
   }
   ngOnDestroy(){
     this.notificationSubs ? this.notificationSubs.unsubscribe() : null;

@@ -1,25 +1,25 @@
 
 
 <mat-card *ngIf="notification" [style.background-color]="isChecked ? '#fcebcd' : 'white' "  fxLayout="row">
-    <div fxFlex.gt-md="14" fxFlex.lt-lg="20">
+    <div fxFlex.gt-sm="14" fxFlex.lt-md="20">
         {{notification.project ? notification.project['name'] : ''}}
     </div>
-    <div fxHide.lt-lg fxShow.gt-md fxFlex="14">
+    <div fxHide.lt-md fxShow.gt-sm fxFlex="14">
         {{notification.type}}
     </div>
-    <div fxFlex.gt-md="14" fxFlex.lt-lg="20">
+    <div fxFlex.gt-sm="14" fxFlex.lt-md="20">
         {{notification.userFrom['name']}}
     </div>
-    <div fxHide.lt-lg fxShow.gt-md fxFlex="14">
+    <div fxHide.lt-md fxShow.gt-sm fxFlex="14">
         {{method}}
     </div>
     <div fxFlex="30" >
         {{notification.date | date : 'M/d/yy HH:mm'}}
     </div>
-    <div fxLayoutAlign="space-around" fxFlex.gt-md="24" fxFlex.lt-lg="40">
+    <div fxLayoutAlign="space-around" fxFlex.gt-sm="24" fxFlex.lt-md="40">
         <div *ngIf="!isChecked && !hasActionsRequired " fxFlex="50"><button fxLayout="column" fxLayoutAlign="center" (click)="toggleNotification.emit(notification._id)" mat-raised-button><mat-icon>done</mat-icon></button></div>
         <div *ngIf="hasActionsRequired"fxFlex="50"><button (click)="showActionsRequired.emit(notification)" matTooltip="ACTIONS REQUIRED" fxLayout="column" fxLayoutAlign="center" mat-raised-button><mat-icon color="warn">assignment_late</mat-icon></button></div>
-        <div fxHide.lt-lg fxShow.gt-md fxFlex="50"><button  mat-raised-button [style.background-color]="color != 'white' ? color : !isChecked ? 'white' : color " fxLayout="column" fxLayoutAlign="center"(click)="selectNotification.emit(notification)"><mat-icon >launch</mat-icon></button></div>
-        <div fxShow.lt-lg fxHide.gt-md fxFlex="50"><button  mat-raised-button  [style.color]="'#7b87cc'" fxLayout="column" fxLayoutAlign="center" (click)="selectNotification.emit(notification)">	<mat-icon >info</mat-icon></button></div>
+        <div fxHide.lt-md fxShow.gt-sm fxFlex="50"><button  mat-raised-button [style.background-color]="color != 'white' ? color : !isChecked ? 'white' : color " fxLayout="column" fxLayoutAlign="center"(click)="selectNotification.emit(notification)"><mat-icon >launch</mat-icon></button></div>
+        <div fxShow.lt-md fxHide.gt-sm fxFlex="50"><button  mat-raised-button  [style.color]="'#7b87cc'" fxLayout="column" fxLayoutAlign="center" (click)="selectNotification.emit(notification)">	<mat-icon >info</mat-icon></button></div>
     </div>
 </mat-card>

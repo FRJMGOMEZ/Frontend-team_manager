@@ -1,8 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {Credentials} from '../shared/models/credentials';
 import { AuthDialogService } from '../shared/providers/auth-dialog.service';
-import { LocalStorageService } from 'src/app/library/providers/local-storage.service';
-import { DeviceDetectorService } from 'ngx-device-detector';
+import { LpLocalStorage } from 'lp-operations';
 
 @Component({
   selector: "app-login",
@@ -21,18 +20,18 @@ export class LoginComponent implements OnInit {
   email: string;
   password:string;
   rememberMe: boolean
-  regExpValidations:{error:string,regExp:string}[]=[
+  passwordRegExpValidations:{error:string,regExp:string}[]=[
     { error: 'hasNumeric', regExp:'(?=.*[0-9])'},
     { error: 'minLength', regExp:'(?=.{8,})'}
   ]
 
-  constructor(private localStorageService: LocalStorageService, private dialogService: AuthDialogService, private deviceDetectorService: DeviceDetectorService){}
+  constructor(private dialogService: AuthDialogService){}
 
   ngOnInit() {
     this.checkRememberMe();
   }
  checkRememberMe(){
-    this.email = this.localStorageService.get('rememberMe') || "";
+   this.email = LpLocalStorage.get('rememberMe') || "";
     this.email ? this.rememberMe = true : this.rememberMe = false;
   }
  doLogin() {
@@ -51,14 +50,6 @@ export class LoginComponent implements OnInit {
 
   togglePassVisibility(){
     this.hidePass = !this.hidePass;
-  }
-
-  checkStyleByDevice(){
-    if(this.deviceDetectorService.isDesktop()){
-      return 'login-container-desktop'
-    }else{
-      return 'login-container-mobile'
-    }
   }
 }
 

@@ -4,12 +4,10 @@ import { take } from 'rxjs/operators';
 import { User } from '../../../core/models/user.model';
 import { Task } from '../../../core/models/task.model';
 import { AuthService } from '../../../auth/shared/providers/auth.service';
-import { LpParseDatePipe } from '../../../library/lp-pipes/lp-parse-date.pipe';
-import { LpParseHourPipe } from '../../../library/lp-pipes/lp-parse-hour.pipe';
 import { LpDate, LpObject } from 'lp-operations';
 import { TaskService } from '../../../core/providers/task.service';
 import { MediaService } from '../../../core/providers/media.service';
-
+import { LpParseDatePipe, LpParseHourPipe } from 'lp-date-pipes';
 @Component({
   selector: 'app-task-edition-and-creation',
   templateUrl: './task-edition-and-creation.component.html',

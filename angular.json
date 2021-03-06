@@ -322,46 +322,6 @@
         }
       }
     },
-    "lp-local-storage": {
-      "projectType": "library",
-      "root": "projects/lp-local-storage",
-      "sourceRoot": "projects/lp-local-storage/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
-          "options": {
-            "tsConfig": "projects/lp-local-storage/tsconfig.lib.json",
-            "project": "projects/lp-local-storage/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/lp-local-storage/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/lp-local-storage/src/test.ts",
-            "tsConfig": "projects/lp-local-storage/tsconfig.spec.json",
-            "karmaConfig": "projects/lp-local-storage/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/lp-local-storage/tsconfig.lib.json",
-              "projects/lp-local-storage/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
     "lp-thinking-time-progress": {
       "projectType": "library",
       "root": "projects/lp-thinking-time-progress",
@@ -394,6 +354,206 @@
             "tsConfig": [
               "projects/lp-thinking-time-progress/tsconfig.lib.json",
               "projects/lp-thinking-time-progress/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "lp-input-trimmer": {
+      "projectType": "library",
+      "root": "projects/lp-input-trimmer",
+      "sourceRoot": "projects/lp-input-trimmer/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/lp-input-trimmer/tsconfig.lib.json",
+            "project": "projects/lp-input-trimmer/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/lp-input-trimmer/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/lp-input-trimmer/src/test.ts",
+            "tsConfig": "projects/lp-input-trimmer/tsconfig.spec.json",
+            "karmaConfig": "projects/lp-input-trimmer/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/lp-input-trimmer/tsconfig.lib.json",
+              "projects/lp-input-trimmer/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "lp-date-pipes": {
+      "projectType": "library",
+      "root": "projects/lp-date-pipes",
+      "sourceRoot": "projects/lp-date-pipes/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/lp-date-pipes/tsconfig.lib.json",
+            "project": "projects/lp-date-pipes/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/lp-date-pipes/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/lp-date-pipes/src/test.ts",
+            "tsConfig": "projects/lp-date-pipes/tsconfig.spec.json",
+            "karmaConfig": "projects/lp-date-pipes/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/lp-date-pipes/tsconfig.lib.json",
+              "projects/lp-date-pipes/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "lp-validation-directives": {
+      "projectType": "library",
+      "root": "projects/lp-validation-directives",
+      "sourceRoot": "projects/lp-validation-directives/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/lp-validation-directives/tsconfig.lib.json",
+            "project": "projects/lp-validation-directives/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/lp-validation-directives/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/lp-validation-directives/src/test.ts",
+            "tsConfig": "projects/lp-validation-directives/tsconfig.spec.json",
+            "karmaConfig": "projects/lp-validation-directives/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/lp-validation-directives/tsconfig.lib.json",
+              "projects/lp-validation-directives/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "lp-files-uploader": {
+      "projectType": "library",
+      "root": "projects/lp-files-uploader",
+      "sourceRoot": "projects/lp-files-uploader/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/lp-files-uploader/tsconfig.lib.json",
+            "project": "projects/lp-files-uploader/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/lp-files-uploader/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/lp-files-uploader/src/test.ts",
+            "tsConfig": "projects/lp-files-uploader/tsconfig.spec.json",
+            "karmaConfig": "projects/lp-files-uploader/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/lp-files-uploader/tsconfig.lib.json",
+              "projects/lp-files-uploader/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "lp-bottom-sheet-info": {
+      "projectType": "library",
+      "root": "projects/lp-bottom-sheet-info",
+      "sourceRoot": "projects/lp-bottom-sheet-info/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/lp-bottom-sheet-info/tsconfig.lib.json",
+            "project": "projects/lp-bottom-sheet-info/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/lp-bottom-sheet-info/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/lp-bottom-sheet-info/src/test.ts",
+            "tsConfig": "projects/lp-bottom-sheet-info/tsconfig.spec.json",
+            "karmaConfig": "projects/lp-bottom-sheet-info/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/lp-bottom-sheet-info/tsconfig.lib.json",
+              "projects/lp-bottom-sheet-info/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

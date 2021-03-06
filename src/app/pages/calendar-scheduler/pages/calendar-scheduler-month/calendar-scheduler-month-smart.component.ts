@@ -7,8 +7,7 @@ import { Task } from 'src/app/core/models/task.model';
 import { ActivatedRoute } from '@angular/router';
 import { TaskService } from '../../../../core/providers/task.service';
 import { DialogsService } from '../../../../core/providers/dialogs.service';
-import { LpArray } from '../../../../../../projects/lp-operations/src/lp-array';
-import { LpObject } from 'lp-operations';
+import { LpObject, LpArray } from 'lp-operations';
 
 @Component({
     selector: 'app-calendar-scheduler-month-smart',

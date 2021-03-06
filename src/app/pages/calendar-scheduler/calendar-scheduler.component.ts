@@ -4,11 +4,10 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CalendarSchedulerMonthInfoComponent } from './components/calendar-scheduler-month-info/calendar-scheduler-month-info.component';
 import { CalendarSchedulerDayInfoComponent } from './components/calendar-scheduler-day-info/calendar-scheduler-day-info.component';
-import { LocalStorageService } from '../../library/providers/local-storage.service';
 import { ProjectService } from '../../core/providers/project.service';
 import { Project } from '../../core/models/project.model';
 import { MediaService } from '../../core/providers/media.service';
-
+import { LpLocalStorage } from 'lp-operations';
 
 @Component({
   selector: 'app-calendar-scheduler',
@@ -28,7 +27,6 @@ export class CalendarSchedulerComponent implements  OnInit, OnDestroy {
   urlHasQuerys:boolean = false;
   constructor(private projectService:ProjectService,
               private deviceDetectorService:DeviceDetectorService,
-              private localStorageService: LocalStorageService,
               private router:Router,
               private ar:ActivatedRoute,
               public mdService:MediaService){}
@@ -40,9 +38,9 @@ export class CalendarSchedulerComponent implements  OnInit, OnDestroy {
       this.selectedProject = project._id;
       this.navigateToChild()
     })
-    this.selectedDate = this.localStorageService.get('state-data', 'date-selected') ? new Date(this.localStorageService.get('state-data', 'date-selected')) : new Date();
+    this.selectedDate = LpLocalStorage.get('state-data', 'date-selected') ? new Date(LpLocalStorage.get('state-data', 'date-selected')) : new Date();
     this.selectionDate = this.selectedDate;
-    this.dateFormat = this.localStorageService.get('state-data', 'date-format') || 'month';
+    this.dateFormat = LpLocalStorage.get('state-data', 'date-format') || 'month';
     /* FIXME */
     this.selectedProject = this.projectService.selectedProject._id; ;
     this.navigateToChild();
@@ -53,12 +51,12 @@ export class CalendarSchedulerComponent implements  OnInit, OnDestroy {
   }
   setFormat(format: string) {
     this.dateFormat = format;
-    this.localStorageService.set('state-data', this.dateFormat, 'date-format');
+    LpLocalStorage.set('state-data', this.dateFormat, 'date-format');
     this.navigateToChild();
   }
   searchByDate(date?:Date){
     this.selectedDate = date ? date : this.selectionDate;
-    this.localStorageService.set('state-data', this.selectedDate, 'date-selected');
+    LpLocalStorage.set('state-data', this.selectedDate, 'date-selected');
     this.navigateToChild();
   }
 

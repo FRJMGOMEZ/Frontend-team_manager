@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CalendarSchedulerComponent } from '../../calendar-scheduler.component';
 import { TaskService } from '../../../../core/providers/task.service';
 import { DialogsService } from '../../../../core/providers/dialogs.service';
-import { LpObject } from '../../../../../../projects/lp-operations/src/lp-object';
+import { LpObject } from 'lp-operations';
 
 @Component({
     selector: 'app-calendar-scheduler-day-smart',

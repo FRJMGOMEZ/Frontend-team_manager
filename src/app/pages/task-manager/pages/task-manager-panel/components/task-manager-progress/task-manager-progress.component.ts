@@ -4,7 +4,6 @@ import { Task } from '../../../../../../core/models/task.model';
 import { LpDate } from 'lp-operations';
 import { tap } from 'rxjs/operators';
 
-
 @Component({
   selector: 'app-task-manager-progress',
   templateUrl: './task-manager-progress.component.html',
@@ -31,7 +30,7 @@ export class TaskManagerProgressComponent implements OnChanges {
     return this.taskSelected ? new Date().getTime() >= this.taskSelected.startDate ? 
     Math.round(((new Date().getTime() - this.taskSelected.startDate) * 100) / (this.taskSelected.endDate - this.taskSelected.startDate)) < 100 ? Math.ceil(((new Date().getTime() - this.taskSelected.startDate) * 100) / (this.taskSelected.endDate - this.taskSelected.startDate)) : 100: 0 : 0;
   }
-  calculateExtraTime():Observable<any>{
+  calculateExtraTime():Observable<number>{
      const calculate = ()=>{
       if(this.taskSelected.status === 'on review'){
         this.extraTimeMilisec = this.taskSelected.extraTime ? this.taskSelected.extraTime + (new Date().getTime() - this.taskSelected.deliverDate) : (new Date().getTime() - this.taskSelected.deliverDate);

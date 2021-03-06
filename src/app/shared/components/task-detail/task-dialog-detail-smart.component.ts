@@ -2,9 +2,8 @@ import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Task } from '../../../core/models/task.model';
 import { TaskService } from '../../../core/providers/task.service';
-import { LocalStorageService } from '../../../library/providers/local-storage.service';
 import { AuthService } from '../../../auth/shared/providers/auth.service';
-import { LpObject } from 'lp-operations';
+import { LpObject, LpLocalStorage } from 'lp-operations';
 
 @Component({
     selector: 'app-task-dialog-smart',
@@ -20,7 +19,7 @@ import { LpObject } from 'lp-operations';
         `
         mat-dialog-content{
             margin-bottom:0px !important;
-            height:450px!important;
+            max-height:100vh!important;
         }
         `
     ]
@@ -35,13 +34,12 @@ export class TaskDialogSmartComponent implements OnInit {
         private dialogRef: MatDialogRef<TaskDialogSmartComponent>,
         @Inject(MAT_DIALOG_DATA) private data,
         private taskService: TaskService,
-        private localStorageService: LocalStorageService,
         private cdr: ChangeDetectorRef,
         private authService: AuthService) { }
 
     ngOnInit(): void {
         this.taskService.getTaskById(this.data.taskId).subscribe((task: Task) => {
-            this.localStorageService.set('state-data', this.data.taskId, 'task-on-screen')
+            LpLocalStorage.set('state-data', this.data.taskId, 'task-on-screen')
             this.taskSelected = task;
         })
         this.prevDialog = this.data.prevDialog;
@@ -66,7 +64,7 @@ export class TaskDialogSmartComponent implements OnInit {
     }
     closeDialog(date?) {
         this.dialogRef.close(date ? { date } : undefined)
-        this.localStorageService.remove('state-data', 'task-on-screen')
+        LpLocalStorage.remove('state-data', 'task-on-screen')
     }
 
 }
