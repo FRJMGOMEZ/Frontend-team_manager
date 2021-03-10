@@ -9,7 +9,7 @@ import { User } from '../../core/models/user.model';
   styleUrls: ["./registration.component.scss"]
 })
 export class RegistrationComponent {
-  imgBackground = 'assets/menu / icon / calendar.png'
+  imgBackground = 'assets/menu/icon/calendar.png'
 
   regExpValidations: { error: string, regExp: string }[] = [
     { error: 'hasNumeric', regExp: '(?=.*[0-9])' },
