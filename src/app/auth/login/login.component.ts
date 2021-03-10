@@ -10,7 +10,7 @@ import { LpLocalStorage } from 'lp-operations';
 })
 export class LoginComponent implements OnInit {
 
-  imgBackground = '../../../assets/images/team-manager.jpg'
+  imgBackground = 'src/assets/images/team-manager.jpg'
   @Output() login: EventEmitter<{ credentials: Credentials, rememberMe: boolean }> = new EventEmitter<{ credentials: Credentials, rememberMe: boolean }>();
 
   @Output() toRegistration:EventEmitter<void> = new EventEmitter<void>();
