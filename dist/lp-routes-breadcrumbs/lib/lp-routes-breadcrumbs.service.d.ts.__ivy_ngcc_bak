@@ -1,0 +1,17 @@
+import { Router } from '@angular/router';
+export declare class LpRoutesBreadcrumbsService {
+    private router;
+    private navigationStart;
+    private navigationEnd;
+    constructor(router: Router);
+    listenningNavigationStart(): void;
+    listenningNavigationEnd(): void;
+    getNavStart(): {
+        currentUrl: string;
+        previousUrl: string;
+    };
+    getNavEnd(): {
+        currentUrl: string;
+        previousUrl: string;
+    };
+}

@@ -1,0 +1,13 @@
+import { OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+export declare class LpInfoDialogComponent implements OnInit {
+    private dialogRef;
+    private data;
+    message: string;
+    item: string;
+    title: string;
+    constructor(dialogRef: MatDialogRef<LpInfoDialogComponent>, data: any);
+    ngOnInit(): void;
+    hideModal(): void;
+    reportError(): void;
+}

@@ -1,0 +1,1 @@
+{"version":3,"file":"lp-thinking-time-progress.module.d.ts","sources":["lp-thinking-time-progress.module.d.ts"],"names":[],"mappings":";;;;;AAAA;;;AACA","sourcesContent":["export declare class LpThinkingTimeProgressModule {\r\n}\r\n"]}

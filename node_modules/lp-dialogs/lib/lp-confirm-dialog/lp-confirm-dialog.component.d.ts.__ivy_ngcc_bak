@@ -1,0 +1,11 @@
+import { OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+export declare class LpConfirmDialogComponent implements OnInit {
+    private dialogRef;
+    private data;
+    message: string;
+    title: string;
+    constructor(dialogRef: MatDialogRef<LpConfirmDialogComponent>, data: any);
+    ngOnInit(): void;
+    hideModal(accepted: boolean): void;
+}

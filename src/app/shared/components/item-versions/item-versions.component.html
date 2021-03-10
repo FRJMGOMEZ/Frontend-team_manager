@@ -1,6 +1,0 @@
-
-<div fxLayout="row" class="div-radio-group">
-  <mat-radio-group fxLayout="row" (change)="selectVersion($event.value)" [(ngModel)]="itemV" aria-label="Select an option">
-        <mat-radio-button [value]="i" *ngFor="let version of itemVersions; let i = index"  >v{{ i + 1}}</mat-radio-button>
-  </mat-radio-group>
- </div>

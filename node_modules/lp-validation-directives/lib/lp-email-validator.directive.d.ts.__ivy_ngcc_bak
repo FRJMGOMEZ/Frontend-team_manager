@@ -1,0 +1,7 @@
+import { Validator, AbstractControl } from '@angular/forms';
+export declare class LpEmailValidatorDirective implements Validator {
+    constructor();
+    validate(c: AbstractControl): {
+        [key: string]: any;
+    };
+}

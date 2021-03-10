@@ -1,0 +1,22 @@
+{
+  "name": "lp-date-selector",
+  "version": "10.0.3",
+  "peerDependencies": {
+    "@angular/common": "^10.0.4",
+    "@angular/core": "^10.0.4"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0",
+    "lp-operations": "10.0.1"
+  },
+  "main": "bundles/lp-date-selector.umd.js",
+  "module": "fesm2015/lp-date-selector.js",
+  "es2015": "fesm2015/lp-date-selector.js",
+  "esm2015": "esm2015/lp-date-selector.js",
+  "fesm2015": "fesm2015/lp-date-selector.js",
+  "typings": "lp-date-selector.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "prepublishOnly": "node --eval \"console.error('ERROR: Trying to publish a package that has been compiled by Ivy. This is not allowed.\\nPlease delete and rebuild the package, without compiling with Ivy, before attempting to publish.\\n')\" && exit 1"
+  }
+}

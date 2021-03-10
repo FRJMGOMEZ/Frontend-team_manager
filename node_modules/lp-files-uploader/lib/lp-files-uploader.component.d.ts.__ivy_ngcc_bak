@@ -1,0 +1,21 @@
+import { ElementRef, AfterViewInit } from '@angular/core';
+import { ControlValueAccessor, NgModel, Validator } from '@angular/forms';
+export declare class LpFilesUploaderComponent implements ControlValueAccessor, AfterViewInit, Validator {
+    trigger: ElementRef;
+    fileInput: ElementRef;
+    fileInputController: NgModel;
+    config: {
+        [key: string]: any;
+    };
+    errors: {
+        [key: string]: any;
+    };
+    validate(): {
+        [key: string]: any;
+    };
+    ngAfterViewInit(): void;
+    private propagateChange;
+    writeValue(obj: any): void;
+    registerOnChange(fn: any): void;
+    registerOnTouched(): void;
+}

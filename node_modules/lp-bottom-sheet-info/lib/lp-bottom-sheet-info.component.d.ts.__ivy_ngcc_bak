@@ -1,0 +1,10 @@
+import { ComponentType } from '@angular/cdk/portal';
+import { OnInit } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+export declare class LpBottomSheetInfoComponent implements OnInit {
+    private _bottomSheet;
+    componentToShow: ComponentType<any>;
+    constructor(_bottomSheet: MatBottomSheet);
+    ngOnInit(): void;
+    openInfo(): void;
+}

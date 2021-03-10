@@ -1,0 +1,1 @@
+{"version":3,"file":"lp-parse-date.pipe.d.ts","sources":["lp-parse-date.pipe.d.ts"],"names":[],"mappings":"AAAA;;AACA;AACA;;;AACA","sourcesContent":["import { PipeTransform } from '@angular/core';\r\nexport declare class LpParseDatePipe implements PipeTransform {\r\n    transform(time: Date | number, to: string): unknown;\r\n}\r\n"]}

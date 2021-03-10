@@ -1,0 +1,15 @@
+import { OnInit, EventEmitter, SimpleChanges } from '@angular/core';
+import { Subscription } from 'rxjs';
+export declare class LpThinkingTimeProgressComponent implements OnInit {
+    progress: number;
+    show: boolean;
+    velocity: number;
+    diameter: number;
+    end: EventEmitter<boolean>;
+    timeSubscription: Subscription;
+    constructor();
+    ngOnInit(): void;
+    ngOnChanges(changes: SimpleChanges): void;
+    stopProgress(): void;
+    ngOnDestroy(): void;
+}
