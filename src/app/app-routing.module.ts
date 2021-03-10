@@ -4,6 +4,7 @@ import {Routes, RouterModule} from '@angular/router'
 import { CheckTokenGuard } from './auth/shared/guards/check-token.guard';
 
 
+
 const appRoutes: Routes = [
 
   { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
