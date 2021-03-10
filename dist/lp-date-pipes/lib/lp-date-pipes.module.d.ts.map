@@ -1,1 +1,0 @@
-{"version":3,"file":"lp-date-pipes.module.d.ts","sources":["lp-date-pipes.module.d.ts"],"names":[],"mappings":";;;AAAA;;;AACA","sourcesContent":["export declare class LpDatePipesModule {\r\n}\r\n"]}

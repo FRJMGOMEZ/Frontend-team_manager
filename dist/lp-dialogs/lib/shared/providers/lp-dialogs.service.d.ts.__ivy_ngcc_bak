@@ -1,8 +1,0 @@
-import { MatDialog } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
-export declare class LpDialogsService {
-    private dialog;
-    constructor(dialog: MatDialog);
-    openConfirmDialog(title?: string, message?: string): Observable<any>;
-    openInfoDialog(message: string, title: string, item?: string): Observable<any>;
-}

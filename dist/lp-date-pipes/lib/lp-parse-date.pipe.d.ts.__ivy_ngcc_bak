@@ -1,4 +1,0 @@
-import { PipeTransform } from '@angular/core';
-export declare class LpParseDatePipe implements PipeTransform {
-    transform(time: Date | number, to: string): unknown;
-}

@@ -1,4 +1,0 @@
-import { PipeTransform } from '@angular/core';
-export declare class LpParseHourPipe implements PipeTransform {
-    transform(hour: string, format: string): string;
-}

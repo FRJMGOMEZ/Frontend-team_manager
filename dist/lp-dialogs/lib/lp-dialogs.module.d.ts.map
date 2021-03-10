@@ -1,1 +1,0 @@
-{"version":3,"file":"lp-dialogs.module.d.ts","sources":["lp-dialogs.module.d.ts"],"names":[],"mappings":";;;;;AAAA;;;AACA","sourcesContent":["export declare class LpDialogsModule {\r\n}\r\n"]}
