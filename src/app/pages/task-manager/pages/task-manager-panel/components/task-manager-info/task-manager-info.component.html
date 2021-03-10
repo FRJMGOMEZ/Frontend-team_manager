@@ -53,7 +53,7 @@
                   <div fxLayoutAlign="center">
                       <mat-icon 
                       color="primary"
-                      [matTooltip]="taskSelected.status === 'on review' ? 'Task on review by the manager' :'' "
+                      [matTooltip]="taskSelected.status === 'on review' ? 'Task is being reviewed' :'' "
                       [ngClass]="{'icon-disabled': !taskService.taskTimeStarted(taskSelected)}"
                       (click)="toggleStat()">
                       {{ taskSelected.status === 'pending' ? 'move_to_inbox' : taskSelected.status === 'on review' ? 'hourglass_full' : 'assignment_turned_in'  }}
@@ -89,7 +89,7 @@
             </ul>
         </div>
         <div  fxLayout.gt-sm="row" fxLayout.lt-md="column" fxFlex="50">
-            <h4  fxLayout.gt-sm="column" fxLayoutAlign.lt-md>Reviewers</h4>
+            <h4  fxLayout.gt-sm="column" fxLayoutAlign.lt-md="center">Reviewers</h4>
              <ul>
                <li *ngFor="let reviewer of taskSelected.reviewers" role="listitem">{{reviewer.name}}</li>
             </ul>

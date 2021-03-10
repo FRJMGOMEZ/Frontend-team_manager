@@ -33,7 +33,7 @@ export class ProjectEditionAndCreationComponent implements OnChanges {
       if (this.project) {
         this.projectPristine = LpObject.copyObject(this.project);
       } else {
-        this.project = new Project('', [this.userOnline._id], [this.userOnline._id], [], [], true);
+        this.project = new Project('', this.userOnline._id, [this.userOnline._id], [this.userOnline._id], [], [], true);
         this.participantsSelected = [this.userOnline];
         this.admSelected = [this.userOnline];
         this.admOptions = [this.userOnline];
@@ -47,7 +47,7 @@ export class ProjectEditionAndCreationComponent implements OnChanges {
         this.admOptions = this.project.participants as User[];
         this.admSelected = this.project.administrators as User[];
       } else {
-        this.project = new Project('', [this.userOnline], [this.userOnline], [], [], true);
+        this.project = new Project('',this.userOnline._id,[this.userOnline], [this.userOnline], [], [], true);
         this.participantsSelected = [this.userOnline];
         this.admSelected = [this.userOnline];
         this.admOptions = [this.userOnline];

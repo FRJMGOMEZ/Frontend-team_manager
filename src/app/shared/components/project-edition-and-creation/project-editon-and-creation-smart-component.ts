@@ -14,6 +14,7 @@ import { LpLocalStorage } from 'lp-operations';
     template: `
        <app-project-edition-and-creation [participantsOptions]="participantsOptions" [userOnline]="userOnline" [project]="project" (hide)="hideModal()" (postProject)="postProject($event)" (putProject)="putProject($event)" > </app-project-edition-and-creation>
     `,
+    styleUrls:['./project-edition-and-creation.component.css']
 
 })
 export class ProjectEditionAndCreationSmartComponent implements OnInit {

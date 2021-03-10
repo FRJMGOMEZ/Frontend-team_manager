@@ -16,6 +16,7 @@ import { LpLocalStorage } from 'lp-operations';
     template: `
          <app-task-edition-and-creation [selectedProject]="selectedProject" [projectParticipants]="projectParticipants" (postTask)="postTask($event)" (putTask)="putTask($event)" [task]="taskSelected" (close)="closeDialog()" [prevDialog]="prevDialog" (dialogBack)="dialogBack()"> </app-task-edition-and-creation>
     `,
+    styleUrls:['./task-edition-and-creation.component.scss']
 })
 export class TaskDialogEditionAndCreationSmartComponent {
     projectParticipants: User[] = [];
@@ -44,7 +45,7 @@ export class TaskDialogEditionAndCreationSmartComponent {
             let taskSelected = LpObject.copyObject(taskDb);
             taskSelected.participants = (taskSelected.participants as User[]).map((eachParticipant: User) => { return eachParticipant._id });
             taskSelected.reviewers = (taskSelected.reviewers as User[]).map((eachParticipant: User) => { return eachParticipant._id });
-            taskSelected.user = (taskSelected.user as User)._id;
+            taskSelected.createdBy = (taskSelected.createdBy as User)._id;
             taskSelected.project = taskSelected.project as Project;
             this.taskSelected = taskSelected;
             LpLocalStorage.set('state-data', this.taskSelected._id, 'task');

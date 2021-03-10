@@ -16,15 +16,29 @@
   cursor: pointer;
 }
 
-.div-file-icon{
-  height: 125px;
-width: 100px;
+.div-files{
+  overflow-x: scroll;
+  overflow-y:hidden;
+  max-height: 500px;
+}
+
+.div-files::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
+.div-file{
+  width: 100px;
+  height: 150px;
+
 
 .div-file-title{
   max-height: 20px;
   font-size: 10px;
   word-break: break-all; 
 }
+}
+.p-message{
+   word-break: break-all;
 }
 
 

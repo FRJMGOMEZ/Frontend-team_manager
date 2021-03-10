@@ -1,10 +1,11 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ProjectService } from '../../providers/project.service';
 import { DialogsService } from '../../providers/dialogs.service';
 import { Project } from '../../models/project.model';
 import { LpArray, LpLocalStorage } from 'lp-operations';
 import { MediaService } from '../../providers/media.service';
+import { MatExpansionPanelHeader } from '@angular/material/expansion';
 
 
 @Component({
@@ -14,6 +15,7 @@ import { MediaService } from '../../providers/media.service';
 })
 export class ProjectsSmartComponent implements OnInit {
 
+    @ViewChild(MatExpansionPanelHeader) expHeader: MatExpansionPanelHeader;
     projects: Project[] = []
     projectSubs: Subscription;
     projectSelected: string;
@@ -54,7 +56,8 @@ export class ProjectsSmartComponent implements OnInit {
         })
     }
     selectProject(project: Project) {
-        this.projectService.selectProject(project)
+        this.projectService.selectProject(project);
+        this.expHeader ? this.expHeader._toggle() : null;
     }
     putProject(project: Project) {
         this.dialogsService.openEditProjectDialog(project);

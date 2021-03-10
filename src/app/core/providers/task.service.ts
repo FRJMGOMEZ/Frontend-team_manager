@@ -33,7 +33,7 @@ export class TaskService {
     return this.http.post(url, task).pipe(
       map((res: any) => { return res.task }),
       tap((task: Task) => { this.lpDialogsService.openInfoDialog('SUCESFULLY CREATED', 'CREATION', task.name); this.taskSrc.next({task,action:'POST'}) }),
-      catchError((err) => {  this.lpDialogsService.openInfoDialog(err.error.err.message, 'ERROR'); return this.errorHandlerService.handleError(err) }))
+      catchError((err) => {  this.lpDialogsService.openInfoDialog(err.error.err.message, 'ERROR'); return this.errorHandlerService.handleError(err) }));
   }
 
   putTask(changes: { [key: string]: any }, id: string) {
@@ -52,7 +52,7 @@ export class TaskService {
         }
       }),
       catchError((err) => { this.lpDialogsService.openInfoDialog(err.error.err.message, 'ERROR'); return this.errorHandlerService.handleError(err)})
-    )
+    );
   }
 
   toggleStatus(newStatus: string, taskId: string) {
@@ -60,19 +60,19 @@ export class TaskService {
       .pipe(
         map((res: any) => { return res.task }),
         tap((task: Task) => {
-          this.taskSrc.next({ task, action: 'PUT' })
+          this.taskSrc.next({ task, action: 'PUT' });
           this.lpDialogsService.openInfoDialog('SUCESFULLY UPDATED', 'EDITION', task.name);
         }),
         catchError((err) => {this.lpDialogsService.openInfoDialog(err.error.err.message, 'ERROR'); return this.errorHandlerService.handleError(err) })
-      )
+      );
   }
 
   
   getTasks(selector: string,querysString?:string,skip:number=0,limit:number=99999999) {
-    let url = `${API_URL}tasks/${selector}${querysString}`
-    let headers = new HttpHeaders({skip:skip.toString(),limit:limit.toString()})
+    let url = `${API_URL}tasks/${selector}${querysString}`;
+    let headers = new HttpHeaders({skip:skip.toString(),limit:limit.toString()});
     return this.http.get(url,{headers}).pipe(
-      catchError((err) => { return this.errorHandlerService.handleError(err) }))
+      catchError((err) => { return this.errorHandlerService.handleError(err) }));
   }
 
   deleteTask(taskId: string) {
@@ -86,27 +86,28 @@ export class TaskService {
       .pipe(
         switchMap((res: any) => {
           return res ? backRequest : empty()
-        }))
+        }));
   }
 
   getTaskById(id: string) {
+    console.log(`${API_URL}task-by-id/${id}`)
     let url = `${API_URL}task-by-id/${id}`;
     return this.http.get(url).pipe(
       map((res: any) => { return res.task }),
-      catchError((err) => { this.lpDialogsService.openInfoDialog(err.error.err.message, 'ERROR'); return this.errorHandlerService.handleError(err) })
-    )
+      catchError((err) => {console.log({err}); this.lpDialogsService.openInfoDialog(err.error.err.message, 'ERROR'); return this.errorHandlerService.handleError(err) })
+    );
   }
   getTaskFiles(taskId:string,skip:number,limit:number=30,title:string=""){
     return this.http.get(`${API_URL}task-files/${taskId}?skip=${skip}&limit=${limit}&title=${title}`).pipe(
       map((res:any)=>{ return res.files}),
-      catchError((err) => { this.lpDialogsService.openInfoDialog(err.error.err.message, 'ERROR'); return this.errorHandlerService.handleError(err) }))
+      catchError((err) => { this.lpDialogsService.openInfoDialog(err.error.err.message, 'ERROR'); return this.errorHandlerService.handleError(err) }));
   }
   userInTask(taskId:string){
     return new Promise((resolve,reject)=>{
       this.wsService.emit('user-in-task', { taskId: taskId }, (usersOnline: string[]) => {
         resolve(usersOnline);
       })
-    })
+    });
   }
   userOutTask(taskId:string){
       this.wsService.emit('user-out-task',{taskId});
@@ -149,12 +150,12 @@ export class TaskService {
               break;
             case 'DELETE':
               if ((participantsIds as string[]).includes(this.authService.userOnline._id)) {
-                this.taskSrc.next({ task, action: 'DELETE' })
+                this.taskSrc.next({ task, action: 'DELETE' });
               }
               break;
             case 'STATUS CHANGE':
               if ((participantsIds as string[]).includes(this.authService.userOnline._id)) {
-                this.taskSrc.next({ task, action: 'PUT' })
+                this.taskSrc.next({ task, action: 'PUT' });
               }
             break;  
           }
@@ -166,6 +167,6 @@ export class TaskService {
   }
 
   canBeEdited(task:Task){
-    return !(task.status === 'done' || task.status === 'on review')
+    return !(task.status === 'done' || task.status === 'on review');
   }
 }

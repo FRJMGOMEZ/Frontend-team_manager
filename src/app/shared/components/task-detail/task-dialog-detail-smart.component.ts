@@ -15,15 +15,9 @@ import { LpObject, LpLocalStorage } from 'lp-operations';
     <button (click)="closeDialog()" mat-raised-button> Close </button>
     </mat-dialog-actions>
     `,
-    styles:[
-        `
-        mat-dialog-content{
-            margin-bottom:0px !important;
-            max-height:100vh!important;
-        }
-        `
+    styleUrls:[
+        './task-detail.component.scss'
     ]
-    
 })
 export class TaskDialogSmartComponent implements OnInit {
 

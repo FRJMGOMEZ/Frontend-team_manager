@@ -1,5 +1,17 @@
 .div-users{
     margin:10px;
     overflow-y: scroll;
+    max-height: 55vh;
+}
+
+.div-users::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
+@media  (max-width: 1279px) {
+ .div-users{
     max-height:100%;
+    border-bottom: 1px solid lightgrey;
+}
+
 }

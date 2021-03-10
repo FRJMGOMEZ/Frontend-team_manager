@@ -21,8 +21,9 @@ export class TaskDetailComponent implements OnChanges  {
   @Output() back = new EventEmitter<any>();
   @Output() editTask:EventEmitter<string> = new EventEmitter<string>();
   @Output() restoreVersion: EventEmitter<{ taskChanges: { [key: string]: any }, id: string }> = new EventEmitter<{ taskChanges: { [key: string]: any }, id: string }>();
-  isLastVersion: boolean;
+  isCurrentVersion: boolean;
   currentVersion:number;
+  propertiesNoEditables = ['prevStates', 'deliverDate', 'extraTime', 'validationTime', 'actionsRequired', '__v','createdBy'];
 
   get extraTime(){
     const timesArray = LpDate.milisecsToString(this.taskSelected.extraTime);
@@ -43,8 +44,10 @@ export class TaskDetailComponent implements OnChanges  {
     });
   }
   checkChangesToPatch() {
-      let obj = LpObject.getObjectDifferences(this.taskSelected, this.prevTask);
-      return { taskChanges: obj, id: this.taskSelected._id };
+    const taskSelected = Object.keys(this.taskSelected).reduce((acum, key) => { !this.propertiesNoEditables.includes(key) ? acum[key] = this.taskSelected[key] : null; return acum }, {});
+    const taskPristine = Object.keys(this.taskPristine).reduce((acum, key) => { !this.propertiesNoEditables.includes(key) ? acum[key] = this.taskPristine[key] : null; return acum }, {});
+    let obj = LpObject.getObjectDifferences(taskPristine, taskSelected);
+    return { taskChanges: obj, id: this.taskSelected._id };
   }
   versionIsDifferent(){
     return !LpObject.areEquals(this.prevTask, this.taskSelected);
@@ -55,7 +58,9 @@ export class TaskDetailComponent implements OnChanges  {
 
   setVersion(task:Task){
   this.taskSelected = task;
-  this.isLastVersion = LpObject.areEquals(this.taskSelected, this.taskPristine);
+  const taskSelected = Object.keys(this.taskSelected).reduce((acum,key)=>{ !this.propertiesNoEditables.includes(key) ? acum[key]=this.taskSelected[key] : null; return acum },{});
+  const taskPristine = Object.keys(this.taskPristine).reduce((acum, key) => { !this.propertiesNoEditables.includes(key) ? acum[key] = this.taskPristine[key] : null; return acum }, {});
+  this.isCurrentVersion = LpObject.areEquals(taskSelected,taskPristine);
   }
 
   showDescription() {

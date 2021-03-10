@@ -10,3 +10,10 @@
 .div-actions-required::-webkit-scrollbar { 
     display: none;  /* Safari and Chrome */
 }
+
+@media (min-width: 0px) and (max-width: 1279px) {
+  ::ng-deep .cdk-overlay-pane{
+    position: absolute !important;
+    top: 5px !important;
+  }
+}

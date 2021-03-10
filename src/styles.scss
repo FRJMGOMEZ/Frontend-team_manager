@@ -314,16 +314,12 @@ a{
     right:5%;
     top:10%;
 }
+  .cdk-overlay-pane{
+    position: absolute !important;
+    top: 5px ;
+  }
 }
 
-/* @media (min-width: 0px) and (max-width: 599.9px){
-    .div-info-icon{
-    position: absolute;
-     z-index: 999999;
-    right:5%;
-    top:20%;
-}
-} */
 
 
 

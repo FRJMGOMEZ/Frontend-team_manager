@@ -1,7 +1,7 @@
 
 
 
-    <div  fxLayout="row"  fxShow.gt-xs fxHide.xs>
+    <div  fxLayout="row"  fxShow.gt-sm fxHide.lt-md>
         <div  fxFlex="5" fxLayout="column" >
             <mat-card  [ngClass]="{'mat-card-day-selected':isDaySelected(day)}" class="mat-card-day"  fxLayout="column"
                 *ngFor="let day of week; let i = index" (click)="selectDate(day)">
@@ -10,14 +10,14 @@
                 </div>
             </mat-card>
         </div>
-        <div [style.margin]="'10px'" fxLayout="column">
-            <div fxLayout="row">
+        <div fxFlex="95" [style.margin]="'10px'" fxLayout="column">
+            <div [style.width]="'95vw'" fxLayout="row">
                 <mat-card fxFlex='90' class="mat-card-hour" *ngFor="let hour of hours">
                         <div>{{hour.date | date : 'H'}}</div>
                 </mat-card>
                 <div fxFlex="10"></div>
             </div>
-            <div  fxLayout="row">
+            <div [style.width]="'95vw'" fxLayout="row">
                 <mat-card fxFlex="90"  #cardHour [style.height]="'66vh'" class="mat-card-hour" *ngFor="let hour of hours">
                     <div  fxLayout="column">
                         <div #taskDiv [class]="task.priority === 1 ? 'div-task-high-p' : task-priority === 2 ? 'div-task-medium-p' : 'div-task-low-p' " [ngClass]="{'': taskRender(taskDiv,task,hour,'regular')}" *ngFor="let task of tasks"></div>
@@ -32,7 +32,7 @@
         </div>
     </div>
 
-    <div fxHide.gt-xs fxShow.xs fxLayout="column">
+    <div fxHide.gt-sm fxShow.lt-md fxLayout="column">
         <div fxFlex="10"  fxLayout="row">
             <mat-card class="mat-card-week-day"  [ngClass]="{'card-selected-day':isDaySelected(day)}"  fxLayout="column"
                 *ngFor="let day of week; let i = index">
@@ -47,7 +47,7 @@
                     <mat-icon  (click)="checkTask.emit(task._id)">remove_red_eye</mat-icon>
                 </div>
             </div>
-            <div fxFlex="100" fxHide.gt-xs fxShow.xs fxLayout="row">
+            <div fxFlex="100" fxHide.gt-sm fxShow.lt-md fxLayout="row">
                 <div [style.height]="'52vh'" fxLayout="column">
                    <div class="div-date"  [style.height.%]="100/hours.length"  *ngFor="let hour of hours">
                       {{hour.date | date : 'H'}}

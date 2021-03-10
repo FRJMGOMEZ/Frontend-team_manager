@@ -7,7 +7,7 @@
                 fxLayoutAlign="space-around">
                 <div>
                     <mat-form-field>
-                        <input matInput lpInputTrimmer  minlength="5" required #nameControl="ngModel" [(ngModel)]="project.name" id="name" name="name" type="text" class="form-control"placeholder="Name">
+                        <input autocomplete="off" matInput lpInputTrimmer  minlength="5" required #nameControl="ngModel" [(ngModel)]="project.name" id="name" name="name" type="text" class="form-control"placeholder="Name">
                     </mat-form-field>
                     <p *ngIf="nameControl.errors?.minlength && !nameControl.errors?.required"class="error-message">Min 5 characters</p>
                 </div>

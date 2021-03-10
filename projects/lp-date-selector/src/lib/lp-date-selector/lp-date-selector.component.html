@@ -3,7 +3,7 @@
 <div class="div-date" fxLayoutAlign="center" *ngIf="dateFormat === 'day'">
     <mat-form-field fxFlex="100" appearance="fill">
         <mat-label>{{label}}</mat-label>
-        <input [min]="minDate" [max]="maxDate" (ngModelChange)="setDate($event)" [disabled]="disabled"  [ngModel]="selectedDate" name="date" #daySelection matInput [matDatepicker]="picker">
+        <input autocomplete="off" [min]="minDate" [max]="maxDate" (ngModelChange)="setDate($event)" [disabled]="disabled"  [ngModel]="selectedDate" name="date" #daySelection matInput [matDatepicker]="picker">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
@@ -11,7 +11,7 @@
 <div  class="div-date" *ngIf="dateFormat === 'month'" fxLayout.gt-xs="row" fxLayoutAlign="center" fxLayout.xs="column">
     <mat-form-field fxFlex="40" fxLayoutAlign="center" appearance="fill">
             <mat-label>Year</mat-label>
-            <input [disabled]="disabled" [min]="min ? min.getFullYear():null" [max]="max ? max.getFullYear():null" (keyup)="setDate(null,yearSelection.value, monthSelection.value)"  #yearSelection [value]="selectedDate ? selectedDate.getFullYear().toString() : null"  matInput
+            <input autocomplete="off" [disabled]="disabled" [min]="min ? min.getFullYear():null" [max]="max ? max.getFullYear():null" (keyup)="setDate(null,yearSelection.value, monthSelection.value)"  #yearSelection [value]="selectedDate ? selectedDate.getFullYear().toString() : null"  matInput
                 onkeypress="return event.charCode >= 48 && event.charCode <= 57" placeholder="Year">
     </mat-form-field>
     <mat-form-field fxFlex="40"  fxLayoutAlign="center" appearance="fill">
@@ -27,6 +27,7 @@
 <div  class="div-date" *ngIf="dateFormat === 'time'" fxLayout="column" fxLayoutAlign="center">
         <label *ngIf="label" for="endDate">{{label}}</label>
              <input 
+               autocomplete="off"
                 #timeSelection 
                 class="input-date"
                 [owlDateTime]="dt2"

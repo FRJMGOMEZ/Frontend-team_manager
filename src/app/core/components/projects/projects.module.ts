@@ -7,13 +7,14 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '../../../shared/material/material.module';
 import { ProjectsDialogComponent } from './projects-dialog/projects-dialog.component';
 
+
 @NgModule({
-  declarations: [ProjectsSmartComponent,ProjectsComponent, ProjectsDialogComponent],
+  declarations: [ProjectsSmartComponent, ProjectsComponent, ProjectsDialogComponent ],
   imports: [
     CommonModule,
     MaterialModule,
     FormsModule,
     FlexLayoutModule],
-  exports: [ProjectsSmartComponent, ProjectsDialogComponent]
+  exports: [ProjectsSmartComponent, ProjectsDialogComponent ]
 })
 export class ProjectsModule { }

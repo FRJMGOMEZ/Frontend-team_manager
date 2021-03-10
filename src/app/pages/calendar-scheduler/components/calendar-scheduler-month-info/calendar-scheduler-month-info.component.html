@@ -1,5 +1,5 @@
 
-<div [style.margin.px]="'20'" fxLayout="row">
+<div fxHide.lt-sm [style.margin.px]="'20'" fxLayout="row">
     <div fxFlex="50" fxLayout="column">
            <div fxLayout="row">
                <mat-icon  class="priority-low" > trip_origin</mat-icon>
@@ -29,4 +29,8 @@
                <p class="p-info">TASK TIME RUNNED OUT</p>
            </div>
     </div>
+</div>
+<div fxLayout="row">
+<mat-icon color="primary" >pageview</mat-icon> 
+<p>CLICK TO SHOW THE TASK LIST OF EACH DAY</p>
 </div>

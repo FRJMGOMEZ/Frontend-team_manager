@@ -4,6 +4,7 @@ import { LpObject } from 'lp-operations';
 import { AuthService } from '../../../auth/shared/providers/auth.service';
 import { ProjectService } from '../../../core/providers/project.service';
 import { DialogsService } from '../../../core/providers/dialogs.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-project-detail-smart',
@@ -27,7 +28,7 @@ export class ProjectDetailSmartComponent {
     let projectChanges = LpObject.copyObject(data.projectChanges);
     data.projectChanges.user = this.authService.userOnline._id;
     data.projectChanges.participants ? data.projectChanges.participants = data.projectChanges.participants.map((p: any) => { return p._id }) : null;
-    this.projectService.putProject(data.projectChanges,this.projectSelected._id).subscribe((projectUpdated:Project)=>{
+    this.projectService.putProject(data.projectChanges,this.projectSelected._id).pipe(map((res:any)=>{return res.project})).subscribe((projectUpdated:Project)=>{
       this.projectSelected = LpObject.mergeObjects(projectUpdated, projectChanges); 
       this.cdr.detectChanges();
     })

@@ -11,25 +11,25 @@ export class ErrorHandlerService {
   constructor(private plSnackbarNotificationsService:SnackbarNotificationsService) { }
   handleError(error: HttpErrorResponse) {
 
-     let errorMessage = error.error.message
+     let errorMessage = error.error.message;
 
     switch (error.status) {
-      case 400: this.plSnackbarNotificationsService.httpError(errorMessage, '')
+      case 400: this.plSnackbarNotificationsService.httpError(errorMessage, '');
         break;
       case 401:
-        this.plSnackbarNotificationsService.httpError(errorMessage, '')
+        this.plSnackbarNotificationsService.httpError(errorMessage, '');
         break;
-      case 403: this.plSnackbarNotificationsService.httpError(errorMessage, '')
+      case 403: this.plSnackbarNotificationsService.httpError(errorMessage, '');
         break;
       case 404:
-          this.plSnackbarNotificationsService.httpError(errorMessage,'')
+          this.plSnackbarNotificationsService.httpError(errorMessage,'');
         break;
-      case 504: this.plSnackbarNotificationsService.httpError(errorMessage, '')
+      case 504: this.plSnackbarNotificationsService.httpError(errorMessage, '');
         break;
-      case 400: this.plSnackbarNotificationsService.httpError(errorMessage,'')  
+      case 400: this.plSnackbarNotificationsService.httpError(errorMessage,''); 
        break;
     }
 
-    return throwError(error)
+    return throwError(error);
   }
 }

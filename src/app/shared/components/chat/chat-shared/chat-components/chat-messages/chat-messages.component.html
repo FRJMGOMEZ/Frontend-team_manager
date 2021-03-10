@@ -9,14 +9,14 @@
            <div [ngStyle]="{'color': message.user._id === userOnline._id  ? '#7b87cc' : '#d1870c'}" [fxLayoutAlign]="message.user._id === userOnline._id  ? 'flex-start' : 'flex-end'">
             <small>  {{message.date | date : 'M/d/yy, h:mm a'}} {{message.user.name}}</small>
            </div>
-           <div fxLayout="row">
-               <div class="div-file-icon" fxLayout="column" *ngFor="let file of message.files" >
+           <div *ngIf="message.files.length > 0" class="div-files" fxLayout="row">
+               <div class="div-file" fxLayout="column" *ngFor="let file of message.files" >
                    <img #fileImg (click)="downloadFile.emit({src:fileImg.src,file:file})" class="file-icon" [src]=" file | fileIcon | async" alt="">
                    <div class="div-file-title">
                        {{file.title}}
                    </div>
                </div>
            </div>
-            {{message.text}}
+            <p class="p-message" >{{message.text}}</p>
         </mat-card>
 </div>

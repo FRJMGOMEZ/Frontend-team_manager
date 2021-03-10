@@ -8,13 +8,14 @@
                    <small fxFlex="70" class="property-changed">*Property edited*</small>
                   <div *ngIf="taskSelected && prevTask"  class="div-labels" fxLayoutAlign="flex-end">
                       <mat-icon *ngIf="prevDialog" (click)="back.emit()">keyboard_backspace</mat-icon>
-                      <mat-icon *ngIf="!prevDialog && isLastVersion && taskPristine.status !== 'done'" (click)="editTask.emit(taskSelected._id)" >edit</mat-icon>
-                      <mat-icon *ngIf="!isLastVersion && taskPristine.status !== 'done'" (click)="restore()" appIsAdm >settings_backup_restore</mat-icon>
+                      <mat-icon *ngIf="!prevDialog && isCurrentVersion && taskPristine.status !== 'done'" (click)="editTask.emit(taskSelected._id)">edit</mat-icon>
+                      <mat-icon *ngIf="!isCurrentVersion && taskPristine.status !== 'done' && !propertyHasChanged('status')" (click)="restore()">settings_backup_restore</mat-icon>
                   </div>
                 </div>
-              <div fxFlex="85" fxLayout="column" fxLayoutAlign="center" >
-                <div fxLayoutAlign="flex-start" [style.height]="'10px'">
-                    <mat-label fxLayoutAlign="center" [style.color]="'#7b87cc'" *ngIf="isLastVersion">*CURRENT STATE*</mat-label>
+            <div fxFlex="85" fxLayout="column" fxLayoutAlign="center" >
+                <div fxLayoutAlign="space-between" [style.height]="'10px'">
+                    <small *ngIf="currentVersion !== null" class="small-user" >{{ currentVersion === 0 ? 'created by' : 'edited by' }} {{currentVersion === 0 ? taskSelected.createdBy.name : taskSelected.prevStates[currentVersion -1 ] ? taskSelected.prevStates[currentVersion -1 ] .user.name : ''}}</small>
+                    <small class="small-current-state" fxLayoutAlign="center" [style.color]="'#7b87cc'" *ngIf="isCurrentVersion">*current state*</small>
                 </div>
                 <div  fxLayout="column" >
                     <h3 [class]="propertyHasChanged('name') ? 'property-changed':''" fxLayoutAlign="center">{{taskSelected.name}}</h3>

@@ -39,7 +39,7 @@ export class TaskEditionAndCreationSmartComponent implements OnInit {
     this.taskService.getTaskById(taskId).subscribe((taskDb: Task) => {
       let taskSelected = LpObject.copyObject(taskDb);
       taskSelected.participants = (taskSelected.participants as User[]).map((eachParticipant: User) => { return eachParticipant._id });
-      taskSelected.user = (taskSelected.user as User)._id;
+      taskSelected.createdBy = (taskSelected.createdBy as User)._id;
       taskSelected.project = taskSelected.project as Project;
       this.taskSelected = taskSelected;
       LpLocalStorage.set('state-data', this.taskSelected._id, 'task');

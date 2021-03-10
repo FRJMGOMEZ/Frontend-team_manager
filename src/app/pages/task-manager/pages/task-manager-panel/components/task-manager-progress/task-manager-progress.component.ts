@@ -38,10 +38,10 @@ export class TaskManagerProgressComponent implements OnChanges {
         this.extraTimeMilisec = this.taskSelected.extraTime ? this.taskSelected.extraTime : new Date().getTime() - this.taskSelected.deliverDate;
       }
        this.extraTimeProgress = this.taskSelected.endDate <= new Date().getTime() ? this.taskSelected.extraTime ? (new Date().getTime() - this.taskSelected.deliverDate * 100) / this.extraTimeMilisec : 0 : 0;
-       this.extraTimeStringArray = LpDate.milisecsToString(this.extraTimeMilisec);
+       this.extraTimeStringArray = LpDate.milisecsToString(this.extraTimeMilisec).filter((time,i)=>{ return !time.includes('seconds') })
      };
      calculate();
-    return interval(500)
+    return interval(1000)
     .pipe(tap(()=>{
       calculate();
     }));

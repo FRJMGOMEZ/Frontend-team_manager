@@ -8,10 +8,11 @@ import { ProjectEditionAndCreationSmartComponent } from '../../shared/components
 import { ActionsRequiredSmartDialogComponent } from '../../shared/components/actions-required/actions-required-smart-dialog.component';
 import { ActionRequired } from '../models/action-required';
 import { NotificationsFilterSmartDialogComponent } from '../../pages/home/pages/notifications-list/components/notifications-filter/notifications-filter-smart-dialog.component';
-import { ProjectsDialogComponent } from '../components/projects/projects-dialog/projects-dialog.component';
 import { merge } from 'rxjs';
 import { User } from '../models/user.model';
 import { UserInfoSmartDialogComponent } from '../../shared/components/user-info/user-info-smart-dialog.component';
+import { ProjectsDetailDialogSmartComponent } from '../../shared/components/project-detail/projects-detail-dialog-smart.component';
+import { ProjectsDialogComponent } from '../components/projects/projects-dialog/projects-dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -29,18 +30,18 @@ export class DialogsService {
     dialog.autoFocus = true;
     dialog.width = '500px';
     dialog.maxHeight = '900px';
-    dialog.data = prevDialog ? {taskId,prevDialog} : {taskId}
-    let dialogRef: MatDialogRef<any> = this.dialog.open(TaskDialogSmartComponent, dialog)
+    dialog.data = prevDialog ? {taskId,prevDialog} : {taskId};
+    let dialogRef: MatDialogRef<any> = this.dialog.open(TaskDialogSmartComponent, dialog);
     let subs = dialogRef.afterClosed().subscribe((data)=>{
       if (data) {
         if (data.prevDialog) {
-          this.checkPrevDialog(data.prevDialog)
+          this.checkPrevDialog(data.prevDialog);
         }else if(data.nextDialog){
-          this.checkNextDialog(data.nextDialog,data.dataRequired,'taskInfo')
+          this.checkNextDialog(data.nextDialog,data.dataRequired,'taskInfo');
         }
       }
-      subs.unsubscribe()
-    })
+      subs.unsubscribe();
+    });
   }
 
   openTasksListInfoDialog(date:number, prevDialog?:string){
@@ -50,16 +51,16 @@ export class DialogsService {
     dialog.autoFocus = true;
     dialog.data = prevDialog ? { date, prevDialog }: {date};
     dialog.width = '500px';
-    let dialogRef: MatDialogRef<any> = this.dialog.open(TasksListDialogSmartComponent, dialog)
+    let dialogRef: MatDialogRef<any> = this.dialog.open(TasksListDialogSmartComponent, dialog);
     let subs = dialogRef.afterClosed().subscribe((data)=>{
       if(data){
           if(data.prevDialog){
-            this.checkPrevDialog(data.prevDialog)
+            this.checkPrevDialog(data.prevDialog);
           }else if(data.nextDialog){
-             this.checkNextDialog(data.nextDialog,data.taskId,'tasksList')
+             this.checkNextDialog(data.nextDialog,data.taskId,'tasksList');
           }
       }
-      subs.unsubscribe()
+      subs.unsubscribe();
     })
   }
 
@@ -74,13 +75,13 @@ export class DialogsService {
     let subs = dialogRef.afterClosed().subscribe((data) => {
       if (data) {
         if (data.prevDialog) {
-          this.checkPrevDialog(data.prevDialog)
+          this.checkPrevDialog(data.prevDialog);
         } else if (data.nextDialog) {
-          this.checkNextDialog(data.nextDialog, data.taskId, 'editCreateTask')
+          this.checkNextDialog(data.nextDialog, data.taskId, 'editCreateTask');
         }
       }
-      subs.unsubscribe()
-    })
+      subs.unsubscribe();
+    });
   }
   openEditProjectDialog(project: Project) {
     const dialog = new MatDialogConfig();
@@ -99,9 +100,18 @@ export class DialogsService {
     this.dialog.open(ProjectEditionAndCreationSmartComponent, dialog);
   }
 
+  openProjectInfoDialog(projectId:string){
+    const dialog = new MatDialogConfig();
+    dialog.disableClose = true;
+    dialog.autoFocus = true;
+    dialog.width = '500px';
+    dialog.data ={projectId};
+    this.dialog.open(ProjectsDetailDialogSmartComponent, dialog);
+  }
+
   checkPrevDialog(prevDialog: string) {
     switch (prevDialog) {
-      case 'tasksList': this.openTasksListInfoDialog(this.tasksDate)
+      case 'tasksList': this.openTasksListInfoDialog(this.tasksDate);
         break;
       case 'taskInfo': this.openTaskInfoDialog(this.taskId);
         break;
@@ -111,9 +121,9 @@ export class DialogsService {
   }
   checkNextDialog(nextDialog: string, dataRequired: any, prevDialog: string) {
     switch (nextDialog) {
-      case 'tasksList': typeof dataRequired === 'number' ? this.openTasksListInfoDialog(dataRequired, prevDialog) : null
+      case 'tasksList': typeof dataRequired === 'number' ? this.openTasksListInfoDialog(dataRequired, prevDialog) : null;
         break;
-      case 'taskInfo': typeof dataRequired === 'string' ? this.openTaskInfoDialog(dataRequired, prevDialog) : null
+      case 'taskInfo': typeof dataRequired === 'string' ? this.openTaskInfoDialog(dataRequired, prevDialog) : null;
         break;
       case 'editCreateTask': typeof dataRequired === 'string' ? this.openEditCreateTaskDialog(dataRequired, prevDialog) : null;
         break;
@@ -147,10 +157,10 @@ export class DialogsService {
     const dialog = new MatDialogConfig();
     dialog.disableClose = true;
     dialog.autoFocus = true;
-    dialog.maxHeight = '100vh';
-    dialog.maxWidth = '1000px';
+/*     dialog.maxHeight = '100vh';
+    dialog.maxWidth = '1000px'; */
     dialog.data = {projects};
-    let dialogRef: MatDialogRef<any> = this.dialog.open(ProjectsDialogComponent, dialog);
+    let dialogRef: MatDialogRef<any> = this.dialog.open(ProjectsDialogComponent , dialog);
     return merge(dialogRef.componentInstance.putProject, dialogRef.componentInstance.deleteProject, dialogRef.componentInstance.selectProject);
   }
 
@@ -159,6 +169,6 @@ export class DialogsService {
     dialog.disableClose = true;
     dialog.autoFocus = true;
     dialog.data = {user};
-    let dialogRef: MatDialogRef<any> = this.dialog.open(UserInfoSmartDialogComponent, dialog);
+    this.dialog.open(UserInfoSmartDialogComponent, dialog);
   }
 }

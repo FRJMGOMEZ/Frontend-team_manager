@@ -1,6 +1,6 @@
 
 
-<mat-sidenav-container *ngIf="display">
+<mat-sidenav-container *ngIf="display" >
   <mat-sidenav #start [mode]="'side'">
              <mat-list>
                <mat-list-item fxLayoutAlign="center" matTooltip="navigate to notifications">
@@ -32,7 +32,7 @@
   <mat-sidenav-content >
      <mat-toolbar >
     <mat-toolbar-row>
-   <div fxFlex.lt-md="20" fxHide.gt-sm fxShow.lt-gt>
+   <div fxFlex.lt-md="20" fxHide.gt-sm fxShow.lt-md>
       <a >
          <mat-icon   color="accent" (click)="start.toggle()" matBadge matBadgeOverlap="false" appNotifications >menu</mat-icon>
       </a>
@@ -51,7 +51,7 @@
    </a>
    <span *ngIf="mdService.desktop" class="spacer"></span>
    <app-projects-smart fxFlex.lt-md="55" id="project-selector"> </app-projects-smart>
-   <div [style.margin-left]="'10px'" fxFlex.lt-md="22" fxLayoutAlign.gt-sm="center" fxFlex.gt-sm="20" *ngIf="selectedProject"appIsAdm >
+   <div [style.margin-left]="'10px'" fxFlex.lt-md="22" fxLayoutAlign.gt-sm="center" fxFlex.gt-sm="20" *ngIf="selectedProject">
        <button fxLayout="center" ngClass.gt-sm="new-task-btn-desktop" ngClass.lt-md="new-task-btn-mobile" id="new-task" (click)="postTask()" color="accent" [disabled]="!selectedProject" mat-raised-button fxLayoutAlign="center"><span>ADD TASK</span></button>
    </div>
    <a fxShow.gt-sm fxHide>
@@ -73,9 +73,6 @@
    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
-<div *ngIf="!display">
-   <div class="div-not-display" [style.margin]="'25px'" >SORRY THE MOBILE AND TABLE VERSIONS ARE IN PROGRESS.</div>
-</div>
 
   
 

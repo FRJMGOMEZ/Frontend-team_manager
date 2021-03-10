@@ -10,7 +10,9 @@ import { ProjectService } from '../../../core/providers/project.service';
     selector: 'app-tasks-list-dialog-smart',
     template:`
         <app-tasks-list-dialog [prevDialog]="prevDialog" (close)="close()" (back)="back()" [tasks]="tasks" (editTask)="editTask($event)" (checkDetails)="checkDetails($event)" > </app-tasks-list-dialog>
-    `
+    `,
+    styleUrls:['./tasks-list-dialog.component.scss']
+    
 
 })
 export class TasksListDialogSmartComponent implements OnInit {

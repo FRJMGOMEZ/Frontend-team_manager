@@ -21,30 +21,33 @@ export class FilesService {
               private errorHandlerService:ErrorHandlerService) {}
   getDbFile(fileName:string){
     let url = `${API_URL}file/${fileName}`;
-    return this.http.get(url, { responseType: 'blob' })
+    return this.http.get(url, { responseType: 'blob' }).pipe(
+      catchError((err) => { this.lpDialogsService.openInfoDialog(err.message, err.status, 'ERROR'); return this.errorHandlerService.handleError(err) })
+    );
   }
 
   spreadFile(file:FileModel,order:string){
-    this.fileSrc.next({order,file})
+    this.fileSrc.next({order,file});
   }
 
   deleteFile(file:FileModel){
     let url = `${API_URL}delete-file/${file._id}`;
     const request = this.http.delete(url).pipe(
       map((res:any)=>{
-      return res.file
+      return res.file;
     }),
     tap((file:FileModel)=>{
-      this.spreadFile(file,'DELETE')
-    }))
-    return this.lpDialogsService.openConfirmDialog('FILE DELETION', `The file ${file.title} will be deleted`).pipe(switchMap((res:boolean)=>{ return res?request: empty()}))
+      this.spreadFile(file,'DELETE');
+    }),
+    catchError((err) => { this.lpDialogsService.openInfoDialog(err.message, err.status, 'ERROR'); return this.errorHandlerService.handleError(err) }));
+    return this.lpDialogsService.openConfirmDialog('FILE DELETION', `The file ${file.title} will be deleted`).pipe(switchMap((res:boolean)=>{ return res?request: empty()}));
   }
 
   getFileById(id:string){
-    let url = `${API_URL}searchById/file/${id}`
+    let url = `${API_URL}searchById/file/${id}`;
     return this.http.get(url).pipe(
       map((res:any)=>{return res.file}),
-      catchError((err) => { this.lpDialogsService.openInfoDialog(err.message, err.status, 'ERROR'); return this.errorHandlerService.handleError(err) }))
+      catchError((err) => { this.lpDialogsService.openInfoDialog(err.message, err.status, 'ERROR'); return this.errorHandlerService.handleError(err) }));
   }
   downloadFile(data: { src: any, file: FileModel }): Observable<any> {
     const { src, file } = data;
@@ -52,11 +55,15 @@ export class FilesService {
       if (res) {
         const request: Observable<any> = !src.includes('blob') ? this.getDbFile(file.name).pipe(map((blob: Blob) => {return { src: URL.createObjectURL(blob), title: file.title } })) : of({ src, title: file.title });
         return request.pipe(tap((res: { src: any, title: string }) => {
-          
+          const a = document.createElement("a");
+          a.href = res.src;
+          a.download = res.title;
+          document.body.appendChild(a);
+          a.click();
         }))
       } else {
         return empty();
       }
-    }))
+    }));
   }
 }

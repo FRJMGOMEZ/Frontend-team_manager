@@ -1,5 +1,5 @@
 <div class="div-chat-container"fxLayout.lt-md="column">
-    <div [style.border-bottom]="'1px solid lightgrey'" *ngIf="showUsers"fxFlex.lt-md="15" fxFlex.gt-sm="10">
+    <div *ngIf="showUsers"fxFlex.lt-md="15" fxFlex.gt-sm="10">
         <chat-users *ngIf="showUsers" [users]="users" ></chat-users>
     </div>
     <div [fxFlex.lt-md]="showUsers ? '85' : '100'" [fxFlex.gt-sm]="showUsers ? '90' : '100'" fxLayout="column">

@@ -22,7 +22,7 @@ export class PagesComponent implements OnInit, OnDestroy {
   path: string
   projectsSubs: Subscription;
   selectedProject:string;
-  display:boolean = true;
+  display:boolean=false;
   constructor(  private wSService:WebSocketsService,
                 public projectService:ProjectService,
                 public authService:AuthService,
@@ -39,9 +39,16 @@ export class PagesComponent implements OnInit, OnDestroy {
     this.projectsSubs = this.projectService.selectedProject$.pipe(
       tap(() => {})).subscribe((selectedProject:Project)=>{
         this.selectedProject = selectedProject._id;
-        this.wSService.emit('user-in-project', { projectId: selectedProject })
-      })
-    this.wSService.emit('user-in-app', { userId: this.authService.userOnline._id });
+        this.wSService.emit('user-in-project', { projectId: selectedProject });
+    });
+    this.wSService.emit('user-in-app', { userId: this.authService.userOnline._id },(res)=>{
+      if(res.ok){
+        this.display = true;
+      }else{
+        this.lpDialogs.openInfoDialog(res.message, 'USER BUSSY')
+        this.authService.logout().subscribe();
+      }
+    });
     this.projectService.listenningProjectSockets();
     this.taskService.listenningTasksEvents();
     this.notificationsService.listenningNotificationsEvents();

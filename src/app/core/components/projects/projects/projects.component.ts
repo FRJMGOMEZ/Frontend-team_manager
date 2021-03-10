@@ -1,8 +1,6 @@
 import { Component, Input, Output, EventEmitter, ViewChild, SimpleChanges } from '@angular/core';
-
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatExpansionPanelHeader } from '@angular/material/expansion';
 import { Project } from '../../../models/project.model';
 import { MediaService } from '../../../providers/media.service';
 
@@ -21,7 +19,6 @@ export class ProjectsComponent  {
   @Output() putProject: EventEmitter<Project> = new EventEmitter<Project>();
   @Output() postProject: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatExpansionPanelHeader) expHeader: MatExpansionPanelHeader
   displayedColumns = ['name', 'administrators', 'participants', 'status', 'actions'];
   dataSource = new MatTableDataSource<Project>([]);
   @Output() deleteProject: EventEmitter<string> = new EventEmitter<string>();
@@ -36,7 +33,6 @@ export class ProjectsComponent  {
   }
   selectProject(project:Project){  
     this.projectSelectedOut.emit(project);
-    this.expHeader ? this.expHeader._toggle() : null;
   }
 
   get projectSelected(){

@@ -9,17 +9,17 @@
         </ng-container>
         <ng-container matColumnDef="administrators">
             <mat-header-cell mat-header-cell *matHeaderCellDef fxShow fxHide.lt-sm> Administrators</mat-header-cell>
-            <mat-cell mat-cell *matCellDef="let element" fxShow fxHide.lt-sm> {{element.administrators.length }}
+            <mat-cell mat-cell *matCellDef="let element" fxShow fxShow fxHide.lt-sm> {{element.administrators.length }}
             </mat-cell>
         </ng-container>
         <ng-container matColumnDef="participants">
             <mat-header-cell mat-header-cell *matHeaderCellDef fxShow fxHide.lt-sm> Participants </mat-header-cell>
-            <mat-cell mat-cell *matCellDef="let element" fxShow fxHide.lt-sm> {{element.participants.length}}
+            <mat-cell mat-cell *matCellDef="let element" fxShow fxShow fxHide.lt-sm> {{element.participants.length}}
             </mat-cell>
         </ng-container>
         <ng-container matColumnDef="status">
             <mat-header-cell mat-header-cell *matHeaderCellDef fxShow fxHide.lt-sm> Status</mat-header-cell>
-            <mat-cell mat-cell *matCellDef="let element" fxShow fxHide.lt-sm> {{element.status === true ? 'active':'unactive'}} </mat-cell>
+            <mat-cell mat-cell *matCellDef="let element" fxShow fxShow fxHide.lt-sm> {{element.status === true ? 'active':'unactive'}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="actions">
             <mat-header-cell mat-header-cell *matHeaderCellDef> </mat-header-cell>

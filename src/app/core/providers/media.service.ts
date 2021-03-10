@@ -15,9 +15,8 @@ export class MediaService implements OnDestroy {
    this.media$ = this.media.asObservable();
    this.mediaSubscription = this.getCurrentMedia().subscribe()}
  getCurrentMedia(){
-   return this.media$.pipe(map((res) => {console.log({res});return res[0].mqAlias }), tap((media: string) => {
-     this.mqAlias && this.mqAlias != media ? window.location.reload() : null;
-     this.mqAlias = media;
+   return this.media$.pipe(map((res) => {return res[0].mqAlias }), tap((media: string) => {
+     const prevStyle = this.desktop;
      switch (media) {
        case 'xl': this.desktop = true;
          break;
@@ -30,6 +29,8 @@ export class MediaService implements OnDestroy {
        case 'xs': this.desktop = false;
          break;
      }
+     this.mqAlias && prevStyle != this.desktop ? window.location.reload() : null;
+     this.mqAlias = media;
    }))
  }
  ngOnDestroy(){

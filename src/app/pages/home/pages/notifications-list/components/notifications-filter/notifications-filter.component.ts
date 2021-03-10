@@ -13,7 +13,6 @@ export class NotificationsFilterComponent implements OnChanges {
    @Input() queryString:string;
    queryFilters = {
     project:'',
-    userFrom:'',
     type:'',
     method:'',
     from: null,

@@ -9,7 +9,7 @@ import { LpObject } from 'lp-operations';
   styleUrls: ['./project-detail.component.scss']
 })
 export class ProjectDetailComponent implements OnChanges{
-
+  propertiesNoEditables = ['prevStates','actionsRequired', '__v','createdBy'];
   @Input() isDialog:boolean = false;
   @Input() date:number;
   @Input() projectSelected: Project;
@@ -25,18 +25,23 @@ export class ProjectDetailComponent implements OnChanges{
   constructor(public projectService: ProjectService, private lpDialogsService: LpDialogsService) { }
   ngOnChanges(changes:SimpleChanges){
    if(changes.projectSelected && this.projectSelected){
+     console.log(this.projectSelected);
     this.projectPristine = LpObject.copyObject(this.projectSelected);
    }
   }
   restore() {
     this.lpDialogsService.openConfirmDialog('THIS VERSION WILL REPLACE THE CURRENT ONE', 'Are you sure?').subscribe((res) => {
       if (res) {
-        this.restoreVersion.emit(this.checkChangesToEdit());
+      this.restoreVersion.emit(this.checkChangesToEdit());
+        this.checkChangesToEdit()
       }
     })
   }
   checkChangesToEdit() {
-    let obj = LpObject.getObjectDifferences(this.projectSelected, this.prevProject);
+    const projectSelected = Object.keys(this.projectSelected).reduce((acum, key) => { !this.propertiesNoEditables.includes(key) ? acum[key] = this.projectSelected[key] : null; return acum }, {});
+    const projectPristine = Object.keys(this.projectPristine).reduce((acum, key) => { !this.propertiesNoEditables.includes(key) ? acum[key] = this.projectPristine[key] : null; return acum }, {});
+    let obj = LpObject.getObjectDifferences(projectPristine, projectSelected);
+    console.log({obj,projectSelected,projectPristine});
     return { projectChanges: obj, id: this.projectSelected._id };
   }
   versionIsDifferent() {
@@ -48,7 +53,9 @@ export class ProjectDetailComponent implements OnChanges{
 
   setVersion(project:Project){
    this.projectSelected = project;
-   this.isLastVersion = LpObject.areEquals(this.projectSelected,this.projectPristine);
+   const projectSelected = Object.keys(this.projectSelected).reduce((acum, key) => { !this.propertiesNoEditables.includes(key) ? acum[key] = this.projectSelected[key] : null; return acum }, {});
+   const projectPristine = Object.keys(this.projectPristine).reduce((acum, key) => { !this.propertiesNoEditables.includes(key) ? acum[key] = this.projectPristine[key] : null; return acum }, {});
+   this.isLastVersion = LpObject.areEquals(projectSelected,projectPristine);
   }
 
 }

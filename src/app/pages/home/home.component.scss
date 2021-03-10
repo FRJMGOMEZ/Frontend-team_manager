@@ -1,12 +1,6 @@
 .div-home{
   height: 87vh;
 }
-
-@media  (max-width: 1279px) {
- .div-home{
-  height: 90vh;
-}
-}
 ::ng-deep .mat-tab-list {
   .mat-tab-label {
     flex-basis: 1;
@@ -19,13 +13,37 @@
 mat-icon{
   margin: 5px;
 }
-
-
 .div-info-icon{
-    top:8% !important;
+    top:65px;
 }
 
 .div-info-icon-desktop-without-task{
     top:19%
 }
+
+@media (min-width: 600px) and (max-width: 959px){
+  .div-info-icon{
+  top:17vh!important
+}
+
+.div-info-icon-desktop-without-task{
+    top:17vh !important
+}
+}
+
+@media (min-width: 0px) and  (max-width: 600px) {
+ .div-home{
+  height: 90vh;
+}
+
+.div-info-icon{
+  top:18.7vh!important
+}
+
+.div-info-icon-desktop-without-task{
+    top:18.7vh !important
+}
+}
+
+
 

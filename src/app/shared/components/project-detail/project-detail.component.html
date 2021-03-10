@@ -7,13 +7,16 @@
                 <div [style.margin]="'20px'" fxLayoutAlign="flex-start">
                    <small class="property-changed">*Property edited*</small>
                 </div> 
-              <div *ngIf=" prevProject" fxLayout="column" fxLayoutAlign="center" >
+              <div *ngIf="prevProject" fxLayout="column" fxLayoutAlign="center" >
                   <div [style.margin-left.px]="'20'" fxLayoutAlign="flex-end">
                       <mat-icon *ngIf="isDialog" (click)="back.emit()">keyboard_backspace</mat-icon>
                       <mat-icon *ngIf="versionIsDifferent() && !isLastVersion" (click)="restore()"  >settings_backup_restore</mat-icon>
                       <mat-icon *ngIf="isLastVersion" (click)="editProject.emit()" >edit</mat-icon>
-                  </div>
-                 <mat-label fxLayoutAlign="center" [style.color]="'#7b87cc'" *ngIf="isLastVersion">*CURRENT STATE*</mat-label>
+                </div>
+                 <div fxLayoutAlign="space-between">
+                     <small class="small-user" *ngIf="currentVersion !== null" >{{ currentVersion === 0 ? 'created by' : 'edited by' }} {{currentVersion === 0 ? projectSelected.createdBy.name : projectSelected.prevStates && projectSelected.prevStates[currentVersion -1 ] ? projectSelected.prevStates[currentVersion -1 ].user.name : ''}}</small>
+                     <small class="small-current-state" fxLayoutAlign="center" [style.color]="'#7b87cc'" *ngIf="isLastVersion">*current state*</small>
+                 </div>
                 <div  fxLayout="column" >
                     <h3 [class]="propertyHasChanged('name') ? 'property-changed':''" fxLayoutAlign="center">{{projectSelected.name}}</h3>
                 </div>

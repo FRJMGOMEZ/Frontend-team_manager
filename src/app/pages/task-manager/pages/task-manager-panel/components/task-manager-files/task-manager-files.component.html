@@ -17,7 +17,6 @@
        </div>
     </div>
     <div fxHide.gt-md fxShow.lt-lg  class="div-files">
-      pasjlkdjsda
         <div *ngFor="let file of files; let i = index">
           <div fxLayout="row" *ngIf="i % 4 == 0" >
            <mat-card fxLayout="column" fxFlex="25" > <div fxFlex="80"><img #img fxFlex="80" [src]="file | fileIcon | async" alt=""   (click)="filesService.downloadFile({src:img.src,file:file}).subscribe()"> <mat-icon color="warn"  (click)="deleteFile(file)" fxFlex="20">delete</mat-icon></div> <p fxFlex="20">{{file.title}}</p> </mat-card>

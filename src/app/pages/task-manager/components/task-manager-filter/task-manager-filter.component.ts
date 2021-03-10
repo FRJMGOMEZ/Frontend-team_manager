@@ -15,7 +15,7 @@ export class TaskManagerFilterComponent implements OnChanges {
   filters={
     _id:'',
     name:'',
-    user:'',
+    createdBy:'',
     participants:[],
     status:'',
     from:null,
@@ -25,7 +25,7 @@ export class TaskManagerFilterComponent implements OnChanges {
   }
   options = {
      status:['done','pending','overdue'],
-     user:[],
+     createdBy:[],
      participants:[],
      priority:[{label:'low',value:3},{label:'medium',value:2},{label:'high',value:1}]
   }
@@ -37,7 +37,7 @@ export class TaskManagerFilterComponent implements OnChanges {
   ngOnChanges(changes:SimpleChanges){
        if(changes.participants && this.participants){
          this.options.participants = LpObject.copyObject(this.participants);
-         this.options.user = this.participants.filter((p)=>{ return p.role === 'ADMIN_ROLE'})
+         this.options.createdBy = this.participants.filter((p)=>{ return p.role === 'ADMIN_ROLE'})
        }
   }
 

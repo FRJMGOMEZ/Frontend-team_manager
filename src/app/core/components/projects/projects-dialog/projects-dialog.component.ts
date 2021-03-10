@@ -1,6 +1,5 @@
-import { Component, OnInit, EventEmitter, Output, Inject } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Inject} from '@angular/core';
 import { Project } from '../../../models/project.model';
-import { ProjectService } from '../../../providers/project.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
@@ -10,7 +9,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class ProjectsDialogComponent implements OnInit {
 
-  projects: Project[] = []
+  projects: Project[] = [];
   projectSelected: string;
   @Output() putProject: EventEmitter<{ project: Project, order:'put' }> = new EventEmitter<{project:Project,order:'put'}>();
   @Output() deleteProject: EventEmitter<{ project:string, order: 'delete' }> = new EventEmitter<{ project: string, order: 'delete' }>();
@@ -19,6 +18,7 @@ export class ProjectsDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) private data) { }
 
   ngOnInit() {
+    console.log(this.data.projects);
     this.projects = this.data.projects || [];
     this.dialogRef.updatePosition({ top: '17%'})
   }

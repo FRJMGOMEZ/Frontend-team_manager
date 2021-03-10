@@ -15,11 +15,11 @@
    <div fxLayout="row" fxLayoutAlign="space-around" fxLayoutGap="15px">
      <mat-form-field fxFlex="40" class="example-full-width">
       <mat-label>ID</mat-label>
-       <input matInput lpInputTrimmer [(ngModel)]="filters._id"  placeholder="Task ID">
+       <input matInput lpInputTrimmer [(ngModel)]="filters._id"  placeholder="Task ID" autocomplete="off"> 
     </mat-form-field> 
     <mat-form-field fxFlex="40" class="example-full-width">
       <mat-label>Name</mat-label>
-       <input matInput lpInputTrimmer [(ngModel)]="filters.name" placeholder="Task name">
+       <input matInput lpInputTrimmer [(ngModel)]="filters.name" placeholder="Task name" autocomplete="off">
     </mat-form-field>
    </div>
    <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="space-around">
@@ -39,8 +39,8 @@
    <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="space-around">
    <mat-form-field fxFlex="40" appearance="fill">
     <mat-label>Creator/editor</mat-label>
-    <mat-select [(ngModel)]="filters.user"  matNativeControl>
-      <mat-option *ngFor="let user of options.user" [value]="user._id">{{user.name}}</mat-option>
+    <mat-select [(ngModel)]="filters.createdBy"  matNativeControl>
+      <mat-option *ngFor="let user of options.createdBy" [value]="user._id">{{user.name}}</mat-option>
     </mat-select>
   </mat-form-field>  
    <mat-form-field fxFlex="40" appearance="fill">

@@ -5,6 +5,7 @@ import { PrevState } from './prev-state.model';
 export class Project{
 
     constructor(public name:string,
+                public createdBy:string | User,
                 public participants?:string[] | User[],
                 public administrators?:string[] | User[],
                 public messages?:string[],

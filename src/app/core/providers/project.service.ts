@@ -17,7 +17,7 @@ import { LpLocalStorage } from 'lp-operations';
 export class ProjectService {
 
   /*  To spread the projects changes  */
-  private projectSrc: Subject<{ project: Project, action: string }> = new Subject<{ project: Project, action: string }>()
+  private projectSrc: Subject<{ project: Project, action: string }> = new Subject<{ project: Project, action: string }>();
   public project$: Observable<{ project: Project, action: string }> = this.projectSrc.asObservable().pipe(tap((res: any) => {
     if (this.selectedProject && (res.project._id === this.selectedProject._id)) {
       switch (res.action) {
@@ -51,24 +51,24 @@ export class ProjectService {
       map((res: any) => {
         return res.projects }),
       catchError((err) => { this.lpDialogsService.openInfoDialog(err.message, err.status, 'ERROR'); return this.errorHandlerService.handleError(err) })
-    )
+    );
   }
   getProjectById(projectId: string) {
     let url = `${API_URL}project/${projectId}`;
     return this.http.get(url).pipe(
       map((res: any) => {
-        return res.project
+        return res.project;
       }),
-      catchError((err) => { this.lpDialogsService.openInfoDialog(err.message, err.status, 'ERROR'); return this.errorHandlerService.handleError(err) }))
+      catchError((err) => { this.lpDialogsService.openInfoDialog(err.message, err.status, 'ERROR'); return this.errorHandlerService.handleError(err) }));
   }
 
   getParticipants(projectId: string) {
     let url = `${API_URL}get-participants/${projectId}`;
     return this.http.get(url).pipe(map((res: any) => {
-      return res.participants
+      return res.participants;
     }),
       catchError((err) => { this.lpDialogsService.openInfoDialog(err.message, err.status, 'ERROR');; return this.errorHandlerService.handleError(err) })
-    )
+    );
   }
   selectProject(project:Project) {
       this._selectedProject =project;
@@ -77,18 +77,18 @@ export class ProjectService {
   }
 
   postProject(project: Project) {
-    let url = `${API_URL}project`
+    let url = `${API_URL}project`;
     return this.http.post(url, project).pipe(
       tap((res: any) => {
-        this.projectSrc.next({project:res.project,action:'POST'})
+        this.projectSrc.next({project:res.project,action:'POST'});
         this.lpDialogsService.openInfoDialog('SUCCESFULLY CREATED', null, res.project.name);
       })
       , catchError((err) => { this.lpDialogsService.openInfoDialog(err.message, err.status, 'ERROR');; return this.errorHandlerService.handleError(err) })
-    )
+    );
   }
 
   putProject(changes:{ [key: string]: any},id:string): Observable<any> {
-    let url = `${API_URL}project/${id}`
+    let url = `${API_URL}project/${id}`;
     return this.http.put(url, {project:changes}).pipe(
       tap((res: any) => {
         if(!res.project.participants.map((p)=>{ return p._id }).includes(this.authService.userOnline._id)){
@@ -96,27 +96,27 @@ export class ProjectService {
           this.lpDialogsService.openInfoDialog('IN ORDER TO GET ACCESS AGAIN TALK TO OTHER ADMNISTRATOR', 'REMOVAL', res.project.name);
           this.wSService.emit('user-out-project', { projectId: res.project._id });
         }else{
-          this.projectSrc.next({ project: res.project, action: 'PUT' })
-          this.lpDialogsService.openInfoDialog('SUCCESFULLY UPDATED', 'PUT', res.project.name)
+          this.projectSrc.next({ project: res.project, action: 'PUT' });
+          this.lpDialogsService.openInfoDialog('SUCCESFULLY UPDATED', 'PUT', res.project.name);
         }
       }),
-      catchError((err) => { this.lpDialogsService.openInfoDialog(err.message, err.status, 'ERROR');; return this.errorHandlerService.handleError(err) }))
+      catchError((err) => { this.lpDialogsService.openInfoDialog(err.message, err.status, 'ERROR');; return this.errorHandlerService.handleError(err) }));
   }
 
   deleteProject(id: string): Observable<any> {
     let url = `${API_URL}project/${id}`;
     let backRequest = this.http.delete(url).pipe(
       tap((res: any) => {
-        this.projectSrc.next({project:res.project,action:'DELETE'})
-        this.lpDialogsService.openInfoDialog('SUCCESFULY DELETED', 'DELETION', res.project.name)
-        this.wSService.emit('user-out-project',{projectId:res.project._id})
+        this.projectSrc.next({project:res.project,action:'DELETE'});
+        this.lpDialogsService.openInfoDialog('SUCCESFULY DELETED', 'DELETION', res.project.name);
+        this.wSService.emit('user-out-project',{projectId:res.project._id});
       }),
-      catchError((err) => { this.lpDialogsService.openInfoDialog(err.message, err.status, 'ERROR');return this.errorHandlerService.handleError(err) }))
+      catchError((err) => { this.lpDialogsService.openInfoDialog(err.message, err.status, 'ERROR');return this.errorHandlerService.handleError(err) }));
     return this.lpDialogsService.openConfirmDialog()
       .pipe(
         switchMap((res: any) => {
-          return res ? backRequest : empty()
-        }))
+          return res ? backRequest : empty();
+        }));
   }
 
   listenningProjectSockets() {
@@ -126,32 +126,32 @@ export class ProjectService {
       switch (method) {
         case 'POST':
           if (participants.includes(this.authService.userOnline._id)) {
-            this.projectSrc.next({project,action:'POST'})
-            this.wSService.emit('user-in-project', { projectId: project._id })
+            this.projectSrc.next({project,action:'POST'});
+            this.wSService.emit('user-in-project', { projectId: project._id });
           }
           break;
         case 'PUT':
             if(participants.includes(this.authService.userOnline._id)){
               if ((prevProject.participants as any).map((p) => { return p._id }).includes(this.authService.userOnline._id)){
-                this.projectSrc.next({ project, action: 'PUT' })
+                this.projectSrc.next({ project, action: 'PUT' });
               }else{
-                this.projectSrc.next({ project, action: 'POST' })
-                this.wSService.emit('user-in-project',{projectId:project._id})
+                this.projectSrc.next({ project, action: 'POST' });
+                this.wSService.emit('user-in-project',{projectId:project._id});
               }
             }else{
-               this.projectSrc.next({ project, action: 'DELETE' })
-               this.wSService.emit('user-out-project', { projectId: project._id })
+               this.projectSrc.next({ project, action: 'DELETE' });
+               this.wSService.emit('user-out-project', { projectId: project._id });
             }
           break;
         case 'DELETE':
           if (participants.includes(this.authService.userOnline._id)){
-              this.projectSrc.next({ project, action: 'DELETE' })
-              this.wSService.emit('user-out-project', { projectId: project._id })
+              this.projectSrc.next({ project, action: 'DELETE' });
+              this.wSService.emit('user-out-project', { projectId: project._id });
           }
           break;
       }
       if (LpLocalStorage.get('state-data','project-on-screen') === project._id){
-        this.dialogRef.closeAll()
+        this.dialogRef.closeAll();
       }
     })
   }

@@ -4,13 +4,18 @@ import { AuthService } from '../../../auth/shared/providers/auth.service';
 import { ProjectService } from '../../../core/providers/project.service';
 import { LpObject, LpLocalStorage } from 'lp-operations';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { map } from 'rxjs/operators';
+import { DialogsService } from '../../../core/providers/dialogs.service';
 
 @Component({
   selector: 'app-projects-detail-dialog-smart',
   template:`
    <mat-dialog-content>
-   <app-project-detail [date]="date" [projectSelected]="projectSelected" (editProject)="editProject($event)" (restoreVersion)="restoreVersion($event)" > </app-project-detail>
+   <app-project-detail [date]="date" [projectSelected]="projectSelected" (editProject)="editProject()" (restoreVersion)="restoreVersion($event)" > </app-project-detail>
    </mat-dialog-content>
+   <mat-dialog-actions fxLayoutAlign="center">
+     <button mat-raised-button (click)="closeDialog()" >CLOSE</button>
+   </mat-dialog-actions>
   `,
   styles:[]
 })
@@ -24,7 +29,8 @@ export class ProjectsDetailDialogSmartComponent implements OnInit {
     private projectService: ProjectService,
     private cdr: ChangeDetectorRef,
     private dialogRef: MatDialogRef<ProjectsDetailDialogSmartComponent>,
-    @Inject(MAT_DIALOG_DATA) private data
+    @Inject(MAT_DIALOG_DATA) private data,
+    private dialogsService:DialogsService
 
   ) { }
 
@@ -33,21 +39,22 @@ export class ProjectsDetailDialogSmartComponent implements OnInit {
       LpLocalStorage.set('state-data', this.data.projectId, 'project-on-screen')
       this.projectSelected = project;
     })
-    this.date = this.data.date ? this.data.date : null;
+    this.date = this.data.date ? this.data.date : this.date;
     this.prevDialog = this.data.prevDialog;
   }
   restoreVersion(data: { projectChanges: { [key: string]: any }, id: string }) {
     let projectChanges = LpObject.copyObject(data.projectChanges);
     data.projectChanges.user = this.authService.userOnline._id;
     data.projectChanges.participants ? data.projectChanges.participants = data.projectChanges.participants.map((p: any) => { return p._id }) : null;
-    this.projectService.putProject(data.projectChanges, this.projectSelected._id).subscribe((projectUpdated: Project) => {
+    this.projectService.putProject(data.projectChanges, this.projectSelected._id).pipe(map((res: any) => { return res.project })).subscribe((projectUpdated: Project) => {
       this.projectSelected = LpObject.mergeObjects(projectUpdated, projectChanges);
       this.cdr.detectChanges();
     })
   }
 
-  editProject(taskId: string) {
-
+  editProject() {
+    this.dialogsService.openEditProjectDialog(this.projectSelected);
+    this.closeDialog();
   }
   back() {
     this.dialogRef.close({ prevDialog: this.prevDialog })

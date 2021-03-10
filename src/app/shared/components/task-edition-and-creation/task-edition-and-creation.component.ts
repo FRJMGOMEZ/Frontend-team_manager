@@ -35,15 +35,14 @@ export class TaskEditionAndCreationComponent implements OnChanges {
      this.task ={
        name:'',
        description:'',
-       user:this.authService.userOnline._id,
+       createdBy:this.authService.userOnline._id,
        participants:[],
        reviewers:[],
        project:this.selectedProject,
        priority:1,
        status:'',
        startDate:null,
-       endDate:null,
-       disabled:false
+       endDate:null
      }
   }
 

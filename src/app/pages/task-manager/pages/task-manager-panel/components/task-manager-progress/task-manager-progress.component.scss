@@ -21,12 +21,21 @@
        .progress-bar{
       background-color:#7b87cc;
           height: 100%;
+          width: 100%;
         }
      }
   }
   .div-extratime-info{
    margin-top:10px !important
     }
+
+    span{
+      word-break: break-all;
+    }
+
+  .div-date{
+    margin: 7px !important;
+  }
 
 }
 

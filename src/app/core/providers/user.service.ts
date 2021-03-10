@@ -31,7 +31,7 @@ export class UserServices {
             tap((res: any) => { this.count = res.count }),
             map((res: any) => { return res.users }),
             catchError((err) => { return this.errorHandlerService.handleError(err)})
-        )
+        );
     }
     searchUsers(input: string, from: number = 0, limit: number = 5): Observable<User[]> {
         let url = `${API_URL}search/users/${input}?from=${from}&limit=${limit}`;
@@ -40,7 +40,7 @@ export class UserServices {
             map((res: any) => {
                 return res.users;
             })
-            , catchError((err) => { return this.errorHandlerService.handleError(err) }))
+            , catchError((err) => { return this.errorHandlerService.handleError(err) }));
     }
 
     postUser(user: User) {
@@ -50,43 +50,43 @@ export class UserServices {
             map((res: any) => {
         })
             , catchError((err) => { return this.errorHandlerService.handleError(err) })
-        )
+        );
     }
 
     putUser(id: string, user: User):Observable<User> {
-        let url = `${API_URL}user/${id}`
+        let url = `${API_URL}user/${id}`;
         return this.http.put(url, user).pipe(
             tap((res: any) => {
                 if (res.user._id === this.authService.userOnline._id) {
-                    this.authService.saveUser(res.user, LpLocalStorage.get('user','token'))
+                    this.authService.saveUser(res.user, LpLocalStorage.get('user','token'));
                     this.authService.userOnline = res.user;
                 }
-                this.userSrc.next({user:res.user,order:'put'})
+                this.userSrc.next({user:res.user,order:'put'});
             }),
             map((res:any)=>{return res.user}),
             catchError((err) => { return this.errorHandlerService.handleError(err) })
-        )
+        );
     }
 
     changeUserStatus(id: string) {
-        let url = `${API_URL}changeUserStatus/${id}`
+        let url = `${API_URL}changeUserStatus/${id}`;
         return this.http.put(url, {}).pipe(
             tap((res:any)=>{ this.userSrc.next({user:res.user, order:'put'})}),
-            catchError((err) => { return this.errorHandlerService.handleError(err) }))
+            catchError((err) => { return this.errorHandlerService.handleError(err) }));
     }
 
     changeRole(userId: string, role: string) {
-        let url = `${API_URL}changeRole/${userId}/${role}`
+        let url = `${API_URL}changeRole/${userId}/${role}`;
         return this.http.put(url, {}).pipe(
             tap((res: any) => { this.userSrc.next({ user: res.user, order: 'put' }) }),
-            catchError((err) => { return this.errorHandlerService.handleError(err) }))
+            catchError((err) => { return this.errorHandlerService.handleError(err) }));
     }
 
     deleteUser(id: string) {
-        let url = `${API_URL}user/${id}`
+        let url = `${API_URL}user/${id}`;
         return this.http.delete(url).pipe(
             tap((res: any) => { this.userSrc.next({ user: res.user, order: 'delete' }) }),
-            catchError((err) => { return this.errorHandlerService.handleError(err) }))
+            catchError((err) => { return this.errorHandlerService.handleError(err) }));
     }
 
 }

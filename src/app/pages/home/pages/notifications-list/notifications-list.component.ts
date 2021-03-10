@@ -124,11 +124,17 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
   }
   selectNotification(notification:NotificationModel){
     this.notificationService.selectNotification(notification);
-    if(this.mdService.desktop){
-      this.router.navigate([`${notification._id}`], { relativeTo: this.ar });
-    }else{
-       this.dialogsService.openTaskInfoDialog(notification.item);
-    }
+    console.log({notification});
+    this.router.navigate([`${notification._id}`], { relativeTo: this.ar }).then(()=>{
+      if(!this.mdService.desktop){
+        switch(notification.type){
+          case 'Task': this.dialogsService.openTaskInfoDialog(notification.item);
+          break;
+          case 'Project': this.dialogsService.openProjectInfoDialog(notification.item);
+          break;
+        }
+      }
+    })
   }
 
   getNotificationById(id:string){
@@ -141,7 +147,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
   }
 
   toggleNotification(notificationId:string){
-    this.lpDialogsService.openConfirmDialog('ARE YOU SURE?', '').pipe(switchMap((res:boolean)=>{
+    this.lpDialogsService.openConfirmDialog('SET NOTIFICATION AS CHECKED', '').pipe(switchMap((res:boolean)=>{
       return res ? this.notificationService.toggleNotification(notificationId) : empty()
     })).subscribe((res:boolean)=>{
       res ? (this.notifications.find((n)=>{ return n._id === notificationId}).usersTo as any[]).find((u)=>{ return u.user === this.authService.userOnline._id}).checked = true : null;

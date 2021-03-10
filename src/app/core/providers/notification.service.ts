@@ -42,8 +42,7 @@ export class NotificationService {
       catchError((err) => { this.lpDialogsService.openInfoDialog(err.message, err.status, 'ERROR'); return this.errorHandlerService.handleError(err) }));
   }
   getNotificationsUnchecked(queryString:string,skip:number,limit:number):Observable<any>{
-    // FIXME:
-    let query = `checked=false&userTo=${this.authService.userOnline._id}`
+    let query = `checked=false&userTo=${this.authService.userOnline._id}`;
     queryString+= queryString ? '&' + query : '?' + query;
     return this.getNotifications(queryString, skip, limit);
   }
@@ -63,29 +62,29 @@ export class NotificationService {
   showSnackNot(notification: NotificationModel) {
     const { method, item, prevItem } = notification;
     const user = notification.userFrom as User;
-    const project =  notification.type === 'Project' ? {name:''} : notification.project as {name:string,_id:string}
+    const project =  notification.type === 'Project' ? {name:''} : notification.project as {name:string,_id:string};
     switch (method) {
       case 'POST':
         this.lpSnackbarNotificationService.showNotification('ADHESION', item.name , notification.type, user.name, project.name);
         break;
       case 'PUT':
         if ((item.participants as string[]).includes(this.authService.userOnline._id)) {
-          this.lpSnackbarNotificationService.showNotification(method, prevItem ? prevItem.name ? prevItem.name :item.name : item.name, notification.type, user.name, project.name)
+          this.lpSnackbarNotificationService.showNotification(method, prevItem ? prevItem.name ? prevItem.name :item.name : item.name, notification.type, user.name, project.name);
         } else {
-          this.lpSnackbarNotificationService.showNotification('REMOVAL', prevItem ? prevItem.name ? prevItem.name : item.name : item.name, notification.type, user.name, project.name)
+          this.lpSnackbarNotificationService.showNotification('REMOVAL', prevItem ? prevItem.name ? prevItem.name : item.name : item.name, notification.type, user.name, project.name);
         }
         break;
       case 'DELETE':
-        this.lpSnackbarNotificationService.showNotification('DELETE', item.name, notification.type, user.name, project.name)
+        this.lpSnackbarNotificationService.showNotification('DELETE', item.name, notification.type, user.name, project.name);
         break;
       case 'STATUS CHANGE':
-        this.lpSnackbarNotificationService.showNotification(method, item.name, notification.type, user.name, project.name, item.status)
+        this.lpSnackbarNotificationService.showNotification(method, item.name, notification.type, user.name, project.name, item.status);
         break;
     }
   }
   listenningNotificationsEvents(){
     this.wsService.listen('notification').subscribe((notification:NotificationModel)=>{
-      this.addSnackNotification(notification);
+      (notification.userFrom as User)._id !== this.authService.userOnline._id ? this.addSnackNotification(notification):null;
       (notification.usersTo as any).map((u)=>{ return u.user}).includes(this.authService.userOnline._id) ? this.notificationsUncheckedSrc.next(true) : null;
       this.notificationSrc.next(notification);
     })

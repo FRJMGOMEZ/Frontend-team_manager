@@ -58,6 +58,7 @@ export class CalendarSchedulerDayComponent {
   }
 
   renderTask(taskDiv:ElementRef,size: 'small' | 'regular', percent:number,task:Task){
+    console.log({percent})
     if (size === 'regular') {
       this.renderer.setStyle(taskDiv, 'background-color', this.taskColor(task));
       this.renderer.setStyle(taskDiv, 'width', `${percent}%`);
