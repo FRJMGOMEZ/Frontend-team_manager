@@ -393,6 +393,8 @@ lp-input-trimmer
 
 lp-operations
 
+lp-routes-breadcrumbs
+
 lp-thinking-time-progress
 
 lp-validation-directives
