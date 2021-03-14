@@ -15,11 +15,9 @@ export class ErrorHandlerService {
              private lpDialogsService:LpDialogsService) { }
   handleError(error: HttpErrorResponse) {
 
-     this.loadSpinnerService.state.next(false);
-     
-     this.lpDialogsService.openInfoDialog(error.message, error.status.toString(), 'ERROR'); 
-
-     let errorMessage = error.error.message;
+    this.loadSpinnerService.state.next(false);
+    let errorMessage = error.error.err ? error.error.err.message : error.error.message;
+    this.lpDialogsService.openInfoDialog(errorMessage || 'API ERROR' , `ERROR ${error.status}`); 
 
     switch (error.status) {
       case 400: this.plSnackbarNotificationsService.httpError(errorMessage, '');
