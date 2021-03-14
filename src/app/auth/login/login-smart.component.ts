@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthService } from '../shared/providers/auth.service';
-import { Credentials } from '../shared/models/credentials';
+import { AuthService } from '../../core/providers/auth.service';
+import { Credentials } from '../../core/models/credentials';
 @Component({
   selector: "app-login-smart",
   template:`
@@ -22,9 +22,7 @@ export class LoginSmartComponent implements OnInit {
     } 
   }
  login(data:{credentials:Credentials,rememberMe:boolean}) {
-  this.authService.login(data.credentials, data.rememberMe).subscribe((res:any) => {
-      this.router.navigate([""]);
-    });
+  this.authService.login(data.credentials, data.rememberMe).subscribe((res:any) => this.router.navigate([""]));
   }
   navigateToRegistration(){
       this.router.navigate(['registration'],{relativeTo:this.ar.parent})

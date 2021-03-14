@@ -1,17 +1,16 @@
 import { Component, OnInit, ChangeDetectorRef, Inject } from '@angular/core';
 import { Project } from '../../../core/models/project.model';
-import { AuthService } from '../../../auth/shared/providers/auth.service';
+import { AuthService } from '../../../core/providers/auth.service';
 import { ProjectService } from '../../../core/providers/project.service';
 import { LpObject, LpLocalStorage } from 'lp-operations';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { map } from 'rxjs/operators';
-import { DialogsService } from '../../../core/providers/dialogs.service';
 
 @Component({
   selector: 'app-projects-detail-dialog-smart',
   template:`
    <mat-dialog-content>
-   <app-project-detail [date]="date" [projectSelected]="projectSelected" (editProject)="editProject()" (restoreVersion)="restoreVersion($event)" > </app-project-detail>
+   <app-project-detail [date]="date" [projectSelected]="projectSelected"(restoreVersion)="restoreVersion($event)" > </app-project-detail>
    </mat-dialog-content>
    <mat-dialog-actions fxLayoutAlign="center">
      <button mat-raised-button (click)="closeDialog()" >CLOSE</button>
@@ -29,8 +28,7 @@ export class ProjectsDetailDialogSmartComponent implements OnInit {
     private projectService: ProjectService,
     private cdr: ChangeDetectorRef,
     private dialogRef: MatDialogRef<ProjectsDetailDialogSmartComponent>,
-    @Inject(MAT_DIALOG_DATA) private data,
-    private dialogsService:DialogsService
+    @Inject(MAT_DIALOG_DATA) private data
 
   ) { }
 
@@ -50,11 +48,6 @@ export class ProjectsDetailDialogSmartComponent implements OnInit {
       this.projectSelected = LpObject.mergeObjects(projectUpdated, projectChanges);
       this.cdr.detectChanges();
     })
-  }
-
-  editProject() {
-    this.dialogsService.openEditProjectDialog(this.projectSelected);
-    this.closeDialog();
   }
   back() {
     this.dialogRef.close({ prevDialog: this.prevDialog })

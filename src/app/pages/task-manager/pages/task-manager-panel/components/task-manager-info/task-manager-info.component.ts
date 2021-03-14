@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Task } from '../../../../../../core/models/task.model';
 import { TaskService } from '../../../../../../core/providers/task.service';
-import { AuthService } from '../../../../../../auth/shared/providers/auth.service';
+import { AuthService } from '../../../../../../core/providers/auth.service';
 import { LpDialogsService } from 'lp-dialogs';
 import { MediaService } from '../../../../../../core/providers/media.service';
 import { DialogsService } from '../../../../../../core/providers/dialogs.service';

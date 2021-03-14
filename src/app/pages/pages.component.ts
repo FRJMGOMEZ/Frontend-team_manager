@@ -6,7 +6,7 @@ import { Subscription} from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { WebSocketsService } from '../core/providers/web-sockets.service';
 import { ProjectService } from '../core/providers/project.service';
-import { AuthService } from '../auth/shared/providers/auth.service';
+import { AuthService } from '../core/providers/auth.service';
 import { DialogsService } from '../core/providers/dialogs.service';
 import { TaskService } from '../core/providers/task.service';
 import { NotificationService } from '../core/providers/notification.service';
@@ -23,6 +23,7 @@ export class PagesComponent implements OnInit, OnDestroy {
   projectsSubs: Subscription;
   selectedProject:string;
   display:boolean=false;
+  sidenavOpen:boolean = false;
   constructor(  private wSService:WebSocketsService,
                 public projectService:ProjectService,
                 public authService:AuthService,

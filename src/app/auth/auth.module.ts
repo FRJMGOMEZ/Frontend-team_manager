@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { Routes, RouterModule } from '@angular/router';
-import { PasswordDirective } from './shared/directives/password-validator.directive';
+import { PasswordDirective } from '../shared/directives/password-validator.directive';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginSmartComponent } from './login/login-smart.component';

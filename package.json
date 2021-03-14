@@ -33,6 +33,7 @@
     "lp-files-uploader": "^10.0.1",
     "lp-input-trimmer": "^10.0.1",
     "lp-operations": "^10.1.2",
+    "lp-routes-breadcrumbs": "^10.1.1",
     "lp-thinking-time-progress": "^10.0.1",
     "lp-validation-directives": "^10.0.1",
     "ng-pick-datetime": "^7.0.0",

@@ -13,20 +13,20 @@
     left: 3%;
     top:10%;
      .registration-box{
-        padding-top:10rem
+        padding-top:5vh
     }
     h1{
         font-family: 'Alfa Slab One', cursive;
         color:#3c4873;
-        font-size:1.8rem
+        font-size:2.4rem
     }
  
 }
 
 @media  (max-width: 1279px) {
 .registration-container{
+    height: 100vh;
     position: inherit;
-    height: 100%;
     width:100%;
     background:#ffffff;
     .registration-box{

@@ -7,7 +7,7 @@ import { User } from '../../../../../../core/models/user.model';
 import { TaskService } from '../../../../../../core/providers/task.service';
 import { FileModel } from '../../../../../../core/models/file.model';
 import { FilesService } from '../../../../../../core/providers/files.service';
-import { AuthService } from '../../../../../../auth/shared/providers/auth.service';
+import { AuthService } from '../../../../../../core/providers/auth.service';
 import { MediaService } from '../../../../../../core/providers/media.service';
 
 @Component({

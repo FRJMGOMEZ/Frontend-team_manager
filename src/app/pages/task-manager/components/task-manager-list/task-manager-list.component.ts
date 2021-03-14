@@ -17,7 +17,7 @@ export class TaskManagerListComponent implements OnInit {
   @Input() tasksList:Task[] = [];
   @Output() selectTask = new EventEmitter<string>();
   @Output() getItems = new EventEmitter<number>();
-  displayedColumns: string[] = ['name', 'end date', 'status', 'priority', 'options'];
+  displayedColumns: string[] = ['name', 'status', 'priority', 'options'];
   constructor() { }
   ngOnInit(): void {}
   paginatorChange(event){

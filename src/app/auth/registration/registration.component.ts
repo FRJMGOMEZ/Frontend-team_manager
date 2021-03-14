@@ -1,7 +1,7 @@
  import { Component, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { checkRegExp, areTheyEqual } from '../shared/utils/validations';
+import { checkRegExp, areTheyEqual } from '../../shared/utils/validations';
 import { User } from '../../core/models/user.model';
 @Component({
   selector: 'app-registration',
@@ -9,7 +9,6 @@ import { User } from '../../core/models/user.model';
   styleUrls: ["./registration.component.scss"]
 })
 export class RegistrationComponent {
-  imgBackground = 'assets/menu/icon/calendar.png'
 
   regExpValidations: { error: string, regExp: string }[] = [
     { error: 'hasNumeric', regExp: '(?=.*[0-9])' },

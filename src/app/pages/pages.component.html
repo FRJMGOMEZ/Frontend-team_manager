@@ -1,8 +1,10 @@
 
-
 <mat-sidenav-container *ngIf="display" >
   <mat-sidenav #start [mode]="'side'">
              <mat-list>
+                <mat-list-item fxLayoutAlign="center" matTooltip="navigate to notifications">
+                      <mat-icon   color="accent" (click)="start.toggle();sidenavOpen=false" >menu</mat-icon>
+               </mat-list-item>
                <mat-list-item fxLayoutAlign="center" matTooltip="navigate to notifications">
                   <mat-icon #homeIcon [color]="path === 'home' ? 'primary' : 'accent'" (click)="navigate('home')" routerLinkActive="router-link-active"
                      color="accent"  matTooltip="navigate to home">home</mat-icon>
@@ -32,9 +34,9 @@
   <mat-sidenav-content >
      <mat-toolbar >
     <mat-toolbar-row>
-   <div fxFlex.lt-md="20" fxHide.gt-sm fxShow.lt-md>
+   <div *ngIf="!sidenavOpen" fxFlex.lt-md="22" fxHide.gt-sm fxShow.lt-md fxLayoutAlign="flex-start">
       <a >
-         <mat-icon   color="accent" (click)="start.toggle()" matBadge matBadgeOverlap="false" appNotifications >menu</mat-icon>
+         <mat-icon   color="accent" (click)="start.toggle();sidenavOpen = true;" matBadge matBadgeOverlap="false" appNotifications >menu</mat-icon>
       </a>
    </div>
    <a fxShow.gt-sm fxHide >
@@ -50,9 +52,13 @@
          matTooltip="navigate to task manager" class="icon-pages" color="accent">assignment</mat-icon>
    </a>
    <span *ngIf="mdService.desktop" class="spacer"></span>
-   <app-projects-smart fxFlex.lt-md="55" id="project-selector"> </app-projects-smart>
-   <div [style.margin-left]="'10px'" fxFlex.lt-md="22" fxLayoutAlign.gt-sm="center" fxFlex.gt-sm="20" *ngIf="selectedProject">
-       <button fxLayout="center" ngClass.gt-sm="new-task-btn-desktop" ngClass.lt-md="new-task-btn-mobile" id="new-task" (click)="postTask()" color="accent" [disabled]="!selectedProject" mat-raised-button fxLayoutAlign="center"><span>ADD TASK</span></button>
+   <div fxLayout="row" fxFlex="sidenavOpen  ? '100' : '78'">
+     <div fxFlex.lt-md="82" fxFlex.gt-sm="70">
+      <app-projects-smart  id="project-selector"> </app-projects-smart>
+     </div>
+     <div [style.margin-left]="'7px'" fxFlex.lt-md="18" fxFlex.gt-sm="30" fxLayoutAlign="center" *ngIf="selectedProject">
+          <button fxLayout="center" ngClass.gt-sm="new-task-btn-desktop" ngClass.lt-md="new-task-btn-mobile" id="new-task" (click)="postTask()" color="accent" [disabled]="!selectedProject" mat-raised-button fxLayoutAlign="center"><span>+ TASK</span></button>
+      </div>
    </div>
    <a fxShow.gt-sm fxHide>
      <mat-icon [matMenuTriggerFor]="menu" color="primary">account_circle</mat-icon>

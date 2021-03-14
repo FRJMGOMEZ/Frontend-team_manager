@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
-import { CheckTokenGuard } from '../auth/shared/guards/check-token.guard';
+import { CheckTokenGuard } from '../shared/guards/check-token.guard';
 
 let pagesRoutes:Routes = [
   {

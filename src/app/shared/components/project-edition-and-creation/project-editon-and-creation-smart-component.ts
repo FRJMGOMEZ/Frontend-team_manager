@@ -5,7 +5,7 @@ import { User } from '../../../core/models/user.model';
 import { UserServices } from '../../../core/providers/user.service';
 import { Project } from '../../../core/models/project.model';
 import { ProjectService } from '../../../core/providers/project.service';
-import { AuthService } from '../../../auth/shared/providers/auth.service';
+import { AuthService } from '../../../core/providers/auth.service';
 import { LpObject } from 'lp-operations';
 import { LpLocalStorage } from 'lp-operations';
 

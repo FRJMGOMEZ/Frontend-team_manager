@@ -3,6 +3,7 @@ import { Project } from '../../../core/models/project.model';
 import { ProjectService } from '../../../core/providers/project.service';
 import { LpDialogsService } from 'lp-dialogs';
 import { LpObject } from 'lp-operations';
+import { DialogsService } from '../../../core/providers/dialogs.service';
 @Component({
   selector: 'app-project-detail',
   templateUrl: './project-detail.component.html',
@@ -19,13 +20,11 @@ export class ProjectDetailComponent implements OnChanges{
   @Output() back = new EventEmitter<any>();
   isLastVersion:boolean = false;
   isFirstVersion:boolean;
-  @Output() editProject: EventEmitter<void> = new EventEmitter<void>();
   @Output() restoreVersion: EventEmitter<{ projectChanges: { [key: string]: any }, id: string }> = new EventEmitter<{ projectChanges: { [key: string]: any }, id: string }>();
   currentVersion:number
-  constructor(public projectService: ProjectService, private lpDialogsService: LpDialogsService) { }
+  constructor(public projectService: ProjectService, private lpDialogsService: LpDialogsService, private dialogsService:DialogsService) { }
   ngOnChanges(changes:SimpleChanges){
    if(changes.projectSelected && this.projectSelected){
-     console.log(this.projectSelected);
     this.projectPristine = LpObject.copyObject(this.projectSelected);
    }
   }
@@ -41,7 +40,6 @@ export class ProjectDetailComponent implements OnChanges{
     const projectSelected = Object.keys(this.projectSelected).reduce((acum, key) => { !this.propertiesNoEditables.includes(key) ? acum[key] = this.projectSelected[key] : null; return acum }, {});
     const projectPristine = Object.keys(this.projectPristine).reduce((acum, key) => { !this.propertiesNoEditables.includes(key) ? acum[key] = this.projectPristine[key] : null; return acum }, {});
     let obj = LpObject.getObjectDifferences(projectPristine, projectSelected);
-    console.log({obj,projectSelected,projectPristine});
     return { projectChanges: obj, id: this.projectSelected._id };
   }
   versionIsDifferent() {
@@ -57,5 +55,12 @@ export class ProjectDetailComponent implements OnChanges{
    const projectPristine = Object.keys(this.projectPristine).reduce((acum, key) => { !this.propertiesNoEditables.includes(key) ? acum[key] = this.projectPristine[key] : null; return acum }, {});
    this.isLastVersion = LpObject.areEquals(projectSelected,projectPristine);
   }
+
+  editProject() {
+    this.dialogsService.openEditProjectDialog(this.projectSelected);
+    this.close.emit()
+  }
+
+
 
 }

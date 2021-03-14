@@ -5,13 +5,13 @@
         <div class="div-date" fxLayoutAlign="center"> <span> {{taskSelected.endDate | date : 'M/d/yy, H:mm '}} </span></div>
     </div>
     <div [fxFlex]=" taskSelected.deliverDate ? '40' : '100'"  class="div-progress" fxLayoutGap="5px" fxLayout="row">
-        <div fxHide.lt-md fxShow.gt-sm  fxLayoutAlign="center" fxFlex="10" > <span>{{taskSelected.startDate | date : 'M/d/yy, H:mm '}}</span> </div>
-        <div fxFlex.gt-sm="80" fxFlex.lt-md="100" fxLayoutAlign="center">
-            <div fxFlex="90" fxLayout="column" class="progress-bar-container" >
+        <div fxHide.lt-md fxShow.gt-sm  fxLayoutAlign="center" fxFlex="15" > <span>{{taskSelected.startDate | date : 'M/d/yy, H:mm '}}</span> </div>
+        <div fxFlex.gt-sm="70" fxFlex.lt-md="100" fxLayoutAlign="center">
+            <div fxFlex="100" fxLayout="column" class="progress-bar-container" >
                 <div [style.width.%]="timelineProgress" class="progress-bar" ></div>
             </div>
         </div>
-        <div  fxHide.lt-md fxShow.gt-sm  fxLayoutAlign="center" fxFlex="10"> <span> {{taskSelected.endDate | date : 'M/d/yy, H:mm '}} </span></div>
+        <div  fxHide.lt-md fxShow.gt-sm  fxLayoutAlign="center" fxFlex="15"> <span> {{taskSelected.endDate | date : 'M/d/yy, H:mm '}} </span></div>
     </div>
     <div fxFlex="40" *ngIf="extraTimeMilisec"  class="div-progress" fxLayout="column">
         <div fxLayoutAlign="center" [style.width.%]="'100'">

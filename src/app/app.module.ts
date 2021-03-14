@@ -9,11 +9,12 @@ import { SocketIoModule } from 'ngx-socket-io';
 import { environment } from '../environments/environment';
 import { LpDialogsModule } from 'lp-dialogs';
 import { MaterialModule } from './shared/material/material.module';
-import { TokenInterceptor } from './auth/shared/interceptors/token.interceptor';
 import { MatNativeDateModule } from '@angular/material/core';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { LocationStrategy } from '@angular/common';
 import { HashLocationStrategy } from '@angular/common';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { LoadSpinnerModule } from './core/components/load-spinner/load-spinner.module';
 @NgModule({
   declarations: [
     AppComponent
@@ -31,8 +32,9 @@ import { HashLocationStrategy } from '@angular/common';
     MatNativeDateModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+    LoadSpinnerModule
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }, { provide: LocationStrategy, useClass: HashLocationStrategy },],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, { provide: LocationStrategy, useClass: HashLocationStrategy },],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
      

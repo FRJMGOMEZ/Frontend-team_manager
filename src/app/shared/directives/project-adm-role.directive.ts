@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Renderer2, Input, OnInit } from '@angular/core';
-import { AuthService } from '../../auth/shared/providers/auth.service';
+import { AuthService } from '../../core/providers/auth.service';
 
 @Directive({
   selector: '[appProjectAdmRole]'

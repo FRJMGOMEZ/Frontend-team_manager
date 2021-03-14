@@ -1,7 +1,7 @@
 import { Component, ChangeDetectorRef,Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TaskService } from '../../../core/providers/task.service';
-import { AuthService } from '../../../auth/shared/providers/auth.service';
+import { AuthService } from '../../../core/providers/auth.service';
 import { Task } from '../../../core/models/task.model';
 import { LpObject } from 'lp-operations';
 import { DialogsService } from '../../../core/providers/dialogs.service';

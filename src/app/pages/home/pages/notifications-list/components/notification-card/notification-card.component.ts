@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NotificationModel } from '../../../../../../core/models/notification.model';
 import { User } from '../../../../../../core/models/user.model';
-import { AuthService } from '../../../../../../auth/shared/providers/auth.service';
+import { AuthService } from '../../../../../../core/providers/auth.service';
 import { MediaService } from '../../../../../../core/providers/media.service';
 
 @Component({

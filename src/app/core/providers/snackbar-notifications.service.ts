@@ -7,29 +7,25 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class SnackbarNotificationsService {
 
   constructor(private _snackBar: MatSnackBar) { }
-  showNotification(action: string, item: string, itemType: string, user: string, project?: string,status?:string) {
+  showNotification(action: string, item: string, itemType: string, user: string, project?: string) {
      let message = ''
      switch(action){
        case 'POST':
-         message += `${item}(${itemType}) created ${project ? `in project ${project}`: ''} and includes you`;
+         message += `${user} has created ${item}(${itemType}) ${project ? `in project ${project}`: ''} and included you`;
           break;
        case 'PUT':
-         message += `${item}(${itemType}) edited ${project ? `in project ${project}` : ''}`;
+         message += `${user} has edited ${item}(${itemType}) ${project ? `in project ${project}` : ''}`;
          break;
        case 'ADHESION':
-         message += `${item}(${itemType}) created ${project ? `in project ${project}` : ''} and includes you`;
+         message += `${user} has edited ${item}(${itemType}) ${project ? `in project ${project}` : ''} and included you`;
        break;
        case 'REMOVAL':
-         message += `${item}(${itemType}) created ${project ? `in project ${project}` : ''} and removes you`;
+         message += `${user} has edited ${item}(${itemType}) ${project ? `in project ${project}` : ''} and removed you`;
        break;
         case 'DELETE':
-         message += `${item}(${itemType}) deleted ${project ? `in project ${project}` : ''} and includes you`;
-         break;  
-       case 'STATUS CHANGE':
-         message += `${item}(${itemType}) changed status to "${status}"`;
-         break;     
+         message += `${user} has deleted ${item}(${itemType}) ${project ? `in project ${project}` : ''}`;
+         break;      
      }
-     message+= ` by ${user}`;
     this._snackBar.open(message, action, {
       duration: 4000,
     });

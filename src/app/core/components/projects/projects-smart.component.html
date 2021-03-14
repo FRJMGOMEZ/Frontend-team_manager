@@ -19,18 +19,21 @@
        </app-projects>
      </mat-expansion-panel>
      <mat-card class="mat-card-project" *ngIf="!mdService.desktop" >
-        <div fxFlex="10">
-        <a fxLayout="column" fxLayoutAlign="center" (click)="postProject()">
-            <mat-icon fxLayoutAlign="flex-start" color="primary">add</mat-icon>
-        </a>
-        </div>
-        <div  fxFlex="80" fxLayout="row" fxLayoutAlign="center">
+       
+        <div  fxFlex="80" fxLayout="column" fxLayoutAlign="center">
         {{projectSelected ? projectName: ''}}
         </div>
-        <div fxFlex="10">
-         <a fxLayout="column" fxLayoutAlign="center">
-            <mat-icon color="primary" (click)="openProjectList()" >list</mat-icon>
-        </a>
+        <div fxFlex="20" fxLayout="column">
+             <div fxLayoutAlign="flex-start" fxFlex="50">
+            <a fxLayout="column" fxLayoutAlign="center" (click)="postProject()">
+                <mat-icon fxLayoutAlign="flex-start" color="primary">add</mat-icon>
+            </a>
+            </div>
+            <div fxFlex="50">
+             <a fxLayout="column" fxLayoutAlign="center">
+                <mat-icon color="primary" (click)="openProjectList()" >list</mat-icon>
+            </a>
+            </div>
         </div>
      </mat-card>
     

@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder} from '@angular/forms';
-import { checkRegExp, areTheyEqual } from '../../shared/utils/validations';
+import { checkRegExp, areTheyEqual } from '../../../shared/utils/validations';
 
 @Component({
   selector: 'app-reset',

@@ -3,7 +3,7 @@ import { Subscription, empty } from 'rxjs';
 import { Task } from '../../../../core/models/task.model';
 import { User } from '../../../../core/models/user.model';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../../../auth/shared/providers/auth.service';
+import { AuthService } from '../../../../core/providers/auth.service';
 import { TaskService } from '../../../../core/providers/task.service';
 import { DialogsService } from '../../../../core/providers/dialogs.service';
 import { LpDialogsService } from 'lp-dialogs';

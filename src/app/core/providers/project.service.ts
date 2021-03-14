@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, catchError, tap, switchMap } from 'rxjs/operators';
+import { map, tap, switchMap } from 'rxjs/operators';
 import { Subject, Observable, empty } from 'rxjs';
 import { WebSocketsService } from './web-sockets.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LpDialogsService } from 'lp-dialogs';
 import { Project } from '../models/project.model';
-import { ErrorHandlerService } from './error-handler.service';
-import { AuthService } from '../../auth/shared/providers/auth.service';
+import { AuthService } from './auth.service';
 import { API_URL } from '../../config/api-url';
 import { LpLocalStorage } from 'lp-operations';
 
@@ -35,11 +34,10 @@ export class ProjectService {
   private _selectedProject:Project;
 
   constructor(private http: HttpClient,
-    private errorHandlerService: ErrorHandlerService,
-    private lpDialogsService: LpDialogsService,
-    private wSService: WebSocketsService,
-    private authService: AuthService,
-    private dialogRef:MatDialog
+              private lpDialogsService: LpDialogsService,
+              private wSService: WebSocketsService,
+              private authService: AuthService,
+              private dialogRef:MatDialog
     ) {}
    
   get selectedProject(){
@@ -48,26 +46,18 @@ export class ProjectService {
   getProjects() {
     let url = `${API_URL}projects`
     return this.http.get(url).pipe(
-      map((res: any) => {
-        return res.projects }),
-      catchError((err) => { this.lpDialogsService.openInfoDialog(err.message, err.status, 'ERROR'); return this.errorHandlerService.handleError(err) })
+      map((res: any) =>  res.projects )
     );
   }
   getProjectById(projectId: string) {
     let url = `${API_URL}project/${projectId}`;
     return this.http.get(url).pipe(
-      map((res: any) => {
-        return res.project;
-      }),
-      catchError((err) => { this.lpDialogsService.openInfoDialog(err.message, err.status, 'ERROR'); return this.errorHandlerService.handleError(err) }));
+      map((res: any) => res.project));
   }
 
   getParticipants(projectId: string) {
     let url = `${API_URL}get-participants/${projectId}`;
-    return this.http.get(url).pipe(map((res: any) => {
-      return res.participants;
-    }),
-      catchError((err) => { this.lpDialogsService.openInfoDialog(err.message, err.status, 'ERROR');; return this.errorHandlerService.handleError(err) })
+    return this.http.get(url).pipe(map((res: any) =>  res.participants)
     );
   }
   selectProject(project:Project) {
@@ -83,7 +73,6 @@ export class ProjectService {
         this.projectSrc.next({project:res.project,action:'POST'});
         this.lpDialogsService.openInfoDialog('SUCCESFULLY CREATED', null, res.project.name);
       })
-      , catchError((err) => { this.lpDialogsService.openInfoDialog(err.message, err.status, 'ERROR');; return this.errorHandlerService.handleError(err) })
     );
   }
 
@@ -99,8 +88,7 @@ export class ProjectService {
           this.projectSrc.next({ project: res.project, action: 'PUT' });
           this.lpDialogsService.openInfoDialog('SUCCESFULLY UPDATED', 'PUT', res.project.name);
         }
-      }),
-      catchError((err) => { this.lpDialogsService.openInfoDialog(err.message, err.status, 'ERROR');; return this.errorHandlerService.handleError(err) }));
+      }));
   }
 
   deleteProject(id: string): Observable<any> {
@@ -110,8 +98,7 @@ export class ProjectService {
         this.projectSrc.next({project:res.project,action:'DELETE'});
         this.lpDialogsService.openInfoDialog('SUCCESFULY DELETED', 'DELETION', res.project.name);
         this.wSService.emit('user-out-project',{projectId:res.project._id});
-      }),
-      catchError((err) => { this.lpDialogsService.openInfoDialog(err.message, err.status, 'ERROR');return this.errorHandlerService.handleError(err) }));
+      }));
     return this.lpDialogsService.openConfirmDialog()
       .pipe(
         switchMap((res: any) => {

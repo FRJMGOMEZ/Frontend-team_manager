@@ -4,7 +4,7 @@ import { User } from '../../../core/models/user.model';
 import { ProjectService } from '../../../core/providers/project.service';
 import { UserServices } from '../../../core/providers/user.service';
 import { TaskService } from '../../../core/providers/task.service';
-import { AuthService } from '../../../auth/shared/providers/auth.service';
+import { AuthService } from '../../../core/providers/auth.service';
 import { Project } from '../../../core/models/project.model';
 import { LpObject, LpLocalStorage } from 'lp-operations';
 
@@ -39,6 +39,7 @@ export class TaskEditionAndCreationSmartComponent implements OnInit {
     this.taskService.getTaskById(taskId).subscribe((taskDb: Task) => {
       let taskSelected = LpObject.copyObject(taskDb);
       taskSelected.participants = (taskSelected.participants as User[]).map((eachParticipant: User) => { return eachParticipant._id });
+      taskSelected.reviewers = (taskSelected.reviewers as User[]).map((eachParticipant: User) => { return eachParticipant._id });
       taskSelected.createdBy = (taskSelected.createdBy as User)._id;
       taskSelected.project = taskSelected.project as Project;
       this.taskSelected = taskSelected;

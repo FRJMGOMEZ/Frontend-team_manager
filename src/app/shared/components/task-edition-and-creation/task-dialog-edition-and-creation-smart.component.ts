@@ -5,11 +5,10 @@ import { Task } from '../../../core/models/task.model';
 import { ProjectService } from '../../../core/providers/project.service';
 import { UserServices } from '../../../core/providers/user.service';
 import { TaskService } from '../../../core/providers/task.service';
-import { AuthService } from '../../../auth/shared/providers/auth.service';
+import { AuthService } from '../../../core/providers/auth.service';
 import { Project } from '../../../core/models/project.model';
 import { LpObject } from 'lp-operations';
 import { LpLocalStorage } from 'lp-operations';
-
 
 @Component({
     selector: 'app-task-dialog-edition-and-creation-smart',
@@ -43,11 +42,7 @@ export class TaskDialogEditionAndCreationSmartComponent {
     getTask(taskId:string) {
         this.taskService.getTaskById(taskId).subscribe((taskDb: Task) => {
             let taskSelected = LpObject.copyObject(taskDb);
-            taskSelected.participants = (taskSelected.participants as User[]).map((eachParticipant: User) => { return eachParticipant._id });
-            taskSelected.reviewers = (taskSelected.reviewers as User[]).map((eachParticipant: User) => { return eachParticipant._id });
-            taskSelected.createdBy = (taskSelected.createdBy as User)._id;
-            taskSelected.project = taskSelected.project as Project;
-            this.taskSelected = taskSelected;
+            this.taskSelected = this.taskParsed(taskSelected);
             LpLocalStorage.set('state-data', this.taskSelected._id, 'task');
         })
     }
@@ -64,7 +59,7 @@ export class TaskDialogEditionAndCreationSmartComponent {
         }
     }
     postTask(task: Task) {
-        this.taskService.postTask(task).subscribe((task: Task) => {
+        this.taskService.postTask(task).subscribe(() => {
             this.closeDialog();
         })
     }
@@ -72,8 +67,16 @@ export class TaskDialogEditionAndCreationSmartComponent {
     //TODO: EDIT PUT METHOD
     putTask(data:{taskChanges: { [key: string]: any },id:string}) {
         this.taskService.putTask(data.taskChanges, data.id).subscribe((task)=>{
-            this.taskSelected = LpObject.mergeObjects(task,data.taskChanges);
+            let taskSelected = LpObject.mergeObjects(task, data.taskChanges);
+            this.taskSelected = this.taskParsed(taskSelected);
         })
+    }
+    taskParsed(task: Task) {
+        task.participants = (task.participants as User[]).map((eachParticipant: User) => { return eachParticipant._id });
+        task.reviewers = (task.reviewers as User[]).map((eachParticipant: User) => { return eachParticipant._id });
+        task.createdBy = (task.createdBy as User)._id;
+        task.project = task.project as Project;
+        return task;
     }
     dialogBack(){
       this.dialogRef.close({prevDialog:this.prevDialog});

@@ -5,7 +5,7 @@ import { Subscription, Observable, fromEvent } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HomeComponent } from '../../home.component';
 import { User } from '../../../../core/models/user.model';
-import { AuthService } from '../../../../auth/shared/providers/auth.service';
+import { AuthService } from '../../../../core/providers/auth.service';
 import { DialogsService } from '../../../../core/providers/dialogs.service';
 import { switchMap, map } from 'rxjs/operators';
 import { ActionsRequiredService } from '../../../../core/providers/actions-required.service';
@@ -124,7 +124,6 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
   }
   selectNotification(notification:NotificationModel){
     this.notificationService.selectNotification(notification);
-    console.log({notification});
     this.router.navigate([`${notification._id}`], { relativeTo: this.ar }).then(()=>{
       if(!this.mdService.desktop){
         switch(notification.type){

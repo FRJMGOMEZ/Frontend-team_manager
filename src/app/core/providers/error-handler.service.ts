@@ -2,14 +2,22 @@ import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { SnackbarNotificationsService } from './snackbar-notifications.service';
+import { LoadSpinnerService } from '../components/load-spinner/load-spinner.service';
+import { LpDialogsService } from 'lp-dialogs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ErrorHandlerService {
 
-  constructor(private plSnackbarNotificationsService:SnackbarNotificationsService) { }
+  constructor(private plSnackbarNotificationsService:SnackbarNotificationsService,
+             private loadSpinnerService:LoadSpinnerService,
+             private lpDialogsService:LpDialogsService) { }
   handleError(error: HttpErrorResponse) {
+
+     this.loadSpinnerService.state.next(false);
+     
+     this.lpDialogsService.openInfoDialog(error.message, error.status.toString(), 'ERROR'); 
 
      let errorMessage = error.error.message;
 

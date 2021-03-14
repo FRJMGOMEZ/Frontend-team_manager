@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
-import { LpRoutesBreadcrumbsModule } from './lp-routes-breadcrumbs.module';
+import { filter, tap } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: LpRoutesBreadcrumbsModule
+  providedIn: 'root'
 })
 export class LpRoutesBreadcrumbsService {
 
@@ -14,26 +13,30 @@ export class LpRoutesBreadcrumbsService {
 
   constructor(private router: Router) {
 
-    this.listenningNavigationStart();
-    this.listenningNavigationEnd();
+   /*  this.listenningNavigationStart();
+    this.listenningNavigationEnd(); */
   }
 
   listenningNavigationStart() {
-    this.router.events
-      .pipe(filter((event) => { return event instanceof NavigationStart }))
-      .subscribe((event: any) => {
-        this.navigationStart.previousUrl = this.navigationStart.currentUrl;
-        this.navigationStart.currentUrl = event.url;
-      })
+    return this.router.events
+      .pipe(
+        filter((event) => { return event instanceof NavigationStart }),
+        tap((event: any) => {
+          this.navigationStart.previousUrl = this.navigationStart.currentUrl;
+          this.navigationStart.currentUrl = event.url;
+        }))
+      
   }
 
   listenningNavigationEnd() {
-    this.router.events
-      .pipe(filter((event) => { return event instanceof NavigationEnd }))
-      .subscribe((event: any) => {
-        this.navigationEnd.previousUrl = this.navigationEnd.currentUrl;
-        this.navigationEnd.currentUrl = event.url;
-      })
+    return this.router.events
+      .pipe(
+        filter((event) => { return event instanceof NavigationEnd }),
+        tap((event: any) => {
+          this.navigationEnd.previousUrl = this.navigationEnd.currentUrl;
+          this.navigationEnd.currentUrl = event.url;
+        }))
+      
   }
 
   getNavStart(): { currentUrl: string, previousUrl: string } {

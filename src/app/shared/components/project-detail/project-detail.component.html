@@ -11,7 +11,7 @@
                   <div [style.margin-left.px]="'20'" fxLayoutAlign="flex-end">
                       <mat-icon *ngIf="isDialog" (click)="back.emit()">keyboard_backspace</mat-icon>
                       <mat-icon *ngIf="versionIsDifferent() && !isLastVersion" (click)="restore()"  >settings_backup_restore</mat-icon>
-                      <mat-icon *ngIf="isLastVersion" (click)="editProject.emit()" >edit</mat-icon>
+                      <mat-icon *ngIf="isLastVersion" (click)="editProject()" >edit</mat-icon>
                 </div>
                  <div fxLayoutAlign="space-between">
                      <small class="small-user" *ngIf="currentVersion !== null" >{{ currentVersion === 0 ? 'created by' : 'edited by' }} {{currentVersion === 0 ? projectSelected.createdBy.name : projectSelected.prevStates && projectSelected.prevStates[currentVersion -1 ] ? projectSelected.prevStates[currentVersion -1 ].user.name : ''}}</small>

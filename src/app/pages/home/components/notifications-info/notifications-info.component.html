@@ -3,12 +3,23 @@
     <div [style.margin-bottom]="'10px'">
         <div class="div-task-checked">
         </div>
-        <div fxLayoutAlign="center">** TASK CHECKED **</div>
+        <div fxLayoutAlign="center">**TASK CHECKED**</div>
     </div>
     <div fxLayout="column">
         <div fxLayout="row"><button  fxLayout="column" fxLayoutAlign="center"  mat-raised-button><mat-icon>done</mat-icon></button>CLICK TO CHANGE NOTIFICATION STATUS AS CHECKED </div>
         <div fxLayout="row"><button fxLayout="column" fxLayoutAlign="center" mat-raised-button><mat-icon color="warn">assignment_late</mat-icon></button>CLICK TO SEE REQUIRED ASSIGNMENT DETAIL</div>
         <div fxLayout="row"><button fxLayout="column" fxLayoutAlign="center" mat-raised-button ><mat-icon >{{ mdService.desktop ? 'launch' : 'info'}}</mat-icon></button>CLICK TO SEE NOTIFICATION ITEM DETAIL</div>
     </div>
- 
+    <div [style.margin-top]="'15px'" fxLayout="row">
+      <mat-radio-button [style.color]="'#7b87cc'">v x</mat-radio-button>
+      <p [style.margin-left]="'20px'" >SELECT THE VERSION OF THE ITEM YOU WANT TO CHECK</p>
+    </div>
+    <div [style.margin-top]="'10px'" fxLayout="row">
+      <mat-icon>edit</mat-icon>
+      <p [style.margin-left]="'20px'" >EDIT THE ITEM</p>
+    </div>
+    <div [style.margin-top]="'10px'" fxLayout="row">
+      <mat-icon>settings_backup_restore</mat-icon>
+      <p [style.margin-left]="'20px'" >RESTORE A PREVIOUS VERSION OF THE ITEM</p>
+    </div>
 </div>

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
+import { AuthService } from './auth.service';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -8,9 +10,8 @@ export class WebSocketsService {
 
   socketStatus:boolean
 
-  constructor(private socket:Socket) { }
+  constructor(private socket:Socket,private authService:AuthService) { }
   checkStatus() {
-
     this.socket.on('connect', () => {
       console.log('Conectado al servidor');
       this.socketStatus = true;
@@ -19,6 +20,7 @@ export class WebSocketsService {
     this.socket.on('disconnect', () => {
       console.log('Desconectado del servidor');
       this.socketStatus = false;
+      this.authService.onServerOfDisconnection().pipe(switchMap(() => { return this.authService.logout() })).subscribe();
     });
   }
   emit(event: string, payload?: any, callback?: Function) {

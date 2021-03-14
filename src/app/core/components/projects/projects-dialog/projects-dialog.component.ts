@@ -18,7 +18,6 @@ export class ProjectsDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) private data) { }
 
   ngOnInit() {
-    console.log(this.data.projects);
     this.projects = this.data.projects || [];
     this.dialogRef.updatePosition({ top: '17%'})
   }

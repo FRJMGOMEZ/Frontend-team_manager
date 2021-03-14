@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import {Credentials} from '../shared/models/credentials';
-import { AuthDialogService } from '../shared/providers/auth-dialog.service';
+import {Credentials} from '../../core/models/credentials';
 import { LpLocalStorage } from 'lp-operations';
+import { AuthDialogService } from '../../core/providers/auth-dialog.service';
 
 @Component({
   selector: "app-login",

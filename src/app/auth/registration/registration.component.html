@@ -1,7 +1,7 @@
 
 <div class="container-fluid">
      <!-- create a parent component to show the image -->
-     <img fxHide.lt-lg class="img-background" [src]="imgBackground" alt="">
+     <img fxHide.lt-lg class="img-background" src="assets/images/team-manager.jpg" alt="">
       <div class="registration-container" >
           <div class="registration-box" fxLayout="column">
               <h1 fxLayoutAlign="center" [style.font-weight]="'bolder'">
@@ -13,12 +13,12 @@
                   <div fxLayoutAlign="center">
                     <mat-form-field>
                       <mat-label for="name">NAME</mat-label>
-                     <input matInput lpInputTrimmer formControlName='name' id="name" name='name' placeholder="Name" type="text" autofocus="" >
+                     <input matInput  formControlName='name' id="name" name='name' placeholder="Name" type="text" autofocus="" >
                       </mat-form-field>
                   </div>
                   <ng-container *ngIf="userForm.controls.name.invalid && userForm.controls.name.touched" >
-                                     <mat-error fxLayoutAlign="center" *ngIf="userForm.controls.name.errors.minlength && !userForm.controls.name.errors.required" class="error-message">
-                                                    El nombre necesita un mínimo de 5 caracteres
+                                     <mat-error fxLayoutAlign="center" *ngIf="userForm.controls.name.errors.minlength && !userForm.controls.name.errors.required" >
+                                                   Name needs at least 5 characters 
                                      </mat-error>
                    </ng-container>
                     <div [style.margin-top]="'0.5em'" fxLayoutAlign="center">
@@ -28,44 +28,44 @@
                         </mat-form-field>
                     </div>
                  <ng-container *ngIf="userForm.controls.email.invalid && userForm.controls.email.touched" >
-                                          <mat-error fxLayoutAlign="center" *ngIf="userForm.controls.email.errors.email" class="error-message">
-                                                        El valor introducido debe ser un email válido
+                                          <mat-error fxLayoutAlign="center" *ngIf="userForm.controls.email.errors.email">
+                                                        The value must be a valid email
                                           </mat-error>
                     </ng-container>
                     <div [style.margin-top]="'1em'" fxLayoutAlign ="center"> 
                         <mat-form-field>
-                             <input lpInputTrimmer matInput formControlName='password1' id="password1" name='password1'  placeholder="Password" type="password" >
+                             <input matInput formControlName='password1' id="password1" name='password1'  placeholder="Password" type="password" >
                         </mat-form-field>
                     </div>
                     <ng-container *ngIf="userForm.controls.password1.invalid && userForm.controls.password1.touched" >
-                                    <mat-error fxLayoutAlign="center" *ngIf="userForm.controls.password1.errors.hasNumeric && !userForm.controls.password1.errors.required" class="error-message">
-                                                    La contraseña debe contener al menos un caracter numérico
+                                    <mat-error fxLayoutAlign="center" *ngIf="userForm.controls.password1.errors.hasNumeric && !userForm.controls.password1.errors.required">
+                                                    The password must contain at least one number
                                     </mat-error>
-                                    <mat-error fxLayoutAlign="center" *ngIf="userForm.controls.password1.errors.minLength && !userForm.controls.password1.errors.required && !userForm.controls.password1.errors.hasNumeric" class="error-message">
-                                                    La contraseña debe de tener un mínimo de 8 caracteres
+                                    <mat-error fxLayoutAlign="center" *ngIf="userForm.controls.password1.errors.minLength && !userForm.controls.password1.errors.required && !userForm.controls.password1.errors.hasNumeric">
+                                                   The password must be at least 8 characters long
                                     </mat-error>
                     </ng-container>
                     <div [style.margin-top]="'0.5em'" fxLayoutAlign ="center" >
                           <mat-form-field>
-                              <input lpInputTrimmer matInput formControlName='password2' id="password2" name='password2' placeholder="Password" type="password" >
+                              <input  matInput formControlName='password2' id="password2" name='password2' placeholder="Password" type="password" >
                           </mat-form-field>
                     </div>
                      <ng-container *ngIf="userForm.controls.password2.invalid && userForm.controls.password2.touched" >
-                                     <mat-error fxLayoutAlign="center" *ngIf="userForm.controls.password2.errors.hasNumeric && !userForm.controls.password2.errors.required"class="error-message">
-                                                    La contraseña debe contener al menos un caracter numérico
+                                     <mat-error fxLayoutAlign="center" *ngIf="userForm.controls.password2.errors.hasNumeric && !userForm.controls.password2.errors.required">
+                                                       The password must contain at least one number
                                      </mat-error>
-                                    <mat-error fxLayoutAlign="center" *ngIf="userForm.controls.password2.errors.minLength && !userForm.controls.password2.errors.required && !userForm.controls.password2.errors.hasNumeric" class="error-message">
-                                                    La contraseña debe de tener un mínimo de 8 caracteres
+                                    <mat-error fxLayoutAlign="center" *ngIf="userForm.controls.password2.errors.minLength && !userForm.controls.password2.errors.required && !userForm.controls.password2.errors.hasNumeric">
+                                                    The password must be at least 8 characters long
                                     </mat-error>
                     </ng-container>
                     <div fxLayoutAlign="center" *ngIf="displayPasswordError(userForm)" [style.margin-top]="'3em'" >
-                                <p class='error-message'>Las contraseñas deben de ser iguales</p>
+                                <mat-error>Password must be equals</mat-error>
                     </div>
                 <div [style.margin-top]="'1em'" fxLayoutAlign="center">
                      <button mat-raised-button [disabled]="userForm.invalid" type='submit'><strong>REGISTER</strong></button>
                 </div>
             </form>
-            <div fxLayoutAlign="center" [style.margin-top]="'1em'">
+            <div fxLayoutAlign="center" [style.margin-top]="'1em'" [style.padding-bottom]="'0.5em'">
                 <a (click)="navigateToLogin()">Login</a>
             </div>
           </div>

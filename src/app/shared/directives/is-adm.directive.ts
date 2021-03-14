@@ -1,5 +1,5 @@
 import { Directive, Renderer2, ElementRef, OnDestroy } from '@angular/core';
-import { AuthService } from '../../auth/shared/providers/auth.service';
+import { AuthService } from '../../core/providers/auth.service';
 import { ProjectService } from '../../core/providers/project.service';
 import { User } from '../../core/models/user.model';
 import { Subscription } from 'rxjs';

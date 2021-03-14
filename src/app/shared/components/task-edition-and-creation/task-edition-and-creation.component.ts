@@ -3,7 +3,7 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { take } from 'rxjs/operators';
 import { User } from '../../../core/models/user.model';
 import { Task } from '../../../core/models/task.model';
-import { AuthService } from '../../../auth/shared/providers/auth.service';
+import { AuthService } from '../../../core/providers/auth.service';
 import { LpDate, LpObject } from 'lp-operations';
 import { TaskService } from '../../../core/providers/task.service';
 import { MediaService } from '../../../core/providers/media.service';
@@ -30,6 +30,8 @@ export class TaskEditionAndCreationComponent implements OnChanges {
   taskPristine: Task;
   today = new Date();
   @Input() prevDialog: string;
+  get timeString() {return this.task.startDate && this.task.endDate ? LpDate.milisecondsToPeriod(this.task.startDate, this.task.endDate) : null;};
+  get reviewersOptions() {return this.projectParticipants.filter((p: User) => { return (this.task.participants as string[]).includes(p._id) });};
 
   ngOnInit(){
      this.task ={
@@ -55,10 +57,7 @@ export class TaskEditionAndCreationComponent implements OnChanges {
   }
   taskHasChanges(): boolean {
     return LpObject.areEquals(this.task, this.taskPristine);
-  }
-  onRecursiveOptChange(recursive: boolean) {
-    recursive ? this.task.endDate = null : null;
-  }
+  };
   triggerResize() {
     // Wait for changes to be applied, then trigger textarea resize.
     this._ngZone.onStable.pipe(take(1))
@@ -92,12 +91,5 @@ export class TaskEditionAndCreationComponent implements OnChanges {
   participantsChange(change){
     this.task.participants = change;
     this.task.reviewers = (this.task.reviewers as string[]).filter((rw)=>{ return (this.task.participants as string[]).includes(rw)})
-  }
-  get timeString(){
-    return this.task.startDate && this.task.endDate ?  LpDate.milisecondsToPeriod(this.task.startDate,this.task.endDate):null;
-  }
-
-  get reviewersOptions(){
-    return this.projectParticipants.filter((p:User)=>{ return (this.task.participants as string[]).includes(p._id) });
   }
 }

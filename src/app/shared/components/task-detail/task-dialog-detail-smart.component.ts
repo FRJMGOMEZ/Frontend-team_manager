@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Task } from '../../../core/models/task.model';
 import { TaskService } from '../../../core/providers/task.service';
-import { AuthService } from '../../../auth/shared/providers/auth.service';
+import { AuthService } from '../../../core/providers/auth.service';
 import { LpObject, LpLocalStorage } from 'lp-operations';
 
 @Component({

@@ -20,24 +20,25 @@ mat-sidenav-container{
 mat-sidenav{
   width:30px;
   position:absolute;
-  z-index:99999;
+  z-index:999996;
   background-color: #1b1b1b;
 }
 
 .new-task-btn-desktop{
     font-weight: bolder;
-    width: 100px;
+    width: 120px;
     font-size: 15px;
     text-align: center;
 }
 
 .new-task-btn-mobile{
     font-weight: bolder;
-    width: 100%;
+    width: 2.5vw !important;
     font-size: 11px;
     text-align: center;
     padding: 0px;
     margin-left: 0vw;
+    height: 8vh;
 }
 
 

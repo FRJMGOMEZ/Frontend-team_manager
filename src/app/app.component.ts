@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { WebSocketsService } from './core/providers/web-sockets.service';
 import { MediaService } from './core/providers/media.service';
-import { AuthService } from './auth/shared/providers/auth.service';
+import { LpRoutesBreadcrumbsService } from 'lp-routes-breadcrumbs';
+import { LoadSpinnerService } from './core/components/load-spinner/load-spinner.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,8 +10,14 @@ import { AuthService } from './auth/shared/providers/auth.service';
 })
 export class AppComponent {
   desktop: boolean;
-  constructor(private wsService: WebSocketsService, public mdService: MediaService){
+  constructor(private wsService: WebSocketsService, public mdService: MediaService, private lpRoutesBreadcrumbsService:LpRoutesBreadcrumbsService, private loadSpinnerService:LoadSpinnerService){
     this.wsService.checkStatus();
+    this.lpRoutesBreadcrumbsService.listenningNavigationStart().subscribe(() => {
+      this.loadSpinnerService.state.next(true);
+    })
+    this.lpRoutesBreadcrumbsService.listenningNavigationEnd().subscribe(()=>{
+      this.loadSpinnerService.state.next(false);
+    })
   }
   title = 'cargomusicapp-front';
 

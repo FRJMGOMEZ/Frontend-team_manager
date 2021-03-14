@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ForgotSmartComponent } from '../../recovering/forgot/forgot-smart.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { ResetSmartComponent } from '../../recovering/reset/reset-smart.component';
+import { ForgotSmartComponent } from '../../auth/recovering/forgot/forgot-smart.component';
+import { ResetSmartComponent } from '../../auth/recovering/reset/reset-smart.component';
+
 
 @Injectable({
   providedIn: 'root'

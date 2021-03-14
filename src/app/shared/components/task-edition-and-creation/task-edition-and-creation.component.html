@@ -8,11 +8,11 @@
                 </div>
                     <mat-form-field>
                             <mat-label>Task name</mat-label>
-                            <input matInput lpInputTrimmer  [(ngModel)]="task.name" name="name" autocomplete="off" required>
+                            <input matInput  [(ngModel)]="task.name" name="name" autocomplete="off" required>
                     </mat-form-field>
                     <mat-form-field >
                             <mat-label>Description</mat-label>
-                            <textarea cdkTextareaAutosize matInput lpInputTrimmer  [(ngModel)]="task.description" name="description" required  
+                            <textarea cdkTextareaAutosize matInput [(ngModel)]="task.description" name="description" required  
                                 #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="4"></textarea>
                     </mat-form-field>
                     <mat-form-field>

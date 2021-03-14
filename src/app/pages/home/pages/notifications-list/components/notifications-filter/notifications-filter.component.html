@@ -2,7 +2,7 @@
 <form #notificationForm="ngForm" fxLayout.gt-sm="row" fxLayout.lt-md="column" action="" (ngSubmit)="search()">
   <mat-form-field fxFlex="16" class="mat-form-field-input">
     <mat-label>Project</mat-label>
-    <input matInput lpInputTrimmer [(ngModel)]="queryFilters.project" autocomplete="off" name="project"  >
+    <input matInput [(ngModel)]="queryFilters.project" autocomplete="off" name="project"  >
     <button *ngIf="queryFilters.project" mat-button matSuffix mat-icon-button aria-label="Clear" (click)="queryFilters.project = ''" >x</button>
   </mat-form-field>  
 <!--   <mat-form-field  fxFlex="14"  class="mat-form-field-input">

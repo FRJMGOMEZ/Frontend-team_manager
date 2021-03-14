@@ -8,8 +8,8 @@
                    <small fxFlex="70" class="property-changed">*Property edited*</small>
                   <div *ngIf="taskSelected && prevTask"  class="div-labels" fxLayoutAlign="flex-end">
                       <mat-icon *ngIf="prevDialog" (click)="back.emit()">keyboard_backspace</mat-icon>
-                      <mat-icon *ngIf="!prevDialog && isCurrentVersion && taskPristine.status !== 'done'" (click)="editTask.emit(taskSelected._id)">edit</mat-icon>
-                      <mat-icon *ngIf="!isCurrentVersion && taskPristine.status !== 'done' && !propertyHasChanged('status')" (click)="restore()">settings_backup_restore</mat-icon>
+                      <mat-icon *ngIf="!prevDialog && isCurrentVersion && taskPristine.status !== 'done' && isUserInTask" (click)="editTask.emit(taskSelected._id)">edit</mat-icon>
+                      <mat-icon *ngIf="!isCurrentVersion && taskPristine.status !== 'done' && !propertyHasChanged('status') && isUserInTask" (click)="restore()">settings_backup_restore</mat-icon>
                   </div>
                 </div>
             <div fxFlex="85" fxLayout="column" fxLayoutAlign="center" >
