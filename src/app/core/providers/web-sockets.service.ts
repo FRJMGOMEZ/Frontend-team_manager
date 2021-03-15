@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { AuthService } from './auth.service';
 import { switchMap } from 'rxjs/operators';
+import { merge } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class WebSocketsService {
     this.socket.on('disconnect', () => {
       console.log('Desconectado del servidor');
       this.socketStatus = false;
-      this.authService.onServerOfDisconnection().pipe(switchMap(() => { return this.authService.logout() })).subscribe();
+      merge(this.authService.onServerOfDisconnection(), this.authService.logout()).subscribe();
     });
   }
   emit(event: string, payload?: any, callback?: Function) {

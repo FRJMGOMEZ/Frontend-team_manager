@@ -6,7 +6,6 @@ import { Task } from '../../../core/models/task.model';
 import { AuthService } from '../../../core/providers/auth.service';
 import { LpDate, LpObject } from 'lp-operations';
 import { TaskService } from '../../../core/providers/task.service';
-import { MediaService } from '../../../core/providers/media.service';
 import { LpParseDatePipe, LpParseHourPipe } from 'lp-date-pipes';
 @Component({
   selector: 'app-task-edition-and-creation',
@@ -24,7 +23,6 @@ export class TaskEditionAndCreationComponent implements OnChanges {
   @Output() putTask: EventEmitter<{ filters: { [key: string]: any }, id: string }> = new EventEmitter<{ filters: { [key: string]: any }, id: string }>();
   @Output() close:EventEmitter<void> = new EventEmitter<void>();
   @Output() back:EventEmitter<void> = new EventEmitter<void>();
-
   @Output() dialogBack = new EventEmitter<void>();
   @Input() task: Task;
   taskPristine: Task;
@@ -48,7 +46,7 @@ export class TaskEditionAndCreationComponent implements OnChanges {
      }
   }
 
-  constructor(private _ngZone: NgZone, private authService:AuthService, public taskService:TaskService, public mdService:MediaService) { }
+  constructor(private _ngZone: NgZone, private authService:AuthService, public taskService:TaskService) { }
 
   ngOnChanges(changes:SimpleChanges){
     if(changes.task && this.task){

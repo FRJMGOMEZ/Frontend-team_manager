@@ -8,7 +8,6 @@ import { User } from '../../core/models/user.model';
 import { ProjectService } from '../../core/providers/project.service';
 import { TaskService } from '../../core/providers/task.service';
 import { Project } from '../../core/models/project.model';
-import { MediaService } from '../../core/providers/media.service';
 import { LpLocalStorage } from 'lp-operations';
 
 @Component({
@@ -17,6 +16,7 @@ import { LpLocalStorage } from 'lp-operations';
   styleUrls: ['./task-manager.component.scss'],
 })
 export class TaskManagerComponent implements OnInit, OnDestroy {
+  @ViewChild(MatTabGroup) tabsGroup: MatTabGroup;
   selectedProject:string;
   tasksList:Task[] = [];
   taskSkip:number=0;
@@ -24,43 +24,21 @@ export class TaskManagerComponent implements OnInit, OnDestroy {
   taskQueryString:string;
   taskTotal:number;
   taskSelected: string;
-  get taskSelectedName(){ return this.tasksList.length > 0 ? this.tasksList.find((t)=>{ return t._id === this.taskSelected}).name: ''}
   participants:User[];
   selectedProjectSubs: Subscription = null;
-  taskSubscription: Subscription = null;
-  @ViewChild(MatTabGroup) tabsGroup:MatTabGroup
+  taskSubs: Subscription = null;
+  get taskSelectedName() { return this.tasksList.length > 0 ? this.tasksList.find((t) => { return t._id === this.taskSelected }).name : '' }
   constructor(private projectService: ProjectService,
                 public taskService: TaskService,
                 private ar:ActivatedRoute,
-                private router:Router,
-                public mdService:MediaService) {}
+                private router:Router) {}
 
   ngOnInit(): void {
 
-    this.selectedProjectSubs = this.projectService.selectedProject$.subscribe((project:Project) => {
-       this.selectedProject = project._id;
-       this.removeTaskInStorage();
-       this.redirectTo('pages/task-manager')
-    })
-    
-    this.taskSubscription = this.taskService.task$.subscribe((res: { task:Task, action:string })=>{
-      if(res){
-        switch (res.action) {
-          case 'POST':
-            this.taskTotal++;
-            this.taskLimit > this.tasksList.length  ? this.tasksList = [...this.tasksList, res.task] : null;
-            if(!this.taskSelected){this.navigateToTask(res.task._id)}
-            break;
-          case 'PUT':
-            this.tasksList = this.tasksList.map((t: Task) => { return t._id === res.task._id ? res.task : t });
-            break;
-          case 'DELETE':
-            this.tasksList = this.tasksList.filter((t: Task) => { return t._id != res.task._id });
-            this.taskSelected = res.task._id === this.taskSelected ? '': this.taskSelected;
-            break;
-        }
-      }
-    });
+    this.listenProjectChanges();
+
+    this.listenTaskChanges();
+
     this.selectedProject = this.projectService.selectedProject._id;
     this.taskSelected = LpLocalStorage.get('state-data', 'task-selected');
     if(this.selectedProject){
@@ -73,9 +51,32 @@ export class TaskManagerComponent implements OnInit, OnDestroy {
     }
   }
 
-  redirectTo(uri: string) {
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
-      this.router.navigate([uri]));
+  listenProjectChanges(){
+    this.selectedProjectSubs = this.projectService.selectedProject$.subscribe((project: Project) => {
+      this.selectedProject = project._id;
+      this.removeTaskInStorage();
+      this.redirectTo('pages/task-manager')
+    });
+  }
+  listenTaskChanges(){
+    this.taskSubs = this.taskService.task$.subscribe((res: { task: Task, action: string }) => {
+      if (res) {
+        switch (res.action) {
+          case 'POST':
+            this.taskTotal++;
+            this.taskLimit > this.tasksList.length ? this.tasksList = [...this.tasksList, res.task] : null;
+            if (!this.taskSelected) { this.navigateToTask(res.task._id) }
+            break;
+          case 'PUT':
+            this.tasksList = this.tasksList.map((t: Task) => { return t._id === res.task._id ? res.task : t });
+            break;
+          case 'DELETE':
+            this.tasksList = this.tasksList.filter((t: Task) => { return t._id != res.task._id });
+            this.taskSelected = res.task._id === this.taskSelected ? '' : this.taskSelected;
+            break;
+        }
+      }
+    });
   }
   getParticipants(){
     this.projectService.getParticipants(this.selectedProject).subscribe((participants:User[]) => {
@@ -90,27 +91,31 @@ export class TaskManagerComponent implements OnInit, OnDestroy {
         this.tasksList = res.tasks;
      }))
   }
-  navigateToTask(id:string){
-    this.taskSelected = id ;
-    this.router.navigate([this.taskSelected], { relativeTo: this.ar }) 
+  selectTask(id: string) {
+    this.tabsGroup ? this.tabsGroup.selectedIndex = 1 : null;
+    this.navigateToTask(id, 'info')
   }
 
-  selectTask(id:string){
-   this.tabsGroup ? this.tabsGroup.selectedIndex = 1 : null;
-   this.navigateToTask(id)
-  }
-
-  setTaskInStorage(){
+  setTaskInStorage() {
     LpLocalStorage.set('state-data', this.taskSelected, 'task-selected');
   }
 
-  removeTaskInStorage(){
-    LpLocalStorage.remove('state-data', 'task-selected') 
+  removeTaskInStorage() {
+    LpLocalStorage.remove('state-data', 'task-selected')
+  }
+
+  redirectTo(uri: string) {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+      this.router.navigate([uri]));
+  }
+  navigateToTask(id:string,tab?:string){
+    this.taskSelected = id ;
+    this.router.navigate([this.taskSelected, tab ? tab : LpLocalStorage.get('state-data','task-manager-tab') || 'info'], { relativeTo: this.ar }) 
   }
 
   ngOnDestroy(){
   this.selectedProjectSubs && this.selectedProjectSubs != null ? this.selectedProjectSubs.unsubscribe():null;
-  this.taskSubscription && this.taskSubscription != null ? this.taskSubscription.unsubscribe() : null;
+  this.taskSubs && this.taskSubs!= null ? this.taskSubs.unsubscribe() : null;
   }
 
 }

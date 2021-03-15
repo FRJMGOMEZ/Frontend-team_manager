@@ -11,7 +11,6 @@ import { DialogsService } from '../core/providers/dialogs.service';
 import { TaskService } from '../core/providers/task.service';
 import { NotificationService } from '../core/providers/notification.service';
 import { LpDialogsService } from 'lp-dialogs';
-import { MediaService } from '../core/providers/media.service';
 
 @Component({
   selector: 'app-pages',
@@ -32,8 +31,7 @@ export class PagesComponent implements OnInit, OnDestroy {
                 private notificationsService: NotificationService,
                 private lpDialogs:LpDialogsService,
                 private router: Router,
-                private ar: ActivatedRoute,
-                public mdService:MediaService)
+                private ar: ActivatedRoute)
                 
   {this.path = this.router.url.split('/')[2]}
   ngOnInit() {

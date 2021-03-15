@@ -5,8 +5,10 @@ import { SocketIoConfig } from 'ngx-socket-io';
 
 export const environment = {
   production: false,
-  apiUrl: "http://localhost:3000/",
-  socketConfig: <SocketIoConfig>{ url: 'http://localhost:3000', options: {} }
+ /*  apiUrl: "http://localhost:3000/",
+  socketConfig: <SocketIoConfig>{ url: 'http://localhost:3000', options: {} } */
+  apiUrl: "https://bee-team.herokuapp.com/",
+  socketConfig: <SocketIoConfig>{ url: 'https://bee-team.herokuapp.com', options: {} }
 };
 
 /*

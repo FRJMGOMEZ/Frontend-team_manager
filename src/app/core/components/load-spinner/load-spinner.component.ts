@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { LoadSpinnerService } from './load-spinner.service';
 import { Subscription } from 'rxjs';
 
@@ -13,12 +13,12 @@ export class LoadSpinnerComponent implements OnInit {
 
   subscription:Subscription;
 
-  constructor(public loadSpinnerService:LoadSpinnerService) { }
+  constructor(public loadSpinnerService:LoadSpinnerService,private cdr:ChangeDetectorRef) { }
 
   ngOnInit() {
     this.subscription = this.loadSpinnerService.state.subscribe((res:boolean)=>{
           this.show = res;
-          console.log(this.show);
+          this.cdr.detectChanges();
     })
   }
 

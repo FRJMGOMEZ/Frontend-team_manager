@@ -1,6 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy} from '@angular/core';
 import { Subscription } from 'rxjs';
-import { DeviceDetectorService } from 'ngx-device-detector';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CalendarSchedulerMonthInfoComponent } from './components/calendar-scheduler-month-info/calendar-scheduler-month-info.component';
 import { CalendarSchedulerDayInfoComponent } from './components/calendar-scheduler-day-info/calendar-scheduler-day-info.component';
@@ -17,33 +16,44 @@ import { LpLocalStorage } from 'lp-operations';
 })
 
 export class CalendarSchedulerComponent implements  OnInit, OnDestroy {
-
-  get infoComponent() {return this.dateFormat === 'month' ? CalendarSchedulerMonthInfoComponent : CalendarSchedulerDayInfoComponent}
   selectedProject: string | undefined
   dateFormat:string = 'month'
   selectedDate:Date
   selectionDate:Date
   selectedProjectSubs:Subscription
   urlHasQuerys:boolean = false;
+  get infoComponent() { return this.dateFormat === 'month' ? CalendarSchedulerMonthInfoComponent : CalendarSchedulerDayInfoComponent }
+  get searchBtnDisabled(){
+    if (this.selectionDate && this.selectedDate) {
+      return new Date(this.selectionDate).getTime() === new Date(this.selectedDate.getFullYear(), this.selectedDate.getMonth(), this.selectedDate.getDate(), 0, 0, 0, 0).getTime();
+    }
+    return true;
+  }
   constructor(private projectService:ProjectService,
-              private deviceDetectorService:DeviceDetectorService,
               private router:Router,
               private ar:ActivatedRoute,
               public mdService:MediaService){}
   ngOnInit(){
+    this.listenParamsChanges();
+    this.listenProjectChange();
+    this.selectedDate = LpLocalStorage.get('state-data', 'date-selected') ? new Date(LpLocalStorage.get('state-data', 'date-selected')) : new Date();
+    this.selectionDate = this.selectedDate;
+    this.dateFormat = LpLocalStorage.get('state-data', 'date-format') || 'month';
+    this.selectedProject = this.projectService.selectedProject._id; ;
+    this.navigateToChild();
+  }
+
+  listenParamsChanges(){
     this.ar.queryParamMap.subscribe((querys) => {
       querys.get('selectedDate') ? this.urlHasQuerys = true : null;
     })
+  }
+
+  listenProjectChange(){
     this.selectedProjectSubs = this.projectService.selectedProject$.subscribe((project: Project) => {
       this.selectedProject = project._id;
       this.navigateToChild()
     })
-    this.selectedDate = LpLocalStorage.get('state-data', 'date-selected') ? new Date(LpLocalStorage.get('state-data', 'date-selected')) : new Date();
-    this.selectionDate = this.selectedDate;
-    this.dateFormat = LpLocalStorage.get('state-data', 'date-format') || 'month';
-    /* FIXME */
-    this.selectedProject = this.projectService.selectedProject._id; ;
-    this.navigateToChild();
   }
 
   dateSelection(date:Date){
@@ -62,17 +72,6 @@ export class CalendarSchedulerComponent implements  OnInit, OnDestroy {
 
   navigateToChild(){
     this.router.navigate([this.dateFormat],{relativeTo: this.urlHasQuerys ? this.ar.parent : this.ar,queryParams:{selectedDate:this.selectedDate,selectedProject:this.selectedProject}})
-  }
-
-  isDesktop() {
-    return this.deviceDetectorService.isDesktop();
-  }
-
-  setSearchBtnDisabled() {
-    if (this.selectionDate && this.selectedDate) {
-      return new Date(this.selectionDate).getTime() === new Date(this.selectedDate.getFullYear(), this.selectedDate.getMonth(), this.selectedDate.getDate(), 0, 0, 0, 0).getTime();
-    }
-    return true;
   }
 
   ngOnDestroy() {

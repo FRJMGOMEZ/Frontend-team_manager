@@ -8,7 +8,6 @@ import { TaskService } from '../../../../../../core/providers/task.service';
 import { FileModel } from '../../../../../../core/models/file.model';
 import { FilesService } from '../../../../../../core/providers/files.service';
 import { AuthService } from '../../../../../../core/providers/auth.service';
-import { MediaService } from '../../../../../../core/providers/media.service';
 
 @Component({
   selector: 'app-task-manager-chat',
@@ -28,8 +27,7 @@ export class TaskManagerChatComponent implements OnInit, OnDestroy {
   constructor(private chatService: ChatService, 
              public taskService: TaskService,
              public filesService:FilesService,
-             public authService:AuthService,
-             public mdService:MediaService) { }
+             public authService:AuthService) { }
 
   ngOnInit() {
     this.listenningMessages();

@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { catchError, map, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from 'src/app/core/models/user.model';
-import { ErrorHandlerService } from './error-handler.service';
 import { API_URL } from '../../config/api-url';
 import { LpLocalStorage } from 'lp-operations';
 
@@ -19,6 +18,7 @@ export class AuthService {
     private router: Router) {
       
     this.uploadFromStorage();
+
   }
 
   /////// LOGIN //////

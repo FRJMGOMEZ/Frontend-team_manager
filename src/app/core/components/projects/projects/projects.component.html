@@ -3,8 +3,8 @@
         <ng-container matColumnDef="name">
             <mat-header-cell   mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
             <mat-cell [style.color]="'blue'" [style.cursor]="'pointer'" class="mat-cell-selector" (click)="selectProject(element)"   mat-cell *matCellDef="let element">
-                <a  *ngIf="!mdService.desktop">{{element.name}}</a>
-                <span *ngIf="mdService.desktop">{{element.name}}</span>
+                <a fxHide.gt-sm>{{element.name}}</a>
+                <span fxShow.gt-sm>{{element.name}}</span>
             </mat-cell>
         </ng-container>
         <ng-container matColumnDef="administrators">

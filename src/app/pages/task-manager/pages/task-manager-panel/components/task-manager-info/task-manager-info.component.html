@@ -2,7 +2,7 @@
 
 
 <div class="div-info-container" fxLayout="column" *ngIf="taskSelected" >
-       <mat-card fxLayout="row" [fxFlex]=" mdService ? 8 : 10">
+       <mat-card fxLayout="row" fxFlex="8 ">
            <div fxLayout="row" fxFlex="50" >
                <h4 fxFlex.gt-sm="50" fxLayout.gt-sm="column" fxLayoutAlign="center">
                    Name:
@@ -20,7 +20,7 @@
                  </div>
             </div>
         </mat-card>
-         <mat-card fxLayout="row" [fxFlex]=" mdService ? 8 : 10">
+         <mat-card fxLayout="row" fxFlex="8">
            <div fxLayout="row" fxFlex="50" >
                <h4 fxFlex.gt-sm="50" fxLayout.gt-sm="column" fxLayoutAlign="center">
                    Status:
@@ -38,13 +38,13 @@
                 </p>
            </div>
        </mat-card>
-         <mat-card fxLayout="column" [fxFlex]="mdService.desktop ? (hasActsRequired ? 26: 36) : '42'"> 
+         <mat-card fxLayout="column" fxFlex.gt-sm="hasActsRequired ? 26: 36" fxFlex.lt-md="42" > 
            <h4  fxLayout.gt-sm="column" fxLayoutAlign="center">
                Progress
            </h4>   
         <app-task-manager-progress   [taskSelected]="taskSelected"></app-task-manager-progress>
         </mat-card>
-        <mat-card  [fxFlex]="mdService.desktop ? (hasActsRequired ? 10: 20) : '35'">
+        <mat-card fxFlex.gt-sm="hasActsRequired ? 10: 20" fxFlex.lt-md="35" >
            <h4 fxFlex.gt-xs="15" fxFlex.xs="50">
                Options
            </h4> 
@@ -59,7 +59,7 @@
                       {{ taskSelected.status === 'pending' ? 'move_to_inbox' : taskSelected.status === 'on review' ? 'hourglass_full' : 'assignment_turned_in'  }}
                       </mat-icon>
                   </div>
-                   <mat-label *ngIf="mdService.desktop" class="label-action">
+                   <mat-label fxHide.lt-md class="label-action">
                     TOGGLE STATUS
                 </mat-label>
                 </div>
@@ -67,7 +67,7 @@
                 <div fxLayoutAlign="center">
                     <mat-icon [ngClass]="{'icon-disabled': !taskService.canBeEdited(taskSelected)}" (click)="taskService.canBeEdited(taskSelected) ? editTask.emit() : null" color="primary">edit</mat-icon>
                 </div>
-                <mat-label *ngIf="mdService.desktop"  class="label-action">
+                <mat-label fxHide.lt-md  class="label-action">
                     EDIT
                 </mat-label>
                  </div>
@@ -75,13 +75,13 @@
                 <div fxLayoutAlign="center">
                     <mat-icon [ngClass]="{'icon-disabled': taskService.taskTimeStarted(taskSelected)}" color="warn" (click)="!taskService.taskTimeStarted(taskSelected) ?  deleteTask.emit() : null">delete</mat-icon>
                 </div>
-                <mat-label *ngIf="mdService.desktop"  class="label-action">
+                <mat-label fxHide.lt-md  class="label-action">
                     DELETE TASK
                 </mat-label>
                  </div>
            </div>
        </mat-card>
-       <mat-card fxLayout="row" [fxFlex]="mdService.desktop ? (hasActsRequired ? 15: 30) : 30">
+       <mat-card fxLayout="row" fxFlex.gt-sm="hasActsRequired ? 15: 30" fxFlex.lt-md="30">
         <div fxLayout.gt-sm="row" fxLayout.lt-md="column" fxFlex="50">
             <h4  fxLayout.gt-sm="column" fxLayoutAlign.lt-md="center">Participants</h4>
              <ul>
@@ -95,13 +95,13 @@
             </ul>
         </div>
        </mat-card>
-       <mat-card fxLayoutAlign="center"*ngIf="hasActsRequired && !mdService.desktop" fxLayout="row" fxFlex="10">
+       <mat-card fxLayoutAlign="center" fxHide.gt-sm  *ngIf="hasActsRequired" fxLayout="row" fxFlex="10">
              <h4>
                Actions required
            </h4> 
        <mat-icon (click)="showActionsRequired()" color="primary">assignment_late</mat-icon>
       </mat-card> 
-      <mat-card  *ngIf="hasActsRequired && mdService.desktop" fxLayout="column" fxFlex="35">
+      <mat-card fxHide.lt-md *ngIf="hasActsRequired" fxLayout="column" fxFlex="35">
             <h4 [style.color]="'red'">
                Actions required
            </h4>

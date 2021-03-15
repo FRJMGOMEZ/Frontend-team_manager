@@ -11,7 +11,7 @@ export class AuthInterceptor implements HttpInterceptor {
     constructor(private authService: AuthService, private loadSpinnerService: LoadSpinnerService, private errorHandlerService:ErrorHandlerService) { }
     intercept(req: HttpRequest<any>, next: HttpHandler):
         Observable<HttpEvent<any>> {
-      this.loadSpinnerService.state.next(true); 
+       req.method === 'GET' ? this.loadSpinnerService.state.next(true) : null;
         if (this.authService.userOnline) {
             const token = this.authService.userOnline['token'];
             const authReq = req.clone({
@@ -27,7 +27,7 @@ export class AuthInterceptor implements HttpInterceptor {
     handle(req: HttpRequest<any>,next: HttpHandler):Observable<HttpEvent<any>>{
         return next.handle(req).pipe(
             tap((res)=>{
-             res.type !== 0 ? this.loadSpinnerService.state.next(false) : null;
+             res.type !== 0 && req.method === 'GET' ? this.loadSpinnerService.state.next(false) : null;
            }),
            catchError((err) => this.errorHandlerService.handleError(err))
            )

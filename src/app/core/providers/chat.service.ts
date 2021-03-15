@@ -21,7 +21,6 @@ export class ChatService {
         const url = `${API_URL}messages/${taskId}`;
         return this.http.get(url,{headers}).pipe(
             map((res: any) => {
-                console.log({res});
             return {
                 count: res.data.count,
                 messages: res.data.messages

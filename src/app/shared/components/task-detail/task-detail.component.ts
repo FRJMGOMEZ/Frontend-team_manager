@@ -3,7 +3,6 @@ import { LpDialogsService } from 'lp-dialogs';
 import { Task } from '../../../core/models/task.model';
 import { TaskService } from '../../../core/providers/task.service';
 import { LpObject } from 'lp-operations';
-import { MediaService } from '../../../core/providers/media.service';
 import { LpDate } from 'lp-operations';
 import { AuthService } from '../../../core/providers/auth.service';
 import { User } from '../../../core/models/user.model';
@@ -35,7 +34,7 @@ export class TaskDetailComponent implements OnChanges  {
     const timesArray = LpDate.milisecsToString(this.taskSelected.extraTime);
     return timesArray.reduce((acum, time, index) => { acum += time + (timesArray[index+1] ?', ' : ''); return acum},'')
   }
-  constructor(public tasksService: TaskService, private lpDialogsService:LpDialogsService, public mdService:MediaService, private authService:AuthService){}
+  constructor(public tasksService: TaskService, private lpDialogsService:LpDialogsService,private authService:AuthService){}
   ngOnChanges(changes:SimpleChanges){
     if (changes.taskSelected && this.taskSelected) {
       this.taskPristine = LpObject.copyObject(this.taskSelected);

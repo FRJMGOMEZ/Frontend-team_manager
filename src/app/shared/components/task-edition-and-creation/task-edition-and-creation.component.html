@@ -2,7 +2,7 @@
 <mat-dialog-content *ngIf="isDialog && task">
     <form fxLayout="column" #taskForm="ngForm">
           <div fxLayout.gt-xs="row" fxLayout.xs="column" fxLayoutAlign="space-around" fxLayoutGap="10px" >
-              <div fxFlex="50" fxLayoutGap.gt-md="25px" fxLayout="column">
+              <div fxFlex.gt-sm="50" fxLayoutGap.gt-md="25px" fxLayout="column">
                 <div>
                     <mat-icon *ngIf="prevDialog" (click)="dialogBack.emit()">keyboard_backspace</mat-icon>
                 </div>
@@ -37,7 +37,7 @@
                         </mat-select>
                     </mat-form-field>
               </div>
-              <div fxLayout="column" fxLayoutAlign="space-around" fxFlex.gt-xs="50" fxLayoutGap="25px">
+              <div fxLayout="column" fxLayoutAlign="space-around" fxFlex.gt-sm="50" fxLayoutGap="25px">
                                 <lp-date-selector
                                  [disabled]="task._id &&  taskService.taskTimeStarted(task) "
                                  dateFormat="time"
@@ -64,7 +64,7 @@
                                 </div>
               </div>
           </div>
-          <div [style.margin-top]="mdService.desktop ? '25px' : '0px'" fxLayoutAlign="center">
+          <div [ngStyle.gt-sm]="{'margin-top': '25px'}"fxLayoutAlign="center">
                  <button (click)="postTask.emit(task)" *ngIf="!task._id" [disabled]="taskForm.invalid" mat-raised-button>
             create </button>
              <button  [disabled]="taskHasChanges() || taskForm.invalid" (click)="putTask.emit(checkChangesToPatch())" *ngIf="task._id" mat-raised-button>

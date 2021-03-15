@@ -4,7 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { TaskManagerPanelComponent } from './task-manager-panel.component';
 
 let routes:Routes = [
-  {path:'',component:TaskManagerPanelComponent}
+  { path: ':tab', component: TaskManagerPanelComponent },
+
 ]
 
 @NgModule({

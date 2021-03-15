@@ -3,11 +3,11 @@
   width: 100%;
 }
 
-@media (max-width: 1279px) {
-  .main{
-   height: 89vh;
-   width: 100%;
-   }
+.new-task-btn{
+    font-weight: bolder;
+    width: 120px;
+    font-size: 15px;
+    text-align: center;
 }
 
 mat-sidenav-container{
@@ -23,24 +23,6 @@ mat-sidenav{
   z-index:999996;
   background-color: #1b1b1b;
 }
-
-.new-task-btn-desktop{
-    font-weight: bolder;
-    width: 120px;
-    font-size: 15px;
-    text-align: center;
-}
-
-.new-task-btn-mobile{
-    font-weight: bolder;
-    width: 2.5vw !important;
-    font-size: 11px;
-    text-align: center;
-    padding: 0px;
-    margin-left: 0vw;
-    height: 8vh;
-}
-
 
 .spacer {
   flex: 1 1 auto;
@@ -73,6 +55,22 @@ mat-toolbar-row{
 .div-not-display{
   color:#7b87cc ;
   margin: 25px;
+}
+
+@media (max-width: 1279px) {
+  .main{
+   height: 89vh;
+   width: 100%;
+   } 
+  .new-task-btn{
+    font-weight: bolder;
+    width: 1.5vw !important;
+    font-size: 11px;
+    text-align: center;
+    padding: 0px;
+    margin-left: 1vw;
+    height: 55px;
+  }
 }
 
 

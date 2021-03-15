@@ -2,7 +2,6 @@ import { Component, Input, Output, EventEmitter, ViewChild, SimpleChanges } from
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Project } from '../../../models/project.model';
-import { MediaService } from '../../../providers/media.service';
 
 @Component({
   selector: 'app-projects',
@@ -22,7 +21,7 @@ export class ProjectsComponent  {
   displayedColumns = ['name', 'administrators', 'participants', 'status', 'actions'];
   dataSource = new MatTableDataSource<Project>([]);
   @Output() deleteProject: EventEmitter<string> = new EventEmitter<string>();
-  constructor(public mdService:MediaService) { };
+  constructor() { };
   ngOnInit(){}
 
   ngOnChanges(changes: SimpleChanges) {

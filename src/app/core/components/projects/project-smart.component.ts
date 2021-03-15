@@ -4,7 +4,6 @@ import { ProjectService } from '../../providers/project.service';
 import { DialogsService } from '../../providers/dialogs.service';
 import { Project } from '../../models/project.model';
 import { LpArray, LpLocalStorage } from 'lp-operations';
-import { MediaService } from '../../providers/media.service';
 import { MatExpansionPanelHeader } from '@angular/material/expansion';
 
 
@@ -24,8 +23,7 @@ export class ProjectsSmartComponent implements OnInit {
    return this.projects.find((p)=>{ return p._id === this.projectSelected}).name;
     }
     constructor(private projectService: ProjectService,
-                private dialogsService: DialogsService,
-                public mdService:MediaService) { }
+                private dialogsService: DialogsService) { }
     ngOnInit() {
 
         this.projectService.selectedProject$.subscribe((selectedProject: Project) => {

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { WebSocketsService } from './core/providers/web-sockets.service';
-import { MediaService } from './core/providers/media.service';
 import { LpRoutesBreadcrumbsService } from 'lp-routes-breadcrumbs';
 import { LoadSpinnerService } from './core/components/load-spinner/load-spinner.service';
 @Component({
@@ -10,7 +9,7 @@ import { LoadSpinnerService } from './core/components/load-spinner/load-spinner.
 })
 export class AppComponent {
   desktop: boolean;
-  constructor(private wsService: WebSocketsService, public mdService: MediaService, private lpRoutesBreadcrumbsService:LpRoutesBreadcrumbsService, private loadSpinnerService:LoadSpinnerService){
+  constructor(private wsService: WebSocketsService,private lpRoutesBreadcrumbsService:LpRoutesBreadcrumbsService, private loadSpinnerService:LoadSpinnerService){
     this.wsService.checkStatus();
     this.lpRoutesBreadcrumbsService.listenningNavigationStart().subscribe(() => {
       this.loadSpinnerService.state.next(true);

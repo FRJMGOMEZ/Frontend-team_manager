@@ -25,7 +25,7 @@
           </div>
           <div fxFlex="20"  fxLayoutAlign.gt-xs="flex-start" fxLayoutAlign.xs="flex-end">
             <div fxLayout="column" fxLayoutAlign="center">
-              <button [ngStyle.lt-md]="{'margin-right': '15px'}"  [disabled]="setSearchBtnDisabled()" (click)="searchByDate()" mat-mini-fab color="accent" aria-label="Example icon button with a bookmark icon">
+              <button [ngStyle.lt-md]="{'margin-right': '15px'}"  [disabled]="searchBtnDisabled" (click)="searchByDate()" mat-mini-fab color="accent" aria-label="Example icon button with a bookmark icon">
                       <mat-icon>forward</mat-icon>
               </button>
             </div>

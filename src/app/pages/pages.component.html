@@ -1,4 +1,3 @@
-
 <mat-sidenav-container *ngIf="display" >
   <mat-sidenav #start [mode]="'side'">
              <mat-list>
@@ -34,9 +33,9 @@
   <mat-sidenav-content >
      <mat-toolbar >
     <mat-toolbar-row>
-   <div *ngIf="!sidenavOpen" fxFlex.lt-md="22" fxHide.gt-sm fxShow.lt-md fxLayoutAlign="flex-start">
+   <div *ngIf="!sidenavOpen" fxFlex.lt-md="18" fxHide.gt-sm fxShow.lt-md fxLayoutAlign="flex-start">
       <a >
-         <mat-icon   color="accent" (click)="start.toggle();sidenavOpen = true;" matBadge matBadgeOverlap="false" appNotifications >menu</mat-icon>
+         <mat-icon [ngStyle.lt-md]="{'margin-left': '0px'}"  color="accent" (click)="start.toggle();sidenavOpen = true;" matBadge matBadgeOverlap="false" appNotifications >menu</mat-icon>
       </a>
    </div>
    <a fxShow.gt-sm fxHide >
@@ -51,13 +50,13 @@
       <mat-icon [color]="path === 'task-manager' ? 'primary' : 'accent'" (click)="navigate('task-manager')" routerLinkActive="router-link-active"
          matTooltip="navigate to task manager" class="icon-pages" color="accent">assignment</mat-icon>
    </a>
-   <span *ngIf="mdService.desktop" class="spacer"></span>
-   <div fxLayout="row" fxFlex="sidenavOpen  ? '100' : '78'">
-     <div fxFlex.lt-md="82" fxFlex.gt-sm="70">
+   <span fxHide.lt-md class="spacer"></span>
+   <div fxLayout="row" fxFlex="sidenavOpen  ? '100' : '82'">
+     <div fxFlex.lt-md="73" fxFlex.gt-sm="70">
       <app-projects-smart  id="project-selector"> </app-projects-smart>
      </div>
-     <div [style.margin-left]="'7px'" fxFlex.lt-md="18" fxFlex.gt-sm="30" fxLayoutAlign="center" *ngIf="selectedProject">
-          <button fxLayout="center" ngClass.gt-sm="new-task-btn-desktop" ngClass.lt-md="new-task-btn-mobile" id="new-task" (click)="postTask()" color="accent" [disabled]="!selectedProject" mat-raised-button fxLayoutAlign="center"><span>+ TASK</span></button>
+     <div fxFlex.lt-md="27" fxFlex.gt-sm="30" fxLayoutAlign="center" *ngIf="selectedProject">
+          <button fxLayout="column" fxLayoutAlign="center" class="new-task-btn"  id="new-task" (click)="postTask()" color="accent" [disabled]="!selectedProject" mat-raised-button fxLayoutAlign="center"><span>+ TASK</span></button>
       </div>
    </div>
    <a fxShow.gt-sm fxHide>
