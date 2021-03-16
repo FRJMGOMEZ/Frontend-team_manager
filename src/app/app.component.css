@@ -1,0 +1,9 @@
+
+.div-browsers-banned{
+    padding-top: 30vh;
+    padding-left: calc(50vw - 300px);
+    padding-right: calc(50vw - 300px);
+}
+    p{
+        width:600px;
+    }

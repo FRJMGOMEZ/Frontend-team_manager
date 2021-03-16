@@ -3,8 +3,8 @@
     <app-load-spinner></app-load-spinner>
     <router-outlet></router-outlet>
 </ng-container>
-<div [style.margin-left]="'30%'" [style.padding-top]="'10%'" *ngIf="!display">
-   THE APP CAN NOT BE DISPLAYED IN THE FOLLOWING BROWSERS : <span *ngFor="let browser of browsersBanned">{{browser}} </span> 
+<div class="div-browsers-banned" *ngIf="!display">
+   <p>THE APP CAN NOT BE DISPLAYED IN THE FOLLOWING BROWSERS : <span *ngFor="let browser of browsersBanned">{{browser}} </span> </p>
 </div>
 
 
