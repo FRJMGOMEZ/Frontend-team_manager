@@ -29,7 +29,7 @@ export class DialogsService {
     dialog.disableClose = true;
     dialog.autoFocus = true;
     dialog.width = '500px';
-    dialog.maxHeight = '900px';
+    dialog.maxHeight = '100vh';
     dialog.data = prevDialog ? {taskId,prevDialog} : {taskId};
     let dialogRef: MatDialogRef<any> = this.dialog.open(TaskDialogSmartComponent, dialog);
     let subs = dialogRef.afterClosed().subscribe((data)=>{

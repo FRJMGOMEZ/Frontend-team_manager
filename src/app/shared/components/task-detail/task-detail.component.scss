@@ -11,7 +11,7 @@ h5{
 
 .div-category{
     margin-top:10px;
-    height: 12vh;
+    height: 14vh;
     width:100%;
     p{
         text-align: center;
@@ -53,5 +53,10 @@ h5{
 mat-dialog-content{
 margin-bottom:0px !important;
 max-height:100vh!important;
+}
+
+.ul-users{
+  overflow-y: scroll;
+  max-height: 75%;
 }
 
