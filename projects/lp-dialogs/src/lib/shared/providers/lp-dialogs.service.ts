@@ -14,7 +14,8 @@ export class LpDialogsService {
     const dialog = new MatDialogConfig();
     dialog.disableClose = true;
     dialog.autoFocus = true;
-    dialog.data = { title, message }
+    dialog.data = { title, message };
+    dialog.maxWidth='100vw';
     let dialogRef: MatDialogRef<any> = this.dialog.open(LpConfirmDialogComponent, dialog)
     return dialogRef.afterClosed()
   }
@@ -22,6 +23,7 @@ export class LpDialogsService {
     const dialog = new MatDialogConfig();
     dialog.disableClose = true;
     dialog.autoFocus = true;
+    dialog.maxWidth = '100vw';
     dialog.data = { message, title, item: item ? item : null }
     let dialogRef: MatDialogRef<any> = this.dialog.open(LpInfoDialogComponent, dialog)
     return dialogRef.afterClosed()

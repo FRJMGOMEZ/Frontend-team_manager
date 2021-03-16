@@ -9,12 +9,15 @@
 
 mat-progress-spinner{
     position: absolute;
-    left: 40vw;
-    right: 40vw;
-    top:40vh;
+    left: calc(50vw - 50px) ;
+    top:calc(50vh - 50px);
     bottom: 40vh;
     opacity: 1 !important;
     font-weight: bolder;
     z-index: 999999;
+    stroke-width: 50px;
 }
+
+
+
 

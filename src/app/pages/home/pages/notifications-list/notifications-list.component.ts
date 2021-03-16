@@ -106,7 +106,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
   }
 
   listenningScroll(){
-    fromEvent(this.divNotifications.nativeElement, 'scroll').subscribe((event: Event) => {
+    this.divNotifications ? fromEvent(this.divNotifications.nativeElement, 'scroll').subscribe((event: Event) => {
       const target = event.target;
       if (target['scrollHeight'] - target['scrollTop'] === target['clientHeight']) {
         if (this.notifications.length < this.notificationsCount) {
@@ -120,7 +120,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
           })
         }
       }
-    })
+    }):null;
   }
   selectNotification(notification:NotificationModel){
     this.notificationService.selectNotification(notification);

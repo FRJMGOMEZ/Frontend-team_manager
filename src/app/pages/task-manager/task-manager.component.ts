@@ -27,7 +27,9 @@ export class TaskManagerComponent implements OnInit, OnDestroy {
   participants:User[];
   selectedProjectSubs: Subscription = null;
   taskSubs: Subscription = null;
-  get taskSelectedName() { return this.tasksList.length > 0 ? this.tasksList.find((t) => { return t._id === this.taskSelected }).name : '' }
+  get taskSelectedName() { 
+    const task = this.tasksList.length > 0 ? this.tasksList.find((t) => { return t._id === this.taskSelected }):undefined;
+    return task ? task.name : '' }
   constructor(private projectService: ProjectService,
                 public taskService: TaskService,
                 private ar:ActivatedRoute,

@@ -11,8 +11,13 @@
       <span fxFlex.gt-sm="20" fxFlex.lt-md="30">Date</span>
     </div>
   <div fxFlex.lt-md="88"  #divNotifications  class="div-notifications-list" >
-    <div *ngFor="let notification of notifications" >
-       <app-notification-card [color]="notificationSelected && (notificationSelected._id=== notification._id) ? '#7b87cc' : 'white' " (selectNotification)="selectNotification($event)" [notification]="notification" [userOnline]="userOnline" (toggleNotification)="toggleNotification($event)" (showActionsRequired)="showActionsRequired($event)" ></app-notification-card>
+    <ng-container *ngIf="notifications.length > 0">
+      <div *ngFor="let notification of notifications" >
+         <app-notification-card [color]="notificationSelected && (notificationSelected._id=== notification._id) ? '#7b87cc' : 'white' " (selectNotification)="selectNotification($event)" [notification]="notification" [userOnline]="userOnline" (toggleNotification)="toggleNotification($event)" (showActionsRequired)="showActionsRequired($event)" ></app-notification-card>
+      </div>
+    </ng-container>
+    <div *ngIf="notifications.length === 0" fxLayoutAlign="center" [style.margin]="'25px'">
+        <strong>{{ path === 'new' ? 'NO NOTIFICATIONS TO CHECK' : 'NO NOTIFICATION RECORDED'}} </strong> 
     </div>
   </div>
 </div>

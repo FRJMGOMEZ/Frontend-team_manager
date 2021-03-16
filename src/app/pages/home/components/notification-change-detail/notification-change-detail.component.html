@@ -1,14 +1,14 @@
 
 
-<mat-card class="mat-card-notification-detail" *ngIf="notification">
-  <div fxFlex="90" *ngIf="itemSelected && notification.type === 'Task' && !itemSelected.deleted">
-    <app-task-detail-smart  [taskSelected]="itemSelected" [date]="notification.date" ></app-task-detail-smart>
-  </div>
-  <div fxFlex="90" *ngIf="itemSelected && notification.type === 'Project' && !itemSelected.deleted">
-      <app-project-detail-smart [date]="notification.date" [projectSelected]="itemSelected" ></app-project-detail-smart>
-  </div>
-   <div fxFlex="10" fxLayoutAlign="flex-end">
-     <mat-icon class="mat-icon-close" color="warn" (click)="unselectNotification.emit()">highlight_off</mat-icon>
+<mat-card fxLayout="column" class="mat-card-notification-detail" *ngIf="notification">
+  <div>
+    <div fxFlex="90" >
+      <app-task-detail-smart *ngIf="itemSelected && notification.type === 'Task' && !itemSelected.deleted"  [taskSelected]="itemSelected" [date]="notification.date" ></app-task-detail-smart>
+       <app-project-detail-smart *ngIf="itemSelected && notification.type === 'Project' && !itemSelected.deleted" [date]="notification.date" [projectSelected]="itemSelected" ></app-project-detail-smart>
+    </div>
+     <div fxFlex="10" fxLayoutAlign="flex-end">
+       <mat-icon class="mat-icon-close" color="warn" (click)="unselectNotification.emit()">highlight_off</mat-icon>
+    </div>
   </div>
   <div fxLayoutAlign="center" [style.margin-top]="'30px'" *ngIf="itemSelected && itemSelected.deleted ">
       <p [style.color]="'red'">

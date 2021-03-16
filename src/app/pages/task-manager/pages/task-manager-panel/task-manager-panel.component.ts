@@ -37,7 +37,7 @@ export class TaskManagerPanelComponent implements  OnDestroy,OnInit{
       this.setTabIndex(tab);
       /// if taskId param change or there is no taskSelected, gets the task by id ///
       const taskId = params.get('id');
-      !this.taskSelected || taskId != this.taskSelected._id ? this.getTaskById(params.get('id')).then(() => { console.log('ei'); this.getUsersInTask(); }) : null;
+      !this.taskSelected || taskId !== this.taskSelected._id ? this.getTaskById(params.get('id')).then(() => { console.log('ei'); this.getUsersInTask(); }) : null;
     });
     this.listenTaskChanges();
   }
@@ -88,15 +88,15 @@ export class TaskManagerPanelComponent implements  OnDestroy,OnInit{
   resolveTaskAction(res:any){
     this.taskService.putTask({ [Object.keys(res)[0]]: res[Object.keys(res)[0]]},res.itemId).subscribe();
   }
-  ngOnDestroy() {
-    this.taskService.userOutTask(this.taskSelected._id);
-    this.taskSubscription.unsubscribe();
-  } 
 
   //// navigation to tab in html ///
   tabNav(index:number){
     const tab = index === 0 ? 'info' : index === 1 ? 'chat' : index === 2 ? 'files' : 'info';
     this.router.navigate([tab],{relativeTo:this.ar.parent});
+  }
+  ngOnDestroy() {
+    this.taskService.userOutTask(this.taskSelected._id);
+    this.taskSubscription.unsubscribe();
   }
 
 }
