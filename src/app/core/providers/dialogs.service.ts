@@ -157,8 +157,8 @@ export class DialogsService {
     const dialog = new MatDialogConfig();
     dialog.disableClose = true;
     dialog.autoFocus = true;
-/*     dialog.maxHeight = '100vh';
-    dialog.maxWidth = '1000px'; */
+    dialog.maxHeight = '100vh';
+    dialog.width = '100vh';
     dialog.data = {projects};
     let dialogRef: MatDialogRef<any> = this.dialog.open(ProjectsDialogComponent , dialog);
     return merge(dialogRef.componentInstance.putProject, dialogRef.componentInstance.deleteProject, dialogRef.componentInstance.selectProject);

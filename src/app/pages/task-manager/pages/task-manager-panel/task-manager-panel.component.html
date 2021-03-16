@@ -1,6 +1,5 @@
 
-
-<ng-container *ngIf="tabIndex != null">
+<ng-container *ngIf="tabIndex !== null">
    <mat-tab-group  [selectedIndex]="tabIndex" (selectedIndexChange)="tabNav($event)" #tabGroup mat-stretch-tabs  fxFlex="100" mat-align-tabs="center">
                   <mat-tab>
                      <ng-template mat-tab-label>

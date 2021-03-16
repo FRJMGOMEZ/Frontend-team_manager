@@ -37,7 +37,7 @@ export class TaskManagerPanelComponent implements  OnDestroy,OnInit{
       this.setTabIndex(tab);
       /// if taskId param change or there is no taskSelected, gets the task by id ///
       const taskId = params.get('id');
-      !this.taskSelected || taskId !== this.taskSelected._id ? this.getTaskById(params.get('id')).then(() => { console.log('ei'); this.getUsersInTask(); }) : null;
+      !this.taskSelected || this.taskSelected && taskId !== this.taskSelected._id ? this.getTaskById(taskId).then(() => {this.getUsersInTask(); }) : null;
     });
     this.listenTaskChanges();
   }
@@ -54,7 +54,14 @@ export class TaskManagerPanelComponent implements  OnDestroy,OnInit{
     });
   }
   setTabIndex(tab:string){
-    this.tabIndex = tab === 'info' ? 0 : tab === 'chat' ? 1 : tab === 'files' ? 2 : this.tabIndex;
+    switch(tab){
+      case 'info': this.tabIndex = 0;
+      break;
+      case 'chat': this.tabIndex = 1;
+      break;
+      case 'files': this.tabIndex = 2;
+      break;
+    }
     LpLocalStorage.set('state-data', tab, 'task-manager-tab');
   }
 

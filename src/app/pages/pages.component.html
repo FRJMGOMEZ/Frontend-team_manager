@@ -2,7 +2,7 @@
   <mat-sidenav #start [mode]="'side'">
              <mat-list>
                 <mat-list-item fxLayoutAlign="center" matTooltip="navigate to notifications">
-                      <mat-icon   color="accent" (click)="start.toggle();sidenavOpen=false" >menu</mat-icon>
+                      <mat-icon   color="primary" (click)="start.toggle();sidenavOpen=false" >menu</mat-icon>
                </mat-list-item>
                <mat-list-item fxLayoutAlign="center" matTooltip="navigate to notifications">
                   <mat-icon #homeIcon [color]="path === 'home' ? 'primary' : 'accent'" (click)="navigate('home')" routerLinkActive="router-link-active"

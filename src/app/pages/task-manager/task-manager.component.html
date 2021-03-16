@@ -1,6 +1,6 @@
 <!-- DESKTOP VERSION -->
 
-<div fxHide.lt-md fxShow.gt-sm  fxLayoutAlign.gt-sm="space-around" fxLayout.lt-md="column" fxLayout.gt-sm="row"  class="task-manager-container" >
+<div *ngIf="mdService.desktop"  fxLayoutAlign.gt-sm="space-around" fxLayout.lt-md="column" fxLayout.gt-sm="row"  class="task-manager-container" >
      <div [ngStyle.lt-md]="{'margin-top': '70px'}"  fxFlex.gt-sm="22" fxFlex.md="35" fxFlex.lt-md="30"  fxLayout="column" >
         <div fxLayoutAlign="center">
             <app-task-manager-filter fxFlex="100" [participants]="participants" [projectId]="selectedProject" (getItems)="getTasks($event,0).subscribe()"></app-task-manager-filter>
@@ -20,7 +20,7 @@
 
  <!--  NO DESKTOP VERSION -->   
 
-<div fxHide.gt-sm fxShow.lt-md>
+<div *ngIf="!mdService.desktop">
     <mat-tab-group mat-stretch-tabs  mat-align-tabs="center">
       <mat-tab>
              <ng-template mat-tab-label>

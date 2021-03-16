@@ -4,7 +4,7 @@
             <mat-header-cell   mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
             <mat-cell [style.color]="'blue'" [style.cursor]="'pointer'" class="mat-cell-selector" (click)="selectProject(element)"   mat-cell *matCellDef="let element">
                 <a fxHide.gt-sm>{{element.name}}</a>
-                <span fxShow.gt-sm>{{element.name}}</span>
+                <span fxHide.lt-md>{{element.name}}</span>
             </mat-cell>
         </ng-container>
         <ng-container matColumnDef="administrators">

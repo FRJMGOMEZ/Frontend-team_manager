@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { AuthService } from './auth.service';
-import { switchMap } from 'rxjs/operators';
 import { merge } from 'rxjs';
 
 @Injectable({
