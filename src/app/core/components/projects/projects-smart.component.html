@@ -26,12 +26,12 @@
         {{projectSelected ? projectName: ''}}
         </div>
         <div fxFlex="20" fxLayout.xs="column" fxLayout.gt-xs="row">
-            <div fxLayoutAlign="flex-start"  fxFlex="50">
+            <div fxLayoutAlign="flex-end"  fxFlex="50">
              <a fxLayout="column" fxLayoutAlign="center">
                 <mat-icon color="primary" (click)="openProjectList()" >list</mat-icon>
             </a>
             </div>
-            <div fxLayoutAlign="flex-start" fxFlex="50">
+            <div fxLayoutAlign="flex-end" fxFlex="50">
             <a fxLayout="column" fxLayoutAlign="center" (click)="postProject()">
                 <mat-icon fxLayoutAlign="flex-start" color="primary">add</mat-icon>
             </a>
