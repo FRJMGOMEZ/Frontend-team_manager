@@ -21,7 +21,7 @@
                     <h3 [class]="propertyHasChanged('name') ? 'property-changed':''" fxLayoutAlign="center">{{taskSelected.name}}</h3>
                 </div>
                 <div  fxLayout.gt-xs="row" fxLayout.xs="column">
-                    <div fxFlex="50" fxLayout.gt-sm="column" fxLayout.lt-md="row"  >
+                    <div fxFlex="33" fxLayout.gt-sm="column" fxLayout.lt-md="row"  >
                        <div fxFlex.lt-md="50" class="div-category" fxLayout="column" >
                            <h5>
                                Start date:
@@ -39,7 +39,7 @@
                             </p>
                         </div>
                     </div>
-                    <div fxFlex="50" fxLayout.gt-sm="column" fxLayout.lt-md="row" >
+                    <div fxFlex="33" fxLayout.gt-sm="column" fxLayout.lt-md="row" >
                         <div fxFlex.lt-md="50" class="div-category" >
                             <h5>
                             Priority:
@@ -57,10 +57,10 @@
                             </p>
                         </div>
                     </div>
-                    <div fxLayout.gt-sm="column" fxLayout-lt-md="row" fxLayoutAlign="center" >
+                    <div fxFlex="33" fxLayout.gt-sm="column" fxLayout-lt-md="row" fxLayoutAlign="center" >
                       <div fxFlex="50" class="div-category" fxLayout="column">
                         <h5>
-                         Description :
+                         Description:
                         </h5>
                          <div fxLayoutAlign="center">
                              <mat-icon  [style.font-size]="'30px'" [color]="propertyHasChanged('description') ? 'accent':''" (click)="showDescription()">pageview</mat-icon>
