@@ -21,25 +21,7 @@
                     <h3 [class]="propertyHasChanged('name') ? 'property-changed':''" fxLayoutAlign="center">{{taskSelected.name}}</h3>
                 </div>
                 <div  fxLayout.gt-xs="row" fxLayout.xs="column">
-                    <div fxLayoutAlign="center" fxFlex="33" fxLayout.gt-sm="column" fxLayout.lt-md="row">
-                        <div fxFlex.lt-md="50" class="div-category">
-                            <h5>
-                                Participants:
-                            </h5>
-                            <ul>
-                                <li [class]="propertyHasChanged('participants') ? 'property-changed':''" *ngFor="let participant of taskSelected.participants" role="listitem">{{participant.name}}</li>
-                            </ul>
-                        </div>
-                        <div fxFlex.lt-md="50" class="div-category">
-                            <h5>
-                                Reviewers:
-                            </h5>
-                            <ul>
-                                <li [class]="propertyHasChanged('reviewers') ? 'property-changed':''" *ngFor="let reviewer of taskSelected.reviewers" role="listitem">{{reviewer.name}}</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div fxFlex="33" fxLayout.gt-sm="column" fxLayout.lt-md="row"  >
+                    <div fxFlex="50" fxLayout.gt-sm="column" fxLayout.lt-md="row"  >
                        <div fxFlex.lt-md="50" class="div-category" fxLayout="column" >
                            <h5>
                                Start date:
@@ -57,7 +39,7 @@
                             </p>
                         </div>
                     </div>
-                    <div fxFlex="33" fxLayout.gt-sm="column" fxLayout.lt-md="row" >
+                    <div fxFlex="50" fxLayout.gt-sm="column" fxLayout.lt-md="row" >
                         <div fxFlex.lt-md="50" class="div-category" >
                             <h5>
                             Priority:
@@ -75,23 +57,48 @@
                             </p>
                         </div>
                     </div>
-                </div>
-                 <div fxLayoutAlign="center" >
-                    <div fxFlex="50" class="div-category" fxLayout="column">
+                    <div fxLayout.gt-sm="column" fxLayout-lt-md="row" fxLayoutAlign="center" >
+                      <div fxFlex="50" class="div-category" fxLayout="column">
                         <h5>
                          Description :
                         </h5>
                          <div fxLayoutAlign="center">
                              <mat-icon  [style.font-size]="'30px'" [color]="propertyHasChanged('description') ? 'accent':''" (click)="showDescription()">pageview</mat-icon>
                          </div>
-                    </div>
-                    <div fxFlex="50" class="div-category" *ngIf="taskSelected.extraTime" fxLayout="column">
+                     </div>
+                     <div fxFlex="50" class="div-category" *ngIf="taskSelected.extraTime" fxLayout="column">
                         <h5>
                           Extra time :
                         </h5>
                         <p>{{extraTime}}</p>
-                    </div>
+                     </div>
                 </div>
+                </div>
+                  <div fxLayoutAlign="center" fxFlex="100" fxLayout="row">
+                        <div fxFlex.lt-md="50" class="div-category">
+                            <h5>
+                                Participants:
+                            </h5>
+                            <ul class="ul-users">
+                                <li [class]="propertyHasChanged('participants') ? 'property-changed':''" *ngFor="let participant of taskSelected.participants" role="listitem">{{participant.name}}</li>
+                            </ul>
+                        </div>
+                        <div fxFlex.lt-md="50" class="div-category">
+                            <h5>
+                                Reviewers:
+                            </h5>
+                            <ul class="ul-users">
+                                <li [class]="propertyHasChanged('reviewers') ? 'property-changed':''" *ngFor="let reviewer of taskSelected.reviewers" role="listitem">{{reviewer.name}}</li>
+                                <li [class]="propertyHasChanged('reviewers') ? 'property-changed':''" *ngFor="let reviewer of taskSelected.reviewers" role="listitem">{{reviewer.name}}</li>
+                                <li [class]="propertyHasChanged('reviewers') ? 'property-changed':''" *ngFor="let reviewer of taskSelected.reviewers" role="listitem">{{reviewer.name}}</li>
+                                <li [class]="propertyHasChanged('reviewers') ? 'property-changed':''" *ngFor="let reviewer of taskSelected.reviewers" role="listitem">{{reviewer.name}}</li>
+                                <li [class]="propertyHasChanged('reviewers') ? 'property-changed':''" *ngFor="let reviewer of taskSelected.reviewers" role="listitem">{{reviewer.name}}</li>
+                                <li [class]="propertyHasChanged('reviewers') ? 'property-changed':''" *ngFor="let reviewer of taskSelected.reviewers" role="listitem">{{reviewer.name}}</li>
+                                <li [class]="propertyHasChanged('reviewers') ? 'property-changed':''" *ngFor="let reviewer of taskSelected.reviewers" role="listitem">{{reviewer.name}}</li>
+                                <li [class]="propertyHasChanged('reviewers') ? 'property-changed':''" *ngFor="let reviewer of taskSelected.reviewers" role="listitem">{{reviewer.name}}</li>
+                            </ul>
+                        </div>
+                    </div>
               </div>
 </div>
 
