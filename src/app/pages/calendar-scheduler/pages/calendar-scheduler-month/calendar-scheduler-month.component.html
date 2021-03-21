@@ -21,7 +21,7 @@
                                         </div>
                                         <div class="div-tasks" fxShow.gt-sm fxHide.lt-md>
                                             <ng-container *ngFor="let task of day.tasks" >
-                                                <mat-icon [matMenuTriggerFor]="menuPc" [matTooltip]="eventTooltip(task)" [matTooltipClass]="'event-tooltip'" [color]="iconColor(task)" [class]="task.priority === 1 ? 'priority-high' : task.priority === 2 ? 'priority-medium': 'priority-low'  " > trip_origin</mat-icon>
+                                                <mat-icon [matMenuTriggerFor]="menuPc" [matTooltip]="eventTooltip(task)" [matTooltipClass]="'event-tooltip'" [color]="iconColor(task)" [class]="task.priority === 1 ? 'priority-low' : task.priority === 2 ? 'priority-medium': 'priority-high'  " > trip_origin</mat-icon>
                                                 <mat-menu #menuPc="matMenu">
                                                     <button (click)="checkTask.emit(task._id)" mat-menu-item>View details</button>
                                                     <div>
