@@ -58,7 +58,7 @@ export class TaskDetailComponent implements OnChanges  {
     return !LpObject.areEquals(this.prevTask, this.taskSelected);
   }
   propertyHasChanged(key:string){
-    return this.prevTask ? JSON.stringify(this.prevTask[key]) != JSON.stringify(this.taskSelected[key]) : false;
+    return  this.prevTask && this.taskSelected ? JSON.stringify(this.prevTask[key]) != JSON.stringify(this.taskSelected[key]) : false;
   }
 
   setVersion(task:Task){

@@ -28,7 +28,7 @@ export class DialogsService {
     const dialog = new MatDialogConfig();
     dialog.disableClose = true;
     dialog.autoFocus = true;
-    dialog.width = '500px';
+    dialog.maxWidth = '100vw';
     dialog.maxHeight = '100vh';
     dialog.data = prevDialog ? {taskId,prevDialog} : {taskId};
     let dialogRef: MatDialogRef<any> = this.dialog.open(TaskDialogSmartComponent, dialog);
@@ -104,7 +104,7 @@ export class DialogsService {
     const dialog = new MatDialogConfig();
     dialog.disableClose = true;
     dialog.autoFocus = true;
-    dialog.width = '500px';
+    dialog.maxWidth = '100vw';
     dialog.data ={projectId};
     this.dialog.open(ProjectsDetailDialogSmartComponent, dialog);
   }
@@ -170,5 +170,9 @@ export class DialogsService {
     dialog.autoFocus = true;
     dialog.data = {user};
     this.dialog.open(UserInfoSmartDialogComponent, dialog);
+  }
+
+  closeAll(){
+    this.dialog.closeAll();
   }
 }

@@ -81,7 +81,7 @@ export class ItemVersionsComponent implements OnInit, ControlValueAccessor {
     }
     this.item = this.itemVersions[version];
     this.itemV = version;
-    this.prevVersion.emit(this.itemVersions[version-1] ? this.itemVersions[version -1] :this.itemV);
+    this.prevVersion.emit(this.itemVersions[version-1] ? this.itemVersions[version -1] :this.itemVersions[this.itemVersions.length -1]);
     this.currentVersion.emit(this.itemV);
     this.propagateChange(this.item);
   }

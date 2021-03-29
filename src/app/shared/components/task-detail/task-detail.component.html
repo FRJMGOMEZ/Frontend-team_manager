@@ -13,7 +13,7 @@
                   </div>
                 </div>
             <div fxFlex="85" fxLayout="column" fxLayoutAlign="center" >
-                <div fxLayoutAlign="space-between" [style.height]="'10px'">
+                <div fxLayoutAlign="space-between" [style.height]="'10px'" [style.margin-bottom]="'10px'">
                     <small *ngIf="currentVersion !== null" class="small-user" >{{ currentVersion === 0 ? 'created by' : 'edited by' }} {{currentVersion === 0 ? taskSelected.createdBy.name : taskSelected.prevStates[currentVersion -1 ] ? taskSelected.prevStates[currentVersion -1 ] .user.name : ''}}</small>
                     <small class="small-current-state" fxLayoutAlign="center" [style.color]="'#7b87cc'" *ngIf="isCurrentVersion">*current state*</small>
                 </div>

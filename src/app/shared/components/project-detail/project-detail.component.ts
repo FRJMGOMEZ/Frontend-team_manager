@@ -46,7 +46,7 @@ export class ProjectDetailComponent implements OnChanges{
     return  !LpObject.areEquals(this.prevProject, this.projectSelected) 
   }
   propertyHasChanged(key: string) {
-    return this.currentVersion !== 0 ? this.prevProject ? JSON.stringify(this.prevProject[key]) != JSON.stringify(this.projectSelected[key]) : false : false;
+    return this.projectSelected && this.prevProject ?  JSON.stringify(this.prevProject[key]) != JSON.stringify(this.projectSelected[key]) : false;
   }
 
   setVersion(project:Project){

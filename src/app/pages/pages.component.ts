@@ -50,6 +50,7 @@ export class PagesComponent implements OnInit, OnDestroy {
           this.notificationsService.listenningNotificationsEvents();
         } else {
           this.lpDialogs.openInfoDialog(res.message, 'USER BUSSY');
+          this.dialogService.closeAll();
           this.router.navigate(['/auth/login']);
         }
     })
@@ -68,6 +69,7 @@ export class PagesComponent implements OnInit, OnDestroy {
   logout(){
     this.lpDialogs.openConfirmDialog('ARE YOU SURE?','').subscribe((res:boolean)=>{
      if(res){
+       this.dialogService.closeAll();
        this.authService.logout().subscribe()
      }
     })
