@@ -70,6 +70,7 @@ export class TaskManagerComponent implements OnInit, OnDestroy {
   
   listenTaskChanges(){
     this.taskSubs = this.taskService.task$.subscribe((res: { task: Task, action: string }) => {
+      console.log({res});
       if (res) {
         switch (res.action) {
           case 'POST':
