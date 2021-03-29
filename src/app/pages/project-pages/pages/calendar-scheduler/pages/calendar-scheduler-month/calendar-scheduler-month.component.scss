@@ -1,0 +1,55 @@
+
+
+
+mat-card{
+  padding:5px!important;
+}
+
+.day-unactive{
+    opacity: 0.5;
+    cursor: not-allowed !important;
+}
+
+.day{
+    cursor: pointer;
+    margin-bottom: 0px;
+}
+
+.task{
+    font-size: 13px;
+    cursor: pointer;
+    height: 13px;
+    margin:0px;
+    padding:0px
+}
+
+.div-tasks{
+  overflow-y: auto;
+
+  .div-icon-task{
+      display: inline-block;
+      height: 25px;
+      width: 25px;
+  }
+
+  mat-icon{
+      height:25px ;
+  }
+
+  .priority-high{
+    font-size: 25px;
+  }
+
+  .priority-medium{
+    font-size:20px;
+   }
+
+  .priority-low{
+    font-size:15px;
+   }   
+}
+
+
+::ng-deep .mat-tooltip {
+    white-space: pre-line;
+}

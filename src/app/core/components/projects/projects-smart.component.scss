@@ -1,12 +1,14 @@
 
-
-.expansion-panel{
+.div-expansion-panel-container{
+  width: 100%;
+  position:relative ;
+  .expansion-panel{
   z-index: 999997;
   position: absolute;
-  top:1%;
-  left:35%;
-  right:30%
+  width: 100%;
 }
+}
+
 ::ng-deep.mat-expansion-panel-body{
   padding:0px 0px 0px!important
 }

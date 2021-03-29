@@ -3,8 +3,9 @@ import { Subscription } from 'rxjs';
 import { ProjectService } from '../../providers/project.service';
 import { DialogsService } from '../../providers/dialogs.service';
 import { Project } from '../../models/project.model';
-import { LpArray, LpLocalStorage } from 'lp-operations';
+import { LpArray } from 'lp-operations';
 import { MatExpansionPanelHeader } from '@angular/material/expansion';
+import { LpLocalStorage } from '../../../../../projects/lp-operations/src/lp-local-storage';
 
 
 @Component({
@@ -26,6 +27,8 @@ export class ProjectsSmartComponent implements OnInit {
                 private dialogsService: DialogsService) { }
     ngOnInit() {
 
+        this.projectSelected = this.projectService.selectedProject ? this.projectService.selectedProject._id  : undefined;
+
         this.projectService.selectedProject$.subscribe((selectedProject: Project) => {
             this.projectSelected = selectedProject._id;
         })
@@ -41,16 +44,11 @@ export class ProjectsSmartComponent implements OnInit {
                 this.projectService.selectProject(null) 
             }
         })
-
         this.projectService.getProjects().subscribe((projects) => {
             this.projects = projects;
-            const projectSId = LpLocalStorage.get('state-data', 'project');
-            const projectSelected = projectSId ? this.projects.find((p)=>{ return p._id === projectSId}) : undefined;
-            if (projectSelected) {
-                this.projectService.selectProject(projectSelected)
-            } else if (this.projects.length > 0) {
-                this.projectService.selectProject(this.projects[0])
-            }
+            const projectId = LpLocalStorage.get('state-data','project') ;
+            const project = projectId ? this.projects.find((p)=>{ return p._id === projectId}) : undefined;
+            project ? this.projectService.selectProject(project) : null;
         })
     }
     selectProject(project: Project) {

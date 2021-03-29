@@ -1,0 +1,26 @@
+.task-manager-container{
+   height: 88vh; 
+}
+@media  (max-width: 1279px) {
+ .task-manager-container{
+   height: 75vh !important; 
+}
+}
+
+::ng-deep .mat-tab-body-wrapper{
+   height: 100% !important;
+   margin:0px !important
+}
+
+.div-no-tasks{
+   margin:50px;
+}
+
+.span-task-name{
+     width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+

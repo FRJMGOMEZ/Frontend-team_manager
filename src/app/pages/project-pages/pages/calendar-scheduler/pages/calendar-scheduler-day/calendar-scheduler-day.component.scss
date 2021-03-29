@@ -1,0 +1,70 @@
+
+.mat-card-day{
+    cursor: pointer;
+    height: 9.5vh;
+    padding:5px !important
+}
+
+.mat-card-day-selected{
+    background-color:#d1870c !important
+}
+
+.mat-card-hour{
+    padding:0px!important;
+    margin: 0px !important;
+    width: 5.5vw;
+    height: 3.3vh;
+}
+
+.div-task-low-p{
+    height: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.div-task-medium-p{
+    height: 15px;
+    margin-bottom: 7.5px;
+    margin-top: 7.5px;
+}
+.div-task-high-p{
+     height: 20px;
+     margin-bottom: 5px;
+     margin-top: 5px;
+}
+
+.a-task-toggle{
+    margin:5px;
+    color:#5464bd;
+    word-break: break-all;
+    max-width: 100%;
+}
+
+.div-scrollable-tasks {
+    overflow-x:scroll;
+    width:92vw;
+    overflow-y:hidden;
+    margin:0px;
+    padding: 0px;
+     height: 52vh;
+}
+
+.mat-card-week-day{
+width: 15%;
+padding: 0px;
+height: 25px !important;
+
+&.selected{
+ background-color: #d1870c !important ;
+}
+
+}
+
+.div-date{
+   background-color:#5464bd;
+   color:white;
+   width: 22px;
+   text-align: center;
+}
+
+
+

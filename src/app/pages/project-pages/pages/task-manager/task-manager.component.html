@@ -1,0 +1,32 @@
+
+<div  fxLayoutAlign.gt-sm="space-around" fxLayout.lt-md="column" fxLayout.gt-sm="row"  class="task-manager-container"  >
+<nav *ngIf="!mdService.desktop" mat-stretch-tabs mat-tab-nav-bar>
+            <a mat-tab-link   (click)="setView(0)">
+                <mat-icon [style.color]="indexSelected === 0 ? '#5153a8' : ''">list</mat-icon>
+            </a>
+            <a mat-tab-link  (click)="setView(1)">
+                <span class="span-task-name" [style.color]="indexSelected === 1 ? '#5153a8' : ''">{{taskSelected ? taskSelectedName : ''}}</span>
+            </a>
+</nav>
+ <div fxFlex="100" fxLayout.gt-sm="row" fxLayout.lt-md="column" fxLayoutAlign.gt-sm="space-around">
+     <div [ngStyle]="{'display': mdService.desktop || (!mdService.desktop &&  indexSelected === 0) ? '' : 'none' }" fxFlex.gt-sm="22" fxFlex.md="35" fxFlex.lt-md="30"  fxLayout="column" >
+            <div fxLayoutAlign="center">
+                <app-task-manager-filter fxFlex="100" [participants]="participants" [projectId]="selectedProject" (getItems)="getTasks($event,0).subscribe()"></app-task-manager-filter>
+            </div>
+            <div fxLayoutAlign="center">
+                <app-task-manager-list fxFlex="100" (selectTask)="selectTask($event)" [tasksList]="tasksList" [taskSelected]="taskSelected ? taskSelected : null" (getItems)="getTasks(taskQueryString,$event).subscribe()" [taskTotal]="taskTotal" ></app-task-manager-list>
+           </div>
+     </div>
+     <div [ngStyle]="{'display': mdService.desktop || (!mdService.desktop &&  indexSelected === 1) ? '' : 'none' }"  fxFlex.gt-sm="75" fxFlex.lt-md="70">
+            <router-outlet></router-outlet>
+             <div fxLayoutAlign="center">
+                     <h4 class="div-no-tasks"  *ngIf="!taskSelected">NO TASK SELECTED</h4>
+            </div>
+     </div>
+ </div>
+</div>
+
+
+
+
+

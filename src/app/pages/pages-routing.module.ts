@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { PagesComponent } from './pages.component';
 import { CheckTokenGuard } from '../shared/guards/check-token.guard';
+import { ProjectGuard } from '../shared/guards/project.guard';
 
 let pagesRoutes:Routes = [
   {
@@ -19,17 +20,10 @@ let pagesRoutes:Routes = [
         canActivate: [CheckTokenGuard],
         loadChildren:()=> import('./home/home.module').then(m => m.HomeModule)
       },
-      {
-        path: 'calendar',
-        loadChildren: () => import('./calendar-scheduler/calendar-scheduler.module').then(m => m.CalendarSchedulerModule),
-        canActivate: [CheckTokenGuard],
-        data: {animation: 'calendar-scheduler'} 
-      },
-      {
-        path:'task-manager',
-        loadChildren: () => import('./task-manager/task-manager.module').then(m => m.TaskManagerModule),
-        canActivate: [CheckTokenGuard],
-        data:{animation:'task-manager'}
+      { 
+        canActivate: [CheckTokenGuard, ProjectGuard],
+        path:':id',
+        loadChildren: () => import('./project-pages/project-pages.module').then(m => m.ProjectPagesModule)
       }
     ]
   }

@@ -1,0 +1,88 @@
+.main {
+  height: 85vh; /* Same as the width of the sidebar */
+  width: 100%;
+}
+
+.new-task-btn{
+    font-weight: bolder;
+    width: 90px;
+    font-size: 15px;
+    text-align: center;
+     &.disabled{
+      opacity: 0.5;
+      cursor: auto;
+    }
+}
+
+mat-sidenav-container{
+  height: 100%;
+  width: 100% !important;
+  margin:0px;
+  padding: 0px;
+}
+
+mat-sidenav{
+  width:30px;
+  position:absolute;
+  z-index:999996;
+  background-color: #1b1b1b;
+}
+
+.spacer {
+  flex: 1 1 auto;
+  width: 50px;
+}
+
+mat-icon{
+    margin:0.5em
+}
+
+.icon-pages {
+    font-size: 30px;
+    margin-left:2em;
+    &.disabled{
+      opacity: 0.5;
+      cursor: auto;
+    }
+}
+
+mat-toolbar-row{
+  background-color:#1b1b1b;
+  padding:5px!important;
+  margin-top:0px !important;
+}
+
+.div-task-btn-desktop{
+  margin-right: 7vw;
+}
+
+.div-task-btn-mobile{
+    margin-right: 0vw;
+}
+
+.div-not-display{
+  color:#7b87cc ;
+  margin: 25px;
+}
+
+@media (max-width: 1279px) {
+  .main{
+   height: 89vh;
+   width: 100%;
+   } 
+  .new-task-btn{
+    font-weight: bolder;
+    width: 100% !important;
+    font-size: 11px;
+    text-align: center;
+    padding: 0px;
+    height: 55px;
+  }
+}
+
+.a-disabled{
+  opacity: 0.5;
+}
+
+
+

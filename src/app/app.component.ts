@@ -9,6 +9,7 @@ import { Platform } from '@angular/cdk/platform';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+ 
   browsersBanned = ['FIREFOX'];
   display:boolean = true;
   constructor(private wsService: WebSocketsService, private lpRoutesBreadcrumbsService: LpRoutesBreadcrumbsService, private loadSpinnerService: LoadSpinnerService, public platform: Platform){
@@ -19,7 +20,6 @@ export class AppComponent {
     this.lpRoutesBreadcrumbsService.listenningNavigationEnd().subscribe(()=>{
       this.loadSpinnerService.state.next(false);
     })
-    // Firefox 1.0+
     this.browsersBanned.forEach((browser)=>{
       if(this.platform[browser]){
         this.display = false;

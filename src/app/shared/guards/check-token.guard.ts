@@ -14,7 +14,7 @@ export class CheckTokenGuard implements CanActivate, CanLoad {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     let token = this.authService.userOnline.token 
-    return this.isExpired(token) ? this.authService.logout() : this.tokenNeedRefresh(token) ? this.authService.refreshToken() : true;
+    return this.isExpired(token) ? this.authService.logout() : this.tokenNeedsRefresh(token) ? this.authService.refreshToken() : true;
   }
   canLoad(
     route: Route,
@@ -33,7 +33,7 @@ export class CheckTokenGuard implements CanActivate, CanLoad {
     }
   }
 
-  tokenNeedRefresh(token:string){
+  tokenNeedsRefresh(token:string){
     const decoded = jwt_decode(token);
     const expiration = decoded.exp * 1000;
     if (new Date().getTime() + 180000 > expiration) {

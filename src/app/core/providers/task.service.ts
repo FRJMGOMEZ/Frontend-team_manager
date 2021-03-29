@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject, Observable, empty } from 'rxjs';
-import { tap, map, catchError, switchMap } from 'rxjs/operators';
+import { tap, map, switchMap } from 'rxjs/operators';
 import { WebSocketsService } from './web-sockets.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LpDialogsService } from 'lp-dialogs';
 import { Task } from '../models/task.model';
-import { ErrorHandlerService } from './error-handler.service';
 import { AuthService } from './auth.service';
 import { API_URL } from '../../config/api-url';
 import { User } from '../models/user.model';
@@ -64,7 +63,6 @@ export class TaskService {
       );
   }
 
-  
   getTasks(selector: string,querysString?:string,skip:number=0,limit:number=99999999) {
     let url = `${API_URL}tasks/${selector}${querysString}`;
     let headers = new HttpHeaders({skip:skip.toString(),limit:limit.toString()});
@@ -87,6 +85,10 @@ export class TaskService {
     return this.http.get(url).pipe(
       map((res: any) => { return res.task} )
     );
+  }
+
+  userIsPartOfTask(taskId:string,projectId:string):Observable<boolean>{
+    return this.http.get(`${API_URL}user-in-task/${taskId}/${projectId}`).pipe(map((res:boolean)=> res))
   }
   getTaskFiles(taskId:string,skip:number,limit:number=30,title:string=""){
     return this.http.get(`${API_URL}task-files/${taskId}?skip=${skip}&limit=${limit}&title=${title}`).pipe(
