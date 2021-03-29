@@ -50,8 +50,7 @@ export class PagesComponent implements OnInit, OnDestroy {
           this.notificationsService.listenningNotificationsEvents();
         } else {
           this.lpDialogs.openInfoDialog(res.message, 'USER BUSSY');
-          /* this.authService.logout().subscribe(); */
-          this.router.navigate(['/auth/login'])
+          this.router.navigate(['/auth/login']);
         }
     })
   }
