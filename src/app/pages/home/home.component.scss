@@ -1,6 +1,10 @@
 .div-home{
   height: 87vh;
 }
+@media (min-width: 0px) and  (max-width: 600px) {
+ .div-home{
+  height: 90vh;
+}
 ::ng-deep .mat-tab-list {
   .mat-tab-label {
     flex-basis: 1;
@@ -31,10 +35,6 @@ mat-icon{
 }
 }
 
-@media (min-width: 0px) and  (max-width: 600px) {
- .div-home{
-  height: 90vh;
-}
 
 .div-info-icon{
   top:18.7vh!important

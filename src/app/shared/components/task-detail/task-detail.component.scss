@@ -1,3 +1,8 @@
+mat-dialog-content{
+margin-bottom:0px !important;
+max-height:100vh!important;
+}
+
 h3{
     margin: 0px;
     padding: 0px;
@@ -23,7 +28,6 @@ h5{
 @media  (max-width: 1279px) {
    .div-category{
    margin-top:5px;
-   height:12vh
    }
 }
 
@@ -49,12 +53,6 @@ h5{
     font-weight: bolder;
     color: #7b87cc;
 }
-
-mat-dialog-content{
-margin-bottom:0px !important;
-max-height:100vh!important;
-}
-
 .ul-users{
   overflow-y: scroll;
   max-height: 75%;
