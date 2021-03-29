@@ -62,9 +62,9 @@ export class ItemVersionsComponent implements OnInit, ControlValueAccessor {
 
   generateVersions(item:any) {
     this.itemVersions = [];
-    this.itemVersions.push( item ? item : this.item)
+    this.itemVersions.push( item ? item : this.item);
     for (let i = item ? item.prevStates.length : this.item.prevStates.length; i >= 1; i--) {
-      this.itemVersions.unshift(this.getVersion(this.itemVersions[0], item ? item.prevStates[i-1].changes : this.item.prevStates[i - 1].changes))
+      this.itemVersions.unshift(this.getVersion(this.itemVersions[0], item ? item.prevStates[i-1].changes : this.item.prevStates[i - 1].changes));
     }
   }
   getVersion(taskBase, taskToMerge) {
@@ -81,7 +81,7 @@ export class ItemVersionsComponent implements OnInit, ControlValueAccessor {
     }
     this.item = this.itemVersions[version];
     this.itemV = version;
-    this.prevVersion.emit(this.itemVersions[version-1] ? this.itemVersions[version -1] :{});
+    this.prevVersion.emit(this.itemVersions[version-1] ? this.itemVersions[version -1] :this.itemV);
     this.currentVersion.emit(this.itemV);
     this.propagateChange(this.item);
   }

@@ -100,6 +100,7 @@ export class AuthService {
     }));
   }
 
+  //// TODO: custom error handling ////
   onServerOfDisconnection() {
     return this.http.post(`${API_URL}on-server-off-disconnection/${this.userOnline._id}`,{});
   }

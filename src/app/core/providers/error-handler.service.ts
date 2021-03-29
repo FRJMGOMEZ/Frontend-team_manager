@@ -4,6 +4,8 @@ import { throwError } from 'rxjs';
 import { SnackbarNotificationsService } from './snackbar-notifications.service';
 import { LoadSpinnerService } from '../components/load-spinner/load-spinner.service';
 import { LpDialogsService } from 'lp-dialogs';
+import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,9 @@ export class ErrorHandlerService {
 
   constructor(private plSnackbarNotificationsService:SnackbarNotificationsService,
              private loadSpinnerService:LoadSpinnerService,
-             private lpDialogsService:LpDialogsService) { }
+             private lpDialogsService:LpDialogsService,
+             private authService:AuthService,
+             private router:Router) { }
   handleError(error: HttpErrorResponse) {
 
     this.loadSpinnerService.state.next(false);
@@ -24,6 +28,9 @@ export class ErrorHandlerService {
         break;
       case 401:
         this.plSnackbarNotificationsService.httpError(errorMessage, '');
+        this.authService.logout().subscribe(()=>{
+          this.router.navigate(['/pages'])
+        });
         break;
       case 403: this.plSnackbarNotificationsService.httpError(errorMessage, '');
         break;

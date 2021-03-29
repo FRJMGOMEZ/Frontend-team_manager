@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '../../core/providers/notification.service';
 import { Subscription, timer } from 'rxjs';
 import { LpLocalStorage } from 'lp-operations';
+import { RoutesService } from '../../core/providers/routes.service';
 
 
 @Component({
@@ -21,9 +22,12 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   constructor(private ar:ActivatedRoute,
               private router:Router,
               private cdr:ChangeDetectorRef,
-              private notificationService:NotificationService) { }
+              private notificationService:NotificationService,
+              private routesService:RoutesService) { }
 
   ngOnInit(){
+     this.routesService.setCurrentPage('home');
+
      this.notificationSubs = this.notificationService.notificationSelected$.subscribe((notification:NotificationModel)=>{
         this.notificationSelected = notification;
         this.selecTab();
