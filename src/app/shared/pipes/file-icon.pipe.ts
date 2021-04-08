@@ -23,7 +23,7 @@ export class FileIconPipe implements PipeTransform {
   transform(file: FileModel | File): unknown {
     let textFormat = this.textFormats.find((f)=>{ return f.mime === file.type})
     if(textFormat){
-      return of(`../../../assets/icons/files/${textFormat.icon}.png`)
+      return of(`assets/icons/files/${textFormat.icon}.png`)
     }
    if(file instanceof File){
       return of(this.domSanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(file)))
