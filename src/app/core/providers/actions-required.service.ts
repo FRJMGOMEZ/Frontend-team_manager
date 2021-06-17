@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, empty } from 'rxjs';
+import { Observable, empty } from 'rxjs';
 import { TaskService } from './task.service';
 import { switchMap } from 'rxjs/operators';
 import { DialogsService } from './dialogs.service';

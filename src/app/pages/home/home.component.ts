@@ -3,7 +3,7 @@ import { NotificationModel } from '../../core/models/notification.model';
 import { NotificationsInfoComponent } from './components/notifications-info/notifications-info.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '../../core/providers/notification.service';
-import { Subscription, timer } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { LpLocalStorage } from 'lp-operations';
 import { RoutesService } from '../../core/providers/routes.service';
 
@@ -26,27 +26,26 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
               private routesService:RoutesService) { }
 
   ngOnInit(){
-     this.routesService.setCurrentPage('home');
-
-     this.notificationSubs = this.notificationService.notificationSelected$.subscribe((notification:NotificationModel)=>{
-        this.notificationSelected = notification;
-        this.selecTab();
-     });
+    
   }
   ngAfterViewInit(){
+    this.routesService.setCurrentPage('home');
+    this.notificationSubs = this.notificationService.notificationSelected$.subscribe((notification: NotificationModel) => {
+      this.notificationSelected = notification;
+      this.cdr.detectChanges();
+      this.selecTab();
+    });
     this.childPath = this.router.url.split('/')[3];
     LpLocalStorage.set('state-data',this.childPath,'home-path');
-    this.tabIndex = this.childPath === 'new' ? 0 : 1;  
-    this.cdr.detectChanges();
   }
    
   navigate(index:number){
-      this.selecTab();
       let url = index === 0 ? 'new' : 'record';
       url += this.notificationSelected ? `/${this.notificationSelected._id}` : '';
       this.router.navigate([url], { relativeTo: this.ar }).then(() => {
         this.childPath = index === 0 ? 'new' : 'record';
         LpLocalStorage.set('state-data', this.childPath, 'home-path');
+        this.selecTab();
       });
   }
   unselectNotification(){
@@ -55,11 +54,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   }
 
   selecTab(){
-    this.tabIndex = this.childPath === 'new' ? 1 : 0;
-    this.cdr.detectChanges();
-    timer().subscribe(() => {
-      this.tabIndex = this.childPath === 'new' ? 0 : 1;
-    });
+    this.tabIndex = this.childPath === 'new' ? 0 : 1;
   }
   ngOnDestroy(){
     this.notificationSubs ? this.notificationSubs.unsubscribe() : null;

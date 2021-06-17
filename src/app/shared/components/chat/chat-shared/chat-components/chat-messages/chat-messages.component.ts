@@ -1,8 +1,9 @@
-import { Component,Output, EventEmitter, Input, SimpleChanges, ElementRef, ViewChild, AfterViewInit, Renderer2, AfterViewChecked, ChangeDetectionStrategy } from '@angular/core';
-import { Subscription, timer } from 'rxjs';
+import { Component, Output, EventEmitter, Input, SimpleChanges, ElementRef, ViewChild, AfterViewInit, Renderer2, AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ChatUser } from '../../chat-models/chat-user.model';
 import { MessageModel } from '../../../../../../core/models/message.model';
 import { FileModel } from '../../../../../../core/models/file.model';
+
 
 @Component({
   selector: 'chat-messages',
@@ -10,32 +11,29 @@ import { FileModel } from '../../../../../../core/models/file.model';
   styleUrls: ['./chat-messages.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChatMessagesComponent implements AfterViewInit, AfterViewChecked {
+export class ChatMessagesComponent implements AfterViewInit {
   @ViewChild('divMessages') divMessages : ElementRef;
   dialogSubs:Subscription;
   @Input() messages:MessageModel[];
-  messagesToDisplay:MessageModel[];
   @Input() messagesCount:number;
   @Input() userOnline:ChatUser;
   @Input() newMessage:MessageModel;
   @Output() getMessages = new EventEmitter<{from:number}>();
   @Output() downloadFile = new EventEmitter<{src:any,file:FileModel}>();
   showSpinner = false;
-  ngAfterViewCheckedTriggered:number = 0;
 
-  constructor( private renderer: Renderer2) { }
+  constructor( private renderer: Renderer2, private cdr:ChangeDetectorRef) {}
 
   ngOnChanges(changes:SimpleChanges){
       if(changes.messages && this.divMessages && !changes.messages.firstChange){
-          this.showSpinner = false;
           this.divMessages.nativeElement.scrollTop = 5;
+          this.showSpinner = false;
+          this.scrollToBottom();
       }
       if(changes.newMessage && this.newMessage ){
          this.messages.push(this.newMessage);
          this.messagesCount++;
-         timer().subscribe(()=>{
-          this.scrollToBottom();
-          });
+         this.scrollToBottom();
       }
   }
   ngAfterViewInit(){
@@ -47,16 +45,12 @@ export class ChatMessagesComponent implements AfterViewInit, AfterViewChecked {
         this.showSpinner = false;
       } 
     });
+    this.scrollToBottom();
   }
-  ngAfterViewChecked() {
-    if (this.ngAfterViewCheckedTriggered < 2){
-      this.scrollToBottom();
-    }
-  }
+
   scrollToBottom(){
-    const div = this.divMessages;
-    div.nativeElement.scrollTop = div.nativeElement.scrollHeight;
-    this.ngAfterViewCheckedTriggered ++;
+    this.cdr.detectChanges();
+    this.divMessages.nativeElement.scrollTop = this.divMessages.nativeElement.scrollHeight;
  }
 
   ngOnDestroy() {

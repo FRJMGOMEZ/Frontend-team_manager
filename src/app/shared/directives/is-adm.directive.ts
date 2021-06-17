@@ -17,17 +17,17 @@ export class IsAdmDirective implements OnDestroy {
      this.check()
      this.projectSubs = this.projectService.project$.subscribe(()=>{
          this.check()
-     })
+     });
      this.projectSelectionSubs = this.projectService.selectedProject$.subscribe(()=>{
        this.check();
-     })
+     });
   }
 
   check(){
   if (!(this.projectService.selectedProject.administrators as User[]).map((u)=>{ return u._id}).includes(this.authService.userOnline._id)){
-     this.renderer.setStyle(this.el.nativeElement, 'display', 'none')
+     this.renderer.setStyle(this.el.nativeElement, 'display', 'none');
   } else {
-    this.renderer.setStyle(this.el.nativeElement, 'display', 'inherit')
+    this.renderer.setStyle(this.el.nativeElement, 'display', 'inherit');
   }
   }
 

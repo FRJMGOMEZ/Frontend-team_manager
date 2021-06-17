@@ -1,7 +1,6 @@
-import { Component, Input, OnInit, SimpleChanges, forwardRef, Output, EventEmitter } from '@angular/core';
+import { Component, Input, forwardRef, Output, EventEmitter } from '@angular/core';
 import { LpObject } from 'lp-operations';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-item-versions',
@@ -15,7 +14,7 @@ import { timer } from 'rxjs';
     },
   ]
 })
-export class ItemVersionsComponent implements OnInit, ControlValueAccessor {
+export class ItemVersionsComponent implements ControlValueAccessor {
 
   @Input() item: any;
 
@@ -31,18 +30,6 @@ export class ItemVersionsComponent implements OnInit, ControlValueAccessor {
 
   constructor() { }
 
-  ngOnInit() {}
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.date && this.date) {
-       if(changes.date.firstChange){
-         timer(250).subscribe(()=>{
-           this.selectVersion()
-         })
-       }else{
-         this.selectVersion();
-       }
-    }
-  }
   private propagateChange = (_: any) => { };
   public writeValue(obj: any) { 
     if(obj){
@@ -53,6 +40,7 @@ export class ItemVersionsComponent implements OnInit, ControlValueAccessor {
         this.generateVersions(obj);
         this.propagateChange(this.item);
       }  
+      this.selectVersion();
     }
   }
   public registerOnChange(fn: any) {

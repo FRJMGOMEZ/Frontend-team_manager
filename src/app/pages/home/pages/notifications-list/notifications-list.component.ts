@@ -47,18 +47,24 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.params = this.ar.firstChild ? this.ar.firstChild.snapshot.paramMap : undefined;
+ 
     this.path = this.router.url.includes('new') ? 'new' : 'record';
     this.cdr.detectChanges();
     this.userOnline = this.authService.userOnline;
 
+    //// receive notifications selected ///
     this.notificationSelectedSubs = this.notificationService.notificationSelected$.subscribe((notification: NotificationModel) => {
       this.notificationSelected = notification;
-    })
-
+    });
+    //// receive new notification
     this.notificationSubs = this.notificationService.notification$.subscribe((notification:NotificationModel)=>{
       this.notifications = [notification,...this.notifications];
-    })
+    });
+    
+    /// check the notifications filters /////
     this.queryString = LpLocalStorage.get('state-data', 'notification-filters');
+
+    /// get the notifications list ///
     this.getNotifications(this.queryString).subscribe((res:any) => {
       this.notificationsCount = res.count;
       this.notifications = [...res.notifications].sort((a, b) => { return b.date - a.date });
@@ -94,7 +100,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
   }
 
   getNotifications(queryString:string){
-      this.queryString = queryString;
+    this.queryString = queryString;
     LpLocalStorage.set('state-data', this.queryString, 'notification-filters');
       let request: Observable<any>
       if (this.path === 'new') {

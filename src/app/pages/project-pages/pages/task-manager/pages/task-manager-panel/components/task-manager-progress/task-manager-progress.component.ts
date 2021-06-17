@@ -1,5 +1,5 @@
-import { Component, Input, ChangeDetectorRef, SimpleChanges, OnChanges } from '@angular/core';
-import { interval, Subscription, timer, Observable } from 'rxjs';
+import { Component, Input, SimpleChanges, OnChanges } from '@angular/core';
+import { interval, Subscription, Observable } from 'rxjs';
 import { LpDate } from 'lp-operations';
 import { tap } from 'rxjs/operators';
 import { Task } from '../../../../../../../../core/models/task.model';
@@ -18,17 +18,13 @@ export class TaskManagerProgressComponent implements OnChanges {
   extraTimeProgress:number = 50;
   timeLineProgressSubs:Subscription;
   timelineProgress:number;
-  constructor(private cdr:ChangeDetectorRef) { }
+  constructor() { }
   ngOnChanges(changes:SimpleChanges){
     if(changes.taskSelected){
-      timer().subscribe(()=>{
         this.timeLineProgressSubs ? this.timeLineProgressSubs.unsubscribe() : null;
         this.timeLineProgressSubs = this.calculateTimelineProgress().subscribe();
         this.extraTimeSubs ? this.extraTimeSubs.unsubscribe() : null;
         this.extraTimeSubs = this.calculateExtraTime().subscribe();
-        this.calculateTimelineProgress();
-        this.cdr.detectChanges();
-      })
     }
   }
   calculateTimelineProgress (){

@@ -19,7 +19,7 @@ export class PasswordDirective implements Validator {
     this.regExps.forEach(( { error, regExp })=>{
       let regularExpression = new RegExp(regExp);
       if(!regularExpression.test(passwordValue)){
-        passError = {[error]:true}
+        passError = {[error]:true};
       }
     })
     return passError;

@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from "@angular/common/http";
-import { map, catchError, tap } from "rxjs/operators";
+import { map, tap } from "rxjs/operators";
 import { Observable,Subject } from 'rxjs';
 import { LpDialogsService } from 'lp-dialogs';
 import { User } from '../models/user.model';
 import { AuthService } from './auth.service';
-import { ErrorHandlerService } from './error-handler.service';
 import { API_URL } from '../../config/api-url';
 import { LpLocalStorage } from 'lp-operations';
 
@@ -14,8 +13,8 @@ import { LpLocalStorage } from 'lp-operations';
 })
 export class UserServices {
 
-    count: number = 0;
-    private userSrc: Subject<{ user: User, order: string }> = new Subject < {user: User, order: string}>();
+   count: number = 0;
+   private userSrc: Subject<{ user: User, order: string }> = new Subject < {user: User, order: string}>();
    user$: Observable < {user: User, order: string}> = this.userSrc.asObservable();
    constructor(private http: HttpClient,
                private authService:AuthService,

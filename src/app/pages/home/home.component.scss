@@ -5,12 +5,7 @@
  .div-home{
   height: 90vh;
 }
-::ng-deep .mat-tab-list {
-  .mat-tab-label {
-    flex-basis: 1;
-    flex-grow: 1
-  }
-}
+
 .mat-tab-link{
   height: 5vh;
 }
@@ -35,7 +30,6 @@ mat-icon{
 }
 }
 
-
 .div-info-icon{
   top:18.7vh!important
 }
@@ -43,6 +37,10 @@ mat-icon{
 .div-info-icon-desktop-without-task{
     top:18.7vh !important
 }
+}
+
+::ng-deep .mat-ink-bar{
+  width: 50% !important;
 }
 
 

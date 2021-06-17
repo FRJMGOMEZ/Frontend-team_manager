@@ -60,19 +60,19 @@ export class PagesComponent implements OnInit, OnDestroy {
       const promise = path === 'home' ? this.router.navigate([path], { relativeTo: this.ar }) : this.router.navigate([ `${this.projectService.selectedProject._id}/${path}`], { relativeTo: this.ar});
       promise.then(()=>{
         this.sidenav && this.sidenav.opened  ? this.sidenav.toggle() : null;
-      })
+      });
     }
   }
   postTask(){
-    this.dialogService.openEditCreateTaskDialog()
+    this.dialogService.openEditCreateTaskDialog();
   }
   logout(){
     this.lpDialogs.openConfirmDialog('ARE YOU SURE?','').subscribe((res:boolean)=>{
      if(res){
        this.dialogService.closeAll();
-       this.authService.logout().subscribe()
+       this.authService.logout().subscribe();
      }
-    })
+    });
    }
   ngOnDestroy() {
     this.wSService.emit('user-out-app');
