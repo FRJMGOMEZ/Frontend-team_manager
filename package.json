@@ -24,7 +24,6 @@
     "@angular/platform-browser": "~10.0.4",
     "@angular/platform-browser-dynamic": "~10.0.4",
     "@angular/router": "~10.0.4",
-    "chart.js": "^2.9.3",
     "jwt-decode": "^3.0.0",
     "lp-bottom-sheet-info": "^10.0.1",
     "lp-date-pipes": "^10.0.1",
